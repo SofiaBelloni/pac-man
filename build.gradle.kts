@@ -11,6 +11,8 @@ plugins {
 }
 repositories {
     jcenter() // Contains the whole Maven Central + other stuff
+    mavenCentral()
+	maven(url = "https://nexus.gluonhq.com/nexus/content/repositories/releases/")
 }
 // List of JavaFX modules you need. Comment out things you are not using.
 val javaFXModules = listOf(
