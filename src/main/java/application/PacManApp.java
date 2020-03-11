@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 /**
  * This class represent the Main class of the JavaFX-based application.
  */
-public final class Main extends Application {
+public final class PacManApp extends Application {
 
     private static final int SCENE_WIDTH = 500;
     private static final int SCENE_HEIGHT = 300;
