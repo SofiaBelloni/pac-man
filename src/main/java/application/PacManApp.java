@@ -22,7 +22,6 @@ public final class PacManApp extends Application {
 //        stage.setTitle("JavaFX - Complete Example");
 //        stage.setScene(scene);
 //        stage.show();
-        
     }
 
     /**

@@ -1,7 +1,7 @@
 package model;
 
-/*
- *This class represent a wall (an obstacle) which cannot be exceeded
+/**
+ *This class represent a wall (an obstacle) which cannot be exceeded.
  */
 public class Wall extends ImmobileEntityImpl {
 

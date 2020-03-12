@@ -1,7 +1,7 @@
 package model;
 
-/*
- * this class implements a generic Entity that can't be moved
+/**
+ * this class implements a generic Entity that can't be moved.
  *
  */
 public abstract class ImmobileEntityImpl implements Entity {

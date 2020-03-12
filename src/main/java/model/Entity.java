@@ -1,7 +1,7 @@
 package model;
 
-/*
- * This interface represents a generic game entity (ghosts, walls, pills, etc.)
+/**
+ * This interface represents a generic game entity (ghosts, walls, pills, etc.).
  */
 public interface Entity {
     /**

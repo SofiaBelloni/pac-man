@@ -21,8 +21,8 @@ public interface GameModel {
      * @return a Map with entities as keys and their positions as values
      */
     Map<Entity, Pair<Integer, Integer>> getEntitiesPosition();
-    /*
-     * Moves each mobile entity to its next position;
+    /**
+     * Moves each mobile entity to its next position.
      */
     void moveEntitiesNextPosition();
     /**
@@ -34,8 +34,8 @@ public interface GameModel {
      * @param entity to remove
      */
     void removeEntity(Entity entity);
-    /*
-     * Increments the level number
+    /**
+     * Increments the level number.
      */
     void incLevelTime();
     /**

@@ -1,11 +1,11 @@
 package model;
 
-/*
- *This class represents one of the pills that can be eaten by Pac-Man
+/**
+ *This class represents one of the pills that can be eaten by Pac-Man.
  */
 public class Pill extends ImmobileEntityImpl {
-    /*
-     * value of the pill to be added to the score
+    /**
+     * value of the pill to be added to the score.
      */
     public static final int POINTS = 10;
 
