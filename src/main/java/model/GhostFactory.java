@@ -2,6 +2,12 @@ package model;
 
 public interface GhostFactory{
     
-    Ghost createGhost(String name);
+    Ghost blinky();
+    
+    Ghost inky();
+    
+    Ghost pinky();
+    
+    Ghost clyde();
     
 }
