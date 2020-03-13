@@ -2,8 +2,8 @@ package model;
 
 public class GhostFactoryImpl implements GhostFactory {
     
-    private Pair<Integer,Integer> pacManPosition;
-    private Pair<Integer,Integer> initialPosition;
+    private Pair<Integer, Integer> pacManPosition;
+    private Pair<Integer, Integer> initialPosition;
 
 
     @Override

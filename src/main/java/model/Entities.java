@@ -9,9 +9,21 @@ public enum Entities {
      */
     PACMAN,
     /**
-     * Ghost.
+     * Ghost Pinky.
      */
-    GHOST,
+    PINKY,
+    /**
+     * Ghost Inky.
+     */
+    INKY,
+    /**
+     * Ghost Blinky.
+     */
+    BLINKY,
+    /**
+     * Ghost Clyde.
+     */
+    CLYDE,
     /**
      * Wall.
      */

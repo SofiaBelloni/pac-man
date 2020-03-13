@@ -38,20 +38,20 @@ public abstract class MobileEntityAbstractImpl implements MobileEntity {
         this.position = position;
     }
 
-    /**
-     * set the direction of the MobileEntity.
-     */
-    @Override
-    public void setDirection(final Directions direction) {
-        this.currentDirection = direction;
-    }
-
-    /**
-     * @return the direction of the MobileEntity.
-     */
-    @Override
-    public Directions getDirection() {
-        return this.currentDirection;
-    }
+//    /**
+//     * set the direction of the MobileEntity.
+//     */
+//    @Override
+//    public void setDirection(final Directions direction) {
+//        this.currentDirection = direction;
+//    }
+//
+//    /**
+//     * @return the direction of the MobileEntity.
+//     */
+//    @Override
+//    public Directions getDirection() {
+//        return this.currentDirection;
+//    }
 
 }
