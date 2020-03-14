@@ -9,21 +9,20 @@ public enum Ghosts {
      * Blinky.
      */
     BLINKY,
-     
+
     /**
      * Inky.
      */
     INKY,
-    
+
     /**
      * Pinky.
      */
     PINKY,
-    
-    
+
     /**
      *Clyde.
      */
     CLYDE
-    
+
 }
