@@ -20,4 +20,11 @@ public interface PacMan extends MobileEntity {
    */
   void nextPosition();
 
+  /**
+   * Get the PacMan position.
+   * 
+   * @return the position of PacMan
+   */
+  Pair<Integer, Integer> getPosition();
+
 }
