@@ -21,12 +21,6 @@ public abstract class MobileEntityAbstractImpl implements MobileEntity {
     }
 
     /**
-     * @return true if the entity is eatable, false if not
-     */
-    @Override
-    public abstract boolean isEatable();
-
-    /**
      * set the position of the MobileEntity.
      */
     @Override
