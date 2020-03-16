@@ -1,8 +1,8 @@
 package model;
 
 public interface GhostFactory {
-    GhostAbstractImpl blinky();
-    GhostAbstractImpl inky();
-    GhostAbstractImpl pinky();
-    GhostAbstractImpl clyde();
+    Ghost blinky();
+    Ghost inky();
+    Ghost pinky();
+    Ghost clyde();
 }
