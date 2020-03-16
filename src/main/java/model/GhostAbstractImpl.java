@@ -1,17 +1,16 @@
 package model;
 
-public abstract class GhostAbstractImpl implements MobileEntity {
+public abstract class GhostAbstractImpl implements Ghost {
+
     protected Pair<Integer, Integer> position;
 
     @Override
-    public Pair<Integer, Integer> getPosition() {
+    public final Pair<Integer, Integer> getPosition() {
        return this.position;
     }
-
     @Override
-    public boolean isEatable() {
- 
-        return false;
+    public final void setPosition(final Pair<Integer, Integer> position) {
+        this.position = position;
     }
-
 }
+
