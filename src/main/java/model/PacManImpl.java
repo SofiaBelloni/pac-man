@@ -1,37 +1,31 @@
 package model;
 
+import java.util.Optional;
+import java.util.Set;
 
 public class PacManImpl extends MobileEntityAbstractImpl implements PacMan {
 
-    //Magari da fare Optional che quando è vuoto sta fermo, oppure aggiungere STOP alle Directions
-    private Directions currentDirection; 
+    private Optional<Directions> currentDirection;
 
-    public PacManImpl(final Pair<Integer, Integer> position) {
-        super(position);
-        this.currentDirection = Directions.RIGHT;
+    public PacManImpl(final int xMapSize, final int yMapSize, final Pair<Integer, Integer> startPosition, final Set<Pair<Integer, Integer>> noWalls) {
+        super(xMapSize, yMapSize, startPosition, noWalls);
+        this.currentDirection = Optional.empty();
     }
 
     @Override
-    public void setDirection(final Directions direction) {
+    public final void nextPosition() {
+        if (!this.currentDirection.isEmpty()) {
+            
+        }
+    }
+
+    @Override
+    public final void setDirection(final Optional<Directions> direction) {
         this.currentDirection = direction;
     }
 
     @Override
-    public Directions getDirection() {
+    public final Optional<Directions> getDirection() {
         return this.currentDirection;
     }
-
-    @Override
-    public void nextPosition() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public boolean isEatable() {
-        return false;
-    }
-
-
-
 }
