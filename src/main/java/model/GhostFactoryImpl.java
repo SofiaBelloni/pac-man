@@ -1,13 +1,13 @@
 package model;
 
-public class GhostFactoryImpl implements GhostFactory {
-    private Pair<Integer, Integer> pacManPosition;
+import java.util.HashSet;
+import java.util.Set;
 
+public class GhostFactoryImpl implements GhostFactory {
 
     @Override
     public GhostAbstractImpl blinky() {
        return new GhostAbstractImpl() {
-
         @Override
         public void setPosition(final Pair<Integer, Integer> position) {
         }

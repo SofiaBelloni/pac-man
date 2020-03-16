@@ -1,11 +1,11 @@
 package model;
 
 public abstract class GhostAbstractImpl implements MobileEntity {
-    protected Pair<Integer, Integer> position;
+    protected Pair<Integer,Integer> currentPosition;
 
     @Override
     public Pair<Integer, Integer> getPosition() {
-       return this.position;
+       return this.currentPosition;
     }
 
     @Override
