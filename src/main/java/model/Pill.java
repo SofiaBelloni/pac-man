@@ -13,9 +13,4 @@ public class Pill extends ImmobileEntityImpl {
         super(position);
     }
 
-    @Override
-    public final boolean isEatable() {
-        return true;
-    }
-
 }
