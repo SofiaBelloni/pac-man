@@ -17,8 +17,8 @@ public interface PacMan extends MobileEntity {
    */
   Optional<Directions> getDirection();
   /**
- * @return the remaining lives of PacMan
- */
-int getLives();
+   * @return the remaining lives of PacMan
+   */
+  int getLives();
 
 }

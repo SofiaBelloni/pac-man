@@ -42,7 +42,7 @@ public class PacManImpl extends MobileEntityAbstractImpl implements PacMan {
             x = 1;
             break;
         default:
-            //bisogna gestirlo in qualche modo
+            //bisogna gestirlo in qualche modo (forse con un log)
             break;
         }
         return new Pair<Integer, Integer>(this.getPosition().getX() + x, this.getPosition().getY() + y);
