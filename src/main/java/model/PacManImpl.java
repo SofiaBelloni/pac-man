@@ -6,10 +6,13 @@ import java.util.Set;
 public class PacManImpl extends MobileEntityAbstractImpl implements PacMan {
 
     private Optional<Directions> currentDirection;
+    private int lives;
 
-    public PacManImpl(final int xMapSize, final int yMapSize, final Pair<Integer, Integer> startPosition, final Set<Pair<Integer, Integer>> noWalls) {
+    public PacManImpl(final int xMapSize, final int yMapSize, final Pair<Integer, Integer> startPosition,
+            final int lives, final Set<Pair<Integer, Integer>> noWalls) {
         super(xMapSize, yMapSize, startPosition, noWalls);
         this.currentDirection = Optional.empty();
+        this.lives = lives;
     }
 
     @Override
@@ -71,5 +74,10 @@ public class PacManImpl extends MobileEntityAbstractImpl implements PacMan {
     @Override
     public final Optional<Directions> getDirection() {
         return this.currentDirection;
+    }
+
+    @Override
+    public final int getLives() {
+        return this.lives;
     }
 }

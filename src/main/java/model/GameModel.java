@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -14,13 +13,13 @@ public interface GameModel {
      */
     void setPacManDirection(Directions direction);
     /**
-     * @return a Set containing all the entities of the game
+     * @return a Set containing all the mobile entities of the game
      */
-    Set<Entity> getEntities();
+    Set<MobileEntity> getMobileEntities();
     /**
-     * @return a Map with entities as keys and their positions as values
+     * @return a Set containing all the immmobile entities of the game
      */
-    Map<Entity, Pair<Integer, Integer>> getEntitiesPosition();
+    Set<MobileEntity> getImmobileEntities();
     /**
      * Moves each mobile entity to its next position.
      */
