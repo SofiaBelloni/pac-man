@@ -7,5 +7,5 @@ public interface MobileEntity extends Entity {
     /*
      * Moves the Entity on the next position
      */
-    void nextPosition();
+    int nextPosition(Pair<Integer, Integer> pacManPosition);
 }
