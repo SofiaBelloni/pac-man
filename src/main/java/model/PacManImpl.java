@@ -80,4 +80,9 @@ public class PacManImpl extends MobileEntityAbstractImpl implements PacMan {
     public final int getLives() {
         return this.lives;
     }
+
+    @Override
+    public final void kill() {
+        this.lives = this.lives - 1;
+    }
 }

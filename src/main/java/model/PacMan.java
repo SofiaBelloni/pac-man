@@ -20,5 +20,9 @@ public interface PacMan extends MobileEntity {
    * @return the remaining lives of PacMan
    */
   int getLives();
+  /*
+   * Decreases the life of PacMan
+   */
+  void kill();
 
 }
