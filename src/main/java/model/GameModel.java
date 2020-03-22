@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -13,13 +14,17 @@ public interface GameModel {
      */
     void setPacManDirection(Directions direction);
     /**
-     * @return a Set containing all the mobile entities of the game
+     * @return a Set containing all the ghosts positions.
      */
-    Set<MobileEntity> getMobileEntities();
+    Map<Ghost, Pair<Integer, Integer>> getGhostsPosition();
     /**
-     * @return a Set containing all the immmobile entities of the game
+     * @return a Set containing the wall's positions;
      */
-    Set<MobileEntity> getImmobileEntities();
+    Set<Pair<Integer, Integer>> getWallsPositions();
+    /**
+     * @return a Set containing the pill's positions;
+     */
+    Set<Pair<Integer, Integer>> getPillsPositions();
     /**
      * Moves each mobile entity to its next position.
      */
@@ -30,27 +35,31 @@ public interface GameModel {
      */
     void addEntity(Entities entity, Pair<Integer, Integer> position);
     /**
-     * @param entity to remove
+     * Increments the level time.
      */
-    void removeEntity(Entity entity);
+    void incLevelTime();
     /**
      * Increments the level number.
      */
-    void incLevelTime();
+    void incLevelNumber();
+    /**
+     * @return the level number
+     */
+    int getLevelNumber();
+    /**
+     * @return the level time
+     */
+    int getLevelTime();
     /**
      * @return the scores of the current game
      */
     int getScores();
     /**
-     * @return the current level time
-     */
-    int getLevelTime();
-    /**
-     * @return the current level number
-     */
-    int getLevelNumber();
-    /**
      * @return the remaining lives of Pac-Man
      */
     int getPacManLives();
+    /**
+     * @return the Pacman position
+     */
+    Pair<Integer, Integer> getPacManPosition();
 }

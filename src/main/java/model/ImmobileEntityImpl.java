@@ -5,7 +5,9 @@ package model;
  *
  */
 public abstract class ImmobileEntityImpl implements Entity {
+
     private final Pair<Integer, Integer> position;
+
     public ImmobileEntityImpl(final Pair<Integer, Integer> position) {
         this.position = position;
     }
