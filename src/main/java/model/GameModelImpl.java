@@ -1,29 +1,23 @@
 package model;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
 public class GameModelImpl implements GameModel {
 
-    private final int xMapSize;
-    private final int yMapSize;
-    private final Set<Pair<Integer, Integer>> walls;
-    private final Set<Pair<Integer, Integer>> pills;
     private final Set<Ghost> ghosts;
     private final PacMan pacMan;
+    private final GameMap maze;
     private int scores;
     private int levelNumber;
     private int levelTime;
 
-    public GameModelImpl(final int xMapSize, final int yMapSize, final Set<Pair<Integer, Integer>> walls, final Set<Pair<Integer, Integer>> pills,
-            final Pair<Integer, Integer> pacManInitialPosition, final Pair<Integer, Integer> ghostsHouse) {
-        this.ghosts = null;
-        this.pacMan = null;
-        this.xMapSize = xMapSize;
-        this.yMapSize = yMapSize;
-        this.walls = walls;
-        this.pills = pills;
+    public GameModelImpl() {
+        this.maze = new GameMapImpl(20, 40, null, null, null);
+        this.ghosts = new HashSet<>();
+        this.pacMan = new PacManImpl(0, 0, null, 0, null);
         this.levelNumber = 1;
         this.levelTime = 0;
         this.scores = 0;
