@@ -33,7 +33,7 @@ public interface GameModel {
      * @param entity type
      * @param position of the entity
      */
-    void addEntity(Entities entity, Pair<Integer, Integer> position);
+    void addEntity(MobileEntities entity, Pair<Integer, Integer> position);
     /**
      * Increments the level time.
      */

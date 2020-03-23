@@ -3,7 +3,7 @@ package model;
 /**
  * this enumeration represents the entities of the game.
  */
-public enum Entities {
+public enum MobileEntities {
     /**
      * PacMan.
      */
@@ -23,13 +23,5 @@ public enum Entities {
     /**
      * Ghost Clyde.
      */
-    CLYDE,
-    /**
-     * Wall.
-     */
-    WALL,
-    /**
-     * Pill.
-     */
-    PILL
+    CLYDE
 }

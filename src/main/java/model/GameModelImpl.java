@@ -46,7 +46,7 @@ public class GameModelImpl implements GameModel {
     }
 
     @Override
-    public void addEntity(final Entities entity, final Pair<Integer, Integer> position) {
+    public void addEntity(final MobileEntities entity, final Pair<Integer, Integer> position) {
         // TODO Auto-generated method stub
     }
 
