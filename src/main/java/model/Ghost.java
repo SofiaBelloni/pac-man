@@ -1,8 +1,10 @@
 package model;
 
 public interface Ghost extends MobileEntity {
-    /**
-     * @return if the ghost can be eaten by Pac-Man
-     */
+
     boolean isEatable();
+
+    int nextPosition(PacMan pacMan);
+
+    Pair<Integer, Integer> targetPosition(PacMan pacMan);
 }
