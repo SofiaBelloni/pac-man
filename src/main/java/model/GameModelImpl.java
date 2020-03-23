@@ -29,7 +29,7 @@ public class GameModelImpl implements GameModel {
     }
 
     @Override
-    public final Map<Ghost, Pair<Integer, Integer>> getGhostsPositions() {
+    public final Map<Ghosts, Set<Pair<Integer, Integer>>> getGhostsPositions() {
         // TODO Auto-generated method stub
         return null;
     }
@@ -37,15 +37,11 @@ public class GameModelImpl implements GameModel {
     @Override
     public final void moveEntitiesNextPosition() {
         this.pacMan.nextPosition();
+        this.ghosts.forEach(x -> x.nextPosition());
     }
 
     @Override
-    public void addEntity(final Entities entity, final Pair<Integer, Integer> position) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
-    public final void incLevelTime() {
+    public final void decLevelTime() {
         this.levelTime = this.levelTime + 1;
     }
 
@@ -66,17 +62,18 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final Set<Pair<Integer, Integer>> getWallsPositions() {
-        return Set.copyOf(this.walls);
+        return this.maze.getWallsPositions();
     }
 
     @Override
     public final Set<Pair<Integer, Integer>> getPillsPositions() {
-        return Set.copyOf(this.pills);
+        return this.maze.getPillsPositions();
     }
 
     @Override
-    public final void incLevelNumber() {
+    public final void nextLevel() {
         this.levelNumber = this.levelNumber + 1;
+        this.levelTime = 0;
     }
 
     @Override

@@ -16,7 +16,7 @@ public interface GameModel {
     /**
      * @return a Set containing all the ghosts positions.
      */
-    Map<Ghost, Pair<Integer, Integer>> getGhostsPositions();
+    Map<Ghosts, Set<Pair<Integer, Integer>>> getGhostsPositions();
     /**
      * @return a Set containing the wall's positions;
      */
@@ -32,11 +32,11 @@ public interface GameModel {
     /**
      * Increments the level time.
      */
-    void incLevelTime();
+    void decLevelTime();
     /**
      * Increments the level number.
      */
-    void incLevelNumber();
+    void nextLevel();
     /**
      * @return the level number
      */
