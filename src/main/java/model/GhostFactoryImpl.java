@@ -14,12 +14,12 @@ public class GhostFactoryImpl implements GhostFactory {
     }
 
     @Override
-    public Ghost create(final MobileEntities ghost) { 
-        if (ghost.equals(MobileEntities.BLINKY)) {
+    public Ghost create(final Entities ghost) { 
+        if (ghost.equals(Entities.BLINKY)) {
             return new Blinky(this.map, this.setWall);
-        } else if (ghost.equals(MobileEntities.INKY)) {
+        } else if (ghost.equals(Entities.INKY)) {
             return new Inky(this.map, this.setWall);
-        } else if (ghost.equals(MobileEntities.PINKY)) {
+        } else if (ghost.equals(Entities.PINKY)) {
             return new Pinky(this.map, this.setWall);
         } else {
             return new Clyde(this.map, this.setWall);
