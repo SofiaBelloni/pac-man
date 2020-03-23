@@ -16,7 +16,7 @@ public interface GameModel {
     /**
      * @return a Set containing all the ghosts positions.
      */
-    Map<Ghost, Pair<Integer, Integer>> getGhostsPosition();
+    Map<Ghost, Pair<Integer, Integer>> getGhostsPositions();
     /**
      * @return a Set containing the wall's positions;
      */

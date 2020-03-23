@@ -35,7 +35,7 @@ public class GameModelImpl implements GameModel {
     }
 
     @Override
-    public final Map<Ghost, Pair<Integer, Integer>> getGhostsPosition() {
+    public final Map<Ghost, Pair<Integer, Integer>> getGhostsPositions() {
         // TODO Auto-generated method stub
         return null;
     }
