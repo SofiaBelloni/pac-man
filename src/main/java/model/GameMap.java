@@ -24,6 +24,10 @@ public interface GameMap {
      */
     Set<Pair<Integer, Integer>> getGhostHousePosition();
     /**
+     * @return free positions (no wall, pill, or ghost house)
+     */
+    Set<Pair<Integer, Integer>> getFreePositions();
+    /**
      * @return the map size on x axis
      */
     int getxMapSize();
