@@ -5,11 +5,11 @@ import java.util.Set;
 
 public class PacManImpl extends MobileEntityAbstractImpl implements PacMan {
 
-    private Optional<Directions> currentDirection;
+    private Directions currentDirection;
     private int lives;
 
     private PacManImpl(final int xMapSize, final int yMapSize, final Pair<Integer, Integer> startPosition,
-            final int lives, final Set<Pair<Integer, Integer>> noWalls, final Optional<Directions> currentDirection) {
+            final int lives, final Set<Pair<Integer, Integer>> noWalls, final Directions currentDirection) {
         super(xMapSize, yMapSize, startPosition, noWalls);
         this.currentDirection = currentDirection;
         this.lives = lives;
@@ -90,24 +90,22 @@ public class PacManImpl extends MobileEntityAbstractImpl implements PacMan {
             }
 
             return new PacManImpl(this.xMapSize.get(), this.yMapSize.get(), this.startPosition.get(), 
-                    this.lives.get(), this.noWalls.get(), this.currentDirection);
+                    this.lives.get(), this.noWalls.get(), this.currentDirection.get());
         }
     }
 
     @Override
-    public final void nextPosition() {
-        if (!this.currentDirection.isEmpty()) {
-            Pair<Integer, Integer> next = this.convertToToroidal(this.calculateNextPosition());
-            if (this.getNoWalls().contains(next)) {
-                this.setPosition(next);
+    public void nextPosition() {
+        Pair<Integer, Integer> next = this.convertToToroidal(this.calculateNextPosition());
+        if (this.getNoWalls().contains(next)) {
+            this.setPosition(next);
             }
-        }
     }
 
     private Pair<Integer, Integer> calculateNextPosition() {
         int x = 0;
         int y = 0;
-        switch (this.currentDirection.get()) {
+        switch (this.currentDirection) {
         case UP:
             y = 1;
             break;
@@ -146,22 +144,22 @@ public class PacManImpl extends MobileEntityAbstractImpl implements PacMan {
     }
 
     @Override
-    public final void setDirection(final Optional<Directions> direction) {
+    public void setDirection(final Directions direction) {
         this.currentDirection = direction;
     }
 
     @Override
-    public final Optional<Directions> getDirection() {
+    public Directions getDirection() {
         return this.currentDirection;
     }
 
     @Override
-    public final int getLives() {
+    public int getLives() {
         return this.lives;
     }
 
     @Override
-    public final void kill() {
+    public void kill() {
         this.lives = this.lives - 1;
     }
 

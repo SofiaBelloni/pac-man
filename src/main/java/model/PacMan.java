@@ -8,20 +8,20 @@ public interface PacMan extends MobileEntity {
    * 
    * @param direction the new direction of the entity
    */
-  void setDirection(Optional<Directions> direction);
+  void setDirection(Directions direction);
 
   /**
    * Get the mobile entity direction.
    * 
    * @return the direction of the entity
    */
-  Optional<Directions> getDirection();
+  Directions getDirection();
   /**
    * @return the remaining lives of PacMan
    */
   int getLives();
-  /*
-   * Decreases the life of PacMan
+  /**
+   * Decreases the life of PacMan.
    */
   void kill();
 

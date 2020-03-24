@@ -24,9 +24,9 @@ public class GameModelImpl implements GameModel {
         this.maze = new GameMapImpl(20, 40, null, null, null);
         this.ghosts = new HashSet<>();
         this.pacMan = new PacManImpl.Builder()
-                            .currentDirection(null)
-                            .mapSize(GameModelImpl.XMAPSIZE, GameModelImpl.YMAPSIZE)
-                            .lives(GameModelImpl.PACMANLIVES)
+                            .currentDirection(Directions.LEFT)
+                            .mapSize(XMAPSIZE, YMAPSIZE)
+                            .lives(PACMANLIVES)
                             .noWalls(null)
                             .startPosition(null)
                             .build();
@@ -38,7 +38,7 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final void setPacManDirection(final Directions direction) {
-        this.pacMan.setDirection(Optional.of(direction));
+        this.pacMan.setDirection(direction);
     }
 
     @Override
