@@ -8,11 +8,90 @@ public class PacManImpl extends MobileEntityAbstractImpl implements PacMan {
     private Optional<Directions> currentDirection;
     private int lives;
 
-    public PacManImpl(final int xMapSize, final int yMapSize, final Pair<Integer, Integer> startPosition,
-            final int lives, final Set<Pair<Integer, Integer>> noWalls) {
+    private PacManImpl(final int xMapSize, final int yMapSize, final Pair<Integer, Integer> startPosition,
+            final int lives, final Set<Pair<Integer, Integer>> noWalls, final Optional<Directions> currentDirection) {
         super(xMapSize, yMapSize, startPosition, noWalls);
-        this.currentDirection = Optional.empty();
+        this.currentDirection = currentDirection;
         this.lives = lives;
+    }
+
+    public static class Builder {
+        private Optional<Integer> xMapSize;
+        private Optional<Integer> yMapSize;
+        private Optional<Pair<Integer, Integer>> startPosition;
+        private Optional<Integer> lives;
+        private Optional<Set<Pair<Integer, Integer>>> noWalls;
+        private Optional<Directions> currentDirection;
+
+        public Builder() {
+
+        }
+        /**
+         * 
+         * @param x xMapSize
+         * @param y yMapSize
+         * @return this
+         */
+        public Builder mapSize(final int x, final int y) {
+            this.xMapSize = Optional.of(x);
+            this.yMapSize = Optional.of(y);
+            return this;
+        }
+        /**
+         * 
+         * @param startPosition a pair containing the x,y position 
+         * @return this
+         */
+        public Builder startPosition(final Pair<Integer, Integer> startPosition) {
+            this.startPosition = Optional.of(startPosition);
+            return this;
+        }
+
+        /**
+         * 
+         * @param lives number of lives. Must be > 0
+         * @return this
+         */
+        public Builder lives(final int lives) {
+            this.lives = Optional.of(lives).filter(x -> x > 0);
+            return this;
+        }
+
+        /**
+         * 
+         * @param noWalls a set containing the coordinates where you can go
+         * @return this
+         */
+        public Builder noWalls(final Set<Pair<Integer, Integer>> noWalls) {
+            this.noWalls = Optional.of(noWalls);
+            return this;
+        }
+
+        /**
+         * 
+         * @param currentDirection the current direction. can be empty if pacman is stall
+         * @return this
+         */
+        public Builder currentDirection(final Directions currentDirection) {
+            this.currentDirection = Optional.of(currentDirection);
+            return this;
+        }
+
+
+        /**
+         * 
+         * @return a new instance of PacManImpl
+         * @throws IllegalStateException if some parameter is missed
+         */
+        public PacManImpl build() throws IllegalStateException {
+            if (this.xMapSize == null || this.yMapSize == null || !this.lives.isPresent() || this.startPosition == null
+                        || this.currentDirection == null || this.noWalls == null) {
+                throw new IllegalStateException("Error while building PacMan. Please control to do it correctly.");
+            }
+
+            return new PacManImpl(this.xMapSize.get(), this.yMapSize.get(), this.startPosition.get(), 
+                    this.lives.get(), this.noWalls.get(), this.currentDirection);
+        }
     }
 
     @Override
@@ -85,4 +164,5 @@ public class PacManImpl extends MobileEntityAbstractImpl implements PacMan {
     public final void kill() {
         this.lives = this.lives - 1;
     }
+
 }

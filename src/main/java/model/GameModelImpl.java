@@ -7,6 +7,12 @@ import java.util.Set;
 
 public class GameModelImpl implements GameModel {
 
+    private static final int XMAPSIZE = 40;
+
+    private static final int YMAPSIZE = 40;
+
+    private static final int PACMANLIVES = 3;
+
     private final Set<Ghost> ghosts;
     private final PacMan pacMan;
     private final GameMap maze;
@@ -17,7 +23,14 @@ public class GameModelImpl implements GameModel {
     public GameModelImpl() {
         this.maze = new GameMapImpl(20, 40, null, null, null);
         this.ghosts = new HashSet<>();
-        this.pacMan = new PacManImpl(0, 0, null, 0, null);
+        this.pacMan = new PacManImpl.Builder()
+                            .currentDirection(null)
+                            .mapSize(GameModelImpl.XMAPSIZE, GameModelImpl.YMAPSIZE)
+                            .lives(GameModelImpl.PACMANLIVES)
+                            .noWalls(null)
+                            .startPosition(null)
+                            .build();
+
         this.levelNumber = 1;
         this.levelTime = 0;
         this.scores = 0;
