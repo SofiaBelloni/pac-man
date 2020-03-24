@@ -1,27 +1,22 @@
 package application;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.GameModel;
+import model.GameModelImpl;
 
 /**
  * This class represent the Main class of the JavaFX-based application.
  */
 public final class PacManApp extends Application {
 
-//    private static final int SCENE_WIDTH = 500;
-//    private static final int SCENE_HEIGHT = 300;
-
     @Override
     public void start(final Stage stage) throws Exception {
-//        final Parent root = FXMLLoader.load(ClassLoader.getSystemResource("layouts/main.fxml"));
-//        final Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
-//        // Stage configuration
-//        stage.setTitle("JavaFX - Complete Example");
-//        stage.setScene(scene);
-//        stage.show();
+
+        final View view = new JavaFXView(stage);
+        final GameModel model = new GameModelImpl();
+        final Controller controller = new ControllerImpl(model, view);
+        view.launch(controller);
     }
 
     /**
