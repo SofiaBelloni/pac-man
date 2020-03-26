@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Optional;
-
 public interface PacMan extends MobileEntity {
   /**
    * Set the mobile entity direction.
