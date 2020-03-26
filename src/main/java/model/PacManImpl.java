@@ -16,16 +16,23 @@ public class PacManImpl extends MobileEntityAbstractImpl implements PacMan {
     }
 
     public static class Builder {
-        private Optional<Integer> xMapSize;
-        private Optional<Integer> yMapSize;
-        private Optional<Pair<Integer, Integer>> startPosition;
-        private Optional<Integer> lives;
-        private Optional<Set<Pair<Integer, Integer>>> noWalls;
-        private Optional<Directions> currentDirection;
+        private Optional<Integer> xMapSize = Optional.empty();
+        private Optional<Integer> yMapSize = Optional.empty();
+        private Optional<Pair<Integer, Integer>> startPosition = Optional.empty();
+        private Optional<Integer> lives = Optional.empty();
+        private Optional<Set<Pair<Integer, Integer>>> noWalls = Optional.empty();
+        private Optional<Directions> currentDirection = Optional.empty();
 
-        public Builder() {
-
+        /**
+         * Used by the builder to check if the Optional fields are correctly assigned.
+         * @param b 
+         */
+        private static void check(final boolean b) {
+            if (!b) {
+                throw new IllegalStateException();
+            }
         }
+
         /**
          * 
          * @param x xMapSize
@@ -83,11 +90,13 @@ public class PacManImpl extends MobileEntityAbstractImpl implements PacMan {
          * @return a new instance of PacManImpl
          * @throws IllegalStateException if some parameter is missed
          */
-        public PacManImpl build() throws IllegalStateException {
-            if (this.xMapSize == null || this.yMapSize == null || !this.lives.isPresent() || this.startPosition == null
-                        || this.currentDirection == null || this.noWalls == null) {
-                throw new IllegalStateException("Error while building PacMan. Please control to do it correctly.");
-            }
+        public PacManImpl build() {
+            check(this.xMapSize.isPresent());
+            check(this.yMapSize.isPresent());
+            check(this.lives.isPresent());
+            check(this.startPosition.isPresent());
+            check(this.currentDirection.isPresent());
+            check(this.noWalls.isPresent());
 
             return new PacManImpl(this.xMapSize.get(), this.yMapSize.get(), this.startPosition.get(), 
                     this.lives.get(), this.noWalls.get(), this.currentDirection.get());
