@@ -11,11 +11,11 @@ public class Clyde extends GhostAbstractImpl {
     }
 
     public Pair<Integer,Integer> targetPosition(PacMan pacMan){
-         findPath(currentPosition, pacMan.getPosition());
-        if (super.distance >= 8) {
-            return pacMan.getPosition();
-        } else {
+        if (currentPosition.getX()>pacMan.getPosition().getX() - 4 && currentPosition.getX()<pacMan.getPosition().getX() + 4 
+            && currentPosition.getY()>pacMan.getPosition().getY() - 4 && currentPosition.getY()<pacMan.getPosition().getY() + 4 ) {
             return super.target;
+        } else {
+            return pacMan.getPosition();
         }
     }
 
@@ -23,13 +23,14 @@ public class Clyde extends GhostAbstractImpl {
             if (super.isEatable()) {
                 super.runAway();
             } else {
+                super.min=100000;
                  for (Pair<Integer, Integer> p:map.keySet()) {
                      map.put(p, 1000);
                  }
                    if (isRelaxed) {
                        isRelaxed = relax();
                    } else {
-                       findPath(currentPosition, targetPosition(pacMan));
+                       findPath(currentPosition, targetPosition(pacMan), super.dir);
                        move(targetPosition(pacMan));
                    }
             }
@@ -40,5 +41,4 @@ public class Clyde extends GhostAbstractImpl {
             }
 
         }
-
 }
