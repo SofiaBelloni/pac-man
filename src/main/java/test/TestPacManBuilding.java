@@ -1,8 +1,9 @@
 package test;
 
+import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
+import java.util.HashSet;
 
 import model.Directions;
 import model.PacMan;
@@ -30,7 +31,7 @@ public class TestPacManBuilding {
                                     .currentDirection(Directions.LEFT)
                                     .lives(3)
                                     .mapSize(XMAPSIZE, YMAPSIZE)
-                                    .noWalls(null)
+                                    .noWalls(new HashSet<Pair<Integer, Integer>>())
                                     .startPosition(new Pair<Integer, Integer>(0, 0))
                                     .build();
         assertEquals(pacMan.getDirection(), Directions.LEFT);
