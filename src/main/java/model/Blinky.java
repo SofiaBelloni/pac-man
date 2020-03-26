@@ -15,16 +15,17 @@ public class Blinky extends GhostAbstractImpl {
     }
 
     public int nextPosition(PacMan pacMan) {
-        if (super.isEatable()) {
-            super.runAway();
+        if (isEatable()) {
+            runAway();
         } else {
-             for (Pair<Integer, Integer> p:map.keySet()) {
-                 map.put(p, 1000);
+            super.min=100000;
+             for (Pair<Integer, Integer> p: map.keySet()) {
+                 map.put(p, 10000);
              }
                if (isRelaxed) {
                    isRelaxed = relax();
                } else {
-                   findPath(currentPosition, targetPosition(pacMan));
+                   findPath(currentPosition, targetPosition(pacMan), super.dir);
                    move(targetPosition(pacMan));
                }
         }
@@ -35,4 +36,5 @@ public class Blinky extends GhostAbstractImpl {
         }
 
     }
+
 }
