@@ -103,6 +103,9 @@ public class PacManImpl extends MobileEntityAbstractImpl implements PacMan {
         }
     }
 
+    /**
+     * Move the PacMan to the next position.
+     */
     @Override
     public void nextPosition() {
         Pair<Integer, Integer> next = this.convertToToroidal(this.calculateNextPosition());

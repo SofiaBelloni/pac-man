@@ -2,16 +2,19 @@ package model;
 
 public interface PacMan extends MobileEntity {
   /**
-   * Set the mobile entity direction.
+   * Set the PacMan direction.
    * 
-   * @param direction the new direction of the entity
+   * @param direction the new direction of PacMan
    */
   void setDirection(Directions direction);
-
   /**
-   * Get the mobile entity direction.
+   * Move PacMan to the next position.
+   */
+  void nextPosition();
+  /**
+   * Get the PacMan direction.
    * 
-   * @return the direction of the entity
+   * @return the direction of PacMan
    */
   Directions getDirection();
   /**
