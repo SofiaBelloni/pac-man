@@ -50,7 +50,7 @@ public class GameModelImpl implements GameModel {
     @Override
     public final void moveEntitiesNextPosition() {
         this.pacMan.nextPosition();
-        this.ghosts.forEach(x -> x.nextPosition());
+        this.ghosts.forEach(x -> x.nextPosition(this.pacMan));
     }
 
     @Override
