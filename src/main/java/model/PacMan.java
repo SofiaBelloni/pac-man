@@ -25,8 +25,4 @@ public interface PacMan extends Entity {
    * Decreases the life of PacMan.
    */
   void kill();
-   /**
-   * Moves PacMan on next position.
-   */
-  void nextPosition();
 }
