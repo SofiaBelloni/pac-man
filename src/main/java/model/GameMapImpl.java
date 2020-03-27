@@ -58,12 +58,13 @@ public class GameMapImpl implements GameMap {
     }
 
     @Override
-    public final Set<Pair<Integer, Integer>> getFreePositions() {
-        Set<Pair<Integer, Integer>> free = new HashSet<>();
+    public final Set<Pair<Integer, Integer>> getNoWallsPositions() {
+        Set<Pair<Integer, Integer>> noWalls = new HashSet<>();
         this.gameMap.entrySet().stream()
         .filter(x -> x.getValue().equals(ImmobileEntities.FREE))
-        .forEach(x -> free.add(x.getKey()));
-        return free;
+        .forEach(x -> noWalls.add(x.getKey()));
+        noWalls.addAll(this.getPillsPositions());
+        return noWalls;
     }
 
     @Override
