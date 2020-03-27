@@ -6,14 +6,14 @@ import java.util.Set;
  * this class implements a generic Entity that can be moved.
  *
  */
-public abstract class MobileEntityAbstractImpl implements MobileEntity {
+public abstract class EntityAbstractImpl implements Entity {
 
     private Pair<Integer, Integer> position;
     private final Set<Pair<Integer, Integer>> noWalls;
     private final int xMapSize;
     private final int yMapSize;
 
-    public MobileEntityAbstractImpl(final int xMapSize, final int yMapSize, final Pair<Integer, Integer> startPosition, final Set<Pair<Integer, Integer>> noWalls) {
+    public EntityAbstractImpl(final int xMapSize, final int yMapSize, final Pair<Integer, Integer> startPosition, final Set<Pair<Integer, Integer>> noWalls) {
         this.position = startPosition;
         this.noWalls = noWalls;
         this.xMapSize = xMapSize;

@@ -1,6 +1,6 @@
 package model;
 
-public interface PacMan extends MobileEntity {
+public interface PacMan extends Entity {
   /**
    * Set the PacMan direction.
    * 
@@ -25,5 +25,8 @@ public interface PacMan extends MobileEntity {
    * Decreases the life of PacMan.
    */
   void kill();
-
+   /**
+   * Moves PacMan on next position.
+   */
+  void nextPosition();
 }

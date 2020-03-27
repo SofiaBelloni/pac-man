@@ -3,7 +3,7 @@ package model;
 import java.util.Optional;
 import java.util.Set;
 
-public class PacManImpl extends MobileEntityAbstractImpl implements PacMan {
+public class PacManImpl extends EntityAbstractImpl implements PacMan {
 
     private Directions currentDirection;
     private int lives;

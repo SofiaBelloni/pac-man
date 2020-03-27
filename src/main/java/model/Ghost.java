@@ -1,6 +1,6 @@
 package model;
 
-public interface Ghost extends MobileEntity {
+public interface Ghost extends Entity {
 
     boolean isEatable();
 
