@@ -2,7 +2,6 @@ package model;
 
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 public class GameModelImpl implements GameModel {

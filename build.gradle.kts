@@ -34,17 +34,10 @@ dependencies {
             implementation("org.openjfx:javafx-$module:13:$platform")
         }
     }
-    // JUnit API and testing engine
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.2")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.5.2")
+    // JUnit 4
     implementation("junit:junit:4.13")
-    //FXGL
+    // FXGL
     implementation("com.github.almasb:fxgl:11.8")
-}
-
-tasks.withType<Test> {
-    // Enables JUnit 5 Jupiter module
-    useJUnitPlatform()
 }
 
 application {
