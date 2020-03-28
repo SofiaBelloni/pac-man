@@ -142,72 +142,85 @@ public abstract class GhostAbstractImpl implements Ghost {
         }
         return true;
     }
-    protected void findPath(Pair<Integer,Integer> position,Pair<Integer,Integer> targetPosition, Directions virtualDir) {  
-        if(map.get(position)>=min) {
-            return;
+    protected void findPath(Pair<Integer,Integer> position,Pair<Integer,Integer> targetPosition, Directions virtualDir) {
+        Set<Pair<Integer, Integer>> adj;
+        boolean found=false;
+        int i=0;
+        map.put(position, i++);
+        setAdj(position);
+        if (up.getY()<=MAX && !setWall.contains(up) && !dir.equals(Directions.DOWN)) {
+            map.put(up, i);
         }
-        if (position.equals(targetPosition)) {
-            min=map.get(position);
-            return;
+        if (down.getY()>=0 && !setWall.contains(down) && !dir.equals(Directions.UP)) {
+            map.put(down, i);
         }
-        if (position.equals(currentPosition)) {
-            map.put(position, 0);
+        if (right.getX()<=MAX && !setWall.contains(right) && !dir.equals(Directions.LEFT)) {
+            map.put(right, i);
         }
-        Pair<Integer, Integer> up = new Pair<>(position.getX(), position.getY() + 1);
-        Pair<Integer, Integer> down = new Pair<>(position.getX(), position.getY() - 1);
-        Pair<Integer, Integer> left = new Pair<>(position.getX() - 1, position.getY());
-        Pair<Integer, Integer> right = new Pair<>(position.getX() + 1, position.getY());
-        if ( !virtualDir.equals(Directions.DOWN) && !setWall.contains(up) && up.getY() <= MAX && map.get(position) + 1 < map.get(up)) {
-            map.put(up, map.get(position) + 1);
-            findPath(up, targetPosition, Directions.UP);
+        if (left.getX()>=0 && !setWall.contains(left) && !dir.equals(Directions.RIGHT)) {
+            map.put(left, i);
         }
-        if ( !virtualDir.equals(Directions.LEFT) && !setWall.contains(right) && right.getX() <= MAX && map.get(position) + 1 < map.get(right)) {
-            map.put(right, map.get(position) + 1);
-            findPath(right, targetPosition, Directions.RIGHT);
+        if (map.get(targetPosition)<900) {
+            found=true;
         }
-        if ( !virtualDir.equals(Directions.UP) && !setWall.contains(down) && down.getY() >= 0 && map.get(position) + 1 < map.get(down)) {
-            map.put(down, map.get(position) + 1);
-            findPath(down, targetPosition,Directions.DOWN);
-        }
-        if ( !virtualDir.equals(Directions.RIGHT) && !setWall.contains(left) && left.getX() >= 0 && map.get(position) + 1 < map.get(left)) {
-            map.put(left, map.get(position) + 1);
-            findPath(left, targetPosition,Directions.LEFT);
+        while (!found) {
+            for (Pair<Integer, Integer> p : map.keySet()) {
+                if (map.get(p).equals(i)) {
+                    setAdj(p);
+                    if (((up.getY()<=MAX && !setWall.contains(up) && i < map.get(up)))) {
+                        map.put(up, i + 1);
+                    }
+                    if (((right.getX()<=MAX && !setWall.contains(right) && i < map.get(right)))) {
+                        map.put(right, i + 1);
+                    } 
+                    if (((left.getX()>=0 && !setWall.contains(left) && i < map.get(left)))) {
+                        map.put(left, i + 1);
+                    } 
+                    if (((down.getY()>=0 && !setWall.contains(down) && i < map.get(down)))) {
+                        map.put(down, i + 1);
+                    }
+                    if (map.get(targetPosition)<900) {
+                        found=true;
+                    }
+                }
+            }
+            i++;
         }
     }
+    
+    
+  
     protected void move(Pair<Integer, Integer> appo) {
-            setAdj(appo);
-            if (map.get(appo) == 1) {
-                if (currentPosition.equals(up)) {
-                    dir=Directions.DOWN;
-                }
-                if (currentPosition.equals(down)) {
-                    dir=Directions.UP;
-                }
-                if (currentPosition.equals(left)) {
-                    dir=Directions.RIGHT;
-                }
-                if (currentPosition.equals(right)) {
-                    dir=Directions.LEFT;
-                }
-                currentPosition = appo;
-                return;
-            }
-            if (!setWall.contains(up) && up.getY() <= MAX && map.get(up) == map.get(appo) - 1) {
-                move(up);
-                return;
-            }
-            if (!setWall.contains(down) && down.getY() >= 0 && map.get(down) == map.get(appo) - 1) {
-                move(down);
-                return;
-            }
-            if (!setWall.contains(left) && left.getX() >= 0 && map.get(left) == map.get(appo) - 1) {
-                move(left);
-                return;
-            }
-            if (!setWall.contains(right) && right.getX() <= MAX && map.get(right) == map.get(appo) - 1) {
-                move(right);
-                return;
-            }
+        Pair<Integer, Integer> x=appo;
+        int i= map.get(x);
+        while (i > 1) {
+            setAdj(x);
+            if (up.getY()<=MAX && !setWall.contains(up) && map.get(up).equals(i-1)) {
+                x = up;
+                i = map.get(x);
+            } else if (right.getX()<=MAX && !setWall.contains(right) && map.get(right).equals(i-1)) {
+                x = right;
+                i = map.get(x);
+            } else if (down.getY()>=0 && !setWall.contains(down) && map.get(down).equals(i-1)) {
+                x = down;
+                i = map.get(x);
+            } else if (left.getY()>=0 && !setWall.contains(left) && map.get(left).equals(i-1)) {
+                x = left;
+                i = map.get(x);
+            } 
+        }
+        setAdj(x);
+        if (currentPosition.equals(up)) {
+            dir=Directions.DOWN;
+        } else if (currentPosition.equals(right)) {
+            dir=Directions.LEFT;
+        } else if (currentPosition.equals(down)) {
+            dir=Directions.UP;
+        } else {
+            dir=Directions.RIGHT;
+        }
+        currentPosition=x;
+        
         }
 
     @Override
