@@ -1,12 +1,16 @@
 package model;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 public class Blinky extends GhostAbstractImpl {
-    public Blinky(final Map<Pair<Integer, Integer>, Integer> map, final Set<Pair<Integer, Integer>> setWall) {
-        super(map, setWall);
-        super.target = new Pair<>(MAX, MAX);
+    
+    public Blinky(Set<Pair<Integer, Integer>> setWall, Integer xMap, Integer yMap) {
+        super(setWall, xMap, yMap);
+        super.target=new Pair<>(xMap, yMap);
+        super.c = new BraveBlinkyBehaviour(setWall, xMap, yMap);
+        super.initialPosition = new Pair<>(7,6);
     }
 
     public Pair<Integer,Integer> targetPosition(PacMan pacMan){
@@ -16,17 +20,21 @@ public class Blinky extends GhostAbstractImpl {
 
     public int nextPosition(PacMan pacMan) {
         if (isEatable()) {
-            runAway();
+            f.runAway(currentPosition, dir);
+            currentPosition = f.getNewPosition();
+            dir = f.getNewDirection();
         } else {
-            super.min=100000;
-             for (Pair<Integer, Integer> p: map.keySet()) {
-                 map.put(p, 10000);
-             }
                if (isRelaxed) {
-                   isRelaxed = relax();
+                    c.relax(currentPosition, target, dir); 
+                    currentPosition = c.getNewPosition();
+                    dir = c.getNewDirection();
+                    if (currentPosition.equals(target)) {
+                        isRelaxed = false;
+                    }
                } else {
-                   findPath(currentPosition, targetPosition(pacMan), super.dir);
-                   move(targetPosition(pacMan));
+                  c.chase(currentPosition, pacMan, dir, Optional.empty());
+                  currentPosition = c.getNewPosition();
+                  dir = c.getNewDirection();
                }
         }
         if (currentPosition.equals(pacMan.getPosition())) {
@@ -36,5 +44,4 @@ public class Blinky extends GhostAbstractImpl {
         }
 
     }
-
 }
