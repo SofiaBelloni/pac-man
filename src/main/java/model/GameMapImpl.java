@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public class GameMapImpl implements GameMap {
+public final class GameMapImpl implements GameMap {
     private final Map<Pair<Integer, Integer>, ImmobileEntities> gameMap;
     private final int xMapSize;
     private final int yMapSize;
@@ -54,6 +54,10 @@ public class GameMapImpl implements GameMap {
         }
         
         public final GameMapImpl build() {
+            if (this.ghostsHouse.isEmpty() || this.pills.isEmpty() || this.walls.isEmpty()
+                    || this.xMapSize.isEmpty() || this.yMapSize.isEmpty()) {
+                throw new IllegalStateException();
+            }
             return new GameMapImpl(this.xMapSize.get(), this.yMapSize.get(),
                     this.walls.get(), this.pills.get(), this.ghostsHouse.get());
         }

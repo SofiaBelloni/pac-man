@@ -16,6 +16,12 @@ public class TestGameMapBuilding {
     private static final int XMAPSIZE = 40;
     private static final int YMAPSIZE = 40;
     
+    @Test(expected = IllegalStateException.class)
+    public void testBuilderNoFields() {
+        @SuppressWarnings("unused")
+        final GameMap gameMap = new GameMapImpl.Builder(XMAPSIZE, XMAPSIZE).build();
+    }
+    
     @Test
     public void builderNotEmpty() {
         Set<Pair<Integer, Integer>> walls = new HashSet<>();
