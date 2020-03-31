@@ -6,26 +6,26 @@ import java.util.Set;
 
 public class GameModelImpl implements GameModel {
 
-    private static final int XMAPSIZE = 40;
+    private static final int X_MAP_SIZE = 40;
 
-    private static final int YMAPSIZE = 40;
+    private static final int Y_MAP_SIZE = 40;
 
-    private static final int PACMANLIVES = 3;
+    private static final int PAC_MAN_LIVES = 3;
 
     private final Set<Ghost> ghosts;
     private final PacMan pacMan;
-    private final GameMap maze;
+    private final GameMap gameMap;
     private int scores;
     private int levelNumber;
     private int levelTime;
 
     public GameModelImpl() {
-        this.maze = new GameMapImpl(20, 40, null, null, null);
+        this.gameMap = new GameMapImpl.Builder(X_MAP_SIZE, Y_MAP_SIZE).build();
         this.ghosts = new HashSet<>();
         this.pacMan = new PacManImpl.Builder()
                             .currentDirection(Directions.LEFT)
-                            .mapSize(XMAPSIZE, YMAPSIZE)
-                            .lives(PACMANLIVES)
+                            .mapSize(X_MAP_SIZE, Y_MAP_SIZE)
+                            .lives(PAC_MAN_LIVES)
                             .noWalls(null)
                             .startPosition(null)
                             .build();
@@ -74,12 +74,12 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final Set<Pair<Integer, Integer>> getWallsPositions() {
-        return this.maze.getWallsPositions();
+        return this.gameMap.getWallsPositions();
     }
 
     @Override
     public final Set<Pair<Integer, Integer>> getPillsPositions() {
-        return this.maze.getPillsPositions();
+        return this.gameMap.getPillsPositions();
     }
 
     @Override
