@@ -7,10 +7,14 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * This class is used to manage the map of the game, with walls pills etc.
+ * This class is used to manage the map of the game, with walls pills, etc.
  *
  */
 public final class GameMapImpl implements GameMap {
+    /**
+     * This field defines the score of each pill.
+     */
+    public static final int PILL_POINTS = 100;
     private final Map<Pair<Integer, Integer>, ImmobileEntities> gameMap;
     private final int xMapSize;
     private final int yMapSize;
@@ -44,21 +48,25 @@ public final class GameMapImpl implements GameMap {
             this.xMapSize = Optional.of(xMapSize);
             this.yMapSize = Optional.of(yMapSize);
         }
+
         @Override
         public final Builder walls(final Set<Pair<Integer, Integer>> walls) {
             this.walls = Optional.of(walls);
             return this;
         }
+
         @Override
         public final Builder pills(final Set<Pair<Integer, Integer>> pills) {
             this.pills = Optional.of(pills);
             return this;
         }
+
         @Override
         public final Builder ghostsHouse(final Set<Pair<Integer, Integer>> ghostsHouse) {
             this.ghostsHouse = Optional.of(ghostsHouse);
             return this;
         }
+
         @Override
         public final GameMapImpl build() {
             if (this.ghostsHouse.isEmpty() || this.pills.isEmpty() || this.walls.isEmpty()
