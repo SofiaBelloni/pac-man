@@ -6,7 +6,7 @@ public class GameLoop implements Runnable {
     
     private static double FPS = 60.0;
     private static final double TIME_BETWEEN_UPDATES = 1000.0 / FPS;
-    
+
     private Thread thread;
     private boolean running = false;
     private boolean paused = false;

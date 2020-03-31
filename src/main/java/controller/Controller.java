@@ -5,6 +5,7 @@ package controller;
  * Its purpose is to accept input and converts it to commands for the model or view.
  */
 public interface Controller {
+
     /**
      * Starts a new game session.
      **/
