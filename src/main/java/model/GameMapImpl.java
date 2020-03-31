@@ -3,6 +3,7 @@ package model;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 public class GameMapImpl implements GameMap {
@@ -10,7 +11,7 @@ public class GameMapImpl implements GameMap {
     private final int xMapSize;
     private final int yMapSize;
 
-    public GameMapImpl(final int xMapSize, final int yMapSize, final Set<Pair<Integer, Integer>> walls,
+    private GameMapImpl(final int xMapSize, final int yMapSize, final Set<Pair<Integer, Integer>> walls,
             final Set<Pair<Integer, Integer>> pills, final Set<Pair<Integer, Integer>> ghostsHouse) {
         this.xMapSize = xMapSize;
         this.yMapSize = yMapSize;
@@ -18,11 +19,43 @@ public class GameMapImpl implements GameMap {
         walls.forEach(x -> this.gameMap.put(x, ImmobileEntities.WALL));
         pills.forEach(x -> this.gameMap.put(x, ImmobileEntities.PILL));
         ghostsHouse.forEach(x -> this.gameMap.put(x, ImmobileEntities.GHOSTS_HOUSE));
-        
         for (int i = 0; i < xMapSize; i++) {
             for (int j = 0; j < yMapSize; j++) {
                 this.gameMap.putIfAbsent(new Pair<Integer, Integer>(i, j), ImmobileEntities.FREE);
             }
+        }
+    }
+    
+    public static class Builder {
+        private Optional<Integer> xMapSize = Optional.empty();
+        private Optional<Integer> yMapSize = Optional.empty();
+        private Optional<Set<Pair<Integer, Integer>>> pills = Optional.empty();
+        private Optional<Set<Pair<Integer, Integer>>> walls = Optional.empty();
+        private Optional<Set<Pair<Integer, Integer>>> ghostsHouse = Optional.empty();
+        
+        public Builder(final int xMapSize, final int yMapSize) {
+            this.xMapSize = Optional.of(xMapSize);
+            this.yMapSize = Optional.of(yMapSize);
+        }
+        
+        public final Builder walls(final Set<Pair<Integer, Integer>> walls) {
+            this.walls = Optional.of(walls);
+            return this;
+        }
+        
+        public final Builder pills(final Set<Pair<Integer, Integer>> pills) {
+            this.pills = Optional.of(pills);
+            return this;
+        }
+        
+        public final Builder ghostsHouse(final Set<Pair<Integer, Integer>> ghostsHouse) {
+            this.ghostsHouse = Optional.of(ghostsHouse);
+            return this;
+        }
+        
+        public final GameMapImpl build() {
+            return new GameMapImpl(this.xMapSize.get(), this.yMapSize.get(),
+                    this.walls.get(), this.pills.get(), this.ghostsHouse.get());
         }
     }
 
