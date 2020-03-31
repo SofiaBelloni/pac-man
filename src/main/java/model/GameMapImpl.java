@@ -6,6 +6,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * This class is used to manage the map of the game, with walls pills etc.
+ *
+ */
 public final class GameMapImpl implements GameMap {
     private final Map<Pair<Integer, Integer>, ImmobileEntities> gameMap;
     private final int xMapSize;
@@ -25,34 +29,37 @@ public final class GameMapImpl implements GameMap {
             }
         }
     }
-    
-    public static class Builder {
+    /**
+     * This class uses builder pattern to build GameMapImpl objects.
+     *
+     */
+    public static class Builder implements GameMapBuilder {
         private Optional<Integer> xMapSize = Optional.empty();
         private Optional<Integer> yMapSize = Optional.empty();
         private Optional<Set<Pair<Integer, Integer>>> pills = Optional.empty();
         private Optional<Set<Pair<Integer, Integer>>> walls = Optional.empty();
         private Optional<Set<Pair<Integer, Integer>>> ghostsHouse = Optional.empty();
-        
+
         public Builder(final int xMapSize, final int yMapSize) {
             this.xMapSize = Optional.of(xMapSize);
             this.yMapSize = Optional.of(yMapSize);
         }
-        
+        @Override
         public final Builder walls(final Set<Pair<Integer, Integer>> walls) {
             this.walls = Optional.of(walls);
             return this;
         }
-        
+        @Override
         public final Builder pills(final Set<Pair<Integer, Integer>> pills) {
             this.pills = Optional.of(pills);
             return this;
         }
-        
+        @Override
         public final Builder ghostsHouse(final Set<Pair<Integer, Integer>> ghostsHouse) {
             this.ghostsHouse = Optional.of(ghostsHouse);
             return this;
         }
-        
+        @Override
         public final GameMapImpl build() {
             if (this.ghostsHouse.isEmpty() || this.pills.isEmpty() || this.walls.isEmpty()
                     || this.xMapSize.isEmpty() || this.yMapSize.isEmpty()) {
@@ -64,12 +71,12 @@ public final class GameMapImpl implements GameMap {
     }
 
     @Override
-    public final void removePill(final Pair<Integer, Integer> position) {
+    public void removePill(final Pair<Integer, Integer> position) {
         this.gameMap.put(position, ImmobileEntities.FREE);
     }
 
     @Override
-    public final Set<Pair<Integer, Integer>> getWallsPositions() {
+    public Set<Pair<Integer, Integer>> getWallsPositions() {
         Set<Pair<Integer, Integer>> walls = new HashSet<>();
         this.gameMap.entrySet().stream()
         .filter(x -> x.getValue().equals(ImmobileEntities.WALL))
@@ -78,7 +85,7 @@ public final class GameMapImpl implements GameMap {
     }
 
     @Override
-    public final Set<Pair<Integer, Integer>> getPillsPositions() {
+    public Set<Pair<Integer, Integer>> getPillsPositions() {
         Set<Pair<Integer, Integer>> pills = new HashSet<>();
         this.gameMap.entrySet().stream()
         .filter(x -> x.getValue().equals(ImmobileEntities.PILL))
@@ -87,7 +94,7 @@ public final class GameMapImpl implements GameMap {
     }
 
     @Override
-    public final Set<Pair<Integer, Integer>> getGhostHousePosition() {
+    public Set<Pair<Integer, Integer>> getGhostHousePosition() {
         Set<Pair<Integer, Integer>> ghostHouse = new HashSet<>();
         this.gameMap.entrySet().stream()
         .filter(x -> x.getValue().equals(ImmobileEntities.GHOSTS_HOUSE))
@@ -96,7 +103,7 @@ public final class GameMapImpl implements GameMap {
     }
 
     @Override
-    public final Set<Pair<Integer, Integer>> getNoWallsPositions() {
+    public Set<Pair<Integer, Integer>> getNoWallsPositions() {
         Set<Pair<Integer, Integer>> noWalls = new HashSet<>();
         this.gameMap.entrySet().stream()
         .filter(x -> x.getValue().equals(ImmobileEntities.FREE))
@@ -106,12 +113,12 @@ public final class GameMapImpl implements GameMap {
     }
 
     @Override
-    public final int getxMapSize() {
+    public int getxMapSize() {
         return this.xMapSize;
     }
 
     @Override
-    public final int getyMapSize() {
+    public int getyMapSize() {
         return this.yMapSize;
     }
 
