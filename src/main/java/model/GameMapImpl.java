@@ -18,6 +18,7 @@ public class GameMapImpl implements GameMap {
         walls.forEach(x -> this.gameMap.put(x, ImmobileEntities.WALL));
         pills.forEach(x -> this.gameMap.put(x, ImmobileEntities.PILL));
         ghostsHouse.forEach(x -> this.gameMap.put(x, ImmobileEntities.GHOSTS_HOUSE));
+        
         for (int i = 0; i < xMapSize; i++) {
             for (int j = 0; j < yMapSize; j++) {
                 this.gameMap.putIfAbsent(new Pair<Integer, Integer>(i, j), ImmobileEntities.FREE);
