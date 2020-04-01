@@ -6,21 +6,22 @@ import java.util.Optional;
 import java.util.Set;
 
 public abstract class BraveAbstractBehaviour implements BraveBehaviour {
-    
-    private Pair<Integer, Integer> newPosition;
-    private Directions newDirection;
-    boolean isPathFound;
+
+    private boolean isPathFound;
     private int i;
     private int j;
     private final Set<Pair<Integer, Integer>> setWall;
     private final Map<Pair<Integer, Integer>, Integer> map;
     protected final int xMap;
     protected final int yMap;
+    protected Directions currentDirection;
+    protected Pair<Integer, Integer> currentPosition;
+    protected Pair<Integer, Integer> relaxTarget;
     protected Pair<Integer, Integer> up;
     protected Pair<Integer, Integer> down;
     protected Pair<Integer, Integer> left;
     protected Pair<Integer, Integer> right;
-    
+
     public BraveAbstractBehaviour(final Set<Pair<Integer, Integer>> setWall, int xMap, int yMap) {
         this.map = new HashMap<>();
         this.setWall = setWall;
@@ -28,8 +29,9 @@ public abstract class BraveAbstractBehaviour implements BraveBehaviour {
         this.yMap = yMap;
         this.j = 0;
         this.isPathFound = false;
+        this.currentDirection = Directions.UP;
     }
-    
+
     protected void setAdj(Pair<Integer, Integer> position) {
         up = new Pair<>(position.getX(), position.getY() + 1);
         down = new Pair<>(position.getX(), position.getY() - 1);
