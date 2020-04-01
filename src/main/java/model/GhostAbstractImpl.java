@@ -1,62 +1,54 @@
 package model;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 
 public abstract class GhostAbstractImpl implements Ghost {
-    protected int xMap;
-    protected int yMap;
-    protected final Set<Pair<Integer, Integer>> setWall;
+   
     private boolean eatable;
-    protected Pair<Integer, Integer> target;
-    protected Pair<Integer, Integer> currentPosition;
+    private boolean isRelaxed;
+    protected BraveBehaviour myBehaviour;
     protected Pair<Integer, Integer> initialPosition;
-    protected Directions dir;
-    protected boolean isRelaxed;
-    protected FrightenedBehaviour f; 
-    protected BraveBehaviour c;
+    protected Pair<Integer, Integer> relaxTarget;
 
-    public GhostAbstractImpl(final Set<Pair<Integer, Integer>> setWall, Integer xMap, Integer yMap) {
-        this.setWall = setWall;
-        this.xMap = xMap;
-        this.yMap = yMap;
-        eatable = false;
-        currentPosition = new Pair<>(7,6);
-        dir = Directions.UP;
-        isRelaxed = true;
-        f = new FrightenedBehaviourImpl(setWall, xMap, yMap);
+    public GhostAbstractImpl() {
+        this.eatable = false;
+        this.isRelaxed = true;
     }
     
-
-    public Pair<Integer, Integer> getPosition() {
-        return currentPosition;
+    public void nextPosition(PacMan pacMan) {
+        if (this.eatable) {
+            this.myBehaviour.runAway();
+        } else {
+            if (this.isRelaxed) {
+                this.myBehaviour.relax();
+                if (this.myBehaviour.getPosition().equals(this.relaxTarget)) {
+                    this.isRelaxed = false;
+                }
+            } else {
+                this.myBehaviour.chase(pacMan, Optional.empty());
+            }
+        }
     }
     
-
-    @Override
     public boolean isEatable() {
         return this.eatable;
     }  
     
-    @Override
     public void returnHome() {
-        this.currentPosition = this.initialPosition;
+        this.myBehaviour.setPosition(this.initialPosition);
+    }
+
+    public Pair<Integer, Integer> getPosition() {
+        return this.myBehaviour.getPosition();
     }
     
-    @Override
     public void setEatable(boolean eatable) {
         this.eatable = eatable;
-        if (eatable) {
-            if (dir.equals(Directions.UP)) {
-                dir = Directions.DOWN;
-            } else if (dir.equals(Directions.RIGHT)) {
-                dir = Directions.LEFT;
-            } else if (dir.equals(Directions.DOWN)) {
-                dir = Directions.UP;
-            } else {
-                dir = Directions.RIGHT;
-            }
+        if (this.eatable) {
+            this.myBehaviour.turnAround(this.myBehaviour.getDirection());
         }
     }
 }
