@@ -4,14 +4,13 @@ import java.util.Set;
 
 public class BraveBlinkyBehaviour extends BraveAbstractBehaviour {
 
-	public BraveBlinkyBehaviour(Set<Pair<Integer, Integer>> setWall, int xMap, int yMap) {
-		super(setWall, xMap, yMap);
-	}
-	
-	public void chase(Pair<Integer, Integer> currentPosition, PacMan pacMan, Directions dir, Optional<Pair<Integer, Integer>> blinkyPosition) {
-			super.findPath(currentPosition, pacMan.getPosition(), dir);
-			super.move(currentPosition, pacMan.getPosition(), 1);
-	}
+    public BraveBlinkyBehaviour(Set<Pair<Integer, Integer>> setWall, int xMap, int yMap, Pair<Integer, Integer> relaxTarget) {
+        super(setWall, xMap, yMap);
+        this.relaxTarget = relaxTarget;
+    }
 
-
+    public void chase(PacMan pacMan, Optional<Pair<Integer, Integer>> blinkyPosition) {
+        this.findPath(pacMan.getPosition());
+        this.move(pacMan.getPosition(), 1);
+    }
 }
