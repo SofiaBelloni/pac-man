@@ -30,7 +30,6 @@ public class ControllerImpl implements Controller {
     @Override
     public void pauseGame() {
         // TODO Auto-generated method stub
-
     }
 
     @Override

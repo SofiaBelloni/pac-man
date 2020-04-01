@@ -23,5 +23,4 @@ public interface Controller {
      * Saves the player and his score.
      **/
     void savePlayer(int score);
-
 }

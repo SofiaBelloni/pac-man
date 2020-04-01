@@ -75,6 +75,7 @@ public class GameLoop implements Runnable {
 
     private void render() {
       //TODO: Render game
+
     }
 
     private void update(final double delta) {
