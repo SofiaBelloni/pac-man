@@ -1,12 +1,40 @@
 package model;
 
-public interface Ghost extends Entity {
-
-    boolean isEatable();
-    
-    int nextPosition(PacMan pacMan);
-    
-    void setEatable(boolean eatable);
-    
+/**
+ * The Interface Ghost.
+ */
+public interface Ghost extends MobileEntity {
+    /**
+     * Creates the Ghost.
+     */
+    void create();
+    /**
+     * Next position.
+     *
+     * @param pacMan
+     */
+    void nextPosition(PacMan pacMan);
+    /**
+     * Makes the Ghost return home.
+     */
     void returnHome();
+    /**
+     * Sets the eatable.
+     *
+     * @param eatable the new eatable
+     */
+    void setEatable(boolean eatable);
+    /**
+     * Gets the position.
+     *
+     * @return the position
+     */
+    Pair<Integer, Integer> getPosition();
+    /**
+     * Checks if is eatable.
+     *
+     * @return true, if is eatable
+     */
+    boolean isEatable();
+
 }
