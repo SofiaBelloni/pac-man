@@ -19,7 +19,7 @@ public class GhostFactoryImpl implements GhostFactory {
         return new GhostAbstractImpl() {        
             public void create() {
                 this.relaxTarget = new Pair<>(xMap,yMap);
-                this.myBehaviour = new BraveBlinkyBehaviour(setWall, xMap, yMap, this.relaxTarget);
+                this.myBehaviour = new BlinkyBehaviour(setWall, xMap, yMap, this.relaxTarget);
                 this.initialPosition = new Pair<>(7,6);
                 this.myBehaviour.setPosition(this.initialPosition);
             }
@@ -31,7 +31,7 @@ public class GhostFactoryImpl implements GhostFactory {
         return new GhostAbstractImpl() {        
             public void create() {
                 this.relaxTarget = new Pair<>(0,yMap);
-                this.myBehaviour = new BravePinkyBehaviour(setWall, xMap, yMap, this.relaxTarget);
+                this.myBehaviour = new PinkyBehaviour(setWall, xMap, yMap, this.relaxTarget);
                 this.initialPosition = new Pair<>(7,6);
                 this.myBehaviour.setPosition(this.initialPosition);
             }
@@ -43,7 +43,7 @@ public class GhostFactoryImpl implements GhostFactory {
         return new GhostAbstractImpl() {
             public void create() {
                 this.relaxTarget = new Pair<>(xMap,0);
-                this.myBehaviour = new BraveInkyBehaviour(setWall, xMap, yMap, this.relaxTarget);
+                this.myBehaviour = new InkyBehaviour(setWall, xMap, yMap, this.relaxTarget);
                 this.initialPosition = new Pair<>(7,6);
                 this.myBehaviour.setPosition(this.initialPosition);
             }
@@ -55,7 +55,7 @@ public class GhostFactoryImpl implements GhostFactory {
         return new GhostAbstractImpl() {
             public void create() {
                 this.relaxTarget = new Pair<>(0,0);
-                this.myBehaviour = new BraveClydeBehaviour(setWall, xMap, yMap, this.relaxTarget);
+                this.myBehaviour = new ClydeBehaviour(setWall, xMap, yMap, this.relaxTarget);
                 this.initialPosition = new Pair<>(7,6);
                 this.myBehaviour.setPosition(this.initialPosition);
             }

@@ -2,12 +2,12 @@ package model;
 import java.util.Optional;
 import java.util.Set;
 
-public class BravePinkyBehaviour extends BraveAbstractBehaviour {
+public class PinkyBehaviour extends GhostAbstractBehaviour {
 	
 	private Pair<Integer, Integer> chaseTarget;
 	private final Set<Pair<Integer, Integer>> setWall;
 
-	public BravePinkyBehaviour(Set<Pair<Integer, Integer>> setWall, int xMap, int yMap, Pair<Integer, Integer> relaxTarget) {
+	public PinkyBehaviour(Set<Pair<Integer, Integer>> setWall, int xMap, int yMap, Pair<Integer, Integer> relaxTarget) {
 		super(setWall, xMap, yMap);
 		this.setWall = setWall;
 		this.relaxTarget = relaxTarget;

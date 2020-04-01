@@ -5,7 +5,7 @@ import java.util.Optional;
 /**
  * The Interface BraveBehaviour.
  */
-public interface BraveBehaviour {
+public interface GhostBehaviour {
     /**
      * RunAway algorithm. 
      * When the ghost are eatable, they move in a random way.

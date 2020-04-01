@@ -9,7 +9,7 @@ public abstract class GhostAbstractImpl implements Ghost {
    
     private boolean eatable;
     private boolean isRelaxed;
-    protected BraveBehaviour myBehaviour;
+    protected GhostBehaviour myBehaviour;
     protected Pair<Integer, Integer> initialPosition;
     protected Pair<Integer, Integer> relaxTarget;
 

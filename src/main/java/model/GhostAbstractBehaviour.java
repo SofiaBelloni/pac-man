@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-public abstract class BraveAbstractBehaviour implements BraveBehaviour {
+public abstract class GhostAbstractBehaviour implements GhostBehaviour {
 
     private boolean isPathFound;
     private int i;
@@ -24,7 +24,7 @@ public abstract class BraveAbstractBehaviour implements BraveBehaviour {
     protected Pair<Integer, Integer> left;
     protected Pair<Integer, Integer> right;
 
-    public BraveAbstractBehaviour(final Set<Pair<Integer, Integer>> setWall, int xMap, int yMap) {
+    public GhostAbstractBehaviour(final Set<Pair<Integer, Integer>> setWall, int xMap, int yMap) {
         this.map = new HashMap<>();
         this.setWall = setWall;
         this.xMap = xMap;
