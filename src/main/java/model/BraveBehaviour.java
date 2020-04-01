@@ -2,13 +2,51 @@ package model;
 
 import java.util.Optional;
 
+/**
+ * The Interface BraveBehaviour.
+ */
 public interface BraveBehaviour {
+    /**
+     * RunAway algorithm. 
+     * When the ghost are eatable, they move in a random way.
+     */
+    void runAway();
+    /**
+     * Chase algorithm.
+     * When ghosts reach the corner, they start chasing PacMan
+     * @param pacMan
+     * @param blinkyPosition the blinky position
+     */
+    void chase(PacMan pacMan, Optional<Pair<Integer, Integer>> blinkyPosition);
+    /**
+     * Relax algorithm.
+     * When ghosts are created, they reach the respective corner of the map.
+     */
+    void relax();
 
-    void chase(Pair<Integer, Integer> currentPosition, PacMan pacMan, Directions dir, Optional<Pair<Integer, Integer>> blinkyPosition);
+    /**
+     * Gets the position.
+     *
+     * @return the position
+     */
+    Pair<Integer, Integer> getPosition();
 
-    void relax(Pair<Integer, Integer> currentPosition, Pair<Integer, Integer> targetPosition, Directions dir);
-
-    Directions getNewDirection();
-
-    Pair<Integer, Integer> getNewPosition();
+    /**
+     * Sets the position.
+     *
+     * @param initialPosition the initial position
+     */
+    void setPosition(Pair<Integer, Integer> initialPosition);
+    
+    /**
+     * Makes ghost turn around because they are eatable.
+     * 
+     * @param dir the direction
+     * @return the opposite direction
+     */
+    Directions turnAround(Directions dir);
+    /**
+     * Gets the direction
+     */
+    Directions getDirection();
 }
