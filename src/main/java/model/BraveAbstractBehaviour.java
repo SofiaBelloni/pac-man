@@ -1,8 +1,10 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 
 public abstract class BraveAbstractBehaviour implements BraveBehaviour {
@@ -39,114 +41,140 @@ public abstract class BraveAbstractBehaviour implements BraveBehaviour {
         right = new Pair<>(position.getX() + 1, position.getY());
     }
 
-    @Override
-    public void chase(Pair<Integer, Integer> currentPosition, PacMan pacMan, Directions dir,
-            Optional<Pair<Integer, Integer>> blinkyPosition) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void relax(Pair<Integer, Integer> currentPosition, Pair<Integer, Integer> targetPosition, Directions dir) {
-        if (!isPathFound) {
-            findPath(currentPosition, targetPosition, dir);
-        }
-        j++;
-        move(currentPosition, targetPosition, j);
-    }
-
-    @Override
-    public Directions getNewDirection() {
-        return newDirection;
-    }
-    
-    public Pair<Integer, Integer> getNewPosition() {
-        return newPosition;
-    }
-    
-    protected void findPath(Pair<Integer, Integer> currentPosition, Pair<Integer, Integer> targetPosition, Directions dir) {
-        this.isPathFound = false;
-        i = 0;
-        for (int k = 0; k <= xMap; k++) {
-            for (int j = 0; j <= yMap; j++) {
-                map.put(new Pair<>(k,j), 10000);
-            }
-        }
-        map.put(currentPosition, i++);
-        setAdj(currentPosition);
-        if (up.getY()<=yMap && !setWall.contains(up) && !dir.equals(Directions.DOWN)) {
-            map.put(up, i);
-        }
-        if (down.getY()>=0 && !setWall.contains(down) && !dir.equals(Directions.UP)) {
-            map.put(down, i);
-        }
-        if (right.getX()<=xMap && !setWall.contains(right) && !dir.equals(Directions.LEFT)) {
-            map.put(right, i);
-        }
-        if (left.getX()>=0 && !setWall.contains(left) && !dir.equals(Directions.RIGHT)) {
-            map.put(left, i);
-        }
-        if (map.get(targetPosition)<9000) {
-            isPathFound=true;
-        }
-        while (!isPathFound) {
-            for (Pair<Integer, Integer> p : map.keySet()) {
-                if (map.get(p).equals(i)) {
-                    setAdj(p);
-                    if (((up.getY()<=yMap && !setWall.contains(up) && i < map.get(up)))) {
-                        map.put(up, i + 1);
-                        
-                    }
-                    if (((right.getX()<=xMap && !setWall.contains(right) && i < map.get(right)))) {
-                        map.put(right, i + 1);
-                        
-                    } 
-                    if (((left.getX()>=0 && !setWall.contains(left) && i < map.get(left)))) {
-                        map.put(left, i + 1);
-                        
-                    } 
-                    if (((down.getY()>=0 && !setWall.contains(down) && i < map.get(down)))) {
-                        map.put(down, i + 1);
-                        
-                    }
-                    if (map.get(targetPosition)<900) {
-                        isPathFound=true;
+    public void runAway() {
+        Pair<Integer, Integer> oldPosition = this.currentPosition;
+        this.setAdj(this.currentPosition);
+        Map<Directions, Pair<Integer, Integer>> map = new HashMap<>();
+        map.put(Directions.UP, this.up);
+        map.put(Directions.RIGHT, this.right);
+        map.put(Directions.DOWN, this.down);
+        map.put(Directions.LEFT, this.left);
+        Map<Directions, Pair<Integer, Integer>> map2;
+        while (this.currentPosition.equals(oldPosition)) {
+            for (Directions dir : map.keySet()) {
+                if (this.currentDirection.equals(dir)) {
+                    map2 = new HashMap<>(map);
+                    map2.remove(this.turnAround(dir));
+                    List<Directions> list = new ArrayList<>(map2.keySet());
+                    Random r = new Random();
+                    Directions randomDir = list.get(r.nextInt(3));
+                    if (!this.setWall.contains(map2.get(randomDir))) {
+                        this.currentPosition = map2.get(randomDir);
+                        this.currentDirection = randomDir;
                     }
                 }
             }
-            i++;
         }
     }
-    
-    protected void move(Pair<Integer, Integer> currentPosition, Pair<Integer, Integer> targetPosition, int counter) {
-        newPosition = targetPosition;
-        int i= map.get(newPosition);
-        while (i > counter) {
-            setAdj(newPosition);
-            if (up.getY()<=yMap && !setWall.contains(up) && map.get(up).equals(i-1)) {
-                newPosition = up;
-                i = map.get(newPosition);
-            } else if (right.getX()<=xMap && !setWall.contains(right) && map.get(right).equals(i-1)) {
-                newPosition = right;
-                i = map.get(newPosition);
-            } else if (down.getY()>=0 && !setWall.contains(down) && map.get(down).equals(i-1)) {
-                newPosition = down;
-                i = map.get(newPosition);
-            } else if (left.getY()>=0 && !setWall.contains(left) && map.get(left).equals(i-1)) {
-                newPosition = left;
-                i = map.get(newPosition);
+
+    public void relax() {
+        if (!this.isPathFound) {
+            this.findPath(this.relaxTarget);
+        }
+        this.j++;
+        this.move(this.relaxTarget, this.j);
+    }
+
+    protected void findPath(Pair<Integer, Integer> targetPosition) {
+        this.isPathFound = false;
+        this.i = 0;
+        for (int k = 0; k <= this.xMap; k++) {
+            for (int j = 0; j <= this.yMap; j++) {
+                this.map.put(new Pair<>(k, j), 10000);
+            }
+        }
+        this.map.put(this.currentPosition, this.i++);
+        this.setAdj(this.currentPosition);
+        if (!this.setWall.contains(this.up) && !this.currentDirection.equals(Directions.DOWN)) {
+            this.map.put(this.up, this.i);
+        }
+        if (!this.setWall.contains(this.down) && !this.currentDirection.equals(Directions.UP)) {
+            this.map.put(this.down, this.i);
+        }
+        if (!this.setWall.contains(this.right) && !this.currentDirection.equals(Directions.LEFT)) {
+            this.map.put(this.right, this.i);
+        }
+        if (!this.setWall.contains(this.left) && !this.currentDirection.equals(Directions.RIGHT)) {
+            this.map.put(this.left, this.i);
+        }
+        if (this.map.get(targetPosition) < 9000) {
+            this.isPathFound = true;
+        }
+        while (!this.isPathFound) {
+            for (Pair<Integer, Integer> p : this.map.keySet()) {
+                if (this.map.get(p).equals(this.i)) {
+                    this.setAdj(p);
+                    if (((!this.setWall.contains(this.up) && this.i < this.map.get(this.up)))) {
+                        this.map.put(this.up, this.i + 1);
+                    }
+                    if (((!this.setWall.contains(this.right) && this.i < this.map.get(this.right)))) {
+                        this.map.put(this.right, this.i + 1);
+                    } 
+                    if (((!this.setWall.contains(this.left) && this.i < this.map.get(this.left)))) {
+                        this.map.put(this.left, this.i + 1);
+                    } 
+                    if (((!this.setWall.contains(this.down) && this.i < this.map.get(this.down)))) {
+                        this.map.put(this.down, this.i + 1);
+                    }
+                    if (this.map.get(targetPosition) < 900) {
+                        this.isPathFound = true;
+                    }
+                }
+            }
+            this.i++;
+        }
+    }
+
+    protected void move(Pair<Integer, Integer> targetPosition, int counter) {
+        Pair<Integer, Integer> lastPosition = this.currentPosition;
+        this.currentPosition = targetPosition;
+        int distance = this.map.get(this.currentPosition);
+        while (distance > counter) {
+            setAdj(this.currentPosition);
+            if (!this.setWall.contains(this.up) && this.map.get(this.up).equals(distance - 1)) {
+                this.currentPosition = this.up;
+            } else if (!this.setWall.contains(this.right) && this.map.get(this.right).equals(distance - 1)) {
+                this.currentPosition = this.right;
+            } else if (!this.setWall.contains(this.down) && this.map.get(this.down).equals(distance - 1)) {
+                this.currentPosition = this.down;
+            } else if (!this.setWall.contains(this.left) && this.map.get(this.left).equals(distance - 1)) {
+                this.currentPosition = this.left;
             } 
+            distance = this.map.get(this.currentPosition);
         }
-        setAdj(newPosition);
-        if (currentPosition.equals(up)) {
-            newDirection=Directions.DOWN;
-        } else if (currentPosition.equals(right)) {
-            newDirection=Directions.LEFT;
-        } else if (currentPosition.equals(down)) {
-            newDirection=Directions.UP;
+        this.setAdj(this.currentPosition);
+        if (lastPosition.equals(this.up)) {
+            this.currentDirection = Directions.DOWN;
+        } else if (lastPosition.equals(this.right)) {
+            this.currentDirection = Directions.LEFT;
+        } else if (lastPosition.equals(this.down)) {
+            this.currentDirection = Directions.UP;
         } else {
-            newDirection=Directions.RIGHT;
+            this.currentDirection = Directions.RIGHT;
         }
     }
-    
+
+    public Pair<Integer, Integer> getPosition() {
+        return this.currentPosition;
+    }
+
+    public void setPosition(Pair<Integer, Integer> initialPosition) {
+        this.currentPosition = initialPosition;
+    }
+
+    public Directions getDirection() {
+        return this.currentDirection;
+    }
+
+    public Directions turnAround(Directions dir) {
+        if (dir.equals(Directions.UP)) {
+            return Directions.DOWN;
+        } else if (dir.equals(Directions.RIGHT)) {
+            return Directions.LEFT;
+        } else if (dir.equals(Directions.DOWN)) {
+            return Directions.UP;
+        } else {
+            return Directions.RIGHT;
+        }
+    }
 }
