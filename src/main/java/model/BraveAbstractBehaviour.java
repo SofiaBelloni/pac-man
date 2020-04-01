@@ -146,5 +146,5 @@ public abstract class BraveAbstractBehaviour implements BraveBehaviour {
             newDirection=Directions.RIGHT;
         }
     }
-
+    
 }
