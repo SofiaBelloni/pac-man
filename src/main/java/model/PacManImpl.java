@@ -3,14 +3,18 @@ package model;
 import java.util.Optional;
 import java.util.Set;
 
-public class PacManImpl extends EntityAbstractImpl implements PacMan {
+public final class PacManImpl extends EntityAbstractImpl implements PacMan {
 
     private Directions currentDirection;
     private int lives;
+    private PairImpl<Integer, Integer> position;
+    private final Set<PairImpl<Integer, Integer>> noWalls;
 
     private PacManImpl(final int xMapSize, final int yMapSize, final PairImpl<Integer, Integer> startPosition,
             final int lives, final Set<PairImpl<Integer, Integer>> noWalls, final Directions currentDirection) {
-        super(xMapSize, yMapSize, startPosition, noWalls);
+        super(xMapSize, yMapSize);
+        this.noWalls = noWalls;
+        this.position = startPosition;
         this.currentDirection = currentDirection;
         this.lives = lives;
     }
@@ -114,7 +118,7 @@ public class PacManImpl extends EntityAbstractImpl implements PacMan {
             }
     }
 
-    private Pair<Integer, Integer> calculateNextPosition() {
+    private PairImpl<Integer, Integer> calculateNextPosition() {
         int x = 0;
         int y = 0;
         switch (this.currentDirection) {
@@ -131,7 +135,6 @@ public class PacManImpl extends EntityAbstractImpl implements PacMan {
             x = 1;
             break;
         default:
-            //bisogna gestirlo in qualche modo (forse con un log)
             break;
         }
         return new PairImpl<Integer, Integer>(this.getPosition().getX() + x, this.getPosition().getY() + y);
@@ -155,6 +158,28 @@ public class PacManImpl extends EntityAbstractImpl implements PacMan {
     @Override
     public void kill() {
         this.lives = this.lives - 1;
+    }
+
+    @Override
+    public PairImpl<Integer, Integer> getPosition() {
+        return this.position;
+    }
+
+    /**
+     * Set the position of PacMan.
+     * 
+     * @param position the position of PacMan
+     */
+    private void setPosition(final PairImpl<Integer, Integer> position) {
+        this.position = position;
+    }
+
+    /**
+     * 
+     * @return a set containing the positions where PacMan can go.
+     */
+    private Set<PairImpl<Integer, Integer>> getNoWalls() {
+        return this.noWalls;
     }
 
 }
