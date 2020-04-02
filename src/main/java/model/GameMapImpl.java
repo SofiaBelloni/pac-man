@@ -14,13 +14,17 @@ public final class GameMapImpl implements GameMap {
     /**
      * This field defines the score of each pill.
      */
-    public static final int PILL_POINTS = 100;
+    private final int pillScore;
     private final Map<PairImpl<Integer, Integer>, ImmobileEntities> gameMap;
     private final int xMapSize;
     private final int yMapSize;
 
-    private GameMapImpl(final int xMapSize, final int yMapSize, final Set<PairImpl<Integer, Integer>> walls,
-            final Set<PairImpl<Integer, Integer>> pills, final Set<PairImpl<Integer, Integer>> ghostsHouse) {
+    private GameMapImpl(final int xMapSize, final int yMapSize,
+            final Set<PairImpl<Integer, Integer>> walls,
+            final Set<PairImpl<Integer, Integer>> pills,
+            final Set<PairImpl<Integer, Integer>> ghostsHouse,
+            final int pillPoints) {
+        this.pillScore = pillPoints;
         this.xMapSize = xMapSize;
         this.yMapSize = yMapSize;
         this.gameMap = new HashMap<>();
@@ -38,15 +42,24 @@ public final class GameMapImpl implements GameMap {
      *
      */
     public static class Builder implements GameMapBuilder {
-        private final int xMapSize;
-        private final int yMapSize;
+        private Optional<Integer> xMapSize = Optional.empty();
+        private Optional<Integer> yMapSize = Optional.empty();
+        private Optional<Integer> pillScore = Optional.empty();
         private Optional<Set<PairImpl<Integer, Integer>>> pills = Optional.empty();
         private Optional<Set<PairImpl<Integer, Integer>>> walls = Optional.empty();
         private Optional<Set<PairImpl<Integer, Integer>>> ghostsHouse = Optional.empty();
 
-        public Builder(final int xMapSize, final int yMapSize) {
-            this.xMapSize = xMapSize;
-            this.yMapSize = yMapSize;
+        @Override
+        public final Builder mapSize(final int xMapSize, final int yMapSize) {
+            this.xMapSize = Optional.of(xMapSize);
+            this.yMapSize = Optional.of(yMapSize);
+            return this;
+        }
+        
+        @Override
+        public final Builder pillScore(final int pillScore) {
+            this.pillScore = Optional.of(pillScore);
+            return this;
         }
 
         @Override
@@ -68,12 +81,18 @@ public final class GameMapImpl implements GameMap {
         }
 
         @Override
+        public final Builder standardMap() {
+            return this;
+        }
+
+        @Override
         public final GameMapImpl build() {
-            if (this.ghostsHouse.isEmpty() || this.pills.isEmpty() || this.walls.isEmpty()) {
+            if (this.ghostsHouse.isEmpty() || this.pills.isEmpty() || this.walls.isEmpty()
+                    || this.xMapSize.isEmpty() || this.yMapSize.isEmpty() || this.pillScore.isEmpty()) {
                 throw new IllegalStateException();
             }
-            return new GameMapImpl(this.xMapSize, this.yMapSize,
-                    this.walls.get(), this.pills.get(), this.ghostsHouse.get());
+            return new GameMapImpl(this.xMapSize.get(), this.yMapSize.get(),
+                    this.walls.get(), this.pills.get(), this.ghostsHouse.get(), this.pillScore.get());
         }
     }
 
@@ -127,6 +146,11 @@ public final class GameMapImpl implements GameMap {
     @Override
     public int getyMapSize() {
         return this.yMapSize;
+    }
+    
+    @Override
+    public int getPillScore() {
+        return this.pillScore;
     }
 
     enum ImmobileEntities {

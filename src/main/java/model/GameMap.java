@@ -35,4 +35,8 @@ public interface GameMap {
      * @return the map size on y axis
      */
     int getyMapSize();
+    /**
+     * @return score value of one pill
+     */
+    int getPillScore();
 }
