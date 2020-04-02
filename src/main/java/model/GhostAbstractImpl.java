@@ -10,8 +10,8 @@ public abstract class GhostAbstractImpl implements Ghost {
     private boolean eatable;
     private boolean isRelaxed;
     protected GhostBehaviour myBehaviour;
-    protected Pair<Integer, Integer> initialPosition;
-    protected Pair<Integer, Integer> relaxTarget;
+    protected PairImpl<Integer, Integer> initialPosition;
+    protected PairImpl<Integer, Integer> relaxTarget;
 
     public GhostAbstractImpl() {
         this.eatable = false;
@@ -41,7 +41,7 @@ public abstract class GhostAbstractImpl implements Ghost {
         this.myBehaviour.setPosition(this.initialPosition);
     }
 
-    public Pair<Integer, Integer> getPosition() {
+    public PairImpl<Integer, Integer> getPosition() {
         return this.myBehaviour.getPosition();
     }
     

@@ -17,7 +17,7 @@ public interface GhostBehaviour {
      * @param pacMan
      * @param blinkyPosition the blinky position
      */
-    void chase(PacMan pacMan, Optional<Pair<Integer, Integer>> blinkyPosition);
+    void chase(PacMan pacMan, Optional<PairImpl<Integer, Integer>> blinkyPosition);
     /**
      * Relax algorithm.
      * When ghosts are created, they reach the respective corner of the map.
@@ -29,14 +29,14 @@ public interface GhostBehaviour {
      *
      * @return the position
      */
-    Pair<Integer, Integer> getPosition();
+    PairImpl<Integer, Integer> getPosition();
 
     /**
      * Sets the position.
      *
      * @param initialPosition the initial position
      */
-    void setPosition(Pair<Integer, Integer> initialPosition);
+    void setPosition(PairImpl<Integer, Integer> initialPosition);
     
     /**
      * Makes ghost turn around because they are eatable.

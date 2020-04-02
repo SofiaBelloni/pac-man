@@ -10,23 +10,23 @@ public interface GameMap {
     /**
      * @param position of the pill to remove
      */
-    void removePill(Pair<Integer, Integer> position);
+    void removePill(PairImpl<Integer, Integer> position);
     /**
      * @return the walls positions
      */
-    Set<Pair<Integer, Integer>> getWallsPositions();
+    Set<PairImpl<Integer, Integer>> getWallsPositions();
     /**
      * @return the pills positions
      */
-    Set<Pair<Integer, Integer>> getPillsPositions();
+    Set<PairImpl<Integer, Integer>> getPillsPositions();
     /**
      * @return the ghost house position
      */
-    Set<Pair<Integer, Integer>> getGhostHousePosition();
+    Set<PairImpl<Integer, Integer>> getGhostHousePosition();
     /**
      * @return free positions (no wall, pill, or ghost house)
      */
-    Set<Pair<Integer, Integer>> getNoWallsPositions();
+    Set<PairImpl<Integer, Integer>> getNoWallsPositions();
     /**
      * @return the map size on x axis
      */

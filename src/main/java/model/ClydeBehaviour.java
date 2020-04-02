@@ -4,10 +4,10 @@ import java.util.Set;
 
 public class ClydeBehaviour extends GhostAbstractBehaviour {
 
-    private Pair<Integer, Integer> chaseTarget;
+    private PairImpl<Integer, Integer> chaseTarget;
     private static final int PACMANRADIUS = 7;
 
-    public ClydeBehaviour(Set<Pair<Integer, Integer>> setWall, int xMap, int yMap, Pair<Integer, Integer> relaxTarget) {
+    public ClydeBehaviour(Set<PairImpl<Integer, Integer>> setWall, int xMap, int yMap, PairImpl<Integer, Integer> relaxTarget) {
         super(setWall, xMap, yMap);
         this.relaxTarget = relaxTarget;
     }
@@ -22,7 +22,7 @@ public class ClydeBehaviour extends GhostAbstractBehaviour {
     }
     
     @Override
-    public void chase(PacMan pacMan, Optional<Pair<Integer, Integer>> blinkyPosition) {
+    public void chase(PacMan pacMan, Optional<PairImpl<Integer, Integer>> blinkyPosition) {
         this.targetPosition(pacMan);
         this.findPath(this.chaseTarget);
         this.move(this.chaseTarget, 1);

@@ -8,8 +8,8 @@ public class PacManImpl extends EntityAbstractImpl implements PacMan {
     private Directions currentDirection;
     private int lives;
 
-    private PacManImpl(final int xMapSize, final int yMapSize, final Pair<Integer, Integer> startPosition,
-            final int lives, final Set<Pair<Integer, Integer>> noWalls, final Directions currentDirection) {
+    private PacManImpl(final int xMapSize, final int yMapSize, final PairImpl<Integer, Integer> startPosition,
+            final int lives, final Set<PairImpl<Integer, Integer>> noWalls, final Directions currentDirection) {
         super(xMapSize, yMapSize, startPosition, noWalls);
         this.currentDirection = currentDirection;
         this.lives = lives;
@@ -18,9 +18,9 @@ public class PacManImpl extends EntityAbstractImpl implements PacMan {
     public static class Builder {
         private Optional<Integer> xMapSize = Optional.empty();
         private Optional<Integer> yMapSize = Optional.empty();
-        private Optional<Pair<Integer, Integer>> startPosition = Optional.empty();
+        private Optional<PairImpl<Integer, Integer>> startPosition = Optional.empty();
         private Optional<Integer> lives = Optional.empty();
-        private Optional<Set<Pair<Integer, Integer>>> noWalls = Optional.empty();
+        private Optional<Set<PairImpl<Integer, Integer>>> noWalls = Optional.empty();
         private Optional<Directions> currentDirection = Optional.empty();
 
         /**
@@ -49,7 +49,7 @@ public class PacManImpl extends EntityAbstractImpl implements PacMan {
          * @param startPosition a pair containing the x,y position 
          * @return this
          */
-        public Builder startPosition(final Pair<Integer, Integer> startPosition) {
+        public Builder startPosition(final PairImpl<Integer, Integer> startPosition) {
             this.startPosition = Optional.of(startPosition);
             return this;
         }
@@ -69,7 +69,7 @@ public class PacManImpl extends EntityAbstractImpl implements PacMan {
          * @param noWalls a set containing the coordinates where you can go
          * @return this
          */
-        public Builder noWalls(final Set<Pair<Integer, Integer>> noWalls) {
+        public Builder noWalls(final Set<PairImpl<Integer, Integer>> noWalls) {
             this.noWalls = Optional.of(noWalls);
             return this;
         }
@@ -108,7 +108,7 @@ public class PacManImpl extends EntityAbstractImpl implements PacMan {
      */
     @Override
     public void nextPosition() {
-        Pair<Integer, Integer> next = this.convertToToroidal(this.calculateNextPosition());
+        PairImpl<Integer, Integer> next = this.convertToToroidal(this.calculateNextPosition());
         if (this.getNoWalls().contains(next)) {
             this.setPosition(next);
             }
@@ -134,7 +134,7 @@ public class PacManImpl extends EntityAbstractImpl implements PacMan {
             //bisogna gestirlo in qualche modo (forse con un log)
             break;
         }
-        return new Pair<Integer, Integer>(this.getPosition().getX() + x, this.getPosition().getY() + y);
+        return new PairImpl<Integer, Integer>(this.getPosition().getX() + x, this.getPosition().getY() + y);
     }
 
     @Override

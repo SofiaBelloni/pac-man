@@ -12,19 +12,19 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
     private boolean isPathFound;
     private int i;
     private int j;
-    private final Set<Pair<Integer, Integer>> setWall;
-    private final Map<Pair<Integer, Integer>, Integer> map;
+    private final Set<PairImpl<Integer, Integer>> setWall;
+    private final Map<PairImpl<Integer, Integer>, Integer> map;
     protected final int xMap;
     protected final int yMap;
     protected Directions currentDirection;
-    protected Pair<Integer, Integer> currentPosition;
-    protected Pair<Integer, Integer> relaxTarget;
-    protected Pair<Integer, Integer> up;
-    protected Pair<Integer, Integer> down;
-    protected Pair<Integer, Integer> left;
-    protected Pair<Integer, Integer> right;
+    protected PairImpl<Integer, Integer> currentPosition;
+    protected PairImpl<Integer, Integer> relaxTarget;
+    protected PairImpl<Integer, Integer> up;
+    protected PairImpl<Integer, Integer> down;
+    protected PairImpl<Integer, Integer> left;
+    protected PairImpl<Integer, Integer> right;
 
-    public GhostAbstractBehaviour(final Set<Pair<Integer, Integer>> setWall, int xMap, int yMap) {
+    public GhostAbstractBehaviour(final Set<PairImpl<Integer, Integer>> setWall, int xMap, int yMap) {
         this.map = new HashMap<>();
         this.setWall = setWall;
         this.xMap = xMap;
@@ -35,21 +35,21 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
     }
 
     protected void setAdj(Pair<Integer, Integer> position) {
-        up = new Pair<>(position.getX(), position.getY() + 1);
-        down = new Pair<>(position.getX(), position.getY() - 1);
-        left = new Pair<>(position.getX() - 1, position.getY());
-        right = new Pair<>(position.getX() + 1, position.getY());
+        up = new PairImpl<>(position.getX(), position.getY() + 1);
+        down = new PairImpl<>(position.getX(), position.getY() - 1);
+        left = new PairImpl<>(position.getX() - 1, position.getY());
+        right = new PairImpl<>(position.getX() + 1, position.getY());
     }
 
     public void runAway() {
         Pair<Integer, Integer> oldPosition = this.currentPosition;
         this.setAdj(this.currentPosition);
-        Map<Directions, Pair<Integer, Integer>> map = new HashMap<>();
+        Map<Directions, PairImpl<Integer, Integer>> map = new HashMap<>();
         map.put(Directions.UP, this.up);
         map.put(Directions.RIGHT, this.right);
         map.put(Directions.DOWN, this.down);
         map.put(Directions.LEFT, this.left);
-        Map<Directions, Pair<Integer, Integer>> map2;
+        Map<Directions, PairImpl<Integer, Integer>> map2;
         while (this.currentPosition.equals(oldPosition)) {
             for (Directions dir : map.keySet()) {
                 if (this.currentDirection.equals(dir)) {
@@ -80,7 +80,7 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         this.i = 0;
         for (int k = 0; k <= this.xMap; k++) {
             for (int j = 0; j <= this.yMap; j++) {
-                this.map.put(new Pair<>(k, j), 10000);
+                this.map.put(new PairImpl<>(k, j), 10000);
             }
         }
         this.map.put(this.currentPosition, this.i++);
@@ -125,7 +125,7 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         }
     }
 
-    protected void move(Pair<Integer, Integer> targetPosition, int counter) {
+    protected void move(PairImpl<Integer, Integer> targetPosition, int counter) {
         Pair<Integer, Integer> lastPosition = this.currentPosition;
         this.currentPosition = targetPosition;
         int distance = this.map.get(this.currentPosition);
@@ -154,11 +154,11 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         }
     }
 
-    public Pair<Integer, Integer> getPosition() {
+    public PairImpl<Integer, Integer> getPosition() {
         return this.currentPosition;
     }
 
-    public void setPosition(Pair<Integer, Integer> initialPosition) {
+    public void setPosition(PairImpl<Integer, Integer> initialPosition) {
         this.currentPosition = initialPosition;
     }
 

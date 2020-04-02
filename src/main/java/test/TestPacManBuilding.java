@@ -8,7 +8,7 @@ import java.util.HashSet;
 import model.Directions;
 import model.PacMan;
 import model.PacManImpl;
-import model.Pair;
+import model.PairImpl;
 
 /**
  * JUnit test that creates objects.
@@ -31,11 +31,11 @@ public class TestPacManBuilding {
                                     .currentDirection(Directions.LEFT)
                                     .lives(3)
                                     .mapSize(XMAPSIZE, YMAPSIZE)
-                                    .noWalls(new HashSet<Pair<Integer, Integer>>())
-                                    .startPosition(new Pair<Integer, Integer>(0, 0))
+                                    .noWalls(new HashSet<PairImpl<Integer, Integer>>())
+                                    .startPosition(new PairImpl<Integer, Integer>(0, 0))
                                     .build();
         assertEquals(pacMan.getDirection(), Directions.LEFT);
-        assertEquals(pacMan.getPosition(), new Pair<Integer, Integer>(0, 0));
+        assertEquals(pacMan.getPosition(), new PairImpl<Integer, Integer>(0, 0));
     }
 
 }

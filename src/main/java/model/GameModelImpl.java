@@ -41,7 +41,7 @@ public class GameModelImpl implements GameModel {
     }
 
     @Override
-    public final Map<Ghosts, Set<Pair<Integer, Integer>>> getGhostsPositions() {
+    public final Map<Ghosts, Set<PairImpl<Integer, Integer>>> getGhostsPositions() {
         // TODO Auto-generated method stub
         return null;
     }
@@ -73,12 +73,12 @@ public class GameModelImpl implements GameModel {
     }
 
     @Override
-    public final Set<Pair<Integer, Integer>> getWallsPositions() {
+    public final Set<PairImpl<Integer, Integer>> getWallsPositions() {
         return this.gameMap.getWallsPositions();
     }
 
     @Override
-    public final Set<Pair<Integer, Integer>> getPillsPositions() {
+    public final Set<PairImpl<Integer, Integer>> getPillsPositions() {
         return this.gameMap.getPillsPositions();
     }
 

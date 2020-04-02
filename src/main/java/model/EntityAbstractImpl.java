@@ -8,12 +8,12 @@ import java.util.Set;
  */
 public abstract class EntityAbstractImpl implements Entity {
 
-    private Pair<Integer, Integer> position;
-    private final Set<Pair<Integer, Integer>> noWalls;
+    private PairImpl<Integer, Integer> position;
+    private final Set<PairImpl<Integer, Integer>> noWalls;
     private final int xMapSize;
     private final int yMapSize;
 
-    public EntityAbstractImpl(final int xMapSize, final int yMapSize, final Pair<Integer, Integer> startPosition, final Set<Pair<Integer, Integer>> noWalls) {
+    public EntityAbstractImpl(final int xMapSize, final int yMapSize, final PairImpl<Integer, Integer> startPosition, final Set<PairImpl<Integer, Integer>> noWalls) {
         this.position = startPosition;
         this.noWalls = noWalls;
         this.xMapSize = xMapSize;
@@ -21,14 +21,14 @@ public abstract class EntityAbstractImpl implements Entity {
     }
 
     @Override
-    public final Pair<Integer, Integer> getPosition() {
+    public final PairImpl<Integer, Integer> getPosition() {
         return this.position;
     }
-    protected final void setPosition(final Pair<Integer, Integer> position) {
+    protected final void setPosition(final PairImpl<Integer, Integer> position) {
         this.position = position;
     }
 
-    protected final Set<Pair<Integer, Integer>> getNoWalls() {
+    protected final Set<PairImpl<Integer, Integer>> getNoWalls() {
         return noWalls;
     }
 
@@ -40,7 +40,7 @@ public abstract class EntityAbstractImpl implements Entity {
         return yMapSize;
     }
 
-    protected Pair<Integer, Integer> convertToToroidal(final Pair<Integer, Integer> position) {
+    protected PairImpl<Integer, Integer> convertToToroidal(final Pair<Integer, Integer> position) {
         int newX = position.getX();
         int newY = position.getY();
         if (newX >= this.getxMapSize()) {
@@ -55,7 +55,7 @@ public abstract class EntityAbstractImpl implements Entity {
         if (newY < 0) {
             newY = this.getyMapSize() - 1;
         }
-        return new Pair<Integer, Integer>(newX, newY);
+        return new PairImpl<Integer, Integer>(newX, newY);
     }
 
 }

@@ -29,7 +29,7 @@ public interface Ghost extends Entity {
      *
      * @return the position
      */
-    Pair<Integer, Integer> getPosition();
+    PairImpl<Integer, Integer> getPosition();
     /**
      * Checks if is eatable.
      *

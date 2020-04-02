@@ -15,12 +15,12 @@ public final class GameMapImpl implements GameMap {
      * This field defines the score of each pill.
      */
     public static final int PILL_POINTS = 100;
-    private final Map<Pair<Integer, Integer>, ImmobileEntities> gameMap;
+    private final Map<PairImpl<Integer, Integer>, ImmobileEntities> gameMap;
     private final int xMapSize;
     private final int yMapSize;
 
-    private GameMapImpl(final int xMapSize, final int yMapSize, final Set<Pair<Integer, Integer>> walls,
-            final Set<Pair<Integer, Integer>> pills, final Set<Pair<Integer, Integer>> ghostsHouse) {
+    private GameMapImpl(final int xMapSize, final int yMapSize, final Set<PairImpl<Integer, Integer>> walls,
+            final Set<PairImpl<Integer, Integer>> pills, final Set<PairImpl<Integer, Integer>> ghostsHouse) {
         this.xMapSize = xMapSize;
         this.yMapSize = yMapSize;
         this.gameMap = new HashMap<>();
@@ -29,7 +29,7 @@ public final class GameMapImpl implements GameMap {
         ghostsHouse.forEach(x -> this.gameMap.put(x, ImmobileEntities.GHOSTS_HOUSE));
         for (int i = 0; i < xMapSize; i++) {
             for (int j = 0; j < yMapSize; j++) {
-                this.gameMap.putIfAbsent(new Pair<Integer, Integer>(i, j), ImmobileEntities.FREE);
+                this.gameMap.putIfAbsent(new PairImpl<Integer, Integer>(i, j), ImmobileEntities.FREE);
             }
         }
     }
@@ -40,9 +40,9 @@ public final class GameMapImpl implements GameMap {
     public static class Builder implements GameMapBuilder {
         private final int xMapSize;
         private final int yMapSize;
-        private Optional<Set<Pair<Integer, Integer>>> pills = Optional.empty();
-        private Optional<Set<Pair<Integer, Integer>>> walls = Optional.empty();
-        private Optional<Set<Pair<Integer, Integer>>> ghostsHouse = Optional.empty();
+        private Optional<Set<PairImpl<Integer, Integer>>> pills = Optional.empty();
+        private Optional<Set<PairImpl<Integer, Integer>>> walls = Optional.empty();
+        private Optional<Set<PairImpl<Integer, Integer>>> ghostsHouse = Optional.empty();
 
         public Builder(final int xMapSize, final int yMapSize) {
             this.xMapSize = xMapSize;
@@ -50,19 +50,19 @@ public final class GameMapImpl implements GameMap {
         }
 
         @Override
-        public final Builder walls(final Set<Pair<Integer, Integer>> walls) {
+        public final Builder walls(final Set<PairImpl<Integer, Integer>> walls) {
             this.walls = Optional.of(walls);
             return this;
         }
 
         @Override
-        public final Builder pills(final Set<Pair<Integer, Integer>> pills) {
+        public final Builder pills(final Set<PairImpl<Integer, Integer>> pills) {
             this.pills = Optional.of(pills);
             return this;
         }
 
         @Override
-        public final Builder ghostsHouse(final Set<Pair<Integer, Integer>> ghostsHouse) {
+        public final Builder ghostsHouse(final Set<PairImpl<Integer, Integer>> ghostsHouse) {
             this.ghostsHouse = Optional.of(ghostsHouse);
             return this;
         }
@@ -78,13 +78,13 @@ public final class GameMapImpl implements GameMap {
     }
 
     @Override
-    public void removePill(final Pair<Integer, Integer> position) {
+    public void removePill(final PairImpl<Integer, Integer> position) {
         this.gameMap.put(position, ImmobileEntities.FREE);
     }
 
     @Override
-    public Set<Pair<Integer, Integer>> getWallsPositions() {
-        final Set<Pair<Integer, Integer>> walls = new HashSet<>();
+    public Set<PairImpl<Integer, Integer>> getWallsPositions() {
+        final Set<PairImpl<Integer, Integer>> walls = new HashSet<>();
         this.gameMap.entrySet().stream()
         .filter(x -> x.getValue().equals(ImmobileEntities.WALL))
         .forEach(x -> walls.add(x.getKey()));
@@ -92,8 +92,8 @@ public final class GameMapImpl implements GameMap {
     }
 
     @Override
-    public Set<Pair<Integer, Integer>> getPillsPositions() {
-        final Set<Pair<Integer, Integer>> pills = new HashSet<>();
+    public Set<PairImpl<Integer, Integer>> getPillsPositions() {
+        final Set<PairImpl<Integer, Integer>> pills = new HashSet<>();
         this.gameMap.entrySet().stream()
         .filter(x -> x.getValue().equals(ImmobileEntities.PILL))
         .forEach(x -> pills.add(x.getKey()));
@@ -101,8 +101,8 @@ public final class GameMapImpl implements GameMap {
     }
 
     @Override
-    public Set<Pair<Integer, Integer>> getGhostHousePosition() {
-        final Set<Pair<Integer, Integer>> ghostHouse = new HashSet<>();
+    public Set<PairImpl<Integer, Integer>> getGhostHousePosition() {
+        final Set<PairImpl<Integer, Integer>> ghostHouse = new HashSet<>();
         this.gameMap.entrySet().stream()
         .filter(x -> x.getValue().equals(ImmobileEntities.GHOSTS_HOUSE))
         .forEach(x -> ghostHouse.add(x.getKey()));
@@ -110,8 +110,8 @@ public final class GameMapImpl implements GameMap {
     }
 
     @Override
-    public Set<Pair<Integer, Integer>> getNoWallsPositions() {
-        final Set<Pair<Integer, Integer>> noWalls = new HashSet<>();
+    public Set<PairImpl<Integer, Integer>> getNoWallsPositions() {
+        final Set<PairImpl<Integer, Integer>> noWalls = new HashSet<>();
         this.gameMap.entrySet().stream()
         .filter(x -> x.getValue().equals(ImmobileEntities.FREE))
         .forEach(x -> noWalls.add(x.getKey()));
