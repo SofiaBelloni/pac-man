@@ -11,6 +11,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     protected PairImpl<Integer, Integer> relaxTarget;
 
     public GhostAbstractImpl(int xMapSize, int yMapSize) {
+        super(yMapSize, yMapSize);
         this.eatable = false;
         this.isRelaxed = true;
     }
