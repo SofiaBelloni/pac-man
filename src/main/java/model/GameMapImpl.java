@@ -38,15 +38,15 @@ public final class GameMapImpl implements GameMap {
      *
      */
     public static class Builder implements GameMapBuilder {
-        private Optional<Integer> xMapSize = Optional.empty();
-        private Optional<Integer> yMapSize = Optional.empty();
+        private final int xMapSize;
+        private final int yMapSize;
         private Optional<Set<Pair<Integer, Integer>>> pills = Optional.empty();
         private Optional<Set<Pair<Integer, Integer>>> walls = Optional.empty();
         private Optional<Set<Pair<Integer, Integer>>> ghostsHouse = Optional.empty();
 
         public Builder(final int xMapSize, final int yMapSize) {
-            this.xMapSize = Optional.of(xMapSize);
-            this.yMapSize = Optional.of(yMapSize);
+            this.xMapSize = xMapSize;
+            this.yMapSize = yMapSize;
         }
 
         @Override
@@ -69,11 +69,10 @@ public final class GameMapImpl implements GameMap {
 
         @Override
         public final GameMapImpl build() {
-            if (this.ghostsHouse.isEmpty() || this.pills.isEmpty() || this.walls.isEmpty()
-                    || this.xMapSize.isEmpty() || this.yMapSize.isEmpty()) {
+            if (this.ghostsHouse.isEmpty() || this.pills.isEmpty() || this.walls.isEmpty()) {
                 throw new IllegalStateException();
             }
-            return new GameMapImpl(this.xMapSize.get(), this.yMapSize.get(),
+            return new GameMapImpl(this.xMapSize, this.yMapSize,
                     this.walls.get(), this.pills.get(), this.ghostsHouse.get());
         }
     }

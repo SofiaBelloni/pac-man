@@ -24,5 +24,5 @@ public interface GameMapBuilder {
      * @return a GameMapImpl object if all fields are not empty
      * @throws IllegalStateException if a field is empty
      */
-    GameMapImpl build() throws IllegalStateException;
+    GameMapImpl build();
 }
