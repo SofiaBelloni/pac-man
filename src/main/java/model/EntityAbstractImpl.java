@@ -1,7 +1,6 @@
 
 package model;
 
-import java.util.Set;
 
 /**
  * this class implements a generic Entity that can be moved.
@@ -9,29 +8,14 @@ import java.util.Set;
  */
 public abstract class EntityAbstractImpl implements Entity {
 
-    private PairImpl<Integer, Integer> position;
-    private final Set<PairImpl<Integer, Integer>> noWalls;
     private final int xMapSize;
     private final int yMapSize;
 
-    public EntityAbstractImpl(final int xMapSize, final int yMapSize, final PairImpl<Integer, Integer> startPosition, final Set<PairImpl<Integer, Integer>> noWalls) {
-        this.position = startPosition;
-        this.noWalls = noWalls;
+    public EntityAbstractImpl(final int xMapSize, final int yMapSize) {
         this.xMapSize = xMapSize;
         this.yMapSize = yMapSize;
     }
 
-    @Override
-    public final PairImpl<Integer, Integer> getPosition() {
-        return this.position;
-    }
-    protected final void setPosition(final PairImpl<Integer, Integer> position) {
-        this.position = position;
-    }
-
-    protected final Set<PairImpl<Integer, Integer>> getNoWalls() {
-        return noWalls;
-    }
 
     protected final int getxMapSize() {
         return xMapSize;
@@ -41,7 +25,7 @@ public abstract class EntityAbstractImpl implements Entity {
         return yMapSize;
     }
 
-    protected PairImpl<Integer, Integer> convertToToroidal(final Pair<Integer, Integer> position) {
+    protected final PairImpl<Integer, Integer> convertToToroidal(final PairImpl<Integer, Integer> position) {
         int newX = position.getX();
         int newY = position.getY();
         if (newX >= this.getxMapSize()) {
