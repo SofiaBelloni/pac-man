@@ -16,7 +16,7 @@ public class GhostFactoryImpl implements GhostFactory {
     
     @Override
     public Ghost blinky() { 
-        return new GhostAbstractImpl() {        
+        return new GhostAbstractImpl(xMap, yMap) {        
             public void create() {
                 this.relaxTarget = new PairImpl<>(xMap,yMap);
                 this.myBehaviour = new BlinkyBehaviour(setWall, xMap, yMap, this.relaxTarget);
@@ -28,7 +28,7 @@ public class GhostFactoryImpl implements GhostFactory {
 
     @Override
     public Ghost pinky() {
-        return new GhostAbstractImpl() {        
+        return new GhostAbstractImpl(xMap, yMap) {        
             public void create() {
                 this.relaxTarget = new PairImpl<>(0,yMap);
                 this.myBehaviour = new PinkyBehaviour(setWall, xMap, yMap, this.relaxTarget);
@@ -40,7 +40,7 @@ public class GhostFactoryImpl implements GhostFactory {
 
     @Override
     public Ghost inky(Ghost blinky) {
-        return new GhostAbstractImpl() {
+        return new GhostAbstractImpl(xMap, yMap) {        
             public void create() {
                 this.relaxTarget = new PairImpl<>(xMap,0);
                 this.myBehaviour = new InkyBehaviour(setWall, xMap, yMap, this.relaxTarget);
@@ -52,7 +52,7 @@ public class GhostFactoryImpl implements GhostFactory {
 
     @Override
     public Ghost clyde() {
-        return new GhostAbstractImpl() {
+        return new GhostAbstractImpl(xMap, yMap) {        
             public void create() {
                 this.relaxTarget = new PairImpl<>(0,0);
                 this.myBehaviour = new ClydeBehaviour(setWall, xMap, yMap, this.relaxTarget);

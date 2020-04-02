@@ -1,23 +1,20 @@
 package model;
 
-import java.util.Map;
 import java.util.Optional;
-import java.util.Random;
-import java.util.Set;
 
-public abstract class GhostAbstractImpl implements Ghost {
-   
+public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Ghost {
+
     private boolean eatable;
     private boolean isRelaxed;
     protected GhostBehaviour myBehaviour;
     protected PairImpl<Integer, Integer> initialPosition;
     protected PairImpl<Integer, Integer> relaxTarget;
 
-    public GhostAbstractImpl() {
+    public GhostAbstractImpl(int xMapSize, int yMapSize) {
         this.eatable = false;
         this.isRelaxed = true;
     }
-    
+
     public void nextPosition(PacMan pacMan) {
         if (this.eatable) {
             this.myBehaviour.runAway();
@@ -32,19 +29,19 @@ public abstract class GhostAbstractImpl implements Ghost {
             }
         }
     }
-    
+
     public boolean isEatable() {
         return this.eatable;
-    }  
-    
+    }
+
     public void returnHome() {
         this.myBehaviour.setPosition(this.initialPosition);
     }
 
     public PairImpl<Integer, Integer> getPosition() {
-        return this.myBehaviour.getPosition();
+        return this.convertToToroidal(this.myBehaviour.getPosition());
     }
-    
+
     public void setEatable(boolean eatable) {
         this.eatable = eatable;
         if (this.eatable) {
