@@ -137,24 +137,6 @@ public class PacManImpl extends EntityAbstractImpl implements PacMan {
         return new Pair<Integer, Integer>(this.getPosition().getX() + x, this.getPosition().getY() + y);
     }
 
-    private Pair<Integer, Integer> convertToToroidal(final Pair<Integer, Integer> position) {
-        int newX = position.getX();
-        int newY = position.getY();
-        if (newX >= this.getxMapSize()) {
-            newX = 0;
-        }
-        if (newY >= this.getyMapSize()) {
-            newY = 0;
-        }
-        if (newX < 0) {
-            newX = this.getxMapSize() - 1;
-        }
-        if (newY < 0) {
-            newY = this.getyMapSize() - 1;
-        }
-        return new Pair<Integer, Integer>(newX, newY);
-    }
-
     @Override
     public void setDirection(final Directions direction) {
         this.currentDirection = direction;

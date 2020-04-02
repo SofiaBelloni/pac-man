@@ -3,7 +3,7 @@ package model;
 /**
  * The Interface Ghost.
  */
-public interface Ghost extends MobileEntity {
+public interface Ghost extends Entity {
     /**
      * Creates the Ghost.
      */
