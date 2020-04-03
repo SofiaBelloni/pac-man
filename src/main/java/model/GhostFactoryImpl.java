@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Optional;
 import java.util.Set;
 
 
@@ -16,6 +17,7 @@ public class GhostFactoryImpl implements GhostFactory {
     public Ghost blinky() { 
         return new GhostAbstractImpl(this.xMap, this.yMap) {        
             public void create() {
+                this.name = Ghosts.BLINKY;
                 this.relaxTarget = new PairImpl<>(xMap - 1, yMap - 1);
                 this.myBehaviour = new BlinkyBehaviour(setWall, xMap, yMap, this.relaxTarget);
                 this.initialPosition = new PairImpl<>(7, 6);
@@ -28,6 +30,7 @@ public class GhostFactoryImpl implements GhostFactory {
     public Ghost pinky() {
         return new GhostAbstractImpl(this.xMap, this.yMap) {        
             public void create() {
+                this.name = Ghosts.PINKY;
                 this.relaxTarget = new PairImpl<>(0, yMap - 1);
                 this.myBehaviour = new PinkyBehaviour(setWall, xMap, yMap, this.relaxTarget);
                 this.initialPosition = new PairImpl<>(7, 6);
@@ -43,6 +46,8 @@ public class GhostFactoryImpl implements GhostFactory {
         }
         return new GhostAbstractImpl(this.xMap, this.yMap) {        
             public void create() {
+                this.name = Ghosts.INKY;
+                this.blinky = Optional.of(blink);
                 this.relaxTarget = new PairImpl<>(xMap - 1, 0);
                 this.myBehaviour = new InkyBehaviour(setWall, xMap, yMap, this.relaxTarget);
                 this.initialPosition = new PairImpl<>(7,6);
@@ -55,6 +60,7 @@ public class GhostFactoryImpl implements GhostFactory {
     public Ghost clyde() {
         return new GhostAbstractImpl(this.xMap, this.yMap) {        
             public void create() {
+                this.name = Ghosts.CLYDE;
                 this.relaxTarget = new PairImpl<>(0, 0);
                 this.myBehaviour = new ClydeBehaviour(setWall, xMap, yMap, this.relaxTarget);
                 this.initialPosition = new PairImpl<>(7, 6);

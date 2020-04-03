@@ -2,10 +2,13 @@ package model;
 
 import java.util.Optional;
 
+import javax.naming.OperationNotSupportedException;
+
 public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Ghost {
 
     private boolean eatable;
     private boolean isRelaxed;
+    private boolean isBlinkyDead;
     protected Ghosts name;
     protected GhostBehaviour myBehaviour;
     protected PairImpl<Integer, Integer> initialPosition;
@@ -16,6 +19,8 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         super(yMapSize, yMapSize);
         this.eatable = false;
         this.isRelaxed = true;
+        this.blinky = Optional.empty();
+        this.isBlinkyDead = false;
     }
 
     public void nextPosition(PacMan pacMan) {
@@ -58,6 +63,14 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     
     public Ghosts getName() {
         return this.name;
+    }
+    
+    public void blinkyIsDead() throws OperationNotSupportedException {
+        if (this.getName().equals(Ghosts.INKY)) {
+            this.isBlinkyDead = true;
+        } else {
+            throw new OperationNotSupportedException("This method is designed only for Inky");
+        }
     }
 }
 

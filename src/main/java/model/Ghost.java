@@ -1,5 +1,7 @@
 package model;
 
+import javax.naming.OperationNotSupportedException;
+
 /**
  * The Interface Ghost.
  */
@@ -42,5 +44,11 @@ public interface Ghost extends Entity {
      * @return true, if is eatable
      */
     boolean isEatable();
+    
+    /**
+     * Checks if blinky is dead.
+     *
+     */
+    void blinkyIsDead() throws OperationNotSupportedException;
 
 }

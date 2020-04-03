@@ -51,7 +51,7 @@ public class InkyBehaviour extends GhostAbstractBehaviour {
             this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), yMap - 1);
         }
         if (this.chaseTarget.getY() < 0) {
-            this.chaseTarget = new PairImpl<>(this.chaseTarget.getY(), 0);
+            this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), 0);
         }   
         if (this.setWall.contains(this.chaseTarget) || this.currentPosition.equals(this.chaseTarget)) {
             this.setAdj(this.chaseTarget);
@@ -69,7 +69,11 @@ public class InkyBehaviour extends GhostAbstractBehaviour {
 
     @Override
     public void chase(PacMan pacMan, Optional<PairImpl<Integer, Integer>> blinkyPosition) {
-        this.targetPosition(pacMan, blinkyPosition);
+        if (blinkyPosition.isEmpty()) {
+            this.chaseTarget = pacMan.getPosition();
+        } else {
+            this.targetPosition(pacMan, blinkyPosition);
+        }
         this.findPath(this.chaseTarget);
         this.move(this.chaseTarget, 1);
     }
