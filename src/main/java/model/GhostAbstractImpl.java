@@ -10,6 +10,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     protected GhostBehaviour myBehaviour;
     protected PairImpl<Integer, Integer> initialPosition;
     protected PairImpl<Integer, Integer> relaxTarget;
+    protected Optional<Ghost> blinky;
 
     public GhostAbstractImpl(int xMapSize, int yMapSize) {
         super(yMapSize, yMapSize);
@@ -27,7 +28,11 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
                     this.isRelaxed = false;
                 }
             } else {
-                this.myBehaviour.chase(pacMan, Optional.empty());
+                if (blinky.isEmpty()) {
+                    this.myBehaviour.chase(pacMan, Optional.empty());
+                } else {
+                    this.myBehaviour.chase(pacMan, Optional.of(blinky.get().getPosition()));
+                }
             }
         }
     }
