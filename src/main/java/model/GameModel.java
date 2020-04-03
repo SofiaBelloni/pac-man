@@ -16,15 +16,15 @@ public interface GameModel {
     /**
      * @return a Set containing all the ghosts positions.
      */
-    Map<Ghosts, Set<PairImpl<Integer, Integer>>> getGhostsPositions();
+    Map<Ghosts, Set<Pair<Integer, Integer>>> getGhostsPositions();
     /**
      * @return a Set containing the wall's positions;
      */
-    Set<PairImpl<Integer, Integer>> getWallsPositions();
+    Set<Pair<Integer, Integer>> getWallsPositions();
     /**
      * @return a Set containing the pill's positions;
      */
-    Set<PairImpl<Integer, Integer>> getPillsPositions();
+    Set<Pair<Integer, Integer>> getPillsPositions();
     /**
      * Moves each mobile entity to its next position.
      */
@@ -33,10 +33,6 @@ public interface GameModel {
      * Increments the level time.
      */
     void decLevelTime();
-    /**
-     * Increments the level number.
-     */
-    void nextLevel();
     /**
      * @return the level number
      */
