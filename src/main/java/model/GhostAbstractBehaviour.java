@@ -78,45 +78,48 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
     protected void findPath(Pair<Integer, Integer> targetPosition) {
         this.isPathFound = false;
         this.i = 0;
-        for (int k = 0; k <= this.xMap; k++) {
-            for (int j = 0; j <= this.yMap; j++) {
+        for (int k = 0; k < this.xMap; k++) {
+            for (int j = 0; j < this.yMap; j++) {
                 this.map.put(new PairImpl<>(k, j), 10000);
             }
         }
         this.map.put(this.currentPosition, this.i++);
         this.setAdj(this.currentPosition);
-        if (!this.setWall.contains(this.up) && !this.currentDirection.equals(Directions.DOWN)) {
+        if (this.up.getY() < yMap && !this.setWall.contains(this.up) && !this.currentDirection.equals(Directions.DOWN)) {
             this.map.put(this.up, this.i);
         }
-        if (!this.setWall.contains(this.down) && !this.currentDirection.equals(Directions.UP)) {
+        if (this.down.getY() >= 0 && !this.setWall.contains(this.down) && !this.currentDirection.equals(Directions.UP)) {
             this.map.put(this.down, this.i);
         }
-        if (!this.setWall.contains(this.right) && !this.currentDirection.equals(Directions.LEFT)) {
+        if (this.right.getX() < xMap && !this.setWall.contains(this.right) && !this.currentDirection.equals(Directions.LEFT)) {
             this.map.put(this.right, this.i);
         }
-        if (!this.setWall.contains(this.left) && !this.currentDirection.equals(Directions.RIGHT)) {
+        if (this.left.getX() >= 0 && !this.setWall.contains(this.left) && !this.currentDirection.equals(Directions.RIGHT)) {
             this.map.put(this.left, this.i);
         }
-        if (this.map.get(targetPosition) < 9000) {
+        if (this.map.get(targetPosition)<9000) {
             this.isPathFound = true;
         }
         while (!this.isPathFound) {
             for (Pair<Integer, Integer> p : this.map.keySet()) {
                 if (this.map.get(p).equals(this.i)) {
                     this.setAdj(p);
-                    if (((!this.setWall.contains(this.up) && this.i < this.map.get(this.up)))) {
+                    if (this.up.getY() < yMap && !this.setWall.contains(this.up) && this.i < this.map.get(this.up)) {
                         this.map.put(this.up, this.i + 1);
                     }
-                    if (((!this.setWall.contains(this.right) && this.i < this.map.get(this.right)))) {
+                    if (this.right.getX() < xMap && !this.setWall.contains(this.right) && this.i < this.map.get(this.right)) {
                         this.map.put(this.right, this.i + 1);
+                        
                     } 
-                    if (((!this.setWall.contains(this.left) && this.i < this.map.get(this.left)))) {
+                    if (this.left.getX() >= 0 && !this.setWall.contains(this.left) && this.i < this.map.get(this.left)) {
                         this.map.put(this.left, this.i + 1);
+                        
                     } 
-                    if (((!this.setWall.contains(this.down) && this.i < this.map.get(this.down)))) {
+                    if (this.down.getY() >= 0 && !this.setWall.contains(this.down) && this.i < this.map.get(this.down)) {
                         this.map.put(this.down, this.i + 1);
+                        
                     }
-                    if (this.map.get(targetPosition) < 900) {
+                    if (this.map.get(targetPosition) < 9000) {
                         this.isPathFound = true;
                     }
                 }
@@ -131,13 +134,13 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         int distance = this.map.get(this.currentPosition);
         while (distance > counter) {
             setAdj(this.currentPosition);
-            if (!this.setWall.contains(this.up) && this.map.get(this.up).equals(distance - 1)) {
+            if (this.up.getY() < yMap && !this.setWall.contains(this.up) && this.map.get(this.up).equals(distance - 1)) {
                 this.currentPosition = this.up;
-            } else if (!this.setWall.contains(this.right) && this.map.get(this.right).equals(distance - 1)) {
+            } else if (this.right.getX() < xMap && !this.setWall.contains(this.right) && this.map.get(this.right).equals(distance - 1)) {
                 this.currentPosition = this.right;
-            } else if (!this.setWall.contains(this.down) && this.map.get(this.down).equals(distance - 1)) {
+            } else if (this.down.getY() >= 0 && !this.setWall.contains(this.down) && this.map.get(this.down).equals(distance - 1)) {
                 this.currentPosition = this.down;
-            } else if (!this.setWall.contains(this.left) && this.map.get(this.left).equals(distance - 1)) {
+            } else if (this.left.getX() >= 0 && !this.setWall.contains(this.left) && this.map.get(this.left).equals(distance - 1)) {
                 this.currentPosition = this.left;
             } 
             distance = this.map.get(this.currentPosition);

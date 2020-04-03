@@ -16,7 +16,7 @@ public class GhostFactoryImpl implements GhostFactory {
     public Ghost blinky() { 
         return new GhostAbstractImpl(this.xMap, this.yMap) {        
             public void create() {
-                this.relaxTarget = new PairImpl<>(xMap, yMap);
+                this.relaxTarget = new PairImpl<>(xMap - 1, yMap - 1);
                 this.myBehaviour = new BlinkyBehaviour(setWall, xMap, yMap, this.relaxTarget);
                 this.initialPosition = new PairImpl<>(7, 6);
                 this.myBehaviour.setPosition(this.initialPosition);
@@ -28,7 +28,7 @@ public class GhostFactoryImpl implements GhostFactory {
     public Ghost pinky() {
         return new GhostAbstractImpl(this.xMap, this.yMap) {        
             public void create() {
-                this.relaxTarget = new PairImpl<>(0,yMap);
+                this.relaxTarget = new PairImpl<>(0, yMap - 1);
                 this.myBehaviour = new PinkyBehaviour(setWall, xMap, yMap, this.relaxTarget);
                 this.initialPosition = new PairImpl<>(7, 6);
                 this.myBehaviour.setPosition(this.initialPosition);
@@ -40,7 +40,7 @@ public class GhostFactoryImpl implements GhostFactory {
     public Ghost inky(Ghost blinky) {
         return new GhostAbstractImpl(this.xMap, this.yMap) {        
             public void create() {
-                this.relaxTarget = new PairImpl<>(xMap, 0);
+                this.relaxTarget = new PairImpl<>(xMap - 1, 0);
                 this.myBehaviour = new InkyBehaviour(setWall, xMap, yMap, this.relaxTarget);
                 this.initialPosition = new PairImpl<>(7,6);
                 this.myBehaviour.setPosition(this.initialPosition);

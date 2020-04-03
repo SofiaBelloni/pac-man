@@ -37,18 +37,18 @@ public class InkyBehaviour extends GhostAbstractBehaviour {
         if(blinkyPosition.get().getY() <= appo.getY()) {
             targetY=blinkyPosition.get().getY() + (Math.abs(appo.getY() - blinkyPosition.get().getY())*2);
         } else {
-            targetY=blinkyPosition.get().getY() - (Math.abs(appo.getY() - blinkyPosition.get().getY())*2);
+            targetY = blinkyPosition.get().getY() - (Math.abs(appo.getY() - blinkyPosition.get().getY())*2);
         }
         this.chaseTarget = new PairImpl<>(targetX, targetY);
         
-        if (this.chaseTarget.getX() > xMap) {
-            this.chaseTarget = new PairImpl<>(xMap, this.chaseTarget.getY());
+        if (this.chaseTarget.getX() >= xMap) {
+            this.chaseTarget = new PairImpl<>(xMap - 1, this.chaseTarget.getY());
         }
         if (this.chaseTarget.getX() < 0) {
             this.chaseTarget = new PairImpl<>(0, this.chaseTarget.getY());
         }
-        if (this.chaseTarget.getY() > yMap) {
-            this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), yMap);
+        if (this.chaseTarget.getY() >= yMap) {
+            this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), yMap - 1);
         }
         if (this.chaseTarget.getY() < 0) {
             this.chaseTarget = new PairImpl<>(this.chaseTarget.getY(), 0);

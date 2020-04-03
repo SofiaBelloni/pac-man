@@ -13,7 +13,7 @@ public class ClydeBehaviour extends GhostAbstractBehaviour {
     }
 
     private void targetPosition(PacMan pacMan){
-        if (this.currentPosition.getX( )> pacMan.getPosition().getX() - PACMANRADIUS && this.currentPosition.getX() < pacMan.getPosition().getX() + PACMANRADIUS 
+        if (this.currentPosition.getX() > pacMan.getPosition().getX() - PACMANRADIUS && this.currentPosition.getX() < pacMan.getPosition().getX() + PACMANRADIUS 
             && this.currentPosition.getY() > pacMan.getPosition().getY() - PACMANRADIUS && this.currentPosition.getY() < pacMan.getPosition().getY() + PACMANRADIUS) {
             this.chaseTarget = this.relaxTarget;
         } else {
