@@ -42,6 +42,7 @@ public final class GameMapImpl implements GameMap {
      *
      */
     public static class Builder implements GameMapBuilder {
+
         private Optional<Integer> xMapSize = Optional.empty();
         private Optional<Integer> yMapSize = Optional.empty();
         private Optional<Integer> pillScore = Optional.empty();
@@ -55,7 +56,7 @@ public final class GameMapImpl implements GameMap {
             this.yMapSize = Optional.of(yMapSize);
             return this;
         }
-        
+
         @Override
         public final Builder pillScore(final int pillScore) {
             this.pillScore = Optional.of(pillScore);
@@ -77,11 +78,6 @@ public final class GameMapImpl implements GameMap {
         @Override
         public final Builder ghostsHouse(final Set<PairImpl<Integer, Integer>> ghostsHouse) {
             this.ghostsHouse = Optional.of(ghostsHouse);
-            return this;
-        }
-
-        @Override
-        public final Builder standardMap() {
             return this;
         }
 
@@ -147,7 +143,7 @@ public final class GameMapImpl implements GameMap {
     public int getyMapSize() {
         return this.yMapSize;
     }
-    
+
     @Override
     public int getPillScore() {
         return this.pillScore;
