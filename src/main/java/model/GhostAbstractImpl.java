@@ -33,10 +33,10 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
                     this.isRelaxed = false;
                 }
             } else {
-                if (blinky.isEmpty() || this.isBlinkyDead) {
+                if (this.blinky.isEmpty() || this.isBlinkyDead) {
                     this.myBehaviour.chase(pacMan, Optional.empty());
                 } else {
-                    this.myBehaviour.chase(pacMan, Optional.of(blinky.get().getPosition()));
+                    this.myBehaviour.chase(pacMan, Optional.of(this.blinky.get().getPosition()));
                 }
             }
         }

@@ -177,19 +177,19 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
     }
 
     protected final int getxMapSize() {
-        return xMapSize;
+        return this.xMapSize;
     }
 
     protected final int getyMapSize() {
-        return yMapSize;
+        return this.yMapSize;
     }
 
     public final Directions getCurrentDirection() {
-        return currentDirection;
+        return this.currentDirection;
     }
 
     public final PairImpl<Integer, Integer> getCurrentPosition() {
-        return currentPosition;
+        return this.currentPosition;
     }
 
     public final void setCurrentPosition(final PairImpl<Integer, Integer> newPosition) {

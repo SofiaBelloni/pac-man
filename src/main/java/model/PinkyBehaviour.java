@@ -3,7 +3,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public class PinkyBehaviour extends GhostAbstractBehaviour {
-	
+
 	private PairImpl<Integer, Integer> chaseTarget;
 	private final Set<PairImpl<Integer, Integer>> setWall;
 
@@ -40,8 +40,8 @@ public class PinkyBehaviour extends GhostAbstractBehaviour {
 	    @Override
 	    public final void chase(final PacMan pacMan, final Optional<PairImpl<Integer, Integer>> blinkyPosition) {
 	        this.targetPosition(pacMan);
-	        super.findPath(chaseTarget);
-	        super.move(chaseTarget, 1);
+	        super.findPath(this.chaseTarget);
+	        super.move(this.chaseTarget, 1);
 	    }
 
 }
