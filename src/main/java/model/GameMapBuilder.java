@@ -32,11 +32,6 @@ public interface GameMapBuilder {
      */
     Builder pills(Set<PairImpl<Integer, Integer>> pills);
     /**
-     * @return this
-     * creates the original map of the Pac-Man video game
-     */
-    Builder standardMap();
-    /**
      * @return a GameMapImpl object if all fields are not empty
      */
     GameMapImpl build();
