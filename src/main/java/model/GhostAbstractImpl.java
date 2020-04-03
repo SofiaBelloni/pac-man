@@ -6,6 +6,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
 
     private boolean eatable;
     private boolean isRelaxed;
+    protected Ghosts name;
     protected GhostBehaviour myBehaviour;
     protected PairImpl<Integer, Integer> initialPosition;
     protected PairImpl<Integer, Integer> relaxTarget;
@@ -48,6 +49,10 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         if (this.eatable) {
             this.myBehaviour.turnAround(this.myBehaviour.getDirection());
         }
+    }
+    
+    public Ghosts getName() {
+        return this.name;
     }
 }
 

@@ -9,6 +9,12 @@ public interface Ghost extends Entity {
      */
     void create();
     /**
+     * Ghost name.
+     * 
+     * @return the name of the ghost
+     */
+    Ghosts getName();
+    /**
      * Next position.
      *
      * @param pacMan

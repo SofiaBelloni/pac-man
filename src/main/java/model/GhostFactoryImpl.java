@@ -37,7 +37,10 @@ public class GhostFactoryImpl implements GhostFactory {
     }
 
     @Override
-    public Ghost inky(Ghost blinky) {
+    public Ghost inky(Ghost blink) {
+        if (!blink.getName().equals(Ghosts.BLINKY)) {
+            throw new IllegalStateException("Insert Blinky");
+        }
         return new GhostAbstractImpl(this.xMap, this.yMap) {        
             public void create() {
                 this.relaxTarget = new PairImpl<>(xMap - 1, 0);
