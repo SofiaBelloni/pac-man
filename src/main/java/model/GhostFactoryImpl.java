@@ -6,65 +6,65 @@ import java.util.Set;
 
 public class GhostFactoryImpl implements GhostFactory {
     private final Set<PairImpl<Integer, Integer>> setWall;
-    private int xMap;
-    private int yMap;
+    private int xMapSize;
+    private int yMapSize;
 
     public GhostFactoryImpl(final Set<PairImpl<Integer, Integer>> setWall) {
         this.setWall = setWall;
     }
 
     @Override
-    public Ghost blinky() { 
-        return new GhostAbstractImpl(this.xMap, this.yMap) {        
+    public final Ghost blinky() { 
+        return new GhostAbstractImpl(this.xMapSize, this.yMapSize) {
             public void create() {
-                this.name = Ghosts.BLINKY;
-                this.relaxTarget = new PairImpl<>(xMap - 1, yMap - 1);
-                this.myBehaviour = new BlinkyBehaviour(setWall, xMap, yMap, this.relaxTarget);
-                this.initialPosition = new PairImpl<>(7, 6);
-                this.myBehaviour.setPosition(this.initialPosition);
+                this.setName(Ghosts.BLINKY);
+                this.setRelaxTarget(new PairImpl<>(xMapSize - 1, yMapSize - 1));
+                this.setMyBehaviour(new BlinkyBehaviour(setWall, xMapSize, yMapSize, this.getRelaxTarget()));
+                this.setInitialPosition(new PairImpl<>(7, 9));
+                this.getMyBehaviour().setCurrentPosition(this.getPosition());
             }
         };
     }
 
     @Override
-    public Ghost pinky() {
-        return new GhostAbstractImpl(this.xMap, this.yMap) {        
+    public final Ghost pinky() {
+        return new GhostAbstractImpl(this.xMapSize, this.yMapSize) {
             public void create() {
-                this.name = Ghosts.PINKY;
-                this.relaxTarget = new PairImpl<>(0, yMap - 1);
-                this.myBehaviour = new PinkyBehaviour(setWall, xMap, yMap, this.relaxTarget);
-                this.initialPosition = new PairImpl<>(7, 6);
-                this.myBehaviour.setPosition(this.initialPosition);
+                this.setName(Ghosts.PINKY);
+                this.setRelaxTarget(new PairImpl<>(0, yMapSize - 1));
+                this.setMyBehaviour(new PinkyBehaviour(setWall, xMapSize, yMapSize, this.getRelaxTarget()));
+                this.setInitialPosition(new PairImpl<>(7, 6));
+                this.getMyBehaviour().setCurrentPosition(this.getPosition());
             }
         };
     }
 
     @Override
-    public Ghost inky(Ghost blink) {
+    public final Ghost inky(final Ghost blink) {
         if (!blink.getName().equals(Ghosts.BLINKY)) {
             throw new IllegalStateException("Insert Blinky");
         }
-        return new GhostAbstractImpl(this.xMap, this.yMap) {        
+        return new GhostAbstractImpl(this.xMapSize, this.yMapSize) {
             public void create() {
-                this.name = Ghosts.INKY;
-                this.blinky = Optional.of(blink);
-                this.relaxTarget = new PairImpl<>(xMap - 1, 0);
-                this.myBehaviour = new InkyBehaviour(setWall, xMap, yMap, this.relaxTarget);
-                this.initialPosition = new PairImpl<>(7,6);
-                this.myBehaviour.setPosition(this.initialPosition);
+                this.setName(Ghosts.INKY);
+                this.setBlinky(Optional.of(blink));
+                this.setRelaxTarget(new PairImpl<>(xMapSize - 1, 0));
+                this.setMyBehaviour(new InkyBehaviour(setWall, xMapSize, yMapSize, this.getRelaxTarget()));
+                this.setInitialPosition(new PairImpl<>(7, 7));
+                this.getMyBehaviour().setCurrentPosition(this.getPosition());
             }
         };
     }
 
     @Override
-    public Ghost clyde() {
-        return new GhostAbstractImpl(this.xMap, this.yMap) {        
+    public final Ghost clyde() {
+        return new GhostAbstractImpl(this.xMapSize, this.yMapSize) {
             public void create() {
-                this.name = Ghosts.CLYDE;
-                this.relaxTarget = new PairImpl<>(0, 0);
-                this.myBehaviour = new ClydeBehaviour(setWall, xMap, yMap, this.relaxTarget);
-                this.initialPosition = new PairImpl<>(7, 6);
-                this.myBehaviour.setPosition(this.initialPosition);
+                this.setName(Ghosts.CLYDE);
+                this.setRelaxTarget(new PairImpl<>(0, 0));
+                this.setMyBehaviour(new ClydeBehaviour(setWall, xMapSize, yMapSize, this.getRelaxTarget()));
+                this.setInitialPosition(new PairImpl<>(7, 8));
+                this.getMyBehaviour().setCurrentPosition(this.getPosition());
             }
         };
     }

@@ -19,7 +19,7 @@ public interface GhostFactory{
     /**
      * Inky.
      *
-     * @param blinky the blinky
+     * @param blinky 
      * @return the ghost
      */
     Ghost inky(Ghost blinky);
