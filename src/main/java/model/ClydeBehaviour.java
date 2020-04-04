@@ -23,8 +23,10 @@ public class ClydeBehaviour extends GhostAbstractBehaviour {
 
     @Override
     public final void chase(final PacMan pacMan, final Optional<PairImpl<Integer, Integer>> blinkyPosition) {
-        this.targetPosition(pacMan);
-        this.findPath(this.chaseTarget);
-        this.move(this.chaseTarget, 1);
+        if (!moveIfStuck()) {
+            this.targetPosition(pacMan);
+            this.findPath(this.chaseTarget);
+            this.move(this.chaseTarget, 1);
+        }
     }
 }

@@ -66,13 +66,15 @@ public class InkyBehaviour extends GhostAbstractBehaviour {
 
     @Override
     public final void chase(final PacMan pacMan, final Optional<PairImpl<Integer, Integer>> blinkyPosition) {
-        if (blinkyPosition.isEmpty()) {
-            this.chaseTarget = pacMan.getPosition();
-        } else {
-            this.targetPosition(pacMan, blinkyPosition);
+        if (!moveIfStuck()) {
+            if (blinkyPosition.isEmpty()) {
+                this.chaseTarget = pacMan.getPosition();
+            } else {
+                this.targetPosition(pacMan, blinkyPosition);
+            }
+            this.findPath(this.chaseTarget);
+            this.move(this.chaseTarget, 1);
         }
-        this.findPath(this.chaseTarget);
-        this.move(this.chaseTarget, 1);
     }
 
 

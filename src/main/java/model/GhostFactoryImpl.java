@@ -3,17 +3,15 @@ package model;
 import java.util.Optional;
 import java.util.Set;
 
-import model.PacManImpl.Builder;
 
-
-public class GhostFactoryImpl implements GhostFactory {
+public final class GhostFactoryImpl implements GhostFactory {
     private final Set<PairImpl<Integer, Integer>> setWalls;
     private final Set<PairImpl<Integer, Integer>> setHome;
     private int xMapSize;
     private int yMapSize;
     private PairImpl<Integer, Integer> door;
 
-    public GhostFactoryImpl(final Set<PairImpl<Integer, Integer>> setWalls, final Set<PairImpl<Integer,
+    private GhostFactoryImpl(final Set<PairImpl<Integer, Integer>> setWalls, final Set<PairImpl<Integer,
             Integer>> setHome, final int xMapSize, final int yMapSize,
             final PairImpl<Integer, Integer> door) {
         this.setWalls = setWalls;
@@ -100,56 +98,60 @@ public class GhostFactoryImpl implements GhostFactory {
     }
 
     @Override
-    public final Ghost blinky() { 
+    public Ghost blinky() { 
         return new GhostAbstractImpl(this.setWalls, this.setHome, this.xMapSize, this.yMapSize, this.door) {
             public void create() {
+                this.setStartPosition(new PairImpl<>(7,6));
                 this.setName(Ghosts.BLINKY);
                 this.setRelaxTarget(new PairImpl<>(xMapSize - 1, yMapSize - 1));
                 this.setMyBehaviour(new BlinkyBehaviour(setWalls, xMapSize, yMapSize, this.getRelaxTarget()));
-                this.setInitialPosition(new PairImpl<>(7, 9));
+                this.getMyBehaviour().setCurrentPosition(this.getStartPosition());
                 this.getMyBehaviour().setCurrentPosition(this.getPosition());
             }
         };
     }
 
     @Override
-    public final Ghost pinky() {
+    public Ghost pinky() {
         return new GhostAbstractImpl(this.setWalls, this.setHome, this.xMapSize, this.yMapSize, this.door) {
             public void create() {
+                this.setStartPosition(new PairImpl<>(7,6));
                 this.setName(Ghosts.PINKY);
                 this.setRelaxTarget(new PairImpl<>(0, yMapSize - 1));
                 this.setMyBehaviour(new PinkyBehaviour(setWalls, xMapSize, yMapSize, this.getRelaxTarget()));
-                this.setInitialPosition(new PairImpl<>(7, 6));
+                this.getMyBehaviour().setCurrentPosition(this.getStartPosition());
                 this.getMyBehaviour().setCurrentPosition(this.getPosition());
             }
         };
     }
 
     @Override
-    public final Ghost inky(final Ghost blink) {
+    public Ghost inky(final Ghost blink) {
         if (!blink.getName().equals(Ghosts.BLINKY)) {
             throw new IllegalStateException("Insert Blinky");
         }
         return new GhostAbstractImpl(this.setWalls, this.setHome, this.xMapSize, this.yMapSize, this.door) {
             public void create() {
+                this.setStartPosition(new PairImpl<>(7,6));
                 this.setName(Ghosts.INKY);
                 this.setBlinky(Optional.of(blink));
                 this.setRelaxTarget(new PairImpl<>(xMapSize - 1, 0));
                 this.setMyBehaviour(new InkyBehaviour(setWalls, xMapSize, yMapSize, this.getRelaxTarget()));
-                this.setInitialPosition(new PairImpl<>(7, 7));
+                this.getMyBehaviour().setCurrentPosition(this.getStartPosition());
                 this.getMyBehaviour().setCurrentPosition(this.getPosition());
             }
         };
     }
 
     @Override
-    public final Ghost clyde() {
+    public Ghost clyde() {
         return new GhostAbstractImpl(this.setWalls, this.setHome, this.xMapSize, this.yMapSize, this.door) {
             public void create() {
+                this.setStartPosition(new PairImpl<>(7,6));
                 this.setName(Ghosts.CLYDE);
                 this.setRelaxTarget(new PairImpl<>(0, 0));
                 this.setMyBehaviour(new ClydeBehaviour(setWalls, xMapSize, yMapSize, this.getRelaxTarget()));
-                this.setInitialPosition(new PairImpl<>(7, 8));
+                this.getMyBehaviour().setCurrentPosition(this.getStartPosition());
                 this.getMyBehaviour().setCurrentPosition(this.getPosition());
             }
         };

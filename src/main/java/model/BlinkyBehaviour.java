@@ -10,8 +10,10 @@ public class BlinkyBehaviour extends GhostAbstractBehaviour {
     }
 
     public final void chase(final PacMan pacMan, final Optional<PairImpl<Integer, Integer>> blinkyPosition) {
-        this.findPath(pacMan.getPosition());
-        this.move(pacMan.getPosition(), 1);
+        if (!moveIfStuck()) {
+            this.findPath(pacMan.getPosition());
+            this.move(pacMan.getPosition(), 1);
+        }
     }
 
 }

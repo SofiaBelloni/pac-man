@@ -156,6 +156,31 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         this.move(this.relaxTarget, this.j);
     }
 
+    protected final boolean moveIfStuck() {
+        setAdj(this.currentPosition);
+        if (this.currentDirection.equals(Directions.UP) 
+                && (this.setWall.contains(this.left) && this.setWall.contains(this.right))) {
+            this.setCurrentPosition(this.up);
+            return true;
+        }
+        if (this.currentDirection.equals(Directions.DOWN) 
+                && (this.setWall.contains(this.left) && this.setWall.contains(this.right))) {
+            this.setCurrentPosition(this.down);
+            return true;
+        }
+        if (this.currentDirection.equals(Directions.UP) 
+                && (this.setWall.contains(this.up) && this.setWall.contains(this.down))) {
+            this.setCurrentPosition(this.left);
+            return true;
+        }
+        if (this.currentDirection.equals(Directions.UP) 
+                && (this.setWall.contains(this.up) && this.setWall.contains(this.down))) {
+            this.setCurrentPosition(this.right);
+            return true;
+        }
+        return false;
+    }
+
     public final Directions turnAround(final Directions dir) {
         if (dir.equals(Directions.UP)) {
             return Directions.DOWN;

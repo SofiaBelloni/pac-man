@@ -39,9 +39,11 @@ public class PinkyBehaviour extends GhostAbstractBehaviour {
 
 	    @Override
 	    public final void chase(final PacMan pacMan, final Optional<PairImpl<Integer, Integer>> blinkyPosition) {
-	        this.targetPosition(pacMan);
-	        super.findPath(this.chaseTarget);
-	        super.move(this.chaseTarget, 1);
+	        if (!moveIfStuck()) {
+    	        this.targetPosition(pacMan);
+    	        super.findPath(this.chaseTarget);
+    	        super.move(this.chaseTarget, 1);
+	        }
 	    }
 
 }

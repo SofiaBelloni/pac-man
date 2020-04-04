@@ -15,7 +15,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     private boolean closedDoor;
     private Ghosts name;
     private GhostBehaviour myBehaviour;
-    private PairImpl<Integer, Integer> initialPosition;
+    private PairImpl<Integer, Integer> startPosition;
     private PairImpl<Integer, Integer> relaxTarget;
     private Optional<Ghost> blinky;
     private PairImpl<Integer, Integer> door;
@@ -33,7 +33,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     }
 
     public final void nextPosition(final PacMan pacMan) {
-        if (closedDoor) {
+        if (!closedDoor) {
             this.closeTheDoor();
         }
         if (this.eatable) {
@@ -55,13 +55,17 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         this.myBehaviour.setCurrentPosition(this.convertToToroidal(this.myBehaviour.getCurrentPosition()));
     }
 
-    public final void closeTheDoor() {
+    private void closeTheDoor() {
+        int i = 0;
         for (Pair<Integer, Integer> p : setHome) {
-            if (!this.myBehaviour.getCurrentPosition().equals(p)) {
+            if (this.myBehaviour.getCurrentPosition().equals(p)) {
+                i++;
+            }
+        }
+            if (i == 0) {
                 this.setWall.add(door);
                 this.closedDoor = true;
             }
-        }
     }
 
     public final boolean isEatable() {
@@ -69,7 +73,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     }
 
     public final void returnHome() {
-        this.myBehaviour.setCurrentPosition(this.initialPosition);
+        this.myBehaviour.setCurrentPosition(this.startPosition);
     }
 
     public final void blinkyIsDead() throws OperationNotSupportedException {
@@ -107,8 +111,12 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         this.myBehaviour = myBehaviour;
     }
 
-    protected final void setInitialPosition(final PairImpl<Integer, Integer> initialPosition) {
-        this.initialPosition = initialPosition;
+    protected final PairImpl<Integer, Integer> getStartPosition() {
+        return this.startPosition;
+    }
+
+    protected final void setStartPosition(final PairImpl<Integer, Integer> startPosition) {
+        this.startPosition = startPosition;
     }
 
     protected final PairImpl<Integer, Integer> getRelaxTarget() {
