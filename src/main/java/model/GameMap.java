@@ -10,23 +10,23 @@ public interface GameMap {
     /**
      * @param position of the pill to remove
      */
-    void removePill(PairImpl<Integer, Integer> position);
+    void removePill(Pair<Integer, Integer> position);
     /**
      * @return the walls positions
      */
-    Set<PairImpl<Integer, Integer>> getWallsPositions();
+    Set<Pair<Integer, Integer>> getWallsPositions();
     /**
      * @return the pills positions
      */
-    Set<PairImpl<Integer, Integer>> getPillsPositions();
+    Set<Pair<Integer, Integer>> getPillsPositions();
     /**
      * @return the ghost house position
      */
-    Set<PairImpl<Integer, Integer>> getGhostHousePosition();
+    Set<Pair<Integer, Integer>> getGhostHousePosition();
     /**
      * @return free positions (no wall, pill, or ghost house)
      */
-    Set<PairImpl<Integer, Integer>> getNoWallsPositions();
+    Set<Pair<Integer, Integer>> getNoWallsPositions();
     /**
      * @return the map size on x axis
      */
@@ -39,4 +39,13 @@ public interface GameMap {
      * @return score value of one pill
      */
     int getPillScore();
+    /**
+     * @param position of the pill
+     * @return true if in position there is a pill, false otherwise
+     */
+    boolean isPill(Pair<Integer, Integer> position);
+    /**
+     * @return the initial position of PacMan
+     */
+    Pair<Integer, Integer> getPacManStartPosition();
 }
