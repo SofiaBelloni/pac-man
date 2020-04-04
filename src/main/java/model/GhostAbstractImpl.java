@@ -57,7 +57,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
 
     public final void closeTheDoor() {
         for (Pair<Integer, Integer> p : setHome) {
-            if (!this.myBehaviour.getCurrentDirection().equals(p)) {
+            if (!this.myBehaviour.getCurrentPosition().equals(p)) {
                 this.setWall.add(door);
                 this.closedDoor = true;
             }
