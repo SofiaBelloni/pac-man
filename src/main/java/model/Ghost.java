@@ -20,6 +20,11 @@ public interface Ghost extends Entity {
     void nextPosition(PacMan pacMan);
 
     /**
+     * Close the door of the ghost home when he is out.
+     */
+    void closeTheDoor();
+
+    /**
      * Makes the Ghost return home.
      */
     void returnHome();

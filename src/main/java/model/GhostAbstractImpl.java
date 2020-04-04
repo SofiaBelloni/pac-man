@@ -1,29 +1,41 @@
 package model;
 
 import java.util.Optional;
+import java.util.Set;
 
 import javax.naming.OperationNotSupportedException;
 
 public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Ghost {
 
+    private final Set<PairImpl<Integer, Integer>> setWall;
+    private final Set<PairImpl<Integer, Integer>> setHome;
     private boolean eatable;
     private boolean isRelaxed;
     private boolean isBlinkyDead;
+    private boolean closedDoor;
     private Ghosts name;
     private GhostBehaviour myBehaviour;
     private PairImpl<Integer, Integer> initialPosition;
     private PairImpl<Integer, Integer> relaxTarget;
     private Optional<Ghost> blinky;
+    private PairImpl<Integer, Integer> door;
 
-    public GhostAbstractImpl(final int xMapSize, final int yMapSize) {
+    public GhostAbstractImpl(final Set<PairImpl<Integer, Integer>> setWall, final Set<PairImpl<Integer, Integer>> setHome, final int xMapSize, final int yMapSize, final PairImpl<Integer, Integer> door) {
         super(yMapSize, yMapSize);
         this.eatable = false;
         this.isRelaxed = true;
         this.blinky = Optional.empty();
         this.isBlinkyDead = false;
+        this.setWall = setWall;
+        this.setHome = setHome;
+        this.door = door;
+        this.closedDoor = false;
     }
 
     public final void nextPosition(final PacMan pacMan) {
+        if (closedDoor) {
+            this.closeTheDoor();
+        }
         if (this.eatable) {
             this.myBehaviour.runAway();
         } else {
@@ -38,6 +50,16 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
                 } else {
                     this.myBehaviour.chase(pacMan, Optional.of(this.blinky.get().getPosition()));
                 }
+            }
+        }
+        this.myBehaviour.setCurrentPosition(this.convertToToroidal(this.myBehaviour.getCurrentPosition()));
+    }
+
+    public final void closeTheDoor() {
+        for (Pair<Integer, Integer> p : setHome) {
+            if (!this.myBehaviour.getCurrentDirection().equals(p)) {
+                this.setWall.add(door);
+                this.closedDoor = true;
             }
         }
     }
@@ -59,7 +81,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     }
 
     public final PairImpl<Integer, Integer> getPosition() {
-        return this.convertToToroidal(this.myBehaviour.getCurrentPosition());
+        return this.myBehaviour.getCurrentPosition();
     }
 
     public final void setEatable(final boolean eatable) {
