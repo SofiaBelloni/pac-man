@@ -2,15 +2,20 @@ package model;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * this class implements the Pinky behaviour.
+ *
+ */
 public class PinkyBehaviour extends GhostAbstractBehaviour {
 
-	private PairImpl<Integer, Integer> chaseTarget;
-	private final Set<PairImpl<Integer, Integer>> setWall;
+    private PairImpl<Integer, Integer> chaseTarget;
+    private final Set<PairImpl<Integer, Integer>> setWall;
 
 	public PinkyBehaviour(final Set<PairImpl<Integer, Integer>> setWall, final int xMapSize, final int yMapSize, final PairImpl<Integer, Integer> relaxTarget) {
 		super(setWall, xMapSize, yMapSize);
 		this.setWall = setWall;
 		this.setRelaxTarget(relaxTarget);
+		this.setStartPosition(new PairImpl<>(7, 6)); 
 	}
 	
 	   private void targetPosition(final PacMan pacMan) {

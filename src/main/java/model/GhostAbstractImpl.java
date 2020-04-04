@@ -3,8 +3,10 @@ package model;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.naming.OperationNotSupportedException;
-
+/**
+ * this class implements a generic Ghost Entity.
+ *
+ */
 public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Ghost {
 
     private final Set<PairImpl<Integer, Integer>> setWall;
@@ -13,9 +15,9 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     private boolean isRelaxed;
     private boolean isBlinkyDead;
     private boolean closedDoor;
+    private boolean created;
     private Ghosts name;
     private GhostBehaviour myBehaviour;
-    private PairImpl<Integer, Integer> startPosition;
     private PairImpl<Integer, Integer> relaxTarget;
     private Optional<Ghost> blinky;
     private PairImpl<Integer, Integer> door;
@@ -30,9 +32,11 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         this.setHome = setHome;
         this.door = door;
         this.closedDoor = false;
+        this.created = false;
     }
 
     public final void nextPosition(final PacMan pacMan) {
+        this.checkCreation();
         if (!closedDoor) {
             this.closeTheDoor();
         }
@@ -55,7 +59,14 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         this.myBehaviour.setCurrentPosition(this.convertToToroidal(this.myBehaviour.getCurrentPosition()));
     }
 
-    private void closeTheDoor() {
+
+    public final PairImpl<Integer, Integer> getPosition() {
+        this.checkCreation();
+        return this.myBehaviour.getCurrentPosition();
+    }
+
+    public final void closeTheDoor() {
+        this.checkCreation();
         int i = 0;
         for (Pair<Integer, Integer> p : setHome) {
             if (this.myBehaviour.getCurrentPosition().equals(p)) {
@@ -69,33 +80,34 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     }
 
     public final boolean isEatable() {
+        this.checkCreation();
         return this.eatable;
     }
 
     public final void returnHome() {
-        this.myBehaviour.setCurrentPosition(this.startPosition);
-    }
-
-    public final void blinkyIsDead() throws OperationNotSupportedException {
-        if (this.getName().equals(Ghosts.INKY)) {
-            this.isBlinkyDead = true;
-        } else {
-            throw new OperationNotSupportedException("This method is designed only for Inky");
-        }
-    }
-
-    public final PairImpl<Integer, Integer> getPosition() {
-        return this.myBehaviour.getCurrentPosition();
+        this.checkCreation();
+        this.myBehaviour.setCurrentPosition(this.myBehaviour.getStartPosition());
     }
 
     public final void setEatable(final boolean eatable) {
+        this.checkCreation();
         this.eatable = eatable;
         if (this.eatable) {
             this.myBehaviour.turnAround(this.myBehaviour.getCurrentDirection());
         }
     }
 
+    public final void blinkyIsDead() {
+        this.checkCreation();
+        if (this.getName().equals(Ghosts.INKY)) {
+            this.isBlinkyDead = true;
+        } else {
+            throw new IllegalStateException("This method is designed only for Inky");
+        }
+    }
+
     public final Ghosts getName() {
+        this.checkCreation();
         return this.name;
     }
 
@@ -111,14 +123,6 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         this.myBehaviour = myBehaviour;
     }
 
-    protected final PairImpl<Integer, Integer> getStartPosition() {
-        return this.startPosition;
-    }
-
-    protected final void setStartPosition(final PairImpl<Integer, Integer> startPosition) {
-        this.startPosition = startPosition;
-    }
-
     protected final PairImpl<Integer, Integer> getRelaxTarget() {
         return this.relaxTarget;
     }
@@ -129,6 +133,16 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
 
     protected final void setBlinky(final Optional<Ghost> blinky) {
         this.blinky = blinky;
+    }
+
+    protected final void setCreated() {
+        this.created = true;
+    }
+
+    private void checkCreation() {
+        if (!this.created) {
+            throw new IllegalStateException("Error, ghost not created");
+        }
     }
 }
 

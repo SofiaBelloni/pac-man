@@ -3,7 +3,7 @@ package model;
 import java.util.Optional;
 
 /**
- * The Interface BraveBehaviour.
+ * The Interface GhostBehaviour.
  */
 public interface GhostBehaviour {
 
@@ -57,4 +57,11 @@ public interface GhostBehaviour {
      * @param newPosition the new position
      */
     void setCurrentPosition(PairImpl<Integer, Integer> newPosition);
+
+    /**
+     * Gets the start position.
+     *
+     * @return the start position
+     */
+    PairImpl<Integer, Integer> getStartPosition();
 }

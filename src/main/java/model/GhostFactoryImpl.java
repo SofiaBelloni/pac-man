@@ -3,7 +3,10 @@ package model;
 import java.util.Optional;
 import java.util.Set;
 
-
+/**
+ * this class implements factory for creating Ghost objects.
+ *
+ */
 public final class GhostFactoryImpl implements GhostFactory {
     private final Set<PairImpl<Integer, Integer>> setWalls;
     private final Set<PairImpl<Integer, Integer>> setHome;
@@ -101,12 +104,10 @@ public final class GhostFactoryImpl implements GhostFactory {
     public Ghost blinky() { 
         return new GhostAbstractImpl(this.setWalls, this.setHome, this.xMapSize, this.yMapSize, this.door) {
             public void create() {
-                this.setStartPosition(new PairImpl<>(7,6));
+                this.setCreated();
                 this.setName(Ghosts.BLINKY);
                 this.setRelaxTarget(new PairImpl<>(xMapSize - 1, yMapSize - 1));
                 this.setMyBehaviour(new BlinkyBehaviour(setWalls, xMapSize, yMapSize, this.getRelaxTarget()));
-                this.getMyBehaviour().setCurrentPosition(this.getStartPosition());
-                this.getMyBehaviour().setCurrentPosition(this.getPosition());
             }
         };
     }
@@ -115,12 +116,10 @@ public final class GhostFactoryImpl implements GhostFactory {
     public Ghost pinky() {
         return new GhostAbstractImpl(this.setWalls, this.setHome, this.xMapSize, this.yMapSize, this.door) {
             public void create() {
-                this.setStartPosition(new PairImpl<>(7,6));
+                this.setCreated();
                 this.setName(Ghosts.PINKY);
                 this.setRelaxTarget(new PairImpl<>(0, yMapSize - 1));
                 this.setMyBehaviour(new PinkyBehaviour(setWalls, xMapSize, yMapSize, this.getRelaxTarget()));
-                this.getMyBehaviour().setCurrentPosition(this.getStartPosition());
-                this.getMyBehaviour().setCurrentPosition(this.getPosition());
             }
         };
     }
@@ -132,13 +131,10 @@ public final class GhostFactoryImpl implements GhostFactory {
         }
         return new GhostAbstractImpl(this.setWalls, this.setHome, this.xMapSize, this.yMapSize, this.door) {
             public void create() {
-                this.setStartPosition(new PairImpl<>(7,6));
+                this.setCreated();
                 this.setName(Ghosts.INKY);
-                this.setBlinky(Optional.of(blink));
                 this.setRelaxTarget(new PairImpl<>(xMapSize - 1, 0));
                 this.setMyBehaviour(new InkyBehaviour(setWalls, xMapSize, yMapSize, this.getRelaxTarget()));
-                this.getMyBehaviour().setCurrentPosition(this.getStartPosition());
-                this.getMyBehaviour().setCurrentPosition(this.getPosition());
             }
         };
     }
@@ -147,12 +143,10 @@ public final class GhostFactoryImpl implements GhostFactory {
     public Ghost clyde() {
         return new GhostAbstractImpl(this.setWalls, this.setHome, this.xMapSize, this.yMapSize, this.door) {
             public void create() {
-                this.setStartPosition(new PairImpl<>(7,6));
+                this.setCreated();
                 this.setName(Ghosts.CLYDE);
                 this.setRelaxTarget(new PairImpl<>(0, 0));
                 this.setMyBehaviour(new ClydeBehaviour(setWalls, xMapSize, yMapSize, this.getRelaxTarget()));
-                this.getMyBehaviour().setCurrentPosition(this.getStartPosition());
-                this.getMyBehaviour().setCurrentPosition(this.getPosition());
             }
         };
     }

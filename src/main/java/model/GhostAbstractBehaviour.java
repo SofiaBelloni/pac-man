@@ -7,15 +7,27 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+/**
+ * this class implements a generic Ghost behaviour.
+ *
+ */
 public abstract class GhostAbstractBehaviour implements GhostBehaviour {
 
     private static final int UPPERBOUND = 10000;
 
-    private boolean isPathFound;
+    /**
+     * counter who associate at each position its distance to the currentPosition.
+     */
     private int i;
+    /**
+     * counter which is used to subtract the distance of the target in order to 
+     * use the findPath method only one time in relax method.
+     */
     private int j;
     private final Set<PairImpl<Integer, Integer>> setWall;
     private final Map<PairImpl<Integer, Integer>, Integer> map;
+    private boolean isPathFound;
+    private PairImpl<Integer, Integer> startPosition;
     private PairImpl<Integer, Integer> relaxTarget;
     private PairImpl<Integer, Integer> up;
     private PairImpl<Integer, Integer> down;
@@ -36,13 +48,12 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         this.currentDirection = Directions.UP;
     }
 
-    private void setAdj(final Pair<Integer, Integer> position) {
-        up = new PairImpl<>(position.getX(), position.getY() + 1);
-        down = new PairImpl<>(position.getX(), position.getY() - 1);
-        left = new PairImpl<>(position.getX() - 1, position.getY());
-        right = new PairImpl<>(position.getX() + 1, position.getY());
-    }
-
+    /**
+     * This method implements a version of Dijkstra algorithm which is used to find the shortest path 
+     * from 2 nodes(in this case the nodes are the positions).
+     * 
+     * @param targetPosition
+     */
     protected final void findPath(final Pair<Integer, Integer> targetPosition) {
         this.isPathFound = false;
         this.i = 0;
@@ -93,6 +104,12 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         }
     }
 
+    /**
+     * This method moves the ghost in the position specified by the findPath method.
+     * 
+     * @param targetPosition
+     * @param counter
+     */
     protected final void move(final PairImpl<Integer, Integer> targetPosition, final int counter) {
         Pair<Integer, Integer> lastPosition = this.currentPosition;
         this.currentPosition = targetPosition;
@@ -156,6 +173,11 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         this.move(this.relaxTarget, this.j);
     }
 
+    /**
+     * This method makes the ghost move without using Dijkstra algorithm in case he is stuck.
+     * 
+     * @return true if the ghost is stuck and can go in only one direction
+     */
     protected final boolean moveIfStuck() {
         setAdj(this.currentPosition);
         if (this.currentDirection.equals(Directions.UP) 
@@ -179,6 +201,13 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
             return true;
         }
         return false;
+    }
+
+    private void setAdj(final Pair<Integer, Integer> position) {
+        up = new PairImpl<>(position.getX(), position.getY() + 1);
+        down = new PairImpl<>(position.getX(), position.getY() - 1);
+        left = new PairImpl<>(position.getX() - 1, position.getY());
+        right = new PairImpl<>(position.getX() + 1, position.getY());
     }
 
     public final Directions turnAround(final Directions dir) {
@@ -209,6 +238,7 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         return this.yMapSize;
     }
 
+
     public final Directions getCurrentDirection() {
         return this.currentDirection;
     }
@@ -219,6 +249,15 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
 
     public final void setCurrentPosition(final PairImpl<Integer, Integer> newPosition) {
         this.currentPosition = newPosition;
+    }
+
+    public final PairImpl<Integer, Integer> getStartPosition() {
+        return this.startPosition;
+    }
+
+    protected final void setStartPosition(final PairImpl<Integer, Integer> startPosition) {
+        this.currentPosition = startPosition;
+        this.startPosition = startPosition;
     }
 
 }
