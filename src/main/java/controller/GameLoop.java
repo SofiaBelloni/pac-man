@@ -11,10 +11,11 @@ public class GameLoop implements Runnable {
     private static final double TIME_BETWEEN_UPDATES = 1000.0 / FPS;
 
     private Thread thread;
-    private boolean running = false;
-    private boolean paused = false;
+    private boolean running;
+    private boolean paused;
     private GameModel model;
     private View view;
+    private LevelTimer levelTimer;
     /**
      * Constructor.
      * @param model
@@ -27,6 +28,7 @@ public class GameLoop implements Runnable {
         this.view = view;
         this.running = false;
         this.paused = false;
+        this.levelTimer = new LevelTimer(this.model);
     }
     /**
      * Starts the loop.
@@ -35,10 +37,10 @@ public class GameLoop implements Runnable {
         thread = new Thread(this);
         thread.run();
     }
-    /**
-     * Run method.
-     */
+
+    @Override
     public void run() {
+        this.levelTimer.startTimer();
         this.running = true;
         long now = 0;
         long lastUpdateTime = System.currentTimeMillis();
@@ -47,6 +49,7 @@ public class GameLoop implements Runnable {
             if (this.paused) {
                 synchronized (this.thread) {
                     while (this.paused) {
+                        this.levelTimer.stopTimer();
                         try {
                             this.thread.wait();
                         } catch (InterruptedException e) {
@@ -54,6 +57,7 @@ public class GameLoop implements Runnable {
                         }
                     }
                 }
+                this.levelTimer.startTimer();
                 lastUpdateTime = System.currentTimeMillis();
             }
             now = System.currentTimeMillis();
