@@ -2,6 +2,10 @@ package model;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+* this class implements the Inky behaviour.
+*
+*/
 public class InkyBehaviour extends GhostAbstractBehaviour {
 
     private final Set<PairImpl<Integer, Integer>> setWall;
@@ -11,6 +15,7 @@ public class InkyBehaviour extends GhostAbstractBehaviour {
 		super(setWall, xMapSize, yMapSize);
 		this.setWall = setWall;
 	    this.setRelaxTarget(relaxTarget);
+	    this.setStartPosition(new PairImpl<>(7, 6)); 
 	}
 	
 	private void targetPosition(final PacMan pacMan, final Optional<PairImpl<Integer, Integer>> blinkyPosition) {
@@ -52,13 +57,13 @@ public class InkyBehaviour extends GhostAbstractBehaviour {
             this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), 0);
         }
         if (this.setWall.contains(this.chaseTarget) || this.getCurrentPosition().equals(this.chaseTarget)) {
-            if (!this.setWall.contains(new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() + 1))) {
+            if (this.chaseTarget.getY() + 1 < this.getyMapSize() && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() + 1))) {
                 this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() + 1);
-            } else if (!this.setWall.contains(new PairImpl<>(this.chaseTarget.getX() + 1, this.chaseTarget.getY()))) {
+            } else if (this.chaseTarget.getX() + 1 < this.getxMapSize() && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX() + 1, this.chaseTarget.getY()))) {
                 this.chaseTarget = new PairImpl<>(this.chaseTarget.getX() + 1, this.chaseTarget.getY());
-            } else if (!this.setWall.contains(new PairImpl<>(this.chaseTarget.getX() - 1, this.chaseTarget.getY()))) {
+            } else if (this.chaseTarget.getX() - 1 >= 0 && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX() - 1, this.chaseTarget.getY()))) {
                 this.chaseTarget = new PairImpl<>(this.chaseTarget.getX() - 1, this.chaseTarget.getY());
-            } else {
+            } else if (this.chaseTarget.getY() - 1 >= 0 && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() - 1))) {
                 this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() - 1);
             }
         }

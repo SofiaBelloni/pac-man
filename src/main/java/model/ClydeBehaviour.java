@@ -2,6 +2,10 @@ package model;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+* this class implements the Clyde behaviour.
+*
+*/
 public class ClydeBehaviour extends GhostAbstractBehaviour {
 
     private PairImpl<Integer, Integer> chaseTarget;
@@ -10,6 +14,7 @@ public class ClydeBehaviour extends GhostAbstractBehaviour {
     public ClydeBehaviour(final Set<PairImpl<Integer, Integer>> setWall, final int xMap, final int yMap, final PairImpl<Integer, Integer> relaxTarget) {
         super(setWall, xMap, yMap);
         this.setRelaxTarget(relaxTarget);
+        this.setStartPosition(new PairImpl<>(7, 6)); 
     }
 
     private void targetPosition(final PacMan pacMan) {
