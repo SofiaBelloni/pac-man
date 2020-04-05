@@ -23,7 +23,7 @@ public class ControllerImpl implements ViewObserver {
     public ControllerImpl(final GameModel model, final View view) {
         this.model = model;
         this.view = view;
-        this.gameLoop = new GameLoop();
+        this.gameLoop = new GameLoop(this.model, this.view);
         //TODO leggi highScore da file
     }
 

@@ -1,15 +1,33 @@
 package controller;
+
+import model.GameModel;
+
 /**
  * A thread that periodically updates the model and renders it on the view.
  */
 public class GameLoop implements Runnable {
-    
+
     private static double FPS = 60.0;
     private static final double TIME_BETWEEN_UPDATES = 1000.0 / FPS;
 
     private Thread thread;
     private boolean running = false;
     private boolean paused = false;
+    private GameModel model;
+    private View view;
+    /**
+     * Constructor.
+     * @param model
+     *      the model reference
+     * @param view
+     *      the view reference
+     */
+    public GameLoop(GameModel model, View view) {
+        this.model = model;
+        this.view = view;
+        this.running = false;
+        this.paused = false;
+    }
     /**
      * Starts the loop.
      */
@@ -36,10 +54,11 @@ public class GameLoop implements Runnable {
                         }
                     }
                 }
+                lastUpdateTime = System.currentTimeMillis();
             }
             now = System.currentTimeMillis();
-            this.update(Math.min(1.0f, (double) ((now - lastUpdateTime) / TIME_BETWEEN_UPDATES)));
-            this.render();
+            this.update();
+            this.render(Math.min(1.0f, (double) ((now - lastUpdateTime) / TIME_BETWEEN_UPDATES)));
             unprocessedTime = System.currentTimeMillis() - now;
             if (unprocessedTime < TIME_BETWEEN_UPDATES) {
                 try {
@@ -73,13 +92,14 @@ public class GameLoop implements Runnable {
     }
 
 
-    private void render() {
+    private void render(final double delta) {
       //TODO: Render game
+      //all time-related values must be multiplied by delta
 
     }
 
-    private void update(final double delta) {
+    private void update() {
       //TODO: Update game
-      //all time-related values must be multiplied by delta
+        this.model.moveEntitiesNextPosition();
     }
 }
