@@ -8,7 +8,7 @@ public final class PacManImpl extends EntityAbstractImpl implements PacMan {
     private Directions currentDirection;
     private int lives;
     private Pair<Integer, Integer> position;
-    private Pair<Integer, Integer> startPosition;
+    private final Pair<Integer, Integer> startPosition;
     private final Set<Pair<Integer, Integer>> noWalls;
 
     private PacManImpl(final int xMapSize, final int yMapSize, final Pair<Integer, Integer> startPosition,
@@ -28,7 +28,7 @@ public final class PacManImpl extends EntityAbstractImpl implements PacMan {
         private Optional<Integer> lives = Optional.empty();
         private Optional<Set<Pair<Integer, Integer>>> noWalls = Optional.empty();
         private Optional<Directions> currentDirection = Optional.empty();
-        private boolean built = false;
+        private boolean built;
 
         /**
          * Used by the builder to check if the Optional fields are correctly assigned.
@@ -117,7 +117,7 @@ public final class PacManImpl extends EntityAbstractImpl implements PacMan {
      */
     @Override
     public void nextPosition() {
-        Pair<Integer, Integer> next = this.convertToToroidal(this.calculateNextPosition());
+        final Pair<Integer, Integer> next = this.convertToToroidal(this.calculateNextPosition());
         if (this.noWalls.contains(next)) {
             this.setPosition(next);
             }
