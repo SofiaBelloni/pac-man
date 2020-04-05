@@ -25,4 +25,8 @@ public interface PacMan extends Entity {
    * Decreases the life of PacMan and PacMan return to the startPosition.
    */
   void kill();
+  /**
+   * PacMan return to the startPosition.
+   */
+  void returnToStartPosition();
 }

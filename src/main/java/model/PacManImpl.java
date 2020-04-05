@@ -16,7 +16,7 @@ public final class PacManImpl extends EntityAbstractImpl implements PacMan {
         super(xMapSize, yMapSize);
         this.noWalls = noWalls;
         this.startPosition = startPosition;
-        this.position = startPosition;
+        this.setPosition(startPosition);
         this.currentDirection = currentDirection;
         this.lives = lives;
     }
@@ -163,12 +163,17 @@ public final class PacManImpl extends EntityAbstractImpl implements PacMan {
     @Override
     public void kill() {
         this.lives = this.lives - 1;
-        this.position = this.startPosition;
+        this.returnToStartPosition();
     }
 
     @Override
     public Pair<Integer, Integer> getPosition() {
         return this.position;
+    }
+
+    @Override
+    public void returnToStartPosition() {
+        this.setPosition(startPosition);
     }
 
     /**
@@ -179,5 +184,6 @@ public final class PacManImpl extends EntityAbstractImpl implements PacMan {
     private void setPosition(final Pair<Integer, Integer> position) {
         this.position = position;
     }
+
 
 }
