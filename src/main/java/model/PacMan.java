@@ -22,7 +22,11 @@ public interface PacMan extends Entity {
    */
   int getLives();
   /**
-   * Decreases the life of PacMan.
+   * Decreases the life of PacMan and PacMan return to the startPosition.
    */
   void kill();
+  /**
+   * PacMan return to the startPosition.
+   */
+  void returnToStartPosition();
 }

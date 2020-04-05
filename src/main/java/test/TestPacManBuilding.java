@@ -8,6 +8,7 @@ import java.util.HashSet;
 import model.Directions;
 import model.PacMan;
 import model.PacManImpl;
+import model.Pair;
 import model.PairImpl;
 
 /**
@@ -16,8 +17,8 @@ import model.PairImpl;
 
 public class TestPacManBuilding {
 
-    private static final int XMAPSIZE = 40;
-    private static final int YMAPSIZE = 40;
+    private static final int XMAPSIZE = 28;
+    private static final int YMAPSIZE = 31;
 
     @Test(expected = IllegalStateException.class)
     public void testPacManBuilderNoTypeSpecified() {
@@ -31,7 +32,7 @@ public class TestPacManBuilding {
                                     .currentDirection(Directions.LEFT)
                                     .lives(3)
                                     .mapSize(XMAPSIZE, YMAPSIZE)
-                                    .noWalls(new HashSet<PairImpl<Integer, Integer>>())
+                                    .noWalls(new HashSet<Pair<Integer, Integer>>())
                                     .startPosition(new PairImpl<Integer, Integer>(0, 0))
                                     .build();
         assertEquals(pacMan.getDirection(), Directions.LEFT);

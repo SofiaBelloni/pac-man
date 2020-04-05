@@ -25,7 +25,7 @@ public abstract class EntityAbstractImpl implements Entity {
         return yMapSize;
     }
 
-    protected final PairImpl<Integer, Integer> convertToToroidal(final PairImpl<Integer, Integer> position) {
+    protected final PairImpl<Integer, Integer> convertToToroidal(final Pair<Integer, Integer> position) {
         int newX = position.getX();
         int newY = position.getY();
         if (newX >= this.getxMapSize()) {
