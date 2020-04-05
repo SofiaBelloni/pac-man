@@ -7,5 +7,5 @@ public interface Entity {
     /**
      * @return the position of the entity
      */
-    PairImpl<Integer, Integer> getPosition();
+    Pair<Integer, Integer> getPosition();
 }
