@@ -132,6 +132,6 @@ public class GameModelImpl implements GameModel {
         this.levelNumber = this.levelNumber + 1;
         this.ghosts.forEach(x -> x.returnHome());
         this.gameMap.restorePills();
-        //pacman
+        this.pacMan.returnToStartPosition();
     }
 }
