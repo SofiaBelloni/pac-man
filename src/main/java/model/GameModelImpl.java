@@ -23,10 +23,10 @@ public class GameModelImpl implements GameModel {
         this.ghosts = new HashSet<>();
         this.pacMan = new PacManImpl.Builder()
                             .currentDirection(Directions.LEFT)
-                            .mapSize(X_MAP_SIZE, Y_MAP_SIZE)
+                            .mapSize(this.gameMap.getxMapSize(), this.gameMap.getxMapSize())
                             .lives(PAC_MAN_LIVES)
-                            .noWalls(null)
-                            .startPosition(null)
+                            .noWalls(this.gameMap.getNoWallsPositions())
+                            .startPosition(this.gameMap.getPacManStartPosition())
                             .build();
 
         this.levelNumber = 1;
