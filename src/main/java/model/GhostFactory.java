@@ -3,7 +3,7 @@ package model;
 /**
  * A factory for creating Ghost objects.
  */
-public interface GhostFactory{
+public interface GhostFactory {
     /**
      * Blinky.
      *

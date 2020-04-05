@@ -1,4 +1,5 @@
 package model;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -8,47 +9,46 @@ import java.util.Set;
  */
 public class PinkyBehaviour extends GhostAbstractBehaviour {
 
-    private PairImpl<Integer, Integer> chaseTarget;
-    private final Set<PairImpl<Integer, Integer>> setWall;
+    private Pair<Integer, Integer> chaseTarget;
+    private final Set<Pair<Integer, Integer>> setWall;
 
-	public PinkyBehaviour(final Set<PairImpl<Integer, Integer>> setWall, final int xMapSize, final int yMapSize, final PairImpl<Integer, Integer> relaxTarget) {
-		super(setWall, xMapSize, yMapSize);
-		this.setWall = setWall;
-		this.setRelaxTarget(relaxTarget);
-		this.setStartPosition(new PairImpl<>(7, 6)); 
-	}
-	
-	   private void targetPosition(final PacMan pacMan) {
-	        Pair<Integer, Integer> pacManPosition = pacMan.getPosition();
-	        Directions pacManDirection = pacMan.getDirection();
-	        for (int i = 0; i <= 4; i++) {
-	            if (pacManDirection.equals(Directions.UP)) {
-	                if (!this.setWall.contains(new PairImpl<>(pacManPosition.getX(), pacManPosition.getY() + i)) && pacManPosition.getY() + i < getyMapSize()) {
-	                    this.chaseTarget = new PairImpl<>(pacManPosition.getX(), pacManPosition.getY() + i);
-	                }
-	            } else if (pacManDirection.equals(Directions.RIGHT)) {
-	                if (!this.setWall.contains(new PairImpl<>(pacManPosition.getX() + i, pacManPosition.getY())) && pacManPosition.getX() + i < getxMapSize()) {
-	                    this.chaseTarget = new PairImpl<>(pacManPosition.getX() + i, pacManPosition.getY());
-	                }
-	            } else if (pacManDirection.equals(Directions.DOWN)) {
-	                if (!this.setWall.contains(new PairImpl<>(pacManPosition.getX(), pacManPosition.getY() - i)) && pacManPosition.getY() - i >= 0) {
-	                    this.chaseTarget = new PairImpl<>(pacManPosition.getX(), pacManPosition.getY() - i);
-	                }
-	            } else {
-	                if (!this.setWall.contains(new PairImpl<>(pacManPosition.getX() - i, pacManPosition.getY())) && pacManPosition.getX() - i >= 0) {
-	                    this.chaseTarget = new PairImpl<>(pacManPosition.getX() - i, pacManPosition.getY());
-	                }
-	            }
-	        }
-	    }
+    public PinkyBehaviour(final Set<Pair<Integer, Integer>> setWall, final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize, final Pair<Integer, Integer> relaxTarget) {
+        super(setWall, xMapSize, yMapSize);
+        this.setWall = setWall;
+        this.setRelaxTarget(relaxTarget);
+        this.setStartPosition(ghostHouse.get(2));
+    }
 
-	    @Override
-	    public final void chase(final PacMan pacMan, final Optional<PairImpl<Integer, Integer>> blinkyPosition) {
-	        if (!moveIfStuck()) {
-    	        this.targetPosition(pacMan);
-    	        super.findPath(this.chaseTarget);
-    	        super.move(this.chaseTarget, 1);
-	        }
-	    }
+    private void targetPosition(final PacMan pacMan) {
+        final Pair<Integer, Integer> pacManPosition = pacMan.getPosition();
+        final Directions pacManDirection = pacMan.getDirection();
+        for (int i = 0; i <= 4; i++) {
+            if (pacManDirection.equals(Directions.UP)) {
+                if (!this.setWall.contains(new PairImpl<>(pacManPosition.getX(), pacManPosition.getY() + i)) && pacManPosition.getY() + i < getyMapSize()) {
+                    this.chaseTarget = new PairImpl<>(pacManPosition.getX(), pacManPosition.getY() + i);
+                }
+            } else if (pacManDirection.equals(Directions.RIGHT)) {
+                if (!this.setWall.contains(new PairImpl<>(pacManPosition.getX() + i, pacManPosition.getY())) && pacManPosition.getX() + i < getxMapSize()) {
+                    this.chaseTarget = new PairImpl<>(pacManPosition.getX() + i, pacManPosition.getY());
+                }
+            } else if (pacManDirection.equals(Directions.DOWN)) {
+                if (!this.setWall.contains(new PairImpl<>(pacManPosition.getX(), pacManPosition.getY() - i)) && pacManPosition.getY() - i >= 0) {
+                    this.chaseTarget = new PairImpl<>(pacManPosition.getX(), pacManPosition.getY() - i);
+                }
+            } else {
+                if (!this.setWall.contains(new PairImpl<>(pacManPosition.getX() - i, pacManPosition.getY())) && pacManPosition.getX() - i >= 0) {
+                    this.chaseTarget = new PairImpl<>(pacManPosition.getX() - i, pacManPosition.getY());
+                }
+            }
+        }
+    }
 
+    @Override
+    public final void chase(final PacMan pacMan, final Optional<Pair<Integer, Integer>> blinkyPosition) {
+        if (!moveIfStuck()) {
+            this.targetPosition(pacMan);
+            super.findPath(this.chaseTarget);
+            super.move(this.chaseTarget, 1);
+        }
+    }
 }

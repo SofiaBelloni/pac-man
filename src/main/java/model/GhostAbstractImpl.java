@@ -1,5 +1,6 @@
 package model;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -9,39 +10,53 @@ import java.util.Set;
  */
 public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Ghost {
 
-    private final Set<PairImpl<Integer, Integer>> setWall;
-    private final Set<PairImpl<Integer, Integer>> setHome;
+    private final Set<Pair<Integer, Integer>> setWall;
+    private final List<Pair<Integer, Integer>> ghostHouse;
     private boolean eatable;
     private boolean isRelaxed;
+    private boolean timeToTurn;
     private boolean isBlinkyDead;
-    private boolean closedDoor;
+    private boolean isInside;
     private boolean created;
     private Ghosts name;
     private GhostBehaviour myBehaviour;
-    private PairImpl<Integer, Integer> relaxTarget;
+    private Pair<Integer, Integer> relaxTarget;
     private Optional<Ghost> blinky;
-    private PairImpl<Integer, Integer> door;
+    private final Pair<Integer, Integer> door;
 
-    public GhostAbstractImpl(final Set<PairImpl<Integer, Integer>> setWall, final Set<PairImpl<Integer, Integer>> setHome, final int xMapSize, final int yMapSize, final PairImpl<Integer, Integer> door) {
-        super(yMapSize, yMapSize);
-        this.eatable = false;
+    public GhostAbstractImpl(final Set<Pair<Integer, Integer>> setWall,
+            final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize,
+            final int yMapSize, final Pair<Integer, Integer> door) {
+        super(xMapSize, yMapSize);
         this.isRelaxed = true;
+        this.isInside = true;
+        this.created = false;
+        this.timeToTurn = false;
+        this.eatable = false;
         this.blinky = Optional.empty();
         this.isBlinkyDead = false;
         this.setWall = setWall;
-        this.setHome = setHome;
+        this.ghostHouse = ghostHouse;
         this.door = door;
-        this.closedDoor = false;
-        this.created = false;
     }
 
+    @Override
     public final void nextPosition(final PacMan pacMan) {
         this.checkCreation();
-        if (!closedDoor) {
+        if (isInside) {
             this.closeTheDoor();
         }
         if (this.eatable) {
-            this.myBehaviour.runAway();
+            if (this.timeToTurn) {
+                 if (!isInside && !this.door.equals(new PairImpl<>(this.getPosition().getX(), this.getPosition().getY() - 1))) {
+                     this.myBehaviour.turnAround();
+                 } else {
+                     this.myBehaviour.runAway();
+                 }
+                this.timeToTurn = false;
+            } else {
+                this.myBehaviour.runAway();
+            }
         } else {
             if (this.isRelaxed) {
                 this.myBehaviour.relax();
@@ -59,8 +74,8 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         this.myBehaviour.setCurrentPosition(this.convertToToroidal(this.myBehaviour.getCurrentPosition()));
     }
 
-
-    public final PairImpl<Integer, Integer> getPosition() {
+    @Override
+    public final Pair<Integer, Integer> getPosition() {
         this.checkCreation();
         return this.myBehaviour.getCurrentPosition();
     }
@@ -68,35 +83,39 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     public final void closeTheDoor() {
         this.checkCreation();
         int i = 0;
-        for (Pair<Integer, Integer> p : setHome) {
+        for (final Pair<Integer, Integer> p : this.ghostHouse) {
             if (this.myBehaviour.getCurrentPosition().equals(p)) {
                 i++;
             }
         }
             if (i == 0) {
                 this.setWall.add(door);
-                this.closedDoor = true;
+                this.isInside = false;
             }
     }
 
+    @Override
     public final boolean isEatable() {
         this.checkCreation();
         return this.eatable;
     }
 
+    @Override
     public final void returnHome() {
         this.checkCreation();
         this.myBehaviour.setCurrentPosition(this.myBehaviour.getStartPosition());
     }
 
+    @Override
     public final void setEatable(final boolean eatable) {
         this.checkCreation();
         this.eatable = eatable;
-        if (this.eatable) {
-            this.myBehaviour.turnAround(this.myBehaviour.getCurrentDirection());
+        if (this.isEatable()) {
+            this.timeToTurn = true;
         }
     }
 
+    @Override
     public final void blinkyIsDead() {
         this.checkCreation();
         if (this.getName().equals(Ghosts.INKY)) {
@@ -106,6 +125,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         }
     }
 
+    @Override
     public final Ghosts getName() {
         this.checkCreation();
         return this.name;
@@ -123,11 +143,11 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         this.myBehaviour = myBehaviour;
     }
 
-    protected final PairImpl<Integer, Integer> getRelaxTarget() {
+    protected final Pair<Integer, Integer> getRelaxTarget() {
         return this.relaxTarget;
     }
 
-    protected final void setRelaxTarget(final PairImpl<Integer, Integer> relaxTarget) {
+    protected final void setRelaxTarget(final Pair<Integer, Integer> relaxTarget) {
         this.relaxTarget = relaxTarget;
     }
 

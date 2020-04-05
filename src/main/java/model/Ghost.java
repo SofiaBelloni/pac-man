@@ -30,13 +30,6 @@ public interface Ghost extends Entity {
     void setEatable(boolean eatable);
 
     /**
-     * Gets the position.
-     *
-     * @return the position
-     */
-    PairImpl<Integer, Integer> getPosition();
-
-    /**
      * Gets the name.
      *
      * @return the name

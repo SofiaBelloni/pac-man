@@ -14,7 +14,7 @@ public interface GhostBehaviour {
      * @param pacMan the pac man
      * @param blinkyPosition the blinky position
      */
-    void chase(PacMan pacMan, Optional<PairImpl<Integer, Integer>> blinkyPosition);
+    void chase(PacMan pacMan, Optional<Pair<Integer, Integer>> blinkyPosition);
 
     /**
      * Run away algorithm.
@@ -30,11 +30,8 @@ public interface GhostBehaviour {
 
     /**
      * Makes ghost turn around.
-     *
-     * @param dir the current direction
-     * @return the new direction
      */
-    Directions turnAround(Directions dir);
+    void turnAround();
 
 
     /**
@@ -49,19 +46,19 @@ public interface GhostBehaviour {
      *
      * @return the current position
      */
-    PairImpl<Integer, Integer> getCurrentPosition();
+    Pair<Integer, Integer> getCurrentPosition();
 
     /**
      * Sets the current position.
      *
-     * @param newPosition the new position
+     * @param right the new position
      */
-    void setCurrentPosition(PairImpl<Integer, Integer> newPosition);
+    void setCurrentPosition(Pair<Integer, Integer> right);
 
     /**
      * Gets the start position.
      *
      * @return the start position
      */
-    PairImpl<Integer, Integer> getStartPosition();
+    Pair<Integer, Integer> getStartPosition();
 }

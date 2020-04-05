@@ -1,4 +1,5 @@
 package model;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -8,22 +9,22 @@ import java.util.Set;
 */
 public class InkyBehaviour extends GhostAbstractBehaviour {
 
-    private final Set<PairImpl<Integer, Integer>> setWall;
-	private PairImpl<Integer, Integer> chaseTarget;
-	
-	public InkyBehaviour(final Set<PairImpl<Integer, Integer>> setWall, final int xMapSize, final int yMapSize, final PairImpl<Integer, Integer> relaxTarget) {
-		super(setWall, xMapSize, yMapSize);
-		this.setWall = setWall;
-	    this.setRelaxTarget(relaxTarget);
-	    this.setStartPosition(new PairImpl<>(7, 6)); 
-	}
-	
-	private void targetPosition(final PacMan pacMan, final Optional<PairImpl<Integer, Integer>> blinkyPosition) {
-        Pair<Integer, Integer> pacManPosition = pacMan.getPosition();
+    private final Set<Pair<Integer, Integer>> setWall;
+    private Pair<Integer, Integer> chaseTarget;
+
+    public InkyBehaviour(final Set<Pair<Integer, Integer>> setWall, final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize, final Pair<Integer, Integer> relaxTarget) {
+        super(setWall, xMapSize, yMapSize);
+        this.setWall = setWall;
+        this.setRelaxTarget(relaxTarget);
+        this.setStartPosition(ghostHouse.get(3));
+    }
+
+    private void targetPosition(final PacMan pacMan, final Optional<Pair<Integer, Integer>> blinkyPosition) {
+        final Pair<Integer, Integer> pacManPosition = pacMan.getPosition();
         Pair<Integer, Integer> appo;
         int targetX;
         int targetY;
-        Directions pacManDirection = pacMan.getDirection();
+        final Directions pacManDirection = pacMan.getDirection();
         if (pacManDirection.equals(Directions.UP)) {
             appo = new PairImpl<>(pacManPosition.getX(), pacManPosition.getY() + 2);
         } else if (pacManDirection.equals(Directions.RIGHT)) {
@@ -70,7 +71,7 @@ public class InkyBehaviour extends GhostAbstractBehaviour {
     }
 
     @Override
-    public final void chase(final PacMan pacMan, final Optional<PairImpl<Integer, Integer>> blinkyPosition) {
+    public final void chase(final PacMan pacMan, final Optional<Pair<Integer, Integer>> blinkyPosition) {
         if (!moveIfStuck()) {
             if (blinkyPosition.isEmpty()) {
                 this.chaseTarget = pacMan.getPosition();
@@ -81,6 +82,4 @@ public class InkyBehaviour extends GhostAbstractBehaviour {
             this.move(this.chaseTarget, 1);
         }
     }
-
-
 }

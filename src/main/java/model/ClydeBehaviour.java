@@ -1,4 +1,5 @@
 package model;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -8,13 +9,13 @@ import java.util.Set;
 */
 public class ClydeBehaviour extends GhostAbstractBehaviour {
 
-    private PairImpl<Integer, Integer> chaseTarget;
+    private Pair<Integer, Integer> chaseTarget;
     private static final int PACMANRADIUS = 7;
 
-    public ClydeBehaviour(final Set<PairImpl<Integer, Integer>> setWall, final int xMap, final int yMap, final PairImpl<Integer, Integer> relaxTarget) {
+    public ClydeBehaviour(final Set<Pair<Integer, Integer>> setWall, final List<Pair<Integer, Integer>> ghostHouse, final int xMap, final int yMap, final Pair<Integer, Integer> relaxTarget) {
         super(setWall, xMap, yMap);
         this.setRelaxTarget(relaxTarget);
-        this.setStartPosition(new PairImpl<>(7, 6)); 
+        this.setStartPosition(ghostHouse.get(1));
     }
 
     private void targetPosition(final PacMan pacMan) {
@@ -27,7 +28,7 @@ public class ClydeBehaviour extends GhostAbstractBehaviour {
     }
 
     @Override
-    public final void chase(final PacMan pacMan, final Optional<PairImpl<Integer, Integer>> blinkyPosition) {
+    public final void chase(final PacMan pacMan, final Optional<Pair<Integer, Integer>> blinkyPosition) {
         if (!moveIfStuck()) {
             this.targetPosition(pacMan);
             this.findPath(this.chaseTarget);

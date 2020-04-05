@@ -13,32 +13,28 @@ import java.util.Set;
  */
 public abstract class GhostAbstractBehaviour implements GhostBehaviour {
 
-    private static final int UPPERBOUND = 10000;
+    private static final int UPPERBOUND = 10_000;
 
-    /**
-     * counter who associate at each position its distance to the currentPosition.
-     */
-    private int i;
     /**
      * counter which is used to subtract the distance of the target in order to 
      * use the findPath method only one time in relax method.
      */
     private int j;
-    private final Set<PairImpl<Integer, Integer>> setWall;
-    private final Map<PairImpl<Integer, Integer>, Integer> map;
+    private final Set<Pair<Integer, Integer>> setWall;
+    private final Map<Pair<Integer, Integer>, Integer> map;
     private boolean isPathFound;
-    private PairImpl<Integer, Integer> startPosition;
-    private PairImpl<Integer, Integer> relaxTarget;
-    private PairImpl<Integer, Integer> up;
-    private PairImpl<Integer, Integer> down;
-    private PairImpl<Integer, Integer> left;
-    private PairImpl<Integer, Integer> right;
+    private Pair<Integer, Integer> startPosition;
+    private Pair<Integer, Integer> relaxTarget;
+    private Pair<Integer, Integer> up;
+    private Pair<Integer, Integer> down;
+    private Pair<Integer, Integer> left;
+    private Pair<Integer, Integer> right;
     private final int xMapSize;
     private final int yMapSize;
     private Directions currentDirection;
-    private PairImpl<Integer, Integer> currentPosition;
+    private Pair<Integer, Integer> currentPosition;
 
-    public GhostAbstractBehaviour(final Set<PairImpl<Integer, Integer>> setWall, final int xMapSize, final int yMapSize) {
+    public GhostAbstractBehaviour(final Set<Pair<Integer, Integer>> setWall, final int xMapSize, final int yMapSize) {
         this.map = new HashMap<>();
         this.setWall = setWall;
         this.xMapSize = xMapSize;
@@ -52,55 +48,56 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
      * This method implements a version of Dijkstra algorithm which is used to find the shortest path 
      * from 2 nodes(in this case the nodes are the positions).
      * 
-     * @param targetPosition
+     * @param pair
      */
-    protected final void findPath(final Pair<Integer, Integer> targetPosition) {
+    protected final void findPath(final Pair<Integer, Integer> pair) {
+        int distance = 0;
         this.isPathFound = false;
-        this.i = 0;
+        distance = 0;
         for (int x = 0; x < this.xMapSize; x++) {
             for (int y = 0; y < this.yMapSize; y++) {
                 this.map.put(new PairImpl<>(x, y), UPPERBOUND);
             }
         }
-        this.map.put(this.currentPosition, this.i++);
+        this.map.put(this.currentPosition, distance++);
         this.setAdj(this.currentPosition);
         if (this.up.getY() < yMapSize && !this.setWall.contains(this.up) && !this.currentDirection.equals(Directions.DOWN)) {
-            this.map.put(this.up, this.i);
+            this.map.put(this.up, distance);
         }
         if (this.down.getY() >= 0 && !this.setWall.contains(this.down) && !this.currentDirection.equals(Directions.UP)) {
-            this.map.put(this.down, this.i);
+            this.map.put(this.down, distance);
         }
         if (this.right.getX() < xMapSize && !this.setWall.contains(this.right) && !this.currentDirection.equals(Directions.LEFT)) {
-            this.map.put(this.right, this.i);
+            this.map.put(this.right, distance);
         }
         if (this.left.getX() >= 0 && !this.setWall.contains(this.left) && !this.currentDirection.equals(Directions.RIGHT)) {
-            this.map.put(this.left, this.i);
+            this.map.put(this.left, distance);
         }
-        if (this.map.get(targetPosition) < UPPERBOUND) {
+        if (this.map.get(pair) < UPPERBOUND) {
             this.isPathFound = true;
         }
         while (!this.isPathFound) {
-            for (Pair<Integer, Integer> p : this.map.keySet()) {
-                if (this.map.get(p).equals(this.i)) {
+            for (final Pair<Integer, Integer> p : this.map.keySet()) {
+                if (this.map.get(p).equals(distance)) {
                     this.setAdj(p);
-                    if (this.up.getY() < yMapSize && !this.setWall.contains(this.up) && this.i < this.map.get(this.up)) {
-                        this.map.put(this.up, this.i + 1);
+                    if (this.up.getY() < yMapSize && !this.setWall.contains(this.up) && distance < this.map.get(this.up)) {
+                        this.map.put(this.up, distance + 1);
                     }
-                    if (this.right.getX() < xMapSize && !this.setWall.contains(this.right) && this.i < this.map.get(this.right)) {
-                        this.map.put(this.right, this.i + 1);
+                    if (this.right.getX() < xMapSize && !this.setWall.contains(this.right) && distance < this.map.get(this.right)) {
+                        this.map.put(this.right, distance + 1);
                     } 
-                    if (this.left.getX() >= 0 && !this.setWall.contains(this.left) && this.i < this.map.get(this.left)) {
-                        this.map.put(this.left, this.i + 1);
+                    if (this.left.getX() >= 0 && !this.setWall.contains(this.left) && distance < this.map.get(this.left)) {
+                        this.map.put(this.left, distance + 1);
                     } 
-                    if (this.down.getY() >= 0 && !this.setWall.contains(this.down) && this.i < this.map.get(this.down)) {
-                        this.map.put(this.down, this.i + 1);
+                    if (this.down.getY() >= 0 && !this.setWall.contains(this.down) && distance < this.map.get(this.down)) {
+                        this.map.put(this.down, distance + 1);
                     }
-                    if (this.map.get(targetPosition) < UPPERBOUND) {
+                    if (this.map.get(pair) < UPPERBOUND) {
                         this.isPathFound = true;
                     }
                 }
             }
-            this.i++;
+            distance++;
         }
     }
 
@@ -110,22 +107,22 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
      * @param targetPosition
      * @param counter
      */
-    protected final void move(final PairImpl<Integer, Integer> targetPosition, final int counter) {
-        Pair<Integer, Integer> lastPosition = this.currentPosition;
+    protected final void move(final Pair<Integer, Integer> targetPosition, final int counter) {
+        final Pair<Integer, Integer> lastPosition = this.currentPosition;
         this.currentPosition = targetPosition;
-        int distance = this.map.get(this.currentPosition);
-        while (distance > counter) {
+        int i = this.map.get(this.currentPosition);
+        while (i > counter) {
             setAdj(this.currentPosition);
-            if (this.up.getY() < yMapSize && !this.setWall.contains(this.up) && this.map.get(this.up).equals(distance - 1)) {
+            if (this.up.getY() < yMapSize && !this.setWall.contains(this.up) && this.map.get(this.up).equals(i - 1)) {
                 this.currentPosition = this.up;
-            } else if (this.right.getX() < xMapSize && !this.setWall.contains(this.right) && this.map.get(this.right).equals(distance - 1)) {
+            } else if (this.right.getX() < xMapSize && !this.setWall.contains(this.right) && this.map.get(this.right).equals(i - 1)) {
                 this.currentPosition = this.right;
-            } else if (this.down.getY() >= 0 && !this.setWall.contains(this.down) && this.map.get(this.down).equals(distance - 1)) {
+            } else if (this.down.getY() >= 0 && !this.setWall.contains(this.down) && this.map.get(this.down).equals(i - 1)) {
                 this.currentPosition = this.down;
-            } else if (this.left.getX() >= 0 && !this.setWall.contains(this.left) && this.map.get(this.left).equals(distance - 1)) {
+            } else if (this.left.getX() >= 0 && !this.setWall.contains(this.left) && this.map.get(this.left).equals(i - 1)) {
                 this.currentPosition = this.left;
             } 
-            distance = this.map.get(this.currentPosition);
+            i = this.map.get(this.currentPosition);
         }
         this.setAdj(this.currentPosition);
         if (lastPosition.equals(this.up)) {
@@ -139,23 +136,24 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         }
     }
 
+    @Override
     public final void runAway() {
-        Pair<Integer, Integer> oldPosition = this.currentPosition;
+        final Random r = new Random();
+        final Pair<Integer, Integer> oldPosition = this.currentPosition;
         this.setAdj(this.currentPosition);
-        Map<Directions, PairImpl<Integer, Integer>> map = new HashMap<>();
+        final Map<Directions, Pair<Integer, Integer>> map = new HashMap<>();
+        Map<Directions, Pair<Integer, Integer>> map2;
         map.put(Directions.UP, this.up);
         map.put(Directions.RIGHT, this.right);
         map.put(Directions.DOWN, this.down);
         map.put(Directions.LEFT, this.left);
-        Map<Directions, PairImpl<Integer, Integer>> map2;
         while (this.currentPosition.equals(oldPosition)) {
-            for (Directions dir : map.keySet()) {
+            for (final Directions dir : map.keySet()) {
                 if (this.currentDirection.equals(dir)) {
                     map2 = new HashMap<>(map);
-                    map2.remove(this.turnAround(dir));
-                    List<Directions> list = new ArrayList<>(map2.keySet());
-                    Random r = new Random();
-                    Directions randomDir = list.get(r.nextInt(3));
+                    map2.remove(this.oppositeDir(dir));
+                    final List<Directions> list = new ArrayList<>(map2.keySet());
+                    final Directions randomDir = list.get(r.nextInt(3));
                     if (!this.setWall.contains(map2.get(randomDir))) {
                         this.currentPosition = map2.get(randomDir);
                         this.currentDirection = randomDir;
@@ -165,6 +163,7 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         }
     }
 
+    @Override
     public final void relax() {
         if (!this.isPathFound) {
             this.findPath(this.relaxTarget);
@@ -181,22 +180,22 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
     protected final boolean moveIfStuck() {
         setAdj(this.currentPosition);
         if (this.currentDirection.equals(Directions.UP) 
-                && (this.setWall.contains(this.left) && this.setWall.contains(this.right))) {
+                && this.setWall.contains(this.left) && this.setWall.contains(this.right)) {
             this.setCurrentPosition(this.up);
             return true;
         }
         if (this.currentDirection.equals(Directions.DOWN) 
-                && (this.setWall.contains(this.left) && this.setWall.contains(this.right))) {
+                && this.setWall.contains(this.left) && this.setWall.contains(this.right)) {
             this.setCurrentPosition(this.down);
             return true;
         }
         if (this.currentDirection.equals(Directions.UP) 
-                && (this.setWall.contains(this.up) && this.setWall.contains(this.down))) {
+                && this.setWall.contains(this.up) && this.setWall.contains(this.down)) {
             this.setCurrentPosition(this.left);
             return true;
         }
         if (this.currentDirection.equals(Directions.UP) 
-                && (this.setWall.contains(this.up) && this.setWall.contains(this.down))) {
+                && this.setWall.contains(this.up) && this.setWall.contains(this.down)) {
             this.setCurrentPosition(this.right);
             return true;
         }
@@ -210,23 +209,41 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         right = new PairImpl<>(position.getX() + 1, position.getY());
     }
 
-    public final Directions turnAround(final Directions dir) {
+    private Directions oppositeDir(final Directions dir) {
         if (dir.equals(Directions.UP)) {
             return Directions.DOWN;
-        } else if (dir.equals(Directions.RIGHT)) {
-            return Directions.LEFT;
+        } else if (dir.equals(Directions.LEFT)) {
+            return Directions.RIGHT;
         } else if (dir.equals(Directions.DOWN)) {
             return Directions.UP;
         } else {
-            return Directions.RIGHT;
+            return Directions.LEFT;
         }
     }
 
-    protected final PairImpl<Integer, Integer> getRelaxTarget() {
+    @Override
+    public final void turnAround() {
+        this.setAdj(this.currentPosition);
+        if (this.getCurrentDirection().equals(Directions.UP)) {
+                this.setCurrentPosition(this.down);
+                this.currentDirection = Directions.DOWN;
+        } else if (this.getCurrentDirection().equals(Directions.RIGHT)) {
+            this.setCurrentPosition(this.left);
+            this.currentDirection = Directions.LEFT;
+        } else if (this.getCurrentDirection().equals(Directions.DOWN)) {
+            this.setCurrentPosition(this.up);
+            this.currentDirection = Directions.UP;
+        } else {
+            this.setCurrentPosition(this.right);
+            this.currentDirection = Directions.RIGHT;
+        }
+    }
+
+    protected final Pair<Integer, Integer> getRelaxTarget() {
         return relaxTarget;
     }
 
-    protected final void setRelaxTarget(final PairImpl<Integer, Integer> relaxTarget) {
+    protected final void setRelaxTarget(final Pair<Integer, Integer> relaxTarget) {
         this.relaxTarget = relaxTarget;
     }
 
@@ -238,24 +255,27 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         return this.yMapSize;
     }
 
-
+    @Override
     public final Directions getCurrentDirection() {
         return this.currentDirection;
     }
 
-    public final PairImpl<Integer, Integer> getCurrentPosition() {
+    @Override
+    public final Pair<Integer, Integer> getCurrentPosition() {
         return this.currentPosition;
     }
 
-    public final void setCurrentPosition(final PairImpl<Integer, Integer> newPosition) {
-        this.currentPosition = newPosition;
+    @Override
+    public final void setCurrentPosition(final Pair<Integer, Integer> right2) {
+        this.currentPosition = right2;
     }
 
-    public final PairImpl<Integer, Integer> getStartPosition() {
+    @Override
+    public final Pair<Integer, Integer> getStartPosition() {
         return this.startPosition;
     }
 
-    protected final void setStartPosition(final PairImpl<Integer, Integer> startPosition) {
+    protected final void setStartPosition(final Pair<Integer, Integer> startPosition) {
         this.currentPosition = startPosition;
         this.startPosition = startPosition;
     }

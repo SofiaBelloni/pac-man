@@ -1,4 +1,5 @@
 package model;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -8,13 +9,14 @@ import java.util.Set;
 */
 public class BlinkyBehaviour extends GhostAbstractBehaviour {
 
-    public BlinkyBehaviour(final Set<PairImpl<Integer, Integer>> setWall, final int xMapSize, final int yMapSize, final PairImpl<Integer, Integer> relaxTarget) {
+    public BlinkyBehaviour(final Set<Pair<Integer, Integer>> setWall, final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize, final Pair<Integer, Integer> relaxTarget) {
         super(setWall, xMapSize, yMapSize);
         this.setRelaxTarget(relaxTarget);
-        this.setStartPosition(new PairImpl<>(7, 6)); 
+        this.setStartPosition(ghostHouse.get(0));
     }
 
-    public final void chase(final PacMan pacMan, final Optional<PairImpl<Integer, Integer>> blinkyPosition) {
+    @Override
+    public final void chase(final PacMan pacMan, final Optional<Pair<Integer, Integer>> blinkyPosition) {
         if (!moveIfStuck()) {
             this.findPath(pacMan.getPosition());
             this.move(pacMan.getPosition(), 1);

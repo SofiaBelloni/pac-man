@@ -2,34 +2,35 @@ package model;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.List;
 
 /**
  * this class implements factory for creating Ghost objects.
  *
  */
 public final class GhostFactoryImpl implements GhostFactory {
-    private final Set<PairImpl<Integer, Integer>> setWalls;
-    private final Set<PairImpl<Integer, Integer>> setHome;
-    private int xMapSize;
-    private int yMapSize;
-    private PairImpl<Integer, Integer> door;
+    private final Set<Pair<Integer, Integer>> walls;
+    private final List<Pair<Integer, Integer>> ghostHouse;
+    private final int xMapSize;
+    private final int yMapSize;
+    private final Pair<Integer, Integer> door;
 
-    private GhostFactoryImpl(final Set<PairImpl<Integer, Integer>> setWalls, final Set<PairImpl<Integer,
-            Integer>> setHome, final int xMapSize, final int yMapSize,
-            final PairImpl<Integer, Integer> door) {
-        this.setWalls = setWalls;
-        this.setHome = setHome;
+    private GhostFactoryImpl(final Set<Pair<Integer, Integer>> walls, final List<Pair<Integer,
+            Integer>> ghostHouse, final int xMapSize, final int yMapSize,
+            final Pair<Integer, Integer> door) {
+        this.walls = walls;
+        this.ghostHouse = ghostHouse;
         this.xMapSize = xMapSize;
         this.yMapSize = yMapSize;
         this.door = door;
     }
 
     public static class Builder {
-        private Optional<Set<PairImpl<Integer, Integer>>> setWalls = Optional.empty();
-        private Optional<Set<PairImpl<Integer, Integer>>> setHome = Optional.empty();
+        private Optional<Set<Pair<Integer, Integer>>> walls = Optional.empty();
+        private Optional<List<Pair<Integer, Integer>>> ghostHouse = Optional.empty();
         private Optional<Integer> xMapSize = Optional.empty();
         private Optional<Integer> yMapSize = Optional.empty();
-        private Optional<PairImpl<Integer, Integer>> door = Optional.empty();
+        private Optional<Pair<Integer, Integer>> door = Optional.empty();
 
         /**
          * Used by the builder to check if the Optional fields are correctly assigned.
@@ -57,31 +58,30 @@ public final class GhostFactoryImpl implements GhostFactory {
          * @param door a pair containing the x,y position 
          * @return this
          */
-        public Builder door(final PairImpl<Integer, Integer> door) {
+        public Builder door(final Pair<Integer, Integer> door) {
             this.door = Optional.of(door);
             return this;
         }
 
         /**
          * 
-         * @param setWalls a set containing the coordinates of the walls
+         * @param walls a set containing the coordinates of the walls
          * @return this
          */
-        public Builder setWalls(final Set<PairImpl<Integer, Integer>> setWalls) {
-            this.setWalls = Optional.of(setWalls);
+        public Builder walls(final Set<Pair<Integer, Integer>> walls) {
+            this.walls = Optional.of(walls);
             return this;
         }
 
         /**
          * 
-         * @param setHome a set containing the coordinates where you can go
+         * @param ghostHouse a set containing the coordinates where you can go
          * @return this
          */
-        public Builder setHome(final Set<PairImpl<Integer, Integer>> setHome) {
-            this.setHome = Optional.of(setHome);
+        public Builder ghostHouse(final List<Pair<Integer, Integer>> ghostHouse) {
+            this.ghostHouse = Optional.of(ghostHouse);
             return this;
         }
-
 
         /**
          * 
@@ -89,37 +89,39 @@ public final class GhostFactoryImpl implements GhostFactory {
          * @throws IllegalStateException if some parameter is missed
          */
         public GhostFactoryImpl build() {
-            check(this.setWalls.isPresent());
-            check(this.setHome.isPresent());
+            check(this.walls.isPresent());
+            check(this.ghostHouse.isPresent());
             check(this.xMapSize.isPresent());
             check(this.yMapSize.isPresent());
             check(this.door.isPresent());
 
-            return new GhostFactoryImpl(this.setWalls.get(), this.setHome.get(), this.xMapSize.get(),
+            return new GhostFactoryImpl(this.walls.get(), this.ghostHouse.get(), this.xMapSize.get(),
                     this.yMapSize.get(), this.door.get());
         }
     }
 
     @Override
     public Ghost blinky() { 
-        return new GhostAbstractImpl(this.setWalls, this.setHome, this.xMapSize, this.yMapSize, this.door) {
+        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize, this.door) {
+            @Override
             public void create() {
                 this.setCreated();
                 this.setName(Ghosts.BLINKY);
                 this.setRelaxTarget(new PairImpl<>(xMapSize - 1, yMapSize - 1));
-                this.setMyBehaviour(new BlinkyBehaviour(setWalls, xMapSize, yMapSize, this.getRelaxTarget()));
+                this.setMyBehaviour(new BlinkyBehaviour(walls, ghostHouse, xMapSize, yMapSize, this.getRelaxTarget()));
             }
         };
     }
 
     @Override
     public Ghost pinky() {
-        return new GhostAbstractImpl(this.setWalls, this.setHome, this.xMapSize, this.yMapSize, this.door) {
+        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize, this.door) {
+            @Override
             public void create() {
                 this.setCreated();
                 this.setName(Ghosts.PINKY);
                 this.setRelaxTarget(new PairImpl<>(0, yMapSize - 1));
-                this.setMyBehaviour(new PinkyBehaviour(setWalls, xMapSize, yMapSize, this.getRelaxTarget()));
+                this.setMyBehaviour(new PinkyBehaviour(walls, ghostHouse, xMapSize, yMapSize, this.getRelaxTarget()));
             }
         };
     }
@@ -129,24 +131,26 @@ public final class GhostFactoryImpl implements GhostFactory {
         if (!blink.getName().equals(Ghosts.BLINKY)) {
             throw new IllegalStateException("Insert Blinky");
         }
-        return new GhostAbstractImpl(this.setWalls, this.setHome, this.xMapSize, this.yMapSize, this.door) {
+        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize, this.door) {
+            @Override
             public void create() {
                 this.setCreated();
                 this.setName(Ghosts.INKY);
                 this.setRelaxTarget(new PairImpl<>(xMapSize - 1, 0));
-                this.setMyBehaviour(new InkyBehaviour(setWalls, xMapSize, yMapSize, this.getRelaxTarget()));
+                this.setMyBehaviour(new InkyBehaviour(walls, ghostHouse, xMapSize, yMapSize, this.getRelaxTarget()));
             }
         };
     }
 
     @Override
     public Ghost clyde() {
-        return new GhostAbstractImpl(this.setWalls, this.setHome, this.xMapSize, this.yMapSize, this.door) {
+        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize, this.door) {
+            @Override
             public void create() {
                 this.setCreated();
                 this.setName(Ghosts.CLYDE);
                 this.setRelaxTarget(new PairImpl<>(0, 0));
-                this.setMyBehaviour(new ClydeBehaviour(setWalls, xMapSize, yMapSize, this.getRelaxTarget()));
+                this.setMyBehaviour(new ClydeBehaviour(walls, ghostHouse, xMapSize, yMapSize, this.getRelaxTarget()));
             }
         };
     }
