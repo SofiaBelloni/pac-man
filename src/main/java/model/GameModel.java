@@ -1,5 +1,6 @@
 package model;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ public interface GameModel {
     /**
      * @return a Set containing all the ghosts positions.
      */
-    Map<Ghosts, Set<Pair<Integer, Integer>>> getGhostsPositions();
+    Map<Ghosts, List<Pair<Integer, Integer>>> getGhostsPositions();
     /**
      * @return a Set containing the wall's positions;
      */
