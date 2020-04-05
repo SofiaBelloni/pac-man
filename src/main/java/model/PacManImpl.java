@@ -8,12 +8,14 @@ public final class PacManImpl extends EntityAbstractImpl implements PacMan {
     private Directions currentDirection;
     private int lives;
     private Pair<Integer, Integer> position;
+    private Pair<Integer, Integer> startPosition;
     private final Set<Pair<Integer, Integer>> noWalls;
 
     private PacManImpl(final int xMapSize, final int yMapSize, final Pair<Integer, Integer> startPosition,
             final int lives, final Set<Pair<Integer, Integer>> noWalls, final Directions currentDirection) {
         super(xMapSize, yMapSize);
         this.noWalls = noWalls;
+        this.startPosition = startPosition;
         this.position = startPosition;
         this.currentDirection = currentDirection;
         this.lives = lives;
@@ -26,6 +28,7 @@ public final class PacManImpl extends EntityAbstractImpl implements PacMan {
         private Optional<Integer> lives = Optional.empty();
         private Optional<Set<Pair<Integer, Integer>>> noWalls = Optional.empty();
         private Optional<Directions> currentDirection = Optional.empty();
+        private boolean built = false;
 
         /**
          * Used by the builder to check if the Optional fields are correctly assigned.
@@ -95,12 +98,14 @@ public final class PacManImpl extends EntityAbstractImpl implements PacMan {
          * @throws IllegalStateException if some parameter is missed
          */
         public PacManImpl build() {
+            check(!this.built);
             check(this.xMapSize.isPresent());
             check(this.yMapSize.isPresent());
             check(this.lives.isPresent());
             check(this.startPosition.isPresent());
             check(this.currentDirection.isPresent());
             check(this.noWalls.isPresent());
+            this.built = true;
 
             return new PacManImpl(this.xMapSize.get(), this.yMapSize.get(), this.startPosition.get(), 
                     this.lives.get(), this.noWalls.get(), this.currentDirection.get());
@@ -113,7 +118,7 @@ public final class PacManImpl extends EntityAbstractImpl implements PacMan {
     @Override
     public void nextPosition() {
         Pair<Integer, Integer> next = this.convertToToroidal(this.calculateNextPosition());
-        if (this.getNoWalls().contains(next)) {
+        if (this.noWalls.contains(next)) {
             this.setPosition(next);
             }
     }
@@ -158,6 +163,7 @@ public final class PacManImpl extends EntityAbstractImpl implements PacMan {
     @Override
     public void kill() {
         this.lives = this.lives - 1;
+        this.position = this.startPosition;
     }
 
     @Override
@@ -172,14 +178,6 @@ public final class PacManImpl extends EntityAbstractImpl implements PacMan {
      */
     private void setPosition(final Pair<Integer, Integer> position) {
         this.position = position;
-    }
-
-    /**
-     * 
-     * @return a set containing the positions where PacMan can go.
-     */
-    private Set<Pair<Integer, Integer>> getNoWalls() {
-        return this.noWalls;
     }
 
 }
