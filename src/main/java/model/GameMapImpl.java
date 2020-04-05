@@ -19,6 +19,7 @@ public final class GameMapImpl implements GameMap {
     private final int xMapSize;
     private final int yMapSize;
     private final Pair<Integer, Integer> pacManStartPosition;
+    private final Set<Pair<Integer, Integer>> initialPillsPostion;
 
     private GameMapImpl(final int xMapSize, final int yMapSize,
             final Set<Pair<Integer, Integer>> walls,
@@ -30,6 +31,7 @@ public final class GameMapImpl implements GameMap {
         this.xMapSize = xMapSize;
         this.yMapSize = yMapSize;
         this.pacManStartPosition = pacManStartPosition;
+        this.initialPillsPostion = pills;
         this.gameMap = new HashMap<>();
         walls.forEach(x -> this.gameMap.put(x, ImmobileEntities.WALL));
         pills.forEach(x -> this.gameMap.put(x, ImmobileEntities.PILL));
@@ -176,5 +178,10 @@ public final class GameMapImpl implements GameMap {
         PILL,
         FREE,
         GHOSTS_HOUSE
+    }
+
+    @Override
+    public void restorePills() {
+        this.initialPillsPostion.forEach(x -> this.gameMap.put(x, ImmobileEntities.PILL));
     }
 }

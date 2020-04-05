@@ -24,7 +24,7 @@ public interface GameMap {
      */
     Set<Pair<Integer, Integer>> getGhostHousePosition();
     /**
-     * @return free positions (no wall, pill, or ghost house)
+     * @return free positions (no wall or ghost house)
      */
     Set<Pair<Integer, Integer>> getNoWallsPositions();
     /**
@@ -48,4 +48,8 @@ public interface GameMap {
      * @return the initial position of PacMan
      */
     Pair<Integer, Integer> getPacManStartPosition();
+    /*
+     * restores the pills in the map
+     */
+    void restorePills();
 }

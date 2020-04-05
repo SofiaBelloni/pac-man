@@ -1,8 +1,13 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class GameModelImpl implements GameModel {
 
@@ -40,9 +45,29 @@ public class GameModelImpl implements GameModel {
     }
 
     @Override
-    public final Map<Ghosts, Set<Pair<Integer, Integer>>> getGhostsPositions() {
-        // TODO Auto-generated method stub
-        return null;
+    public final Map<Ghosts, List<Pair<Integer, Integer>>> getGhostsPositions() {
+        Map<Ghosts, List<Pair<Integer, Integer>>> ghostsPositions = new HashMap<>();
+        ghostsPositions.put(Ghosts.BLINKY, new ArrayList<Pair<Integer, Integer>>());
+        ghostsPositions.put(Ghosts.INKY, new ArrayList<Pair<Integer, Integer>>());
+        ghostsPositions.put(Ghosts.PINKY, new ArrayList<Pair<Integer, Integer>>());
+        ghostsPositions.put(Ghosts.CLYDE, new ArrayList<Pair<Integer, Integer>>());
+        this.ghosts.stream()
+        .filter(x -> x.getName().equals(Ghosts.BLINKY))
+        .forEach(x -> ghostsPositions.get(Ghosts.BLINKY)
+        .add(x.getPosition()));
+        this.ghosts.stream()
+        .filter(x -> x.getName().equals(Ghosts.CLYDE))
+        .forEach(x -> ghostsPositions.get(Ghosts.CLYDE)
+        .add(x.getPosition()));
+        this.ghosts.stream()
+        .filter(x -> x.getName().equals(Ghosts.INKY))
+        .forEach(x -> ghostsPositions.get(Ghosts.INKY)
+        .add(x.getPosition()));
+        this.ghosts.stream()
+        .filter(x -> x.getName().equals(Ghosts.PINKY))
+        .forEach(x -> ghostsPositions.get(Ghosts.PINKY)
+        .add(x.getPosition()));
+        return ghostsPositions;
     }
 
     @Override
@@ -51,6 +76,7 @@ public class GameModelImpl implements GameModel {
         this.ghosts.forEach(x -> x.nextPosition(this.pacMan));
         if (this.ghosts.stream().anyMatch(x -> x.getPosition().equals(this.pacMan.getPosition()))) {
             this.pacMan.kill();
+            this.ghosts.forEach(x -> x.returnHome());
         }
         if (this.gameMap.isPill(this.getPacManPosition())) {
             this.gameMap.removePill(this.pacMan.getPosition());
@@ -104,5 +130,8 @@ public class GameModelImpl implements GameModel {
 
     private void nextLevel() {
         this.levelNumber = this.levelNumber + 1;
+        this.ghosts.forEach(x -> x.returnHome());
+        this.gameMap.restorePills();
+        //pacman
     }
 }
