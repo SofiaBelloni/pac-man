@@ -1,6 +1,9 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +31,6 @@ public class TestGameMapBuilding {
     @Test
     public void builderNotEmpty() {
         Set<Pair<Integer, Integer>> walls = new HashSet<>();
-        Set<Pair<Integer, Integer>> free = new HashSet<>();
         Set<Pair<Integer, Integer>> pills = new HashSet<>();
         Set<Pair<Integer, Integer>> ghostsHouse = new HashSet<>();
         for (int i = 0; i < 40; i++) {
@@ -43,10 +45,6 @@ public class TestGameMapBuilding {
                 pills.add(new PairImpl<Integer, Integer>(i, j));
             }
         }
-        for (int i = 3; i < 40; i++) {
-            free.add(new PairImpl<Integer, Integer>(i, 20));
-        }
-        free.addAll(pills);
         GameMap gameMap = new GameMapImpl.Builder()
                 .mapSize(XMAPSIZE, YMAPSIZE)
                 .walls(walls)
@@ -58,6 +56,9 @@ public class TestGameMapBuilding {
         assertEquals(gameMap.getGhostHousePosition(), ghostsHouse);
         assertEquals(gameMap.getWallsPositions(), walls);
         assertEquals(gameMap.getPillsPositions(), pills);
-        assertEquals(gameMap.getNoWallsPositions(), Set.of(free, pills));
+        assertEquals(gameMap.getPacManStartPosition(), new PairImpl<Integer, Integer>(2, 20));
+        assertFalse(gameMap.getNoWallsPositions().contains(gameMap.getWallsPositions()));
+        assertTrue(gameMap.getNoWallsPositions().containsAll(pills));
+        assertTrue(gameMap.getNoWallsPositions().contains(new PairImpl<Integer, Integer>(2, 20)));
     }
 }
