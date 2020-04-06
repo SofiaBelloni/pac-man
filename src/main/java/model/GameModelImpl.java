@@ -6,8 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 public class GameModelImpl implements GameModel {
 
@@ -24,7 +22,9 @@ public class GameModelImpl implements GameModel {
     private int levelTime;
 
     public GameModelImpl() {
-        this.gameMap = new GameMapImpl.Builder().build();
+        this.gameMap = new GameMapImpl.Builder()
+                .mapSize(X_MAP_SIZE, Y_MAP_SIZE)
+                .build();
         this.ghosts = new HashSet<>();
         this.pacMan = new PacManImpl.Builder()
                             .currentDirection(Directions.LEFT)
@@ -46,7 +46,7 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final Map<Ghosts, List<Pair<Integer, Integer>>> getGhostsPositions() {
-        Map<Ghosts, List<Pair<Integer, Integer>>> ghostsPositions = new HashMap<>();
+        final Map<Ghosts, List<Pair<Integer, Integer>>> ghostsPositions = new HashMap<>();
         ghostsPositions.put(Ghosts.BLINKY, new ArrayList<Pair<Integer, Integer>>());
         ghostsPositions.put(Ghosts.INKY, new ArrayList<Pair<Integer, Integer>>());
         ghostsPositions.put(Ghosts.PINKY, new ArrayList<Pair<Integer, Integer>>());
