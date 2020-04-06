@@ -28,7 +28,7 @@ public class TestGameMapBuilding {
     @Test
     public void builderNotEmpty() {
         Set<Pair<Integer, Integer>> walls = new HashSet<>();
-        Set<Pair<Integer, Integer>> noWalls = new HashSet<>();
+        Set<Pair<Integer, Integer>> free = new HashSet<>();
         Set<Pair<Integer, Integer>> pills = new HashSet<>();
         Set<Pair<Integer, Integer>> ghostsHouse = new HashSet<>();
         for (int i = 0; i < 40; i++) {
@@ -43,19 +43,21 @@ public class TestGameMapBuilding {
                 pills.add(new PairImpl<Integer, Integer>(i, j));
             }
         }
-        for (int i = 2; i < 40; i++) {
-            noWalls.add(new PairImpl<Integer, Integer>(i, 20));
+        for (int i = 3; i < 40; i++) {
+            free.add(new PairImpl<Integer, Integer>(i, 20));
         }
-        noWalls.addAll(pills);
+        free.addAll(pills);
         GameMap gameMap = new GameMapImpl.Builder()
                 .mapSize(XMAPSIZE, YMAPSIZE)
                 .walls(walls)
                 .ghostsHouse(ghostsHouse)
                 .pills(pills)
+                .pacManStartPosition(new PairImpl<Integer, Integer>(2, 20))
+                .pillScore(10)
                 .build();
         assertEquals(gameMap.getGhostHousePosition(), ghostsHouse);
         assertEquals(gameMap.getWallsPositions(), walls);
         assertEquals(gameMap.getPillsPositions(), pills);
-        assertEquals(gameMap.getNoWallsPositions(), noWalls);
+        assertEquals(gameMap.getNoWallsPositions(), Set.of(free, pills));
     }
 }
