@@ -43,8 +43,9 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     @Override
     public final void nextPosition(final PacMan pacMan) {
         this.checkCreation();
-        if (isInside) {
-            this.closeTheDoor();
+        if (isInside && !this.ghostHouse.contains(this.getPosition())) {
+            this.setWall.add(door);
+            this.isInside = false;
         }
         if (this.eatable) {
             if (this.timeToTurn) {
@@ -71,27 +72,13 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
                 }
             }
         }
-        this.myBehaviour.setCurrentPosition(this.convertToToroidal(this.myBehaviour.getCurrentPosition()));
+        this.myBehaviour.setCurrentPosition(this.convertToToroidal(this.getPosition()));
     }
 
     @Override
     public final Pair<Integer, Integer> getPosition() {
         this.checkCreation();
         return this.myBehaviour.getCurrentPosition();
-    }
-
-    public final void closeTheDoor() {
-        this.checkCreation();
-        int i = 0;
-        for (final Pair<Integer, Integer> p : this.ghostHouse) {
-            if (this.myBehaviour.getCurrentPosition().equals(p)) {
-                i++;
-            }
-        }
-            if (i == 0) {
-                this.setWall.add(door);
-                this.isInside = false;
-            }
     }
 
     @Override
