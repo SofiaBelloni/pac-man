@@ -9,25 +9,28 @@ import org.junit.Test;
 
 import model.GameMap;
 import model.GameMapImpl;
+import model.Pair;
 import model.PairImpl;
 
 public class TestGameMapBuilding {
 
     private static final int XMAPSIZE = 40;
     private static final int YMAPSIZE = 40;
-    
+
     @Test(expected = IllegalStateException.class)
     public void testBuilderNoFields() {
         @SuppressWarnings("unused")
-        final GameMap gameMap = new GameMapImpl.Builder(XMAPSIZE, XMAPSIZE).build();
+        final GameMap gameMap = new GameMapImpl.Builder()
+        .mapSize(XMAPSIZE, YMAPSIZE)
+        .build();
     }
-    
+
     @Test
     public void builderNotEmpty() {
-        Set<PairImpl<Integer, Integer>> walls = new HashSet<>();
-        Set<PairImpl<Integer, Integer>> noWalls = new HashSet<>();
-        Set<PairImpl<Integer, Integer>> pills = new HashSet<>();
-        Set<PairImpl<Integer, Integer>> ghostsHouse = new HashSet<>();
+        Set<Pair<Integer, Integer>> walls = new HashSet<>();
+        Set<Pair<Integer, Integer>> noWalls = new HashSet<>();
+        Set<Pair<Integer, Integer>> pills = new HashSet<>();
+        Set<Pair<Integer, Integer>> ghostsHouse = new HashSet<>();
         for (int i = 0; i < 40; i++) {
             for (int j = 0; j < 20; j++) {
                 walls.add(new PairImpl<Integer, Integer>(i, j));
@@ -44,7 +47,8 @@ public class TestGameMapBuilding {
             noWalls.add(new PairImpl<Integer, Integer>(i, 20));
         }
         noWalls.addAll(pills);
-        GameMap gameMap = new GameMapImpl.Builder(XMAPSIZE, YMAPSIZE)
+        GameMap gameMap = new GameMapImpl.Builder()
+                .mapSize(XMAPSIZE, YMAPSIZE)
                 .walls(walls)
                 .ghostsHouse(ghostsHouse)
                 .pills(pills)
