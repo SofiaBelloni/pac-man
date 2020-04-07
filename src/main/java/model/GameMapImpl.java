@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * This class is used to manage the map of the game, with walls pills, etc.
@@ -15,33 +17,27 @@ public final class GameMapImpl implements GameMap {
      * This field defines the score of each pill.
      */
     private final int pillScore;
-    private final Map<Pair<Integer, Integer>, PositionType> gameMap;
+    private final Map<TileType, Set<Pair<Integer, Integer>>> gameMap;
     private final int xMapSize;
     private final int yMapSize;
-    private final Pair<Integer, Integer> pacManStartPosition;
     private final Set<Pair<Integer, Integer>> initialPillsPostion;
 
-    private GameMapImpl(final int xMapSize, final int yMapSize,
+    private GameMapImpl(final int xMapSize,
+            final int yMapSize,
+            final int pillPoints,
             final Set<Pair<Integer, Integer>> walls,
             final Set<Pair<Integer, Integer>> pills,
             final Set<Pair<Integer, Integer>> ghostsHouse,
-            final int pillPoints,
             final Pair<Integer, Integer> pacManStartPosition) {
         this.pillScore = pillPoints;
         this.xMapSize = xMapSize;
         this.yMapSize = yMapSize;
-        this.pacManStartPosition = pacManStartPosition;
         this.initialPillsPostion = pills;
         this.gameMap = new HashMap<>();
-        walls.forEach(x -> this.gameMap.put(x, PositionType.WALL));
-        pills.forEach(x -> this.gameMap.put(x, PositionType.PILL));
-        ghostsHouse.forEach(x -> this.gameMap.put(x, PositionType.GHOSTS_HOUSE));
-        this.gameMap.put(pacManStartPosition, PositionType.FREE);
-//        for (int i = 0; i < xMapSize; i++) {
-//            for (int j = 0; j < yMapSize; j++) {
-//                this.gameMap.putIfAbsent(new PairImpl<Integer, Integer>(i, j), ImmobileEntities.FREE);
-//            }
-//        }
+        this.gameMap.put(TileType.PACMAN_START, Set.of(pacManStartPosition));
+        this.gameMap.put(TileType.WALL, walls);
+        this.gameMap.put(TileType.PILL, pills);
+        this.gameMap.put(TileType.GHOSTS_HOUSE, ghostsHouse);
     }
     /**
      * This class uses builder pattern to build GameMapImpl objects.
@@ -96,57 +92,51 @@ public final class GameMapImpl implements GameMap {
 
         @Override
         public final GameMapImpl build() {
-            if (this.ghostsHouse.isEmpty() || this.pills.isEmpty() || this.walls.isEmpty()
-                    || this.xMapSize.isEmpty() || this.yMapSize.isEmpty()
-                    || this.pillScore.isEmpty() || this.pacManStartPosition.isEmpty()) {
+            if (this.ghostsHouse.isEmpty()
+                    || this.pills.isEmpty()
+                    || this.walls.isEmpty()
+                    || this.xMapSize.isEmpty()
+                    || this.yMapSize.isEmpty()
+                    || this.pillScore.isEmpty()
+                    || this.pacManStartPosition.isEmpty()) {
                 throw new IllegalStateException();
             }
-            return new GameMapImpl(this.xMapSize.get(), this.yMapSize.get(),
-                    this.walls.get(), this.pills.get(), this.ghostsHouse.get(),
-                    this.pillScore.get(), this.pacManStartPosition.get());
+            return new GameMapImpl(this.xMapSize.get(),
+                    this.yMapSize.get(),
+                    this.pillScore.get(),
+                    this.walls.get(),
+                    this.pills.get(),
+                    this.ghostsHouse.get(),
+                    this.pacManStartPosition.get());
         }
     }
 
     @Override
     public void removePill(final Pair<Integer, Integer> position) {
-        this.gameMap.put(position, PositionType.FREE);
+        this.gameMap.get(TileType.PILL).remove(position);
+        this.gameMap.get(TileType.FREE).add(position);
     }
 
     @Override
     public Set<Pair<Integer, Integer>> getWallsPositions() {
-        final Set<Pair<Integer, Integer>> walls = new HashSet<>();
-        this.gameMap.entrySet().stream()
-        .filter(x -> x.getValue().equals(PositionType.WALL))
-        .forEach(x -> walls.add(x.getKey()));
-        return walls;
+        return this.gameMap.get(TileType.WALL);
     }
 
     @Override
     public Set<Pair<Integer, Integer>> getPillsPositions() {
-        final Set<Pair<Integer, Integer>> pills = new HashSet<>();
-        this.gameMap.entrySet().stream()
-        .filter(x -> x.getValue().equals(PositionType.PILL))
-        .forEach(x -> pills.add(x.getKey()));
-        return pills;
+        return this.gameMap.get(TileType.PILL);
     }
 
     @Override
     public Set<Pair<Integer, Integer>> getGhostHousePosition() {
-        final Set<Pair<Integer, Integer>> ghostHouse = new HashSet<>();
-        this.gameMap.entrySet().stream()
-        .filter(x -> x.getValue().equals(PositionType.GHOSTS_HOUSE))
-        .forEach(x -> ghostHouse.add(x.getKey()));
-        return ghostHouse;
+        return this.gameMap.get(TileType.PACMAN_START);
     }
 
     @Override
     public Set<Pair<Integer, Integer>> getNoWallsPositions() {
-        final Set<Pair<Integer, Integer>> noWalls = new HashSet<>();
-        this.gameMap.entrySet().stream()
-        .filter(x -> x.getValue().equals(PositionType.FREE))
-        .forEach(x -> noWalls.add(x.getKey()));
-        noWalls.addAll(this.getPillsPositions());
-        return noWalls;
+        return Stream.concat(this.getPillsPositions().stream(),
+                this.gameMap.get(TileType.FREE).stream())
+                .collect(Collectors.toSet());
     }
 
     @Override
@@ -171,18 +161,20 @@ public final class GameMapImpl implements GameMap {
 
     @Override
     public Pair<Integer, Integer> getPacManStartPosition() {
-        return this.pacManStartPosition;
+        return this.gameMap.get(TileType.PACMAN_START).iterator().next();
     }
 
     @Override
     public void restorePills() {
-        this.initialPillsPostion.forEach(x -> this.gameMap.put(x, PositionType.PILL));
+        this.gameMap.get(TileType.FREE).removeAll(this.initialPillsPostion);
+        this.gameMap.put(TileType.PILL, Set.copyOf(this.initialPillsPostion));
     }
 
-    enum PositionType {
+    enum TileType {
         WALL,
         PILL,
-        FREE,
-        GHOSTS_HOUSE
+        GHOSTS_HOUSE,
+        PACMAN_START,
+        FREE
     }
 }
