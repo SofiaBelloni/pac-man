@@ -45,6 +45,34 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
     }
 
     /**
+     * Sets the adjacent boxes of the current position.
+     * 
+     * @param position
+     */
+    private void setAdj(final Pair<Integer, Integer> position) {
+        up = new PairImpl<>(position.getX(), position.getY() + 1);
+        down = new PairImpl<>(position.getX(), position.getY() - 1);
+        left = new PairImpl<>(position.getX() - 1, position.getY());
+        right = new PairImpl<>(position.getX() + 1, position.getY());
+    }
+
+    /** 
+     * @param dir
+     * @return the opposite direction of dir
+     */
+    private Directions oppositeDir(final Directions dir) {
+        if (dir.equals(Directions.UP)) {
+            return Directions.DOWN;
+        } else if (dir.equals(Directions.LEFT)) {
+            return Directions.RIGHT;
+        } else if (dir.equals(Directions.DOWN)) {
+            return Directions.UP;
+        } else {
+            return Directions.LEFT;
+        }
+    }
+
+    /**
      * This method implements a version of Dijkstra algorithm which is used to find the shortest path 
      * from 2 nodes(in this case the nodes are the positions).
      * 
@@ -202,25 +230,6 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         return false;
     }
 
-    private void setAdj(final Pair<Integer, Integer> position) {
-        up = new PairImpl<>(position.getX(), position.getY() + 1);
-        down = new PairImpl<>(position.getX(), position.getY() - 1);
-        left = new PairImpl<>(position.getX() - 1, position.getY());
-        right = new PairImpl<>(position.getX() + 1, position.getY());
-    }
-
-    private Directions oppositeDir(final Directions dir) {
-        if (dir.equals(Directions.UP)) {
-            return Directions.DOWN;
-        } else if (dir.equals(Directions.LEFT)) {
-            return Directions.RIGHT;
-        } else if (dir.equals(Directions.DOWN)) {
-            return Directions.UP;
-        } else {
-            return Directions.LEFT;
-        }
-    }
-
     @Override
     public final void turnAround() {
         this.setAdj(this.currentPosition);
@@ -239,10 +248,19 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         }
     }
 
+    /**
+     * 
+     * @return the target of the Ghost in relax mode
+     */
     protected final Pair<Integer, Integer> getRelaxTarget() {
         return relaxTarget;
     }
 
+    /**
+     * Sets the target of the Ghost in relax mode.
+     * 
+     * @param relaxTarget
+     */
     protected final void setRelaxTarget(final Pair<Integer, Integer> relaxTarget) {
         this.relaxTarget = relaxTarget;
     }

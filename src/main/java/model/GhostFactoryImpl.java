@@ -75,7 +75,7 @@ public final class GhostFactoryImpl implements GhostFactory {
 
         /**
          * 
-         * @param ghostHouse a set containing the coordinates where you can go
+         * @param ghostHouse a list containing the coordinates of the ghost house
          * @return this
          */
         public Builder ghostHouse(final List<Pair<Integer, Integer>> ghostHouse) {
@@ -85,7 +85,7 @@ public final class GhostFactoryImpl implements GhostFactory {
 
         /**
          * 
-         * @return a new instance of PacManImpl
+         * @return a new instance of GhostFactory
          * @throws IllegalStateException if some parameter is missed
          */
         public GhostFactoryImpl build() {
