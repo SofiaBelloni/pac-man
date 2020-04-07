@@ -7,12 +7,12 @@ import java.util.Set;
 * this class implements the Clyde behaviour.
 *
 */
-public class ClydeBehaviour extends GhostAbstractBehaviour {
+public class GhostClydeBehaviour extends GhostAbstractBehaviour {
 
     private Pair<Integer, Integer> chaseTarget;
     private static final int PACMANRADIUS = 7;
 
-    public ClydeBehaviour(final Set<Pair<Integer, Integer>> setWall, final List<Pair<Integer, Integer>> ghostHouse, final int xMap, final int yMap, final Pair<Integer, Integer> relaxTarget) {
+    public GhostClydeBehaviour(final Set<Pair<Integer, Integer>> setWall, final List<Pair<Integer, Integer>> ghostHouse, final int xMap, final int yMap, final Pair<Integer, Integer> relaxTarget) {
         super(setWall, xMap, yMap);
         this.setRelaxTarget(relaxTarget);
         this.setStartPosition(ghostHouse.get(1));

@@ -108,7 +108,7 @@ public final class GhostFactoryImpl implements GhostFactory {
                 this.setCreated();
                 this.setName(Ghosts.BLINKY);
                 this.setRelaxTarget(new PairImpl<>(xMapSize - 1, yMapSize - 1));
-                this.setMyBehaviour(new BlinkyBehaviour(walls, ghostHouse, xMapSize, yMapSize, this.getRelaxTarget()));
+                this.setMyBehaviour(new GhostBlinkyBehaviour(walls, ghostHouse, xMapSize, yMapSize, this.getRelaxTarget()));
             }
         };
     }
@@ -121,7 +121,7 @@ public final class GhostFactoryImpl implements GhostFactory {
                 this.setCreated();
                 this.setName(Ghosts.PINKY);
                 this.setRelaxTarget(new PairImpl<>(0, yMapSize - 1));
-                this.setMyBehaviour(new PinkyBehaviour(walls, ghostHouse, xMapSize, yMapSize, this.getRelaxTarget()));
+                this.setMyBehaviour(new GhostPinkyBehaviour(walls, ghostHouse, xMapSize, yMapSize, this.getRelaxTarget()));
             }
         };
     }
@@ -137,7 +137,7 @@ public final class GhostFactoryImpl implements GhostFactory {
                 this.setCreated();
                 this.setName(Ghosts.INKY);
                 this.setRelaxTarget(new PairImpl<>(xMapSize - 1, 0));
-                this.setMyBehaviour(new InkyBehaviour(walls, ghostHouse, xMapSize, yMapSize, this.getRelaxTarget()));
+                this.setMyBehaviour(new GhostInkyBehaviour(walls, ghostHouse, xMapSize, yMapSize, this.getRelaxTarget()));
             }
         };
     }
@@ -150,7 +150,7 @@ public final class GhostFactoryImpl implements GhostFactory {
                 this.setCreated();
                 this.setName(Ghosts.CLYDE);
                 this.setRelaxTarget(new PairImpl<>(0, 0));
-                this.setMyBehaviour(new ClydeBehaviour(walls, ghostHouse, xMapSize, yMapSize, this.getRelaxTarget()));
+                this.setMyBehaviour(new GhostClydeBehaviour(walls, ghostHouse, xMapSize, yMapSize, this.getRelaxTarget()));
             }
         };
     }

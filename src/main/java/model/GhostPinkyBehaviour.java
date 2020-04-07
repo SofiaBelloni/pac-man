@@ -7,12 +7,12 @@ import java.util.Set;
  * this class implements the Pinky behaviour.
  *
  */
-public class PinkyBehaviour extends GhostAbstractBehaviour {
+public class GhostPinkyBehaviour extends GhostAbstractBehaviour {
 
     private Pair<Integer, Integer> chaseTarget;
     private final Set<Pair<Integer, Integer>> setWall;
 
-    public PinkyBehaviour(final Set<Pair<Integer, Integer>> setWall, final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize, final Pair<Integer, Integer> relaxTarget) {
+    public GhostPinkyBehaviour(final Set<Pair<Integer, Integer>> setWall, final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize, final Pair<Integer, Integer> relaxTarget) {
         super(setWall, xMapSize, yMapSize);
         this.setWall = setWall;
         this.setRelaxTarget(relaxTarget);

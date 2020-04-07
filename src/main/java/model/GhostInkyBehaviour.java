@@ -7,12 +7,12 @@ import java.util.Set;
 * this class implements the Inky behaviour.
 *
 */
-public class InkyBehaviour extends GhostAbstractBehaviour {
+public class GhostInkyBehaviour extends GhostAbstractBehaviour {
 
     private final Set<Pair<Integer, Integer>> setWall;
     private Pair<Integer, Integer> chaseTarget;
 
-    public InkyBehaviour(final Set<Pair<Integer, Integer>> setWall, final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize, final Pair<Integer, Integer> relaxTarget) {
+    public GhostInkyBehaviour(final Set<Pair<Integer, Integer>> setWall, final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize, final Pair<Integer, Integer> relaxTarget) {
         super(setWall, xMapSize, yMapSize);
         this.setWall = setWall;
         this.setRelaxTarget(relaxTarget);

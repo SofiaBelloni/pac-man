@@ -7,9 +7,9 @@ import java.util.Set;
 * this class implements the Blinky behaviour.
 *
 */
-public class BlinkyBehaviour extends GhostAbstractBehaviour {
+public class GhostBlinkyBehaviour extends GhostAbstractBehaviour {
 
-    public BlinkyBehaviour(final Set<Pair<Integer, Integer>> setWall, final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize, final Pair<Integer, Integer> relaxTarget) {
+    public GhostBlinkyBehaviour(final Set<Pair<Integer, Integer>> setWall, final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize, final Pair<Integer, Integer> relaxTarget) {
         super(setWall, xMapSize, yMapSize);
         this.setRelaxTarget(relaxTarget);
         this.setStartPosition(ghostHouse.get(0));
