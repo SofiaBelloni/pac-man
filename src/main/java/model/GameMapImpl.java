@@ -12,9 +12,6 @@ import java.util.stream.Stream;
  *
  */
 public final class GameMapImpl implements GameMap {
-    /**
-     * This field defines the score of each pill.
-     */
     private final int pillScore;
     private final Map<TileType, Set<Pair<Integer, Integer>>> gameMap;
     private final int xMapSize;
