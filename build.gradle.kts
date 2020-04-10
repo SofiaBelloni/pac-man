@@ -38,6 +38,8 @@ dependencies {
     implementation("junit:junit:4.13")
     // FXGL
     implementation("com.github.almasb:fxgl:11.8")
+    // GSON
+    implementation("com.google.code.gson:gson:2.8.6")
 }
 
 application {
