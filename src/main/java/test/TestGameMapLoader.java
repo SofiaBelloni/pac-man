@@ -1,5 +1,7 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.IOException;
 
 import org.junit.Test;
@@ -8,8 +10,9 @@ import model.GameMap;
 import model.GameMapImpl;
 import model.GameMapLoader;
 import model.GameMapLoaderImpl;
+import model.PairImpl;
 
-public class TestGameMapLoder {
+public class TestGameMapLoader {
 
     @Test(expected = NullPointerException.class)
     public void mapLoadingWrongPath() throws IOException {
@@ -28,5 +31,6 @@ public class TestGameMapLoder {
                 .pillScore(100)
                 .walls(mapLoader.getWalls())
                 .build();
+        assertEquals(gameMap.getPacManStartPosition(), new PairImpl<Integer, Integer>(13, 17));
     }
 }
