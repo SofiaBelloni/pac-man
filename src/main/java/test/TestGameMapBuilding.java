@@ -47,18 +47,12 @@ public class TestGameMapBuilding {
         }
         GameMap gameMap = new GameMapImpl.Builder()
                 .mapSize(XMAPSIZE, YMAPSIZE)
+                .pacManStartPosition(new PairImpl<Integer, Integer>(2, 20))
                 .walls(walls)
                 .ghostsHouse(ghostsHouse)
                 .pills(pills)
-                .pacManStartPosition(new PairImpl<Integer, Integer>(2, 20))
                 .pillScore(10)
                 .build();
-        assertEquals(gameMap.getGhostHousePosition(), ghostsHouse);
-        assertEquals(gameMap.getWallsPositions(), walls);
-        assertEquals(gameMap.getPillsPositions(), pills);
         assertEquals(gameMap.getPacManStartPosition(), new PairImpl<Integer, Integer>(2, 20));
-        assertFalse(gameMap.getNoWallsPositions().contains(gameMap.getWallsPositions()));
-        assertTrue(gameMap.getNoWallsPositions().containsAll(pills));
-        assertTrue(gameMap.getNoWallsPositions().contains(new PairImpl<Integer, Integer>(2, 20)));
     }
 }
