@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class GameMapLoaderImpl implements GameMapLoader {
@@ -20,39 +22,10 @@ public class GameMapLoaderImpl implements GameMapLoader {
         this.ghostsHouse = new HashSet<>();
         this.walls = new HashSet<>();
         this.pacManStartPosition = new HashSet<>();
-        final InputStream in = ClassLoader.getSystemResourceAsStream(gameMapPath);
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(in))) {
-            int i = 0;
-            int j = 0;
-            String line = br.readLine();
-            this.xMapSize = line.length();
-            while (line != null) {
-                for (char c : line.toCharArray()) {
-                    switch (c) {
-                    case '0':
-                        this.addElement(this.pills, j, i);
-                        break;
-                    case '1':
-                        this.addElement(this.walls, j, i);
-                        break;
-                    case '2':
-                        this.addElement(this.ghostsHouse, j, i);
-                        break;
-                    case '3':
-                        this.addElement(this.pacManStartPosition, j, i);
-                        break;
-                    default:
-                        break;
-                    }
-                    j = j + 1;
-                }
-                i = i + 1;
-                j = 0;
-                line = br.readLine();
-            }
-            this.yMapSize = i;
-            br.close();
-        }
+        this.xMapSize = this.getLineSize(gameMapPath);
+        this.yMapSize = this.getNumLines(gameMapPath);
+        List<List<Character>> charList = this.fileToCharList(gameMapPath);
+        this.fillSets(charList);
     }
 
     @Override
@@ -88,4 +61,68 @@ public class GameMapLoaderImpl implements GameMapLoader {
     private void addElement(final Set<Pair<Integer, Integer>> set, final int x, final int y) {
         set.add(new PairImpl<Integer, Integer>(x, y));
     }
+
+    private int getNumLines(final String path) throws IOException {
+        InputStream in = ClassLoader.getSystemResourceAsStream(path);
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        int value = Math.toIntExact(br.lines().count());
+        br.close();
+        in.close();
+        return value;
+    }
+
+    private int getLineSize(final String path) throws IOException {
+        InputStream in = ClassLoader.getSystemResourceAsStream(path);
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        String line = br.readLine();
+        int value = 0;
+        if (line != null) {
+            value = line.length();
+        }
+        br.close();
+        in.close();
+        return value;
+    }
+
+    private List<List<Character>> fileToCharList(final String path) throws IOException {
+        InputStream in = ClassLoader.getSystemResourceAsStream(path);
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        List<List<Character>> charList = new ArrayList<>();
+        String s = br.readLine();
+        while (s != null) {
+            List<Character> tmp = new ArrayList<>();
+            s.chars().forEach(c -> {
+                tmp.add((char) c);
+            });
+            charList.add(tmp);
+            s = br.readLine();
+        }
+        br.close();
+        in.close();
+        return charList;
+    }
+
+    private void fillSets(final List<List<Character>> charList) {
+      for (int i = 0; i < charList.size(); i++) {
+          for (int j = 0; j < charList.get(i).size(); j++) {
+              switch (charList.get(i).get(j)) {
+              case '0':
+                  this.addElement(this.pills, j, i);
+                  break;
+              case '1':
+                  this.addElement(this.walls, j, i);
+                  break;
+              case '2':
+                  this.addElement(this.ghostsHouse, j, i);
+                  break;
+              case '3':
+                  this.addElement(this.pacManStartPosition, j, i);
+                  break;
+              default:
+                  //Must throw an exception (?)
+                  break;
+              }
+          }
+      }
+   }
 }
