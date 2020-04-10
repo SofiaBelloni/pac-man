@@ -5,13 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-
-import com.google.common.base.Optional;
 
 public class GameMapLoaderImpl implements GameMapLoader {
     private final Integer xMapSize;
@@ -92,13 +88,14 @@ public class GameMapLoaderImpl implements GameMapLoader {
         InputStream in = ClassLoader.getSystemResourceAsStream(path);
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
         List<List<Character>> charList = new ArrayList<>();
-        while (br.lines().iterator().hasNext()) {
-            String s = br.lines().iterator().next();
+        String s = br.readLine();
+        while (s != null) {
             List<Character> tmp = new ArrayList<>();
             s.chars().forEach(c -> {
                 tmp.add((char) c);
             });
             charList.add(tmp);
+            s = br.readLine();
         }
         br.close();
         in.close();

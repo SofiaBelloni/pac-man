@@ -28,6 +28,5 @@ public class TestGameMapLoder {
                 .pillScore(100)
                 .walls(mapLoader.getWalls())
                 .build();
-        gameMap.toString();
     }
 }
