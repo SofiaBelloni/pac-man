@@ -1,4 +1,5 @@
 package model;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -11,12 +12,14 @@ public class GhostPinkyBehaviour extends GhostAbstractBehaviour {
 
     private Pair<Integer, Integer> chaseTarget;
     private final Set<Pair<Integer, Integer>> setWall;
+    private final List<Pair<Integer, Integer>> ghostHouse;
 
-    public GhostPinkyBehaviour(final Set<Pair<Integer, Integer>> setWall, final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize, final Pair<Integer, Integer> relaxTarget) {
+    public GhostPinkyBehaviour(final Set<Pair<Integer, Integer>> setWall, final Set<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize, final Pair<Integer, Integer> relaxTarget) {
         super(setWall, xMapSize, yMapSize);
         this.setWall = setWall;
         this.setRelaxTarget(relaxTarget);
-        this.setStartPosition(ghostHouse.get(2));
+        this.ghostHouse = new ArrayList<>(ghostHouse);
+        this.setStartPosition(this.ghostHouse.get(2));
     }
 
     private void targetPosition(final PacMan pacMan) {

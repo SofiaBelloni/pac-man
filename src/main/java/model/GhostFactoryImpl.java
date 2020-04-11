@@ -2,7 +2,6 @@ package model;
 
 import java.util.Optional;
 import java.util.Set;
-import java.util.List;
 
 /**
  * this class implements factory for creating Ghost objects.
@@ -10,11 +9,11 @@ import java.util.List;
  */
 public final class GhostFactoryImpl implements GhostFactory {
     private final Set<Pair<Integer, Integer>> walls;
-    private final List<Pair<Integer, Integer>> ghostHouse;
+    private final Set<Pair<Integer, Integer>> ghostHouse;
     private final int xMapSize;
     private final int yMapSize;
 
-    private GhostFactoryImpl(final Set<Pair<Integer, Integer>> walls, final List<Pair<Integer,
+    private GhostFactoryImpl(final Set<Pair<Integer, Integer>> walls, final Set<Pair<Integer,
             Integer>> ghostHouse, final int xMapSize, final int yMapSize) {
         this.walls = walls;
         this.ghostHouse = ghostHouse;
@@ -24,7 +23,7 @@ public final class GhostFactoryImpl implements GhostFactory {
 
     public static class Builder {
         private Optional<Set<Pair<Integer, Integer>>> walls = Optional.empty();
-        private Optional<List<Pair<Integer, Integer>>> ghostHouse = Optional.empty();
+        private Optional<Set<Pair<Integer, Integer>>> ghostHouse = Optional.empty();
         private Optional<Integer> xMapSize = Optional.empty();
         private Optional<Integer> yMapSize = Optional.empty();
 
@@ -62,10 +61,10 @@ public final class GhostFactoryImpl implements GhostFactory {
 
         /**
          * 
-         * @param ghostHouse a list containing the coordinates of the ghost house
+         * @param ghostHouse a Set containing the coordinates of the ghost house
          * @return this
          */
-        public Builder ghostHouse(final List<Pair<Integer, Integer>> ghostHouse) {
+        public Builder ghostHouse(final Set<Pair<Integer, Integer>> ghostHouse) {
             this.ghostHouse = Optional.of(ghostHouse);
             return this;
         }

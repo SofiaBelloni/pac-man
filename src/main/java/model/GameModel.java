@@ -10,6 +10,12 @@ import java.util.Set;
  */
 public interface GameModel {
     /**
+     * Creates the ghost.
+     * @param ghost the ghost name
+     * @return the ghost
+     */
+    Ghost createGhost(Ghosts ghost);
+    /**
      * @param direction of Pac-Man
      * sets the direction of Pac-Man
      */

@@ -1,6 +1,5 @@
 package model;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -11,7 +10,7 @@ import java.util.Set;
 public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Ghost {
 
     private final Set<Pair<Integer, Integer>> setWall;
-    private final List<Pair<Integer, Integer>> ghostHouse;
+    private final Set<Pair<Integer, Integer>> ghostHouse;
     private boolean eatable;
     private boolean isRelaxed;
     private boolean timeToTurn;
@@ -24,7 +23,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     private Optional<Ghost> blinky;
 
     public GhostAbstractImpl(final Set<Pair<Integer, Integer>> setWall,
-            final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize,
+            final Set<Pair<Integer, Integer>> ghostHouse, final int xMapSize,
             final int yMapSize) {
         super(xMapSize, yMapSize);
         this.isRelaxed = true;

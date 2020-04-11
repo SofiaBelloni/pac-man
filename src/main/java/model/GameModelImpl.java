@@ -27,7 +27,7 @@ public class GameModelImpl implements GameModel {
         this.ghosts = new HashSet<>();
         this.ghostFactory = new GhostFactoryImpl.Builder()
                             .walls(this.gameMap.getWallsPositions())
-                            .ghostHouse(null)
+                            .ghostHouse(this.gameMap.getGhostHousePosition())
                             .mapSize(this.gameMap.getxMapSize(), this.gameMap.getyMapSize())
                             .build();
         this.pacMan = new PacManImpl.Builder()
@@ -41,6 +41,22 @@ public class GameModelImpl implements GameModel {
         this.levelNumber = 1;
         this.levelTime = LEVEL_TIME;
         this.scores = 0;
+    }
+
+    @Override
+    public final Ghost createGhost(final Ghosts ghostName) {
+        Ghost ghost;
+        if (ghostName.equals(Ghosts.BLINKY)) {
+            ghost = this.ghostFactory.blinky();
+        } else if (ghostName.equals(Ghosts.PINKY)) {
+            ghost = this.ghostFactory.pinky();
+        } else if (ghostName.equals(Ghosts.INKY)) {
+            ghost = null;
+        } else {
+            ghost = this.ghostFactory.clyde();
+        }
+        this.ghosts.add(ghost);
+        return ghost;
     }
 
     @Override
