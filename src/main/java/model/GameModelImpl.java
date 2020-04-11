@@ -5,12 +5,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 public class GameModelImpl implements GameModel {
 
-    private static final int X_MAP_SIZE = 28;
-    private static final int Y_MAP_SIZE = 31;
     private static final int LEVEL_TIME = 60;
     private static final int PAC_MAN_LIVES = 3;
 
@@ -22,9 +21,8 @@ public class GameModelImpl implements GameModel {
     private int levelTime;
 
     public GameModelImpl() {
-        this.gameMap = new GameMapImpl.Builder()
-                .mapSize(X_MAP_SIZE, Y_MAP_SIZE)
-                .build();
+        GameMapFactory mapFactory = new GameMapFactory();
+        this.gameMap = mapFactory.createMap(Optional.empty());
         this.ghosts = new HashSet<>();
         this.pacMan = new PacManImpl.Builder()
                             .currentDirection(Directions.LEFT)
@@ -47,27 +45,18 @@ public class GameModelImpl implements GameModel {
     @Override
     public final Map<Ghosts, List<Pair<Integer, Integer>>> getGhostsPositions() {
         final Map<Ghosts, List<Pair<Integer, Integer>>> ghostsPositions = new HashMap<>();
-        ghostsPositions.put(Ghosts.BLINKY, new ArrayList<Pair<Integer, Integer>>());
-        ghostsPositions.put(Ghosts.INKY, new ArrayList<Pair<Integer, Integer>>());
-        ghostsPositions.put(Ghosts.PINKY, new ArrayList<Pair<Integer, Integer>>());
-        ghostsPositions.put(Ghosts.CLYDE, new ArrayList<Pair<Integer, Integer>>());
-        this.ghosts.stream()
-        .filter(x -> x.getName().equals(Ghosts.BLINKY))
-        .forEach(x -> ghostsPositions.get(Ghosts.BLINKY)
-        .add(x.getPosition()));
-        this.ghosts.stream()
-        .filter(x -> x.getName().equals(Ghosts.CLYDE))
-        .forEach(x -> ghostsPositions.get(Ghosts.CLYDE)
-        .add(x.getPosition()));
-        this.ghosts.stream()
-        .filter(x -> x.getName().equals(Ghosts.INKY))
-        .forEach(x -> ghostsPositions.get(Ghosts.INKY)
-        .add(x.getPosition()));
-        this.ghosts.stream()
-        .filter(x -> x.getName().equals(Ghosts.PINKY))
-        .forEach(x -> ghostsPositions.get(Ghosts.PINKY)
-        .add(x.getPosition()));
+        ghostsPositions.put(Ghosts.BLINKY, this.getGhostPositions(Ghosts.BLINKY));
+        ghostsPositions.put(Ghosts.CLYDE, this.getGhostPositions(Ghosts.CLYDE));
+        ghostsPositions.put(Ghosts.INKY, this.getGhostPositions(Ghosts.INKY));
+        ghostsPositions.put(Ghosts.PINKY, this.getGhostPositions(Ghosts.PINKY));
         return ghostsPositions;
+    }
+
+    private List<Pair<Integer, Integer>> getGhostPositions(final Ghosts ghost) {
+        final List<Pair<Integer, Integer>> positions = new ArrayList<>();
+        this.ghosts.stream().filter(x -> x.getName().equals(ghost))
+        .forEach(x -> positions.add(x.getPosition()));
+        return positions;
     }
 
     @Override

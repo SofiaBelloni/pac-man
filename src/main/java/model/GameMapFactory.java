@@ -6,7 +6,7 @@ import java.util.Optional;
 public class GameMapFactory {
     private static final int DEFAULT_PILL_SCORE = 100;
 
-    public final GameMap createMap1(final Optional<Integer> pillScore) {
+    public final GameMap createMap(final Optional<Integer> pillScore) {
         return this.createGameMap(
                 this.createMapLoader("game_maps/game_map_1"), pillScore);
     }
