@@ -24,7 +24,7 @@ public class GameMapLoaderImpl implements GameMapLoader {
         this.pacManStartPosition = new HashSet<>();
         this.xMapSize = this.getLineSize(gameMapPath);
         this.yMapSize = this.getNumLines(gameMapPath);
-        List<List<Character>> charList = this.fileToCharList(gameMapPath);
+        final List<List<Character>> charList = this.fileToCharList(gameMapPath);
         this.fillSets(charList);
     }
 
@@ -63,18 +63,18 @@ public class GameMapLoaderImpl implements GameMapLoader {
     }
 
     private int getNumLines(final String path) throws IOException {
-        InputStream in = ClassLoader.getSystemResourceAsStream(path);
-        BufferedReader br = new BufferedReader(new InputStreamReader(in));
-        int value = Math.toIntExact(br.lines().count());
+        final InputStream in = ClassLoader.getSystemResourceAsStream(path);
+        final BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        final int value = Math.toIntExact(br.lines().count());
         br.close();
         in.close();
         return value;
     }
 
     private int getLineSize(final String path) throws IOException {
-        InputStream in = ClassLoader.getSystemResourceAsStream(path);
-        BufferedReader br = new BufferedReader(new InputStreamReader(in));
-        String line = br.readLine();
+        final InputStream in = ClassLoader.getSystemResourceAsStream(path);
+        final BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        final String line = br.readLine();
         int value = 0;
         if (line != null) {
             value = line.length();
@@ -85,12 +85,12 @@ public class GameMapLoaderImpl implements GameMapLoader {
     }
 
     private List<List<Character>> fileToCharList(final String path) throws IOException {
-        InputStream in = ClassLoader.getSystemResourceAsStream(path);
-        BufferedReader br = new BufferedReader(new InputStreamReader(in));
-        List<List<Character>> charList = new ArrayList<>();
+        final InputStream in = ClassLoader.getSystemResourceAsStream(path);
+        final BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        final List<List<Character>> charList = new ArrayList<>();
         String s = br.readLine();
         while (s != null) {
-            List<Character> tmp = new ArrayList<>();
+            final List<Character> tmp = new ArrayList<>();
             s.chars().forEach(c -> {
                 tmp.add((char) c);
             });
