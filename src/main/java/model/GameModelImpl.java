@@ -25,6 +25,11 @@ public class GameModelImpl implements GameModel {
         GameMapFactory mapFactory = new GameMapFactory();
         this.gameMap = mapFactory.createMap(Optional.empty());
         this.ghosts = new HashSet<>();
+        this.ghostFactory = new GhostFactoryImpl.Builder()
+                            .walls(this.gameMap.getWallsPositions())
+                            .ghostHouse(null)
+                            .mapSize(this.gameMap.getxMapSize(), this.gameMap.getyMapSize())
+                            .build();
         this.pacMan = new PacManImpl.Builder()
                             .currentDirection(Directions.LEFT)
                             .mapSize(this.gameMap.getxMapSize(), this.gameMap.getxMapSize())
