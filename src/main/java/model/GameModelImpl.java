@@ -14,6 +14,7 @@ public class GameModelImpl implements GameModel {
     private static final int PAC_MAN_LIVES = 3;
 
     private final Set<Ghost> ghosts;
+    private final GhostFactory ghostFactory;
     private final PacMan pacMan;
     private final GameMap gameMap;
     private int scores;

@@ -15,8 +15,7 @@ public final class GhostFactoryImpl implements GhostFactory {
     private final int yMapSize;
 
     private GhostFactoryImpl(final Set<Pair<Integer, Integer>> walls, final List<Pair<Integer,
-            Integer>> ghostHouse, final int xMapSize, final int yMapSize,
-            final Pair<Integer, Integer> door) {
+            Integer>> ghostHouse, final int xMapSize, final int yMapSize) {
         this.walls = walls;
         this.ghostHouse = ghostHouse;
         this.xMapSize = xMapSize;
@@ -28,7 +27,6 @@ public final class GhostFactoryImpl implements GhostFactory {
         private Optional<List<Pair<Integer, Integer>>> ghostHouse = Optional.empty();
         private Optional<Integer> xMapSize = Optional.empty();
         private Optional<Integer> yMapSize = Optional.empty();
-        private Optional<Pair<Integer, Integer>> door = Optional.empty();
 
         /**
          * Used by the builder to check if the Optional fields are correctly assigned.
@@ -49,15 +47,6 @@ public final class GhostFactoryImpl implements GhostFactory {
         public Builder mapSize(final int x, final int y) {
             this.xMapSize = Optional.of(x);
             this.yMapSize = Optional.of(y);
-            return this;
-        }
-        /**
-         * 
-         * @param door a pair containing the x,y position 
-         * @return this
-         */
-        public Builder door(final Pair<Integer, Integer> door) {
-            this.door = Optional.of(door);
             return this;
         }
 
@@ -91,10 +80,9 @@ public final class GhostFactoryImpl implements GhostFactory {
             check(this.ghostHouse.isPresent());
             check(this.xMapSize.isPresent());
             check(this.yMapSize.isPresent());
-            check(this.door.isPresent());
 
             return new GhostFactoryImpl(this.walls.get(), this.ghostHouse.get(), this.xMapSize.get(),
-                    this.yMapSize.get(), this.door.get());
+                    this.yMapSize.get());
         }
     }
 
