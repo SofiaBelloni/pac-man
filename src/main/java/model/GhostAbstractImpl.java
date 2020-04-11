@@ -22,11 +22,10 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     private GhostBehaviour myBehaviour;
     private Pair<Integer, Integer> relaxTarget;
     private Optional<Ghost> blinky;
-    private final Pair<Integer, Integer> door;
 
     public GhostAbstractImpl(final Set<Pair<Integer, Integer>> setWall,
             final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize,
-            final int yMapSize, final Pair<Integer, Integer> door) {
+            final int yMapSize) {
         super(xMapSize, yMapSize);
         this.isRelaxed = true;
         this.isInside = true;
@@ -37,19 +36,18 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         this.isBlinkyDead = false;
         this.setWall = setWall;
         this.ghostHouse = ghostHouse;
-        this.door = door;
     }
 
     @Override
     public final void nextPosition(final PacMan pacMan) {
         this.checkCreation();
         if (isInside && !this.ghostHouse.contains(this.getPosition())) {
-            this.setWall.add(door);
+            this.setWall.addAll(this.ghostHouse);
             this.isInside = false;
         }
         if (this.eatable) {
             if (this.timeToTurn) {
-                 if (!isInside && !this.door.equals(new PairImpl<>(this.getPosition().getX(), this.getPosition().getY() - 1))) {
+                 if (!isInside && !this.ghostHouse.contains(new PairImpl<>(this.getPosition().getX(), this.getPosition().getY() - 1))) {
                      this.myBehaviour.turnAround();
                  } else {
                      this.myBehaviour.runAway();
@@ -90,6 +88,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     @Override
     public final void returnHome() {
         this.checkCreation();
+        this.setWall.removeAll(this.ghostHouse);
         this.myBehaviour.setCurrentPosition(this.myBehaviour.getStartPosition());
     }
 

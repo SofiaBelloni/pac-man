@@ -13,7 +13,6 @@ public final class GhostFactoryImpl implements GhostFactory {
     private final List<Pair<Integer, Integer>> ghostHouse;
     private final int xMapSize;
     private final int yMapSize;
-    private final Pair<Integer, Integer> door;
 
     private GhostFactoryImpl(final Set<Pair<Integer, Integer>> walls, final List<Pair<Integer,
             Integer>> ghostHouse, final int xMapSize, final int yMapSize,
@@ -22,7 +21,6 @@ public final class GhostFactoryImpl implements GhostFactory {
         this.ghostHouse = ghostHouse;
         this.xMapSize = xMapSize;
         this.yMapSize = yMapSize;
-        this.door = door;
     }
 
     public static class Builder {
@@ -102,7 +100,7 @@ public final class GhostFactoryImpl implements GhostFactory {
 
     @Override
     public Ghost blinky() { 
-        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize, this.door) {
+        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize) {
             @Override
             public void create() {
                 this.setCreated();
@@ -115,7 +113,7 @@ public final class GhostFactoryImpl implements GhostFactory {
 
     @Override
     public Ghost pinky() {
-        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize, this.door) {
+        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize) {
             @Override
             public void create() {
                 this.setCreated();
@@ -131,7 +129,7 @@ public final class GhostFactoryImpl implements GhostFactory {
         if (!blink.getName().equals(Ghosts.BLINKY)) {
             throw new IllegalStateException("Insert Blinky");
         }
-        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize, this.door) {
+        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize) {
             @Override
             public void create() {
                 this.setCreated();
@@ -144,7 +142,7 @@ public final class GhostFactoryImpl implements GhostFactory {
 
     @Override
     public Ghost clyde() {
-        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize, this.door) {
+        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize) {
             @Override
             public void create() {
                 this.setCreated();
