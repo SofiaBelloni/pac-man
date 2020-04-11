@@ -2,7 +2,6 @@ package model;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,9 +21,9 @@ public class GameMapLoaderImpl implements GameMapLoader {
         this.ghostsHouse = new HashSet<>();
         this.walls = new HashSet<>();
         this.pacManStartPosition = new HashSet<>();
-        this.xMapSize = this.getLineSize(gameMapPath);
-        this.yMapSize = this.getNumLines(gameMapPath);
-        final List<List<Character>> charList = this.fileToCharList(gameMapPath);
+        this.xMapSize = this.getLineSize(this.readMapFile(gameMapPath));
+        this.yMapSize = this.getNumLines(this.readMapFile(gameMapPath));
+        final List<List<Character>> charList = this.fileToCharList(this.readMapFile(gameMapPath));
         this.fillSets(charList);
     }
 
@@ -62,31 +61,23 @@ public class GameMapLoaderImpl implements GameMapLoader {
         set.add(new PairImpl<Integer, Integer>(x, y));
     }
 
-    private int getNumLines(final String path) throws IOException {
-        final InputStream in = ClassLoader.getSystemResourceAsStream(path);
-        final BufferedReader br = new BufferedReader(new InputStreamReader(in));
+    private int getNumLines(final BufferedReader br) throws IOException {
         final int value = Math.toIntExact(br.lines().count());
         br.close();
-        in.close();
         return value;
     }
 
-    private int getLineSize(final String path) throws IOException {
-        final InputStream in = ClassLoader.getSystemResourceAsStream(path);
-        final BufferedReader br = new BufferedReader(new InputStreamReader(in));
+    private int getLineSize(final BufferedReader br) throws IOException {
         final String line = br.readLine();
         int value = 0;
         if (line != null) {
             value = line.length();
         }
         br.close();
-        in.close();
         return value;
     }
 
-    private List<List<Character>> fileToCharList(final String path) throws IOException {
-        final InputStream in = ClassLoader.getSystemResourceAsStream(path);
-        final BufferedReader br = new BufferedReader(new InputStreamReader(in));
+    private List<List<Character>> fileToCharList(final BufferedReader br) throws IOException {
         final List<List<Character>> charList = new ArrayList<>();
         String s = br.readLine();
         while (s != null) {
@@ -98,7 +89,6 @@ public class GameMapLoaderImpl implements GameMapLoader {
             s = br.readLine();
         }
         br.close();
-        in.close();
         return charList;
     }
 
@@ -125,4 +115,10 @@ public class GameMapLoaderImpl implements GameMapLoader {
           }
       }
    }
+
+    private BufferedReader readMapFile(final String path) {
+        return new BufferedReader(
+                new InputStreamReader(
+                        ClassLoader.getSystemResourceAsStream(path)));
+    }
 }
