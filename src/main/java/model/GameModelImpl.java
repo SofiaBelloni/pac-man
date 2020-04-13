@@ -10,21 +10,21 @@ import java.util.Set;
 
 public class GameModelImpl implements GameModel {
 
-    private static final int LEVEL_TIME = 60;
     private static final int PAC_MAN_LIVES = 3;
-
+    private static final int LEVEL_DURATION = 60;
+    private static final int INVERTED_GAME_DURATION = 10;
     private final Set<Ghost> ghosts;
     private final GhostFactory ghostFactory;
     private final PacMan pacMan;
     private final GameMap gameMap;
-    private int scores;
-    private int partialScores;
-    private int levelNumber;
-    private int levelTime;
+    private final LevelManager levelManager;
 
     public GameModelImpl() {
         GameMapFactory mapFactory = new GameMapFactory();
         this.gameMap = mapFactory.createMap(Optional.empty());
+        this.levelManager = new LevelManagerImpl(LEVEL_DURATION,
+                INVERTED_GAME_DURATION,
+                this.gameMap.getPillsPositions().size() * this.gameMap.getPillScore());
         this.ghosts = new HashSet<>();
         this.ghostFactory = new GhostFactoryImpl.Builder()
                             .walls(this.gameMap.getWallsPositions())
@@ -38,11 +38,9 @@ public class GameModelImpl implements GameModel {
                             .noWalls(this.gameMap.getNoWallsPositions())
                             .startPosition(this.gameMap.getPacManStartPosition())
                             .build();
-
-        this.levelNumber = 1;
-        this.levelTime = LEVEL_TIME;
-        this.scores = 0;
-        this.partialScores = 0;
+        this.createGhost(Ghosts.CLYDE);
+        this.createGhost(Ghosts.INKY);
+        this.createGhost(Ghosts.PINKY);
     }
 
     private void createGhost(final Ghosts ghostName) {
@@ -86,30 +84,42 @@ public class GameModelImpl implements GameModel {
     @Override
     public final void moveEntitiesNextPosition() {
         this.pacMan.nextPosition();
-        if (this.gameMap.isPill(this.getPacManPosition())) {
-            this.gameMap.removePill(this.pacMan.getPosition());
-            this.scores = this.scores + this.gameMap.getPillScore();
-            this.partialScores = this.partialScores + this.gameMap.getPillScore();
-        }
         this.ghosts.forEach(x -> x.nextPosition(this.pacMan));
-        if (this.ghosts.stream().anyMatch(x -> x.getPosition().equals(this.pacMan.getPosition()))) {
-            this.pacMan.kill();
-            this.ghosts.forEach(x -> x.returnHome());
+        if (this.checkPacmanGhostCollision()) {
+            if (this.levelManager.isGameInverted()) {
+                this.ghosts.removeIf(x ->
+                x.getPosition().equals(this.pacMan.getPosition()));
+            } else {
+                this.pacMan.kill();
+                this.ghosts.forEach(x -> x.returnHome());
+            }
+        } else {
+            if (this.checkPillCollision()) {
+                this.levelManager.incScores(this.gameMap.getPillScore());
+            }
         }
+    }
+
+    private boolean checkPillCollision() {
+        return this.gameMap.isPill(this.getPacManPosition());
+    }
+
+    private boolean checkPacmanGhostCollision() {
+        return this.ghosts.stream().anyMatch(x -> x.getPosition().equals(this.pacMan.getPosition()));
     }
 
     @Override
     public final void decLevelTime() {
-        this.levelTime = this.levelTime - 1;
-        if (this.levelTime == 0) {
-            this.levelTime = GameModelImpl.LEVEL_TIME;
+        if (this.levelManager.getLevelTime() == 0) {
             this.nextLevel();
+        } else {
+            this.levelManager.decLevelTime();
         }
     }
 
     @Override
     public final int getScores() {
-        return this.scores;
+        return this.levelManager.getScores();
     }
 
     @Override
@@ -134,22 +144,21 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final int getLevelNumber() {
-        return this.levelNumber;
+        return this.levelManager.getLevelNumber();
     }
 
     @Override
     public final int getLevelTime() {
-        return this.levelTime;
+        return this.levelManager.getLevelTime();
     }
 
     private void nextLevel() {
-        this.levelNumber = this.levelNumber + 1;
+        this.levelManager.nextLevel();
         this.ghosts.forEach(x -> x.returnHome());
         this.gameMap.restorePills();
         this.pacMan.returnToStartPosition();
         this.createGhost(Ghosts.CLYDE);
         this.createGhost(Ghosts.INKY);
         this.createGhost(Ghosts.PINKY);
-        this.partialScores = 0;
     }
 }
