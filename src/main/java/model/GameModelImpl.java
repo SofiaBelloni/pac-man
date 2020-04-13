@@ -18,6 +18,7 @@ public class GameModelImpl implements GameModel {
     private final PacMan pacMan;
     private final GameMap gameMap;
     private int scores;
+    private int partialScores;
     private int levelNumber;
     private int levelTime;
 
@@ -41,22 +42,23 @@ public class GameModelImpl implements GameModel {
         this.levelNumber = 1;
         this.levelTime = LEVEL_TIME;
         this.scores = 0;
+        this.partialScores = 0;
     }
 
-    @Override
-    public final Ghost createGhost(final Ghosts ghostName) {
+    private void createGhost(final Ghosts ghostName) {
         Ghost ghost;
         if (ghostName.equals(Ghosts.BLINKY)) {
             ghost = this.ghostFactory.blinky();
         } else if (ghostName.equals(Ghosts.PINKY)) {
             ghost = this.ghostFactory.pinky();
         } else if (ghostName.equals(Ghosts.INKY)) {
-            ghost = null;
+            Ghost blinky = this.ghostFactory.blinky();
+            ghost = this.ghostFactory.inky(blinky);
+            this.ghosts.add(blinky);
         } else {
             ghost = this.ghostFactory.clyde();
         }
         this.ghosts.add(ghost);
-        return ghost;
     }
 
     @Override
@@ -84,14 +86,15 @@ public class GameModelImpl implements GameModel {
     @Override
     public final void moveEntitiesNextPosition() {
         this.pacMan.nextPosition();
+        if (this.gameMap.isPill(this.getPacManPosition())) {
+            this.gameMap.removePill(this.pacMan.getPosition());
+            this.scores = this.scores + this.gameMap.getPillScore();
+            this.partialScores = this.partialScores + this.gameMap.getPillScore();
+        }
         this.ghosts.forEach(x -> x.nextPosition(this.pacMan));
         if (this.ghosts.stream().anyMatch(x -> x.getPosition().equals(this.pacMan.getPosition()))) {
             this.pacMan.kill();
             this.ghosts.forEach(x -> x.returnHome());
-        }
-        if (this.gameMap.isPill(this.getPacManPosition())) {
-            this.gameMap.removePill(this.pacMan.getPosition());
-            this.scores = this.scores + this.gameMap.getPillScore();
         }
     }
 
@@ -144,5 +147,9 @@ public class GameModelImpl implements GameModel {
         this.ghosts.forEach(x -> x.returnHome());
         this.gameMap.restorePills();
         this.pacMan.returnToStartPosition();
+        this.createGhost(Ghosts.CLYDE);
+        this.createGhost(Ghosts.INKY);
+        this.createGhost(Ghosts.PINKY);
+        this.partialScores = 0;
     }
 }

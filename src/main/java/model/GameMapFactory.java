@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class GameMapFactory {
-    private static final int DEFAULT_PILL_SCORE = 100;
 
     public final GameMap createMap(final Optional<Integer> pillScore) {
         return this.createGameMap(
@@ -25,9 +24,7 @@ public class GameMapFactory {
                 .pacManStartPosition(mapLoader.getPacManStartPosition())
                 .pills(mapLoader.getPills())
                 .walls(mapLoader.getWalls());
-        if (pillScore.isEmpty()) {
-            mapBuilder = mapBuilder.pillScore(DEFAULT_PILL_SCORE);
-        } else {
+        if (pillScore.isPresent()) {
             mapBuilder.pillScore(pillScore.get());
         }
         return mapBuilder.build();
