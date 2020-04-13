@@ -37,13 +37,6 @@ public interface Ghost extends Entity {
     Ghosts getName();
 
     /**
-     * Checks if is eatable.
-     *
-     * @return true, if is eatable
-     */
-    boolean isEatable();
-
-    /**
      * Checks if blinky is dead.
      *
      */

@@ -40,13 +40,13 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     @Override
     public final void nextPosition(final PacMan pacMan) {
         this.checkCreation();
-        if (isInside && !this.ghostHouse.contains(this.getPosition())) {
+        if (this.isInside && !this.ghostHouse.contains(this.getPosition())) {
             this.setWall.addAll(this.ghostHouse);
             this.isInside = false;
         }
         if (this.eatable) {
             if (this.timeToTurn) {
-                 if (!isInside && !this.ghostHouse.contains(new PairImpl<>(this.getPosition().getX(), this.getPosition().getY() - 1))) {
+                 if (!this.isInside && !this.ghostHouse.contains(new PairImpl<>(this.getPosition().getX(), this.getPosition().getY() - 1))) {
                      this.myBehaviour.turnAround();
                  } else {
                      this.myBehaviour.runAway();
@@ -58,7 +58,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         } else {
             if (this.isRelaxed) {
                 this.myBehaviour.relax();
-                if (this.myBehaviour.getCurrentPosition().equals(this.relaxTarget)) {
+                if (this.getPosition().equals(this.relaxTarget)) {
                     this.isRelaxed = false;
                 }
             } else {
@@ -79,12 +79,6 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     }
 
     @Override
-    public final boolean isEatable() {
-        this.checkCreation();
-        return this.eatable;
-    }
-
-    @Override
     public final void returnHome() {
         this.checkCreation();
         this.setWall.removeAll(this.ghostHouse);
@@ -95,7 +89,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     public final void setEatable(final boolean eatable) {
         this.checkCreation();
         this.eatable = eatable;
-        if (this.isEatable()) {
+        if (this.eatable) {
             this.timeToTurn = true;
         }
     }
