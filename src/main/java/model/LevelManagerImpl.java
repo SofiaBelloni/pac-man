@@ -23,7 +23,7 @@ public class LevelManagerImpl implements LevelManager {
     }
 
     @Override
-    public boolean isGameInverted() {
+    public final boolean isGameInverted() {
         return this.invertedGameTime > 0;
     }
 
@@ -32,7 +32,7 @@ public class LevelManagerImpl implements LevelManager {
         if (this.levelTime > 0) {
             this.levelTime = this.levelTime - 1;
         } else {
-            //throw exception
+            throw new IllegalStateException();
         }
         if (this.invertedGameTime > 0) {
             this.invertedGameTime = this.invertedGameTime - 1;
@@ -40,7 +40,7 @@ public class LevelManagerImpl implements LevelManager {
     }
 
     @Override
-    public void nextLevel() {
+    public final void nextLevel() {
         this.partialScores = 0;
         this.levelNumber = this.levelNumber + 1;
         this.levelTime = this.levelDuration;
@@ -48,7 +48,7 @@ public class LevelManagerImpl implements LevelManager {
     }
 
     @Override
-    public void incScores(final int value) {
+    public final void incScores(final int value) {
         this.partialScores = this.partialScores + value;
         this.scores = this.scores + value;
         if (this.partialScores == this.scoresToInvertGame) {
@@ -60,7 +60,7 @@ public class LevelManagerImpl implements LevelManager {
     private void setInvertedGame() {
         this.invertedGameTime = this.invertedGameDuration;
     }
-    
+
     @Override
     public final int getInvertedGameTime() {
         return this.invertedGameTime;

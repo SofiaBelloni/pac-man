@@ -20,7 +20,7 @@ public class GameModelImpl implements GameModel {
     private final LevelManager levelManager;
 
     public GameModelImpl() {
-        GameMapFactory mapFactory = new GameMapFactory();
+        final GameMapFactory mapFactory = new GameMapFactory();
         this.gameMap = mapFactory.createMap(Optional.empty());
         this.levelManager = new LevelManagerImpl(LEVEL_DURATION,
                 INVERTED_GAME_DURATION,
@@ -50,7 +50,7 @@ public class GameModelImpl implements GameModel {
         } else if (ghostName.equals(Ghosts.PINKY)) {
             ghost = this.ghostFactory.pinky();
         } else if (ghostName.equals(Ghosts.INKY)) {
-            Ghost blinky = this.ghostFactory.blinky();
+            final Ghost blinky = this.ghostFactory.blinky();
             ghost = this.ghostFactory.inky(blinky);
             this.ghosts.add(blinky);
         } else {
@@ -95,7 +95,7 @@ public class GameModelImpl implements GameModel {
             }
         } else {
             if (this.checkPillCollision()) {
-                boolean oldIsGameInverted = this.levelManager.isGameInverted();
+                final boolean oldIsGameInverted = this.levelManager.isGameInverted();
                 this.levelManager.incScores(this.gameMap.getPillScore());
                 if (!oldIsGameInverted && this.levelManager.isGameInverted()) {
                     this.ghosts.forEach(x -> x.setEatable(true));
@@ -117,14 +117,14 @@ public class GameModelImpl implements GameModel {
         if (this.levelManager.getLevelTime() == 0) {
             this.nextLevel();
         } else {
-            boolean oldIsGameInverted = this.levelManager.isGameInverted();
+            final boolean oldIsGameInverted = this.levelManager.isGameInverted();
             this.levelManager.decLevelTime();
             if (oldIsGameInverted && !this.levelManager.isGameInverted()) {
                 this.ghosts.forEach(x -> x.setEatable(false));
             }
         }
     }
-    
+
     @Override
     public final int getScores() {
         return this.levelManager.getScores();
