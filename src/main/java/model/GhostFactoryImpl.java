@@ -112,9 +112,9 @@ public final class GhostFactoryImpl implements GhostFactory {
     }
 
     @Override
-    public Ghost inky(final Ghost blink) {
-        if (!blink.getName().equals(Ghosts.BLINKY)) {
-            throw new IllegalStateException("Insert Blinky");
+    public Ghost inky(final Ghost blinky) {
+        if (!blinky.getName().equals(Ghosts.BLINKY)) {
+            throw new IllegalArgumentException("Insert Blinky");
         }
         return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize) {
             @Override
@@ -122,7 +122,7 @@ public final class GhostFactoryImpl implements GhostFactory {
                 this.setCreated();
                 this.setName(Ghosts.INKY);
                 this.setRelaxTarget(new PairImpl<>(xMapSize - 1, 0));
-                this.setMyBehaviour(new GhostInkyBehaviour(walls, ghostHouse, xMapSize, yMapSize, this.getRelaxTarget()));
+                this.setMyBehaviour(new GhostInkyBehaviour(blinky, walls, ghostHouse, xMapSize, yMapSize, this.getRelaxTarget()));
             }
         };
     }

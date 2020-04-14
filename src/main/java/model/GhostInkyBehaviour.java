@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -11,15 +10,17 @@ public class GhostInkyBehaviour extends GhostAbstractBehaviour {
 
     private final Set<Pair<Integer, Integer>> setWall;
     private Pair<Integer, Integer> chaseTarget;
+    private final Ghost blinky;
 
-    public GhostInkyBehaviour(final Set<Pair<Integer, Integer>> setWall, final Set<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize, final Pair<Integer, Integer> relaxTarget) {
+    public GhostInkyBehaviour(final Ghost blinky, final Set<Pair<Integer, Integer>> setWall, final Set<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize, final Pair<Integer, Integer> relaxTarget) {
         super(setWall, ghostHouse, xMapSize, yMapSize);
+        this.blinky = blinky;
         this.setWall = setWall;
         this.setRelaxTarget(relaxTarget);
         this.setStartPosition(this.getGhostHouse().get(3));
     }
 
-    private void targetPosition(final PacMan pacMan, final Optional<Pair<Integer, Integer>> blinkyPosition) {
+    private void targetPosition(final PacMan pacMan, final Pair<Integer, Integer> blinkyPosition) {
         final Pair<Integer, Integer> pacManPosition = pacMan.getPosition();
         Pair<Integer, Integer> appo;
         int targetX;
@@ -34,15 +35,15 @@ public class GhostInkyBehaviour extends GhostAbstractBehaviour {
         } else {
             appo = new PairImpl<>(pacManPosition.getX() - 2, pacManPosition.getY());
         }
-        if (blinkyPosition.get().getX() <= appo.getX()) {
-            targetX = blinkyPosition.get().getX() + (Math.abs(appo.getX() - blinkyPosition.get().getX()) * 2);
+        if (blinkyPosition.getX() <= appo.getX()) {
+            targetX = blinkyPosition.getX() + (Math.abs(appo.getX() - blinkyPosition.getX()) * 2);
         } else {
-            targetX = blinkyPosition.get().getX() - (Math.abs(appo.getX() - blinkyPosition.get().getX()) * 2);
+            targetX = blinkyPosition.getX() - (Math.abs(appo.getX() - blinkyPosition.getX()) * 2);
         }
-        if (blinkyPosition.get().getY() <= appo.getY()) {
-            targetY = blinkyPosition.get().getY() + (Math.abs(appo.getY() - blinkyPosition.get().getY()) * 2);
+        if (blinkyPosition.getY() <= appo.getY()) {
+            targetY = blinkyPosition.getY() + (Math.abs(appo.getY() - blinkyPosition.getY()) * 2);
         } else {
-            targetY = blinkyPosition.get().getY() - (Math.abs(appo.getY() - blinkyPosition.get().getY()) * 2);
+            targetY = blinkyPosition.getY() - (Math.abs(appo.getY() - blinkyPosition.getY()) * 2);
         }
         this.chaseTarget = new PairImpl<>(targetX, targetY);
         if (this.chaseTarget.getX() >= getxMapSize()) {
@@ -71,12 +72,12 @@ public class GhostInkyBehaviour extends GhostAbstractBehaviour {
     }
 
     @Override
-    public final void chase(final PacMan pacMan, final Optional<Pair<Integer, Integer>> blinkyPosition) {
+    public final void chase(final PacMan pacMan) {
         if (!moveIfStuck()) {
-            if (blinkyPosition.isEmpty()) {
+            if (this.isBlinkyDead()) {
                 this.chaseTarget = pacMan.getPosition();
             } else {
-                this.targetPosition(pacMan, blinkyPosition);
+                this.targetPosition(pacMan, this.blinky.getPosition());
             }
             this.findPath(this.chaseTarget);
             this.move(this.chaseTarget, 1);

@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Optional;
-
 /**
  * The Interface GhostBehaviour.
  */
@@ -12,9 +10,8 @@ public interface GhostBehaviour {
      * When ghosts reach the corner, they start chasing PacMan.
      *
      * @param pacMan the pac man
-     * @param blinkyPosition the blinky position
      */
-    void chase(PacMan pacMan, Optional<Pair<Integer, Integer>> blinkyPosition);
+    void chase(PacMan pacMan);
 
     /**
      * Run away algorithm.
@@ -61,4 +58,17 @@ public interface GhostBehaviour {
      * @return the start position
      */
     Pair<Integer, Integer> getStartPosition();
+
+    /**
+     * Gets the status of Blinky.
+     * 
+     *  @return true if Blinky is dead
+     */
+    boolean isBlinkyDead();
+
+    /**
+     * Set Blinky dead.
+     */
+    void setBlinkyDead();
+
 }

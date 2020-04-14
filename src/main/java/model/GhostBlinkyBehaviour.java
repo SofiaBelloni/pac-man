@@ -1,5 +1,5 @@
 package model;
-import java.util.Optional;
+
 import java.util.Set;
 
 /**
@@ -15,7 +15,7 @@ public class GhostBlinkyBehaviour extends GhostAbstractBehaviour {
     }
 
     @Override
-    public final void chase(final PacMan pacMan, final Optional<Pair<Integer, Integer>> blinkyPosition) {
+    public final void chase(final PacMan pacMan) {
         if (!moveIfStuck()) {
             this.findPath(pacMan.getPosition());
             this.move(pacMan.getPosition(), 1);

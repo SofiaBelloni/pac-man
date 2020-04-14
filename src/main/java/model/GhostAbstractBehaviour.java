@@ -23,6 +23,7 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
     private final Set<Pair<Integer, Integer>> setWall;
     private final Map<Pair<Integer, Integer>, Integer> map;
     private boolean isPathFound;
+    private boolean isBlinkyDead;
     private Pair<Integer, Integer> startPosition;
     private Pair<Integer, Integer> relaxTarget;
     private Pair<Integer, Integer> up;
@@ -43,6 +44,7 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         this.yMapSize = yMapSize;
         this.j = 0;
         this.isPathFound = false;
+        this.isBlinkyDead = false;
         this.currentDirection = Directions.UP;
     }
 
@@ -248,6 +250,16 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
             this.setCurrentPosition(this.right);
             this.currentDirection = Directions.RIGHT;
         }
+    }
+
+    @Override
+    public final boolean isBlinkyDead() {
+        return this.isBlinkyDead;
+    }
+
+    @Override
+    public final void setBlinkyDead() {
+        this.isBlinkyDead = true;
     }
 
     /**

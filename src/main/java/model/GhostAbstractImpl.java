@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -14,25 +13,20 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     private boolean eatable;
     private boolean isRelaxed;
     private boolean timeToTurn;
-    private boolean isBlinkyDead;
     private boolean isInside;
     private boolean created;
     private Ghosts name;
     private GhostBehaviour myBehaviour;
     private Pair<Integer, Integer> relaxTarget;
-    private Optional<Ghost> blinky;
 
     public GhostAbstractImpl(final Set<Pair<Integer, Integer>> setWall,
-            final Set<Pair<Integer, Integer>> ghostHouse, final int xMapSize,
-            final int yMapSize) {
+            final Set<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize) {
         super(xMapSize, yMapSize);
         this.isRelaxed = true;
         this.isInside = true;
         this.created = false;
         this.timeToTurn = false;
         this.eatable = false;
-        this.blinky = Optional.empty();
-        this.isBlinkyDead = false;
         this.setWall = setWall;
         this.ghostHouse = ghostHouse;
     }
@@ -62,11 +56,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
                     this.isRelaxed = false;
                 }
             } else {
-                if (this.blinky.isEmpty() || this.isBlinkyDead) {
-                    this.myBehaviour.chase(pacMan, Optional.empty());
-                } else {
-                    this.myBehaviour.chase(pacMan, Optional.of(this.blinky.get().getPosition()));
-                }
+                this.myBehaviour.chase(pacMan);
             }
         }
         this.myBehaviour.setCurrentPosition(this.convertToToroidal(this.getPosition()));
@@ -98,7 +88,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     public final void blinkyIsDead() {
         this.checkCreation();
         if (this.getName().equals(Ghosts.INKY)) {
-            this.isBlinkyDead = true;
+            this.myBehaviour.setBlinkyDead();
         } else {
             throw new IllegalStateException("This method is designed only for Inky");
         }
@@ -128,10 +118,6 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
 
     protected final void setRelaxTarget(final Pair<Integer, Integer> relaxTarget) {
         this.relaxTarget = relaxTarget;
-    }
-
-    protected final void setBlinky(final Optional<Ghost> blinky) {
-        this.blinky = blinky;
     }
 
     protected final void setCreated() {
