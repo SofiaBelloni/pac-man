@@ -33,10 +33,12 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
     private final int yMapSize;
     private Directions currentDirection;
     private Pair<Integer, Integer> currentPosition;
+    private final List<Pair<Integer, Integer>> ghostHouse;
 
-    public GhostAbstractBehaviour(final Set<Pair<Integer, Integer>> setWall, final int xMapSize, final int yMapSize) {
+    public GhostAbstractBehaviour(final Set<Pair<Integer, Integer>> setWall, final Set<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize) {
         this.map = new HashMap<>();
         this.setWall = setWall;
+        this.ghostHouse = new ArrayList<>(ghostHouse);
         this.xMapSize = xMapSize;
         this.yMapSize = yMapSize;
         this.j = 0;
@@ -296,6 +298,10 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
     protected final void setStartPosition(final Pair<Integer, Integer> startPosition) {
         this.currentPosition = startPosition;
         this.startPosition = startPosition;
+    }
+
+    protected final List<Pair<Integer, Integer>> getGhostHouse() {
+        return this.ghostHouse;
     }
 
 }

@@ -1,6 +1,5 @@
 package model;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Optional;
 import java.util.Set;
 
@@ -10,15 +9,13 @@ import java.util.Set;
 */
 public class GhostClydeBehaviour extends GhostAbstractBehaviour {
 
-    private final List<Pair<Integer, Integer>> ghostHouse;
     private Pair<Integer, Integer> chaseTarget;
     private static final int PACMANRADIUS = 7;
 
-    public GhostClydeBehaviour(final Set<Pair<Integer, Integer>> setWall, final Set<Pair<Integer, Integer>> ghostHouse, final int xMap, final int yMap, final Pair<Integer, Integer> relaxTarget) {
-        super(setWall, xMap, yMap);
+    public GhostClydeBehaviour(final Set<Pair<Integer, Integer>> setWall, final Set<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize, final Pair<Integer, Integer> relaxTarget) {
+        super(setWall, ghostHouse, xMapSize, yMapSize);
         this.setRelaxTarget(relaxTarget);
-        this.ghostHouse = new ArrayList<>(ghostHouse);
-        this.setStartPosition(this.ghostHouse.get(0));
+        this.setStartPosition(this.getGhostHouse().get(0));
     }
 
     private void targetPosition(final PacMan pacMan) {
