@@ -24,4 +24,6 @@ public interface LevelManager {
 
     int getLevelTime();
 
+    int getInvertedGameTime();
+
 }

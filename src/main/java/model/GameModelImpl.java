@@ -95,7 +95,11 @@ public class GameModelImpl implements GameModel {
             }
         } else {
             if (this.checkPillCollision()) {
+                boolean oldIsGameInverted = this.levelManager.isGameInverted();
                 this.levelManager.incScores(this.gameMap.getPillScore());
+                if (!oldIsGameInverted && this.levelManager.isGameInverted()) {
+                    this.ghosts.forEach(x -> x.setEatable(true));
+                }
             }
         }
     }
@@ -113,10 +117,14 @@ public class GameModelImpl implements GameModel {
         if (this.levelManager.getLevelTime() == 0) {
             this.nextLevel();
         } else {
+            boolean oldIsGameInverted = this.levelManager.isGameInverted();
             this.levelManager.decLevelTime();
+            if (oldIsGameInverted && !this.levelManager.isGameInverted()) {
+                this.ghosts.forEach(x -> x.setEatable(false));
+            }
         }
     }
-
+    
     @Override
     public final int getScores() {
         return this.levelManager.getScores();
@@ -155,6 +163,7 @@ public class GameModelImpl implements GameModel {
     private void nextLevel() {
         this.levelManager.nextLevel();
         this.ghosts.forEach(x -> x.returnHome());
+        this.ghosts.forEach(x -> x.setEatable(false));
         this.gameMap.restorePills();
         this.pacMan.returnToStartPosition();
         this.createGhost(Ghosts.CLYDE);

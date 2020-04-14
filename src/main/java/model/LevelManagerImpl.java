@@ -60,6 +60,11 @@ public class LevelManagerImpl implements LevelManager {
     private void setInvertedGame() {
         this.invertedGameTime = this.invertedGameDuration;
     }
+    
+    @Override
+    public final int getInvertedGameTime() {
+        return this.invertedGameTime;
+    }
 
     @Override
     public final int getLevelDuration() {
