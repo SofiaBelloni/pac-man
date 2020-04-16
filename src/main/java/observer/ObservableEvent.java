@@ -6,6 +6,10 @@ public interface ObservableEvent<T> {
      */
     void addEObserver(EventObserver<T> observer);
     /**
+     * @param observer to remove
+     */
+    void removeEObserver(EventObserver<T> observer);
+    /**
      * @param arg to send to observers
      */
     void notifyEventObservers(T arg);
