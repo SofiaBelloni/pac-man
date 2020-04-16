@@ -221,12 +221,12 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
             this.setCurrentPosition(this.down);
             return true;
         }
-        if (this.currentDirection.equals(Directions.UP) 
+        if (this.currentDirection.equals(Directions.LEFT) 
                 && this.setWall.contains(this.up) && this.setWall.contains(this.down)) {
             this.setCurrentPosition(this.left);
             return true;
         }
-        if (this.currentDirection.equals(Directions.UP) 
+        if (this.currentDirection.equals(Directions.RIGHT) 
                 && this.setWall.contains(this.up) && this.setWall.contains(this.down)) {
             this.setCurrentPosition(this.right);
             return true;
@@ -298,8 +298,8 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
     }
 
     @Override
-    public final void setCurrentPosition(final Pair<Integer, Integer> right2) {
-        this.currentPosition = right2;
+    public final void setCurrentPosition(final Pair<Integer, Integer> newPosition) {
+        this.currentPosition = newPosition;
     }
 
     @Override

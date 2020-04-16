@@ -48,9 +48,9 @@ public interface GhostBehaviour {
     /**
      * Sets the current position.
      *
-     * @param right the new position
+     * @param newPosition the new position
      */
-    void setCurrentPosition(Pair<Integer, Integer> right);
+    void setCurrentPosition(Pair<Integer, Integer> newPosition);
 
     /**
      * Gets the start position.
