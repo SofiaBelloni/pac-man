@@ -18,9 +18,10 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     private Ghosts name;
     private GhostBehaviour myBehaviour;
     private Pair<Integer, Integer> relaxTarget;
+    private final PacMan pacMan;
 
     public GhostAbstractImpl(final Set<Pair<Integer, Integer>> setWall,
-            final Set<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize) {
+            final Set<Pair<Integer, Integer>> ghostHouse, final PacMan pacMan, final int xMapSize, final int yMapSize) {
         super(xMapSize, yMapSize);
         this.isRelaxed = true;
         this.isInside = true;
@@ -29,10 +30,11 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         this.eatable = false;
         this.setWall = setWall;
         this.ghostHouse = ghostHouse;
+        this.pacMan = pacMan;
     }
 
     @Override
-    public final void nextPosition(final PacMan pacMan) {
+    public final void nextPosition() {
         this.checkCreation();
         if (this.isInside && !this.ghostHouse.contains(this.getPosition())) {
             this.setWall.addAll(this.ghostHouse);
@@ -56,7 +58,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
                     this.isRelaxed = false;
                 }
             } else {
-                this.myBehaviour.chase(pacMan);
+                this.myBehaviour.chase(this.pacMan);
             }
         }
         this.myBehaviour.setCurrentPosition(this.convertToToroidal(this.getPosition()));

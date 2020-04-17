@@ -8,4 +8,8 @@ public interface Entity {
      * @return the position of the entity
      */
     Pair<Integer, Integer> getPosition();
+    /**
+     * Move the entity to the next position.
+     */
+    void nextPosition();
 }

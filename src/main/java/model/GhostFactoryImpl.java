@@ -10,13 +10,15 @@ import java.util.Set;
 public final class GhostFactoryImpl implements GhostFactory {
     private final Set<Pair<Integer, Integer>> walls;
     private final Set<Pair<Integer, Integer>> ghostHouse;
+    private final PacMan pacMan;
     private final int xMapSize;
     private final int yMapSize;
 
     private GhostFactoryImpl(final Set<Pair<Integer, Integer>> walls, final Set<Pair<Integer,
-            Integer>> ghostHouse, final int xMapSize, final int yMapSize) {
+            Integer>> ghostHouse, final PacMan pacMan, final int xMapSize, final int yMapSize) {
         this.walls = walls;
         this.ghostHouse = ghostHouse;
+        this.pacMan = pacMan;
         this.xMapSize = xMapSize;
         this.yMapSize = yMapSize;
     }
@@ -24,6 +26,7 @@ public final class GhostFactoryImpl implements GhostFactory {
     public static class Builder {
         private Optional<Set<Pair<Integer, Integer>>> walls = Optional.empty();
         private Optional<Set<Pair<Integer, Integer>>> ghostHouse = Optional.empty();
+        private Optional<PacMan> pacMan = Optional.empty();
         private Optional<Integer> xMapSize = Optional.empty();
         private Optional<Integer> yMapSize = Optional.empty();
 
@@ -71,23 +74,34 @@ public final class GhostFactoryImpl implements GhostFactory {
 
         /**
          * 
+         * @param pacMan the PacMan
+         * @return this
+         */
+        public Builder pacMan(final PacMan pacMan) {
+            this.pacMan = Optional.of(pacMan);
+            return this;
+        }
+
+        /**
+         * 
          * @return a new instance of GhostFactory
          * @throws IllegalStateException if some parameter is missed
          */
         public GhostFactoryImpl build() {
             check(this.walls.isPresent());
             check(this.ghostHouse.isPresent());
+            check(this.pacMan.isPresent());
             check(this.xMapSize.isPresent());
             check(this.yMapSize.isPresent());
 
-            return new GhostFactoryImpl(this.walls.get(), this.ghostHouse.get(), this.xMapSize.get(),
+            return new GhostFactoryImpl(this.walls.get(), this.ghostHouse.get(), this.pacMan.get(), this.xMapSize.get(),
                     this.yMapSize.get());
         }
     }
 
     @Override
     public Ghost blinky() { 
-        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize) {
+        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.pacMan, this.xMapSize, this.yMapSize) {
             @Override
             public void create() {
                 this.setCreated();
@@ -100,7 +114,7 @@ public final class GhostFactoryImpl implements GhostFactory {
 
     @Override
     public Ghost pinky() {
-        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize) {
+         return new GhostAbstractImpl(this.walls, this.ghostHouse, this.pacMan, this.xMapSize, this.yMapSize) {
             @Override
             public void create() {
                 this.setCreated();
@@ -116,7 +130,7 @@ public final class GhostFactoryImpl implements GhostFactory {
         if (!blinky.getName().equals(Ghosts.BLINKY)) {
             throw new IllegalArgumentException("Insert Blinky");
         }
-        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize) {
+        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.pacMan, this.xMapSize, this.yMapSize) {
             @Override
             public void create() {
                 this.setCreated();
@@ -129,7 +143,7 @@ public final class GhostFactoryImpl implements GhostFactory {
 
     @Override
     public Ghost clyde() {
-        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize) {
+         return new GhostAbstractImpl(this.walls, this.ghostHouse, this.pacMan, this.xMapSize, this.yMapSize) {
             @Override
             public void create() {
                 this.setCreated();

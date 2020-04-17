@@ -26,11 +26,6 @@ public class GameModelImpl implements GameModel {
                 INVERTED_GAME_DURATION,
                 this.gameMap.getPillsPositions().size() * this.gameMap.getPillScore());
         this.ghosts = new HashSet<>();
-        this.ghostFactory = new GhostFactoryImpl.Builder()
-                            .walls(this.gameMap.getWallsPositions())
-                            .ghostHouse(this.gameMap.getGhostHousePosition())
-                            .mapSize(this.gameMap.getxMapSize(), this.gameMap.getyMapSize())
-                            .build();
         this.pacMan = new PacManImpl.Builder()
                             .currentDirection(Directions.LEFT)
                             .mapSize(this.gameMap.getxMapSize(), this.gameMap.getxMapSize())
@@ -38,6 +33,12 @@ public class GameModelImpl implements GameModel {
                             .noWalls(this.gameMap.getNoWallsPositions())
                             .startPosition(this.gameMap.getPacManStartPosition())
                             .build();
+        this.ghostFactory = new GhostFactoryImpl.Builder()
+                .walls(this.gameMap.getWallsPositions())
+                .ghostHouse(this.gameMap.getGhostHousePosition())
+                .pacMan(pacMan)
+                .mapSize(this.gameMap.getxMapSize(), this.gameMap.getyMapSize())
+                .build();
         this.createGhost(Ghosts.CLYDE);
         this.createGhost(Ghosts.INKY);
         this.createGhost(Ghosts.PINKY);
@@ -84,7 +85,7 @@ public class GameModelImpl implements GameModel {
     @Override
     public final void moveEntitiesNextPosition() {
         this.pacMan.nextPosition();
-        this.ghosts.forEach(x -> x.nextPosition(this.pacMan));
+        this.ghosts.forEach(x -> x.nextPosition());
         if (this.checkPacmanGhostCollision()) {
             if (this.levelManager.isGameInverted()) {
                 this.ghosts.removeIf(x ->

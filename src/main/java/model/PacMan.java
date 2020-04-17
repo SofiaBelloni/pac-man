@@ -8,10 +8,6 @@ public interface PacMan extends Entity {
    */
   void setDirection(Directions direction);
   /**
-   * Move PacMan to the next position.
-   */
-  void nextPosition();
-  /**
    * Get the PacMan direction.
    * 
    * @return the direction of PacMan

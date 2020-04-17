@@ -11,13 +11,6 @@ public interface Ghost extends Entity {
     void create();
 
     /**
-     * Next position.
-     *
-     * @param pacMan
-     */
-    void nextPosition(PacMan pacMan);
-
-    /**
      * Makes the Ghost return home.
      */
     void returnHome();
