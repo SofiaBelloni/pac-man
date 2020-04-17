@@ -17,7 +17,6 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     private boolean created;
     private Ghosts name;
     private GhostBehaviour myBehaviour;
-    private Pair<Integer, Integer> relaxTarget;
     private final PacMan pacMan;
 
     public GhostAbstractImpl(final Set<Pair<Integer, Integer>> setWall,
@@ -54,7 +53,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         } else {
             if (this.isRelaxed) {
                 this.myBehaviour.relax();
-                if (this.getPosition().equals(this.relaxTarget)) {
+                if (this.getPosition().equals(this.myBehaviour.getRelaxTarget())) {
                     this.isRelaxed = false;
                 }
             } else {
@@ -106,20 +105,8 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         this.name = name;
     }
 
-    protected final GhostBehaviour getMyBehaviour() {
-        return this.myBehaviour;
-    }
-
     protected final void setMyBehaviour(final GhostBehaviour myBehaviour) {
         this.myBehaviour = myBehaviour;
-    }
-
-    protected final Pair<Integer, Integer> getRelaxTarget() {
-        return this.relaxTarget;
-    }
-
-    protected final void setRelaxTarget(final Pair<Integer, Integer> relaxTarget) {
-        this.relaxTarget = relaxTarget;
     }
 
     protected final void setCreated() {

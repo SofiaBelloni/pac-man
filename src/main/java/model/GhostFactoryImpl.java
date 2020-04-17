@@ -106,8 +106,7 @@ public final class GhostFactoryImpl implements GhostFactory {
             public void create() {
                 this.setCreated();
                 this.setName(Ghosts.BLINKY);
-                this.setRelaxTarget(new PairImpl<>(xMapSize - 1, yMapSize - 1));
-                this.setMyBehaviour(new GhostBlinkyBehaviour(walls, ghostHouse, xMapSize, yMapSize, this.getRelaxTarget()));
+                this.setMyBehaviour(new GhostBlinkyBehaviour(walls, ghostHouse, xMapSize, yMapSize, new PairImpl<>(xMapSize - 1, yMapSize - 1)));
             }
         };
     }
@@ -119,8 +118,7 @@ public final class GhostFactoryImpl implements GhostFactory {
             public void create() {
                 this.setCreated();
                 this.setName(Ghosts.PINKY);
-                this.setRelaxTarget(new PairImpl<>(0, yMapSize - 1));
-                this.setMyBehaviour(new GhostPinkyBehaviour(walls, ghostHouse, xMapSize, yMapSize, this.getRelaxTarget()));
+                this.setMyBehaviour(new GhostPinkyBehaviour(walls, ghostHouse, xMapSize, yMapSize,  new PairImpl<>(0, yMapSize - 1)));
             }
         };
     }
@@ -135,8 +133,7 @@ public final class GhostFactoryImpl implements GhostFactory {
             public void create() {
                 this.setCreated();
                 this.setName(Ghosts.INKY);
-                this.setRelaxTarget(new PairImpl<>(xMapSize - 1, 0));
-                this.setMyBehaviour(new GhostInkyBehaviour(blinky, walls, ghostHouse, xMapSize, yMapSize, this.getRelaxTarget()));
+                this.setMyBehaviour(new GhostInkyBehaviour(blinky, walls, ghostHouse, xMapSize, yMapSize, new PairImpl<>(xMapSize - 1, 0)));
             }
         };
     }
@@ -148,8 +145,7 @@ public final class GhostFactoryImpl implements GhostFactory {
             public void create() {
                 this.setCreated();
                 this.setName(Ghosts.CLYDE);
-                this.setRelaxTarget(new PairImpl<>(0, 0));
-                this.setMyBehaviour(new GhostClydeBehaviour(walls, ghostHouse, xMapSize, yMapSize, this.getRelaxTarget()));
+                this.setMyBehaviour(new GhostClydeBehaviour(walls, ghostHouse, xMapSize, yMapSize, new PairImpl<>(0, 0)));
             }
         };
     }

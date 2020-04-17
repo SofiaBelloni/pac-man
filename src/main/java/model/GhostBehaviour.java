@@ -71,4 +71,9 @@ public interface GhostBehaviour {
      */
     void setBlinkyDead();
 
+    /**
+     * @return the target of the Ghost in relax mode
+     */
+    Pair<Integer, Integer> getRelaxTarget();
+
 }

@@ -262,11 +262,8 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         this.isBlinkyDead = true;
     }
 
-    /**
-     * 
-     * @return the target of the Ghost in relax mode
-     */
-    protected final Pair<Integer, Integer> getRelaxTarget() {
+    @Override
+    public final Pair<Integer, Integer> getRelaxTarget() {
         return relaxTarget;
     }
 
