@@ -2,8 +2,8 @@ package observer;
 
 public interface EventObserver<T> {
     /**
-     * @param source of th event
-     * @param arg to send to observer
+     * @param source of the event
+     * @param event to send to observer
      */
-    void update(ObservableEvent<T> source, T arg);
+    void update(ObservableEvent<T> source, T event);
 }

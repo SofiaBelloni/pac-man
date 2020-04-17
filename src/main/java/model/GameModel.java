@@ -54,4 +54,8 @@ public interface GameModel {
      * @return the Pacman position
      */
     Pair<Integer, Integer> getPacManPosition();
+    /**
+     * @return true if the game is ended, false otherwise
+     */
+    Boolean isGameEnded();
 }

@@ -14,12 +14,12 @@ public abstract class ObservableViewImpl<T> implements ObservableEvent<T> {
     }
 
     @Override
-    public final void removeEObserver(final EventObserver<T> observer) {
+    public final void removeEventObserver(final EventObserver<T> observer) {
         this.observers.remove(observer);
     }
 
     @Override
-    public final void addEObserver(final EventObserver<T> observer) {
+    public final void addEventObserver(final EventObserver<T> observer) {
         this.observers.add(observer);
     }
 
