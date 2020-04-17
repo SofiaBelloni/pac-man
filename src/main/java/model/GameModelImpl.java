@@ -170,4 +170,9 @@ public class GameModelImpl implements GameModel {
         this.createGhost(Ghosts.INKY);
         this.createGhost(Ghosts.PINKY);
     }
+
+    @Override
+    public final Boolean isGameEnded() {
+        return this.pacMan.getLives() == 0;
+    }
 }

@@ -12,7 +12,7 @@ import java.util.stream.Stream;
  *
  */
 public final class GameMapImpl implements GameMap {
-    private final static int DEFAULT_PILL_SCORE = 100;
+    private static final int DEFAULT_PILL_SCORE = 100;
     private final int pillScore;
     private final Map<TileType, Set<Pair<Integer, Integer>>> gameMap;
     private final int xMapSize;
