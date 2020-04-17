@@ -39,4 +39,16 @@ public class TestPacManBuilding {
         assertEquals(pacMan.getPosition(), new PairImpl<Integer, Integer>(0, 0));
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void testPacManLives() {
+        @SuppressWarnings("unused")
+        final PacMan pacMan = new PacManImpl.Builder()
+                                    .currentDirection(Directions.LEFT)
+                                    .lives(-1)
+                                    .mapSize(XMAPSIZE, YMAPSIZE)
+                                    .noWalls(new HashSet<Pair<Integer, Integer>>())
+                                    .startPosition(new PairImpl<Integer, Integer>(0, 0))
+                                    .build();
+    }
+
 }
