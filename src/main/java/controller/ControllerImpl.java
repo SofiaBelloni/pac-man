@@ -7,7 +7,7 @@ import model.GameModel;
  * This class represents the controller of the game.
  *
  */
-public class ControllerImpl implements ViewObserver {
+public class ControllerImpl implements Controller {
     private final GameModel model;
     private View view;
     private GameLoop gameLoop;
@@ -49,13 +49,13 @@ public class ControllerImpl implements ViewObserver {
 
     }
 
-    @Override
+ 
     public void savePlayer(final String name) {
         this.fileManager.savePlayer(name, this.model.getLevelNumber(), this.model.getScores());
 
     }
 
-    @Override
+
     public void newPacManDirection(Directions newDirection) {
         // TODO Auto-generated method stub
         this.model.setPacManDirection(newDirection);
