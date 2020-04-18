@@ -11,6 +11,7 @@ public class ControllerImpl implements ViewObserver {
     private final GameModel model;
     private View view;
     private GameLoop gameLoop;
+    private FileManager fileManager;
     private int highScore;
 
     /**
@@ -23,8 +24,9 @@ public class ControllerImpl implements ViewObserver {
     public ControllerImpl(final GameModel model, final View view) {
         this.model = model;
         this.view = view;
-        this.gameLoop = new GameLoop(this.model, this.view);
-        //TODO leggi highScore da file
+        this.gameLoop = new GameLoopImpl(this.model, this.view);
+        this.fileManager = new FileManagerImpl();
+        this.highScore = this.fileManager.getHighScore();
     }
 
     @Override
@@ -48,8 +50,8 @@ public class ControllerImpl implements ViewObserver {
     }
 
     @Override
-    public void savePlayer(final int score) {
-        // TODO Auto-generated method stub
+    public void savePlayer(final String name) {
+        this.fileManager.savePlayer(name, this.model.getLevelNumber(), this.model.getScores());
 
     }
 
