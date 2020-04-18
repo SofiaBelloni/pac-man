@@ -8,10 +8,8 @@ import model.GameModel;
  */
 public class LevelTimer {
 
-    private GameModel model;
-    private Timer levelTimer;
-    private GameTimer gameTimer;
-    private boolean isRunning;
+    private final Timer timer;
+    private final GameTimer gameTimer;
 
     /**
      * Constructor.
@@ -19,25 +17,25 @@ public class LevelTimer {
      *      the model reference
      */
     public LevelTimer(final GameModel model) {
-        this.model = model;
-        this.levelTimer = new Timer();
-        this.isRunning = false;
+        this.timer = new Timer();
+        this.gameTimer = new GameTimer(model);
     }
     /**
-     * Starts the GameTimer.
+     * Starts the GameTimer only if it has not already been started.
      **/
     public void startTimer() {
-        gameTimer = new GameTimer(this.model);
-        this.levelTimer.scheduleAtFixedRate(gameTimer, 0, 1000);
-        this.isRunning = true;
-    }
-    /**
-     * Interrupts the GameTimer if it is running.
-     **/
-    public void stopTimer() {
-        if (this.isRunning) {
-            this.gameTimer.cancel();
+        if (!this.gameTimer.isRunning()) {
+            this.timer.scheduleAtFixedRate(this.gameTimer, 0, 1000);
+            this.gameTimer.setRunning(true);
         }
     }
-    
+    /**
+     * Interrupts the GameTimer only if it is running.
+     **/
+    public void stopTimer() {
+        if (this.gameTimer.isRunning()) {
+            this.gameTimer.cancel();
+            this.gameTimer.setRunning(false);
+        }
+    }
 }
