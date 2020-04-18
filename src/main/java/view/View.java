@@ -1,5 +1,6 @@
 package view;
 
+import controller.Controller;
 import javafx.scene.Scene;
 
 public interface View {
