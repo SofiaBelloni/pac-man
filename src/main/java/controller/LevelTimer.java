@@ -27,7 +27,7 @@ public class LevelTimer {
      * Starts the GameTimer.
      **/
     public void startTimer() {
-        gameTimer = new GameTimer(this.model, this.isRunning);
+        gameTimer = new GameTimer(this.model);
         this.levelTimer.scheduleAtFixedRate(gameTimer, 0, 1000);
         this.isRunning = true;
     }
