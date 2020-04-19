@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#onKeyPressed" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.GameOverController">
+   <children>
+      <Label alignment="TOP_CENTER" layoutX="134.0" layoutY="14.0" text="GAME OVER" textAlignment="CENTER" underline="true" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="136.1091023493991" AnchorPane.topAnchor="14.0">
+         <font>
+            <Font size="60.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelName" alignment="TOP_CENTER" layoutX="254.0" layoutY="172.0" text="LabelName" textAlignment="CENTER" AnchorPane.leftAnchor="254.0" AnchorPane.rightAnchor="256.1090940264236" AnchorPane.topAnchor="172.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelScore" alignment="TOP_CENTER" layoutX="255.0" layoutY="215.0" text="LabelScore" textAlignment="CENTER" AnchorPane.leftAnchor="255.0" AnchorPane.rightAnchor="258" AnchorPane.topAnchor="215.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="BOTTOM_CENTER" layoutX="201.0" layoutY="368.0" text="PRESS ENTER TO SEE LEADERBOARD" textAlignment="CENTER" AnchorPane.bottomAnchor="14.54545515076186" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="200.0181887186852" />
+   </children>
+</AnchorPane>
