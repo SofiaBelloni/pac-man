@@ -26,7 +26,7 @@ public class TestPacManBuilding {
 
     @Test
     public void testPacManBuilderNoTypeSpecified() {
-        Assertions.assertThrows(IllegalStateException.class, () -> {
+        assertThrows(IllegalStateException.class, () -> {
             @SuppressWarnings("unused")
             final PacMan pacMan = new PacManImpl.Builder().build();
         });
@@ -47,7 +47,7 @@ public class TestPacManBuilding {
 
     @Test
     public void testPacManLives() {
-        Assertions.assertThrows(IllegalStateException.class, () -> {
+        assertThrows(IllegalStateException.class, () -> {
             @SuppressWarnings("unused")
             final PacMan pacMan = new PacManImpl.Builder()
                     .currentDirection(Directions.LEFT)
