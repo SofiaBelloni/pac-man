@@ -1,11 +1,9 @@
-package test;
+package modeltest;
 
-import static org.junit.Assert.assertEquals;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.IOException;
-
-import org.junit.Test;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import model.GameMap;
 import model.GameMapImpl;
 import model.GameMapLoader;
@@ -14,10 +12,12 @@ import model.PairImpl;
 
 public class TestGameMapLoader {
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void mapLoadingWrongPath() throws IOException {
-        @SuppressWarnings("unused")
-        GameMapLoader mapLoader = new GameMapLoaderImpl("/game_maps/pacman_map_1.txt");
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            @SuppressWarnings("unused")
+            GameMapLoader mapLoader = new GameMapLoaderImpl("/game_maps/pacman_map_1.txt");
+        });
     }
 
     @Test
