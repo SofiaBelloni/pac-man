@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.HashSet;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import model.Directions;
@@ -26,7 +25,7 @@ public class TestPacManBuilding {
 
     @Test
     public void testPacManBuilderNoTypeSpecified() {
-        Assertions.assertThrows(IllegalStateException.class, () -> {
+        assertThrows(IllegalStateException.class, () -> {
             @SuppressWarnings("unused")
             final PacMan pacMan = new PacManImpl.Builder().build();
         });
@@ -47,7 +46,7 @@ public class TestPacManBuilding {
 
     @Test
     public void testPacManLives() {
-        Assertions.assertThrows(IllegalStateException.class, () -> {
+        assertThrows(IllegalStateException.class, () -> {
             @SuppressWarnings("unused")
             final PacMan pacMan = new PacManImpl.Builder()
                     .currentDirection(Directions.LEFT)
