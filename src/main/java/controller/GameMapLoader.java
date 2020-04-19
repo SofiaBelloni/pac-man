@@ -1,6 +1,8 @@
-package model;
+package controller;
 
 import java.util.Set;
+
+import model.Pair;
 
 public interface GameMapLoader {
     /**

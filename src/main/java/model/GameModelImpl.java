@@ -19,9 +19,8 @@ public class GameModelImpl implements GameModel {
     private final GameMap gameMap;
     private final LevelManager levelManager;
 
-    public GameModelImpl() {
-        final GameMapFactory mapFactory = new GameMapFactory();
-        this.gameMap = mapFactory.createMap(Optional.empty());
+    public GameModelImpl(final GameMap gameMap) {
+        this.gameMap = gameMap;
         this.levelManager = new LevelManagerImpl(LEVEL_DURATION,
                 INVERTED_GAME_DURATION,
                 this.gameMap.getPillsPositions().size() * this.gameMap.getPillScore());

@@ -1,4 +1,4 @@
-package model;
+package controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,7 +8,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import model.Pair;
+import model.PairImpl;
+
 public class GameMapLoaderImpl implements GameMapLoader {
+    private static final String GAME_MAP_PATH = "game_maps/";
     private final Integer xMapSize;
     private final Integer yMapSize;
     private final Set<Pair<Integer, Integer>> pills;
@@ -16,14 +20,14 @@ public class GameMapLoaderImpl implements GameMapLoader {
     private final Set<Pair<Integer, Integer>> ghostsHouse;
     private final Set<Pair<Integer, Integer>> pacManStartPosition;
 
-    public GameMapLoaderImpl(final String gameMapPath) throws IOException {
+    public GameMapLoaderImpl(final String mapName) throws IOException {
         this.pills = new HashSet<>();
         this.ghostsHouse = new HashSet<>();
         this.walls = new HashSet<>();
         this.pacManStartPosition = new HashSet<>();
-        this.xMapSize = this.getLineSize(this.readMapFile(gameMapPath));
-        this.yMapSize = this.getNumLines(this.readMapFile(gameMapPath));
-        final List<List<Character>> charList = this.fileToCharList(this.readMapFile(gameMapPath));
+        this.xMapSize = this.getLineSize(this.readMapFile(mapName));
+        this.yMapSize = this.getNumLines(this.readMapFile(mapName));
+        final List<List<Character>> charList = this.fileToCharList(this.readMapFile(mapName));
         this.fillSets(charList);
     }
 
@@ -109,16 +113,16 @@ public class GameMapLoaderImpl implements GameMapLoader {
                   this.addElement(this.pacManStartPosition, j, i);
                   break;
               default:
-                  //Must throw an exception (?)
+                  //TODO
                   break;
               }
           }
       }
    }
 
-    private BufferedReader readMapFile(final String path) {
+    private BufferedReader readMapFile(final String mapName) {
         return new BufferedReader(
                 new InputStreamReader(
-                        ClassLoader.getSystemResourceAsStream(path)));
+                        ClassLoader.getSystemResourceAsStream(GAME_MAP_PATH + mapName)));
     }
 }
