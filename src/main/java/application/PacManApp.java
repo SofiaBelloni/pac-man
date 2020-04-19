@@ -15,7 +15,7 @@ public final class PacManApp extends Application {
 
         final View view = new JavaFXView(stage);
         final GameModel model = new GameModelImpl();
-        final Controller controller = new ControllerImpl(model, view);
+        final ViewObserver controller = new ControllerImpl(model, view);
         view.launch(controller);
     }
 

@@ -49,13 +49,13 @@ public class ControllerImpl implements Controller {
 
     }
 
- 
+    @Override
     public void savePlayer(final String name) {
         this.fileManager.savePlayer(name, this.model.getLevelNumber(), this.model.getScores());
 
     }
 
-
+    @Override
     public void newPacManDirection(Directions newDirection) {
         // TODO Auto-generated method stub
         this.model.setPacManDirection(newDirection);
