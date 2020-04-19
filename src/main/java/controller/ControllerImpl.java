@@ -1,6 +1,8 @@
 package controller;
 
+import model.Directions;
 import model.GameModel;
+import view.View;
 
 /**
  * 

@@ -1,15 +1,11 @@
-package test;
+package modeltest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.junit.Test;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import model.GameMap;
 import model.GameMapImpl;
 import model.Pair;
@@ -20,12 +16,14 @@ public class TestGameMapBuilding {
     private static final int XMAPSIZE = 40;
     private static final int YMAPSIZE = 40;
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testBuilderNoFields() {
-        @SuppressWarnings("unused")
-        final GameMap gameMap = new GameMapImpl.Builder()
-        .mapSize(XMAPSIZE, YMAPSIZE)
-        .build();
+        Assertions.assertThrows(IllegalStateException.class, () -> {
+            @SuppressWarnings("unused")
+            final GameMap gameMap = new GameMapImpl.Builder()
+            .mapSize(XMAPSIZE, YMAPSIZE)
+            .build();
+        });
     }
 
     @Test

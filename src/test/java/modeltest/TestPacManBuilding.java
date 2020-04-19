@@ -1,9 +1,13 @@
-package test;
+package modeltest;
 
-import org.junit.Test;
-import static org.junit.Assert.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.HashSet;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import model.Directions;
 import model.PacMan;
@@ -20,10 +24,12 @@ public class TestPacManBuilding {
     private static final int XMAPSIZE = 28;
     private static final int YMAPSIZE = 31;
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testPacManBuilderNoTypeSpecified() {
-        @SuppressWarnings("unused")
-        final PacMan pacMan = new PacManImpl.Builder().build();
+        Assertions.assertThrows(IllegalStateException.class, () -> {
+            @SuppressWarnings("unused")
+            final PacMan pacMan = new PacManImpl.Builder().build();
+        });
     }
 
     @Test
@@ -39,16 +45,18 @@ public class TestPacManBuilding {
         assertEquals(pacMan.getPosition(), new PairImpl<Integer, Integer>(0, 0));
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testPacManLives() {
-        @SuppressWarnings("unused")
-        final PacMan pacMan = new PacManImpl.Builder()
-                                    .currentDirection(Directions.LEFT)
-                                    .lives(-1)
-                                    .mapSize(XMAPSIZE, YMAPSIZE)
-                                    .noWalls(new HashSet<Pair<Integer, Integer>>())
-                                    .startPosition(new PairImpl<Integer, Integer>(0, 0))
-                                    .build();
+        Assertions.assertThrows(IllegalStateException.class, () -> {
+            @SuppressWarnings("unused")
+            final PacMan pacMan = new PacManImpl.Builder()
+                    .currentDirection(Directions.LEFT)
+                    .lives(-1)
+                    .mapSize(XMAPSIZE, YMAPSIZE)
+                    .noWalls(new HashSet<Pair<Integer, Integer>>())
+                    .startPosition(new PairImpl<Integer, Integer>(0, 0))
+                    .build();
+        });
     }
 
 }

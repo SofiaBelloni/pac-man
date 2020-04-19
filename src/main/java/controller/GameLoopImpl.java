@@ -1,6 +1,7 @@
 package controller;
 
 import model.GameModel;
+import view.View;
 
 /**
  * A thread that periodically updates the model and renders it on the view.

@@ -1,9 +1,12 @@
 package application;
 
+import controller.Controller;
+import controller.ControllerImpl;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.GameModel;
 import model.GameModelImpl;
+import view.View;
 
 /**
  * This class represent the Main class of the JavaFX-based application.
