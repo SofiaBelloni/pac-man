@@ -11,11 +11,6 @@ public interface Ghost extends Entity {
     void create();
 
     /**
-     * Makes the Ghost return home.
-     */
-    void returnHome();
-
-    /**
      * Sets the eatable.
      *
      * @param eatable the new eatable

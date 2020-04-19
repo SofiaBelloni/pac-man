@@ -1,5 +1,6 @@
 package model;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -8,58 +9,26 @@ import java.util.Set;
  */
 public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Ghost {
 
-    private final Set<Pair<Integer, Integer>> setWall;
-    private final Set<Pair<Integer, Integer>> ghostHouse;
     private boolean eatable;
-    private boolean isRelaxed;
-    private boolean timeToTurn;
-    private boolean isInside;
     private boolean created;
     private Ghosts name;
-    private GhostBehaviour myBehaviour;
-    private final PacMan pacMan;
+    private GhostBraveBehaviour myBehaviour;
+    private boolean timeToTurn;
+    private Pair<Integer, Integer> startPosition;
 
-    public GhostAbstractImpl(final Set<Pair<Integer, Integer>> setWall,
-            final Set<Pair<Integer, Integer>> ghostHouse, final PacMan pacMan, final int xMapSize, final int yMapSize) {
+    public GhostAbstractImpl(final Set<Pair<Integer, Integer>> setWall, final List<Pair<Integer,
+    Integer>> ghostHouse, final int xMapSize, final int yMapSize) {
         super(xMapSize, yMapSize);
-        this.isRelaxed = true;
-        this.isInside = true;
         this.created = false;
-        this.timeToTurn = false;
         this.eatable = false;
-        this.setWall = setWall;
-        this.ghostHouse = ghostHouse;
-        this.pacMan = pacMan;
+        this.timeToTurn = false;
     }
 
     @Override
     public final void nextPosition() {
         this.checkCreation();
-        if (this.isInside && !this.ghostHouse.contains(this.getPosition())) {
-            this.setWall.addAll(this.ghostHouse);
-            this.isInside = false;
-        }
-        if (this.eatable) {
-            if (this.timeToTurn) {
-                 if (!this.isInside && !this.ghostHouse.contains(new PairImpl<>(this.getPosition().getX(), this.getPosition().getY() - 1))) {
-                     this.myBehaviour.turnAround();
-                 } else {
-                     this.myBehaviour.runAway();
-                 }
-                this.timeToTurn = false;
-            } else {
-                this.myBehaviour.runAway();
-            }
-        } else {
-            if (this.isRelaxed) {
-                this.myBehaviour.relax();
-                if (this.getPosition().equals(this.myBehaviour.getRelaxTarget())) {
-                    this.isRelaxed = false;
-                }
-            } else {
-                this.myBehaviour.chase(this.pacMan);
-            }
-        }
+        this.myBehaviour.nextPosition(this.eatable, this.timeToTurn);
+        this.timeToTurn = false;
         this.myBehaviour.setCurrentPosition(this.convertToToroidal(this.getPosition()));
     }
 
@@ -70,10 +39,9 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     }
 
     @Override
-    public final void returnHome() {
+    public final void returnToStartPosition() {
         this.checkCreation();
-        this.setWall.removeAll(this.ghostHouse);
-        this.myBehaviour.setCurrentPosition(this.myBehaviour.getStartPosition());
+        this.myBehaviour.returnHome(startPosition);
     }
 
     @Override
@@ -105,12 +73,20 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         this.name = name;
     }
 
-    protected final void setMyBehaviour(final GhostBehaviour myBehaviour) {
+    protected final void setMyBehaviour(final GhostBraveBehaviour myBehaviour) {
         this.myBehaviour = myBehaviour;
     }
 
     protected final void setCreated() {
         this.created = true;
+    }
+
+    protected final Pair<Integer, Integer> getStartPosition() {
+        return this.startPosition;
+    }
+
+    protected final void setStartPosition(final Pair<Integer, Integer> startPosition) {
+        this.startPosition = startPosition;
     }
 
     private void checkCreation() {
