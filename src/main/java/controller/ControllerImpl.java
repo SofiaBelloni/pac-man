@@ -1,5 +1,8 @@
 package controller;
 
+import java.io.IOException;
+import java.util.Optional;
+
 import model.Directions;
 import model.GameModel;
 import view.View;
@@ -15,6 +18,8 @@ public class ControllerImpl implements Controller {
     private GameLoop gameLoop;
     private FileManager fileManager;
     private int highScore;
+    private final String defaultMapName;
+    private Optional<GameMapLoader> gameMapLoader;
 
     /**
      * Constructor.
@@ -29,11 +34,32 @@ public class ControllerImpl implements Controller {
         this.gameLoop = new GameLoopImpl(this.model, this.view);
         this.fileManager = new FileManagerImpl();
         this.highScore = this.fileManager.getHighScore();
+        this.defaultMapName = "game_map_1";
+        this.gameMapLoader = Optional.empty();
+    }
+    @Override
+    public void setGameMap(final String mapName) {
+        try {
+            this.gameMapLoader = Optional.of(new GameMapLoaderImpl(mapName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public int getHighScore() {
+        return this.highScore;
     }
 
     @Override
     public final void startGame() {
         // TODO Auto-generated method stub
+        if (this.gameMapLoader.isEmpty()) {
+            try {
+                this.gameMapLoader = Optional.of(new GameMapLoaderImpl(this.defaultMapName));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         this.gameLoop.start();
 
     }
