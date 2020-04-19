@@ -39,6 +39,9 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
         this.setCurrentPosition(startPosition);
     }
 
+    /**
+     * This method is designed for extension.
+     */
     @Override
     public void nextPosition(final boolean eatable, final boolean timeToTurn) {
         this.findPath(this.relaxTarget);

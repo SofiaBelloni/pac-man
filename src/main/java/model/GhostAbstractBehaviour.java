@@ -49,6 +49,9 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         return this.currentPosition;
     }
 
+    /**
+     * This method is designed for extension.
+     */
     @Override
     public void setCurrentPosition(final Pair<Integer, Integer> newPosition) {
         this.currentPosition = newPosition;

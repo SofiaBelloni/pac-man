@@ -5,12 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import modell.GhostBlinkyBehaviour;
-import modell.GhostClydeBehaviour;
-import modell.GhostInkyBehaviour;
-import modell.GhostPinkyBehaviour;
-import modell.PairImpl;
-
 /**
  * this class implements factory for creating Ghost objects.
  *
