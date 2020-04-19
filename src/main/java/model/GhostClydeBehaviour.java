@@ -1,20 +1,23 @@
 package model;
 
+
+import java.util.List;
 import java.util.Set;
 
 /**
 * this class implements the Clyde behaviour.
 *
 */
-public class GhostClydeBehaviour extends GhostAbstractBehaviour {
+public class GhostClydeBehaviour extends GhostBraveAbstractBehaviour {
 
     private Pair<Integer, Integer> chaseTarget;
     private static final int PACMANRADIUS = 7;
 
-    public GhostClydeBehaviour(final Set<Pair<Integer, Integer>> setWall, final Set<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize, final Pair<Integer, Integer> relaxTarget) {
-        super(setWall, ghostHouse, xMapSize, yMapSize);
+    public GhostClydeBehaviour(final Set<Pair<Integer, Integer>> setWall, final PacMan pacMan,
+            final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize,
+            final Pair<Integer, Integer> relaxTarget, final Pair<Integer, Integer> startPosition) {
+        super(setWall, pacMan, ghostHouse, xMapSize, yMapSize, startPosition);
         this.setRelaxTarget(relaxTarget);
-        this.setStartPosition(this.getGhostHouse().get(0));
     }
 
     private void targetPosition(final PacMan pacMan) {
@@ -27,11 +30,22 @@ public class GhostClydeBehaviour extends GhostAbstractBehaviour {
     }
 
     @Override
-    public final void chase(final PacMan pacMan) {
-        if (!moveIfStuck()) {
-            this.targetPosition(pacMan);
-            this.findPath(this.chaseTarget);
-            this.move(this.chaseTarget, 1);
+    public final void nextPosition(final boolean eatable, final boolean timeToTurn) {
+        if (eatable) {
+            this.getMyFrightenedBehaviour().nextPosition(eatable, timeToTurn);
+            this.setCurrentPosition(this.getMyFrightenedBehaviour().getCurrentPosition());
+            this.setCurrentDirection(this.getMyFrightenedBehaviour().getCurrentDirection());
+        } else {
+            if (this.getRelaxStatus()) {
+                super.nextPosition(eatable, timeToTurn);
+            } else {
+                if (!moveIfStuck()) {
+                    this.targetPosition(this.getPacMan());
+                    super.findPath(this.chaseTarget);
+                    super.move(this.chaseTarget);
+                }
+            }
+            this.getMyFrightenedBehaviour().setCurrentDirection(this.getCurrentDirection());
         }
     }
 }

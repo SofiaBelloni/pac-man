@@ -1,23 +1,27 @@
 package model;
 
+
+import java.util.List;
 import java.util.Set;
 
 /**
 * this class implements the Inky behaviour.
 *
 */
-public class GhostInkyBehaviour extends GhostAbstractBehaviour {
+public class GhostInkyBehaviour extends GhostBraveAbstractBehaviour {
 
     private final Set<Pair<Integer, Integer>> setWall;
     private Pair<Integer, Integer> chaseTarget;
     private final Ghost blinky;
 
-    public GhostInkyBehaviour(final Ghost blinky, final Set<Pair<Integer, Integer>> setWall, final Set<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize, final Pair<Integer, Integer> relaxTarget) {
-        super(setWall, ghostHouse, xMapSize, yMapSize);
+    public GhostInkyBehaviour(final Ghost blinky, final Set<Pair<Integer, Integer>> setWall,
+            final PacMan pacMan, final List<Pair<Integer, Integer>> ghostHouse,
+            final int xMapSize, final int yMapSize, final Pair<Integer, Integer> relaxTarget,
+            final Pair<Integer, Integer> startPosition) {
+        super(setWall, pacMan, ghostHouse, xMapSize, yMapSize, startPosition);
         this.blinky = blinky;
         this.setWall = setWall;
         this.setRelaxTarget(relaxTarget);
-        this.setStartPosition(this.getGhostHouse().get(3));
     }
 
     private void targetPosition(final PacMan pacMan, final Pair<Integer, Integer> blinkyPosition) {
@@ -58,7 +62,7 @@ public class GhostInkyBehaviour extends GhostAbstractBehaviour {
         if (this.chaseTarget.getY() < 0) {
             this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), 0);
         }
-        if (this.setWall.contains(this.chaseTarget) || this.getCurrentPosition().equals(this.chaseTarget)) {
+        if (this.getCurrentPosition().equals(this.chaseTarget)) {
             if (this.chaseTarget.getY() + 1 < this.getyMapSize() && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() + 1))) {
                 this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() + 1);
             } else if (this.chaseTarget.getX() + 1 < this.getxMapSize() && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX() + 1, this.chaseTarget.getY()))) {
@@ -72,15 +76,26 @@ public class GhostInkyBehaviour extends GhostAbstractBehaviour {
     }
 
     @Override
-    public final void chase(final PacMan pacMan) {
-        if (!moveIfStuck()) {
-            if (this.isBlinkyDead()) {
-                this.chaseTarget = pacMan.getPosition();
+    public final void nextPosition(final boolean eatable, final boolean timeToTurn) {
+        if (eatable) {
+            this.getMyFrightenedBehaviour().nextPosition(eatable, timeToTurn);
+            this.setCurrentPosition(this.getMyFrightenedBehaviour().getCurrentPosition());
+            this.setCurrentDirection(this.getMyFrightenedBehaviour().getCurrentDirection());
+        } else {
+            if (this.getRelaxStatus()) {
+                super.nextPosition(eatable, timeToTurn);
             } else {
-                this.targetPosition(pacMan, this.blinky.getPosition());
+                if (!this.moveIfStuck()) {
+                    if (this.isBlinkyDead()) {
+                        this.chaseTarget = this.getPacMan().getPosition();
+                    } else {
+                        this.targetPosition(this.getPacMan(), this.blinky.getPosition());
+                    }
+                    this.findPath(this.chaseTarget);
+                    this.move(this.chaseTarget);
+                }
+                this.getMyFrightenedBehaviour().setCurrentDirection(this.getCurrentDirection());
             }
-            this.findPath(this.chaseTarget);
-            this.move(this.chaseTarget, 1);
         }
     }
 }

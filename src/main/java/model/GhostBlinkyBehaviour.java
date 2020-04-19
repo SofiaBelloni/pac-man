@@ -1,24 +1,38 @@
 package model;
 
+
+import java.util.List;
 import java.util.Set;
 
 /**
 * this class implements the Blinky behaviour.
 *
 */
-public class GhostBlinkyBehaviour extends GhostAbstractBehaviour {
+public class GhostBlinkyBehaviour extends GhostBraveAbstractBehaviour implements GhostBehaviour {
 
-    public GhostBlinkyBehaviour(final Set<Pair<Integer, Integer>> setWall, final Set<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize, final Pair<Integer, Integer> relaxTarget) {
-        super(setWall, ghostHouse, xMapSize, yMapSize);
+    public GhostBlinkyBehaviour(final Set<Pair<Integer, Integer>> setWall, final PacMan pacMan,
+            final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize,
+            final Pair<Integer, Integer> relaxTarget, final Pair<Integer, Integer> startPosition) {
+        super(setWall, pacMan, ghostHouse, xMapSize, yMapSize, startPosition);
         this.setRelaxTarget(relaxTarget);
-        this.setStartPosition(this.getGhostHouse().get(0));
     }
 
     @Override
-    public final void chase(final PacMan pacMan) {
-        if (!moveIfStuck()) {
-            this.findPath(pacMan.getPosition());
-            this.move(pacMan.getPosition(), 1);
+    public final void nextPosition(final boolean eatable, final boolean timeToTurn) {
+        if (eatable) {
+            this.getMyFrightenedBehaviour().nextPosition(eatable, timeToTurn);
+            this.setCurrentPosition(this.getMyFrightenedBehaviour().getCurrentPosition());
+            this.setCurrentDirection(this.getMyFrightenedBehaviour().getCurrentDirection());
+        } else {
+            if (this.getRelaxStatus()) {
+                super.nextPosition(eatable, timeToTurn);
+            } else {
+                if (!moveIfStuck()) {
+                    this.findPath(this.getPacMan().getPosition());
+                    this.move(this.getPacMan().getPosition());
+                }
+            }
+            this.getMyFrightenedBehaviour().setCurrentDirection(this.getCurrentDirection());
         }
     }
 

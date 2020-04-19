@@ -2,16 +2,7 @@ package model;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import modell.Directions;
-import modell.Pair;
-import modell.PairImpl;
-
 import static model.Directions.UP;
-import static modell.Directions.DOWN;
-import static modell.Directions.LEFT;
-import static modell.Directions.RIGHT;
-import static modell.Directions.UP;
 import static model.Directions.DOWN;
 import static model.Directions.RIGHT;
 import static model.Directions.LEFT;

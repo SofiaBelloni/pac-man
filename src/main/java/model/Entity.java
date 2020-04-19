@@ -12,4 +12,8 @@ public interface Entity {
      * Move the entity to the next position.
      */
     void nextPosition();
+    /**
+     * PacMan return to the startPosition.
+     */
+    void returnToStartPosition();
 }
