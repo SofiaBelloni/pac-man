@@ -9,12 +9,12 @@ public interface View {
      * set the controller of the view
      */
     void setController(Controller controller);
-    /*
-     * set the view to visible
+    /**
+     * set the view to visible.
      */
     void setVisible();
-    /*
-     * update the view
+    /**
+     * update the view.
      */
     void render();
     /**
