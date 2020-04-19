@@ -1,7 +1,5 @@
 package model;
 
-import java.util.List;
-import java.util.Set;
 
 /**
  * this class implements a generic Ghost Entity.
@@ -16,8 +14,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     private boolean timeToTurn;
     private Pair<Integer, Integer> startPosition;
 
-    public GhostAbstractImpl(final Set<Pair<Integer, Integer>> setWall, final List<Pair<Integer,
-    Integer>> ghostHouse, final int xMapSize, final int yMapSize) {
+    public GhostAbstractImpl(final int xMapSize, final int yMapSize) {
         super(xMapSize, yMapSize);
         this.created = false;
         this.eatable = false;

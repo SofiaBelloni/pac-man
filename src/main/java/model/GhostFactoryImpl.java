@@ -103,7 +103,7 @@ public final class GhostFactoryImpl implements GhostFactory {
 
     @Override
     public Ghost blinky() { 
-        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize) {
+        return new GhostAbstractImpl(this.xMapSize, this.yMapSize) {
             @Override
             public void create() {
                 this.setCreated();
@@ -117,7 +117,7 @@ public final class GhostFactoryImpl implements GhostFactory {
 
     @Override
     public Ghost pinky() {
-        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize) {
+        return new GhostAbstractImpl(this.xMapSize, this.yMapSize) {
             @Override
             public void create() {
                 this.setCreated();
@@ -134,7 +134,7 @@ public final class GhostFactoryImpl implements GhostFactory {
         if (!blinky.getName().equals(Ghosts.BLINKY)) {
             throw new IllegalArgumentException("Insert Blinky");
         }
-        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize) {
+        return new GhostAbstractImpl(this.xMapSize, this.yMapSize) {
             @Override
             public void create() {
                 this.setCreated();
@@ -148,7 +148,7 @@ public final class GhostFactoryImpl implements GhostFactory {
 
     @Override
     public Ghost clyde() {
-        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize) {
+        return new GhostAbstractImpl(this.xMapSize, this.yMapSize) {
             @Override
             public void create() {
                 this.setCreated();

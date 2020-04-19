@@ -14,15 +14,15 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
     private static final int UPPERBOUND = 10_000;
 
     private final Map<Pair<Integer, Integer>, Integer> mapDijkstra;
+    private final Set<Pair<Integer, Integer>> setWall;
+    private final int xMapSize;
+    private final int yMapSize;
+    private final PacMan pacMan;
+    private final GhostBehaviour fBehaviour;
     private boolean isPathFound;
     private boolean relaxed;
     private boolean isBlinkyDead;
-    private final int xMapSize;
-    private final int yMapSize;
-    private final Set<Pair<Integer, Integer>> setWall;
     private Pair<Integer, Integer> relaxTarget;
-    private final PacMan pacMan;
-    private GhostBehaviour fBehaviour;
 
     public GhostBraveAbstractBehaviour(final Set<Pair<Integer, Integer>> setWall, final PacMan pacMan,
             final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize,
@@ -200,7 +200,7 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
         this.relaxTarget = relaxTarget;
     }
 
-    protected final boolean getRelaxStatus() {
+    protected final boolean isRelaxed() {
         return this.relaxed;
     }
 

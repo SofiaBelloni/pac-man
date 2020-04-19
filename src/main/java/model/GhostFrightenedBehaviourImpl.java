@@ -71,7 +71,7 @@ public class GhostFrightenedBehaviourImpl extends GhostAbstractBehaviour {
         map.put(DOWN, this.getAdj(DOWN));
         map.put(LEFT, this.getAdj(LEFT));
         while (this.getCurrentPosition().equals(oldPosition)) {
-            for (Directions dir : map.keySet()) {
+            for (final Directions dir : map.keySet()) {
                 if (this.getCurrentDirection().equals(dir)) {
                     map2 = new HashMap<>(map);
                     map2.remove(this.oppositeDirection(dir));

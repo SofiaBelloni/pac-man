@@ -82,7 +82,7 @@ public class GhostInkyBehaviour extends GhostBraveAbstractBehaviour {
             this.setCurrentPosition(this.getMyFrightenedBehaviour().getCurrentPosition());
             this.setCurrentDirection(this.getMyFrightenedBehaviour().getCurrentDirection());
         } else {
-            if (this.getRelaxStatus()) {
+            if (this.isRelaxed()) {
                 super.nextPosition(eatable, timeToTurn);
             } else {
                 if (!this.moveIfStuck()) {

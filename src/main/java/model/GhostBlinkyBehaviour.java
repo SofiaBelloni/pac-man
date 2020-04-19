@@ -24,7 +24,7 @@ public class GhostBlinkyBehaviour extends GhostBraveAbstractBehaviour implements
             this.setCurrentPosition(this.getMyFrightenedBehaviour().getCurrentPosition());
             this.setCurrentDirection(this.getMyFrightenedBehaviour().getCurrentDirection());
         } else {
-            if (this.getRelaxStatus()) {
+            if (this.isRelaxed()) {
                 super.nextPosition(eatable, timeToTurn);
             } else {
                 if (!moveIfStuck()) {
