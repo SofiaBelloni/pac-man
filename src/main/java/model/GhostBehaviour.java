@@ -6,37 +6,18 @@ package model;
 public interface GhostBehaviour {
 
     /**
-     * Chase algorithm.
-     * When ghosts reach the corner, they start chasing PacMan.
-     *
-     * @param pacMan the pac man
-     */
-    void chase(PacMan pacMan);
-
-    /**
-     * Run away algorithm.
-     * When ghosts are eatable, they run away from PacMan.
-     */
-    void runAway();
-
-    /**
-     * Relax algorithm.
-     * When ghosts are created, they move in their respective corner.
-     */
-    void relax();
-
-    /**
-     * Makes ghost turn around.
-     */
-    void turnAround();
-
-
-    /**
      * Gets the current direction.
      *
      * @return the current direction
      */
     Directions getCurrentDirection();
+
+    /**
+     * Sets the current direction.
+     *
+     * @param newDirection the new current direction
+     */
+    void setCurrentDirection(Directions newDirection);
 
     /**
      * Gets the current position.
@@ -53,27 +34,17 @@ public interface GhostBehaviour {
     void setCurrentPosition(Pair<Integer, Integer> newPosition);
 
     /**
-     * Gets the start position.
+     * Calculate the next position of the ghost.
      *
-     * @return the start position
+     * @param eatable the eatable
+     * @param timeToTurn the time to turn
      */
-    Pair<Integer, Integer> getStartPosition();
+    void nextPosition(boolean eatable, boolean timeToTurn);
 
     /**
-     * Gets the status of Blinky.
-     * 
-     *  @return true if Blinky is dead
+     * Makes the ghosts return in ghostHouse.
+     *
+     * @param newPosition the new position
      */
-    boolean isBlinkyDead();
-
-    /**
-     * Set Blinky dead.
-     */
-    void setBlinkyDead();
-
-    /**
-     * @return the target of the Ghost in relax mode
-     */
-    Pair<Integer, Integer> getRelaxTarget();
-
+    void returnHome(Pair<Integer, Integer> newPosition);
 }

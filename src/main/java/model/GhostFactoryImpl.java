@@ -1,7 +1,15 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
+import modell.GhostBlinkyBehaviour;
+import modell.GhostClydeBehaviour;
+import modell.GhostInkyBehaviour;
+import modell.GhostPinkyBehaviour;
+import modell.PairImpl;
 
 /**
  * this class implements factory for creating Ghost objects.
@@ -9,7 +17,7 @@ import java.util.Set;
  */
 public final class GhostFactoryImpl implements GhostFactory {
     private final Set<Pair<Integer, Integer>> walls;
-    private final Set<Pair<Integer, Integer>> ghostHouse;
+    private final List<Pair<Integer, Integer>> ghostHouse;
     private final PacMan pacMan;
     private final int xMapSize;
     private final int yMapSize;
@@ -17,7 +25,7 @@ public final class GhostFactoryImpl implements GhostFactory {
     private GhostFactoryImpl(final Set<Pair<Integer, Integer>> walls, final Set<Pair<Integer,
             Integer>> ghostHouse, final PacMan pacMan, final int xMapSize, final int yMapSize) {
         this.walls = walls;
-        this.ghostHouse = ghostHouse;
+        this.ghostHouse = new ArrayList<>(ghostHouse);
         this.pacMan = pacMan;
         this.xMapSize = xMapSize;
         this.yMapSize = yMapSize;
@@ -94,31 +102,35 @@ public final class GhostFactoryImpl implements GhostFactory {
             check(this.xMapSize.isPresent());
             check(this.yMapSize.isPresent());
 
-            return new GhostFactoryImpl(this.walls.get(), this.ghostHouse.get(), this.pacMan.get(), this.xMapSize.get(),
+            return new GhostFactoryImpl(this.walls.get(), this.ghostHouse.get(), this.pacMan.get(), this.xMapSize.get(), 
                     this.yMapSize.get());
         }
     }
 
     @Override
     public Ghost blinky() { 
-        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.pacMan, this.xMapSize, this.yMapSize) {
+        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize) {
             @Override
             public void create() {
                 this.setCreated();
                 this.setName(Ghosts.BLINKY);
-                this.setMyBehaviour(new GhostBlinkyBehaviour(walls, ghostHouse, xMapSize, yMapSize, new PairImpl<>(xMapSize - 1, yMapSize - 1)));
+                this.setStartPosition(ghostHouse.get(0));
+                this.setMyBehaviour(new GhostBlinkyBehaviour(walls, pacMan, ghostHouse,
+                        xMapSize, yMapSize, new PairImpl<>(xMapSize - 1, yMapSize - 1), this.getStartPosition()));
             }
         };
     }
 
     @Override
     public Ghost pinky() {
-         return new GhostAbstractImpl(this.walls, this.ghostHouse, this.pacMan, this.xMapSize, this.yMapSize) {
+        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize) {
             @Override
             public void create() {
                 this.setCreated();
                 this.setName(Ghosts.PINKY);
-                this.setMyBehaviour(new GhostPinkyBehaviour(walls, ghostHouse, xMapSize, yMapSize,  new PairImpl<>(0, yMapSize - 1)));
+                this.setStartPosition(ghostHouse.get(0));
+                this.setMyBehaviour(new GhostPinkyBehaviour(walls, pacMan, ghostHouse,
+                        xMapSize, yMapSize, new PairImpl<>(0, yMapSize - 1), this.getStartPosition()));
             }
         };
     }
@@ -128,24 +140,28 @@ public final class GhostFactoryImpl implements GhostFactory {
         if (!blinky.getName().equals(Ghosts.BLINKY)) {
             throw new IllegalArgumentException("Insert Blinky");
         }
-        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.pacMan, this.xMapSize, this.yMapSize) {
+        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize) {
             @Override
             public void create() {
                 this.setCreated();
                 this.setName(Ghosts.INKY);
-                this.setMyBehaviour(new GhostInkyBehaviour(blinky, walls, ghostHouse, xMapSize, yMapSize, new PairImpl<>(xMapSize - 1, 0)));
+                this.setStartPosition(ghostHouse.get(0));
+                this.setMyBehaviour(new GhostInkyBehaviour(blinky, walls, pacMan, ghostHouse,
+                        xMapSize, yMapSize, new PairImpl<>(xMapSize - 1, 0), this.getStartPosition()));
             }
         };
     }
 
     @Override
     public Ghost clyde() {
-         return new GhostAbstractImpl(this.walls, this.ghostHouse, this.pacMan, this.xMapSize, this.yMapSize) {
+        return new GhostAbstractImpl(this.walls, this.ghostHouse, this.xMapSize, this.yMapSize) {
             @Override
             public void create() {
                 this.setCreated();
                 this.setName(Ghosts.CLYDE);
-                this.setMyBehaviour(new GhostClydeBehaviour(walls, ghostHouse, xMapSize, yMapSize, new PairImpl<>(0, 0)));
+                this.setStartPosition(ghostHouse.get(0));
+                this.setMyBehaviour(new GhostClydeBehaviour(walls, pacMan, ghostHouse,
+                        xMapSize, yMapSize, new PairImpl<>(0, 0), this.getStartPosition()));
             }
         };
     }
