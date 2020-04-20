@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 public class GameModelImpl implements GameModel {
@@ -91,7 +90,7 @@ public class GameModelImpl implements GameModel {
                 x.getPosition().equals(this.pacMan.getPosition()));
             } else {
                 this.pacMan.kill();
-                this.ghosts.forEach(x -> x.returnHome());
+                this.ghosts.forEach(x -> x.returnToStartPosition());
             }
         } else {
             if (this.checkPillCollision()) {
@@ -162,7 +161,7 @@ public class GameModelImpl implements GameModel {
 
     private void nextLevel() {
         this.levelManager.nextLevel();
-        this.ghosts.forEach(x -> x.returnHome());
+        this.ghosts.forEach(x -> x.returnToStartPosition());
         this.ghosts.forEach(x -> x.setEatable(false));
         this.gameMap.restorePills();
         this.pacMan.returnToStartPosition();
