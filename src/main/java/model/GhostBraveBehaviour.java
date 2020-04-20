@@ -8,15 +8,7 @@ public interface GhostBraveBehaviour extends GhostBehaviour {
     Pair<Integer, Integer> getRelaxTarget();
 
     /**
-     * Gets the status of Blinky.
-     * 
-     *  @return true if Blinky is dead
-     */
-    boolean isBlinkyDead();
-
-    /**
-     * Set Blinky dead.
+     * Notify Inky the Blinky death.
      */
     void setBlinkyDead();
-
 }

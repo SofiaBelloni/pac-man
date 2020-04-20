@@ -25,7 +25,7 @@ public interface Ghost extends Entity {
     Ghosts getName();
 
     /**
-     * Checks if blinky is dead.
+     *Notify Blinky's death.
      *
      */
     void blinkyIsDead();

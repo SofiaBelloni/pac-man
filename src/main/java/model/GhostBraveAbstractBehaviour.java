@@ -21,8 +21,8 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
     private final GhostBehaviour fBehaviour;
     private boolean isPathFound;
     private boolean relaxed;
-    private boolean isBlinkyDead;
     private Pair<Integer, Integer> relaxTarget;
+    private boolean isBlinkyDead;
 
     public GhostBraveAbstractBehaviour(final Set<Pair<Integer, Integer>> setWall, final PacMan pacMan,
             final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize,
@@ -30,10 +30,10 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
         super(xMapSize, yMapSize, startPosition);
         this.mapDijkstra = new HashMap<>();
         this.isPathFound = false;
+        this.isBlinkyDead = false;
         this.xMapSize = xMapSize;
         this.yMapSize = yMapSize;
         this.setWall = setWall;
-        this.isBlinkyDead = false;
         this.pacMan = pacMan;
         this.fBehaviour = new GhostFrightenedBehaviourImpl(setWall, ghostHouse, xMapSize, yMapSize, startPosition);
         this.setCurrentPosition(startPosition);
@@ -204,22 +204,20 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
         return this.relaxed;
     }
 
-    @Override
-    public final boolean isBlinkyDead() {
-        return this.isBlinkyDead;
-    }
-
-    @Override
-    public final void setBlinkyDead() {
-        this.isBlinkyDead = true;
-    }
-
-
     protected final PacMan getPacMan() {
         return this.pacMan;
     }
 
     protected final GhostBehaviour getMyFrightenedBehaviour() {
         return this.fBehaviour;
+    }
+
+    protected final boolean isBlinkyDead() {
+        return this.isBlinkyDead;
+    }
+
+    @Override
+    public final void setBlinkyDead() {
+        this.isBlinkyDead = true;
     }
 }
