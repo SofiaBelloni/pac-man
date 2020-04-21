@@ -2,12 +2,9 @@ package view;
 
 import controller.Controller;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 public interface View {
-    /**
-     * @param controller
-     * set the controller of the view
-     */
     void setController(Controller controller);
     /**
      * set the view to visible.
@@ -22,4 +19,8 @@ public interface View {
      * set the view Scene
      */
     void setScene(Scene scene);
+    /**
+     * get the stage.
+     */
+    void close();
 }
