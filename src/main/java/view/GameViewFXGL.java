@@ -13,7 +13,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 
-public class GameView extends GameApplication {
+public class GameViewFXGL extends GameApplication {
 
     private static final int PAC_MAN_SIZE = 40;
     private static final int GHOST_SIZE = 40;
@@ -40,7 +40,7 @@ public class GameView extends GameApplication {
             @Override
             protected void onAction() {
                 //controller.moveUp();
-                pacMan.getComponent(PacManAnimation.class).moveUp();
+                pacMan.getComponent(PacManAnimationFXGL.class).moveUp();
             }
         }, KeyCode.W);
 
@@ -48,7 +48,7 @@ public class GameView extends GameApplication {
             @Override
             protected void onAction() {
                 //controller.moveDown();
-                pacMan.getComponent(PacManAnimation.class).moveDown();
+                pacMan.getComponent(PacManAnimationFXGL.class).moveDown();
             }
         }, KeyCode.S);
 
@@ -56,7 +56,7 @@ public class GameView extends GameApplication {
             @Override
             protected void onAction() {
                 //controller.moveRight();
-                pacMan.getComponent(PacManAnimation.class).moveRight();
+                pacMan.getComponent(PacManAnimationFXGL.class).moveRight();
             }
         }, KeyCode.D);
 
@@ -64,7 +64,7 @@ public class GameView extends GameApplication {
             @Override
             protected void onAction() {
                 //controller.moveLeft();
-                pacMan.getComponent(PacManAnimation.class).moveLeft();
+                pacMan.getComponent(PacManAnimationFXGL.class).moveLeft();
             }
         }, KeyCode.A);
     }
@@ -89,7 +89,7 @@ public class GameView extends GameApplication {
                 .at(x, y)
                 //.viewWithBBox(new Rectangle(PAC_MAN_SIZE, PAC_MAN_SIZE))
                 //.with(new AnimationComponent())
-                .with(new PacManAnimation())
+                .with(new PacManAnimationFXGL())
                 .buildAndAttach();
     }
 

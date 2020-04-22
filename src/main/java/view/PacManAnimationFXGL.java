@@ -8,7 +8,7 @@ import com.almasb.fxgl.texture.AnimationChannel;
 import javafx.geometry.Point2D;
 import javafx.util.Duration;
 
-public class PacManAnimation extends Component {
+public class PacManAnimationFXGL extends Component {
     private int speedX = 0;
     private int speedY = 0;
     private AnimatedTexture texture;
@@ -16,7 +16,7 @@ public class PacManAnimation extends Component {
     private AnimationChannel eat;
     private AnimationChannel idle;
     
-    public PacManAnimation() {
+    public PacManAnimationFXGL() {
         this.eat = new AnimationChannel(FXGL.image("pacman/pacman.png"),
                 4,
                 128,
