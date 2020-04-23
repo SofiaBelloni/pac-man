@@ -11,11 +11,11 @@ public class SpritesFactory {
     
     public final AnimatedSprite pacMan(final Canvas canvas) {
         return new AnimatedSprite(
-                AnimatedSpriteLoader.loadAnimatedSprite("pac_man", 4), Optional.empty(), canvas);
+                TextureLoader.loadAnimatedSprite("pac_man", 4), Optional.empty(), canvas);
     }
     
     public final AnimatedSprite blinky(final Canvas canvas) {
         return new AnimatedSprite(
-                AnimatedSpriteLoader.loadAnimatedSprite("blinky", 4), Optional.empty(), canvas);
+                TextureLoader.loadAnimatedSprite("blinky", 4), Optional.empty(), canvas);
     }
 }
