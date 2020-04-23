@@ -23,9 +23,9 @@ public final class PacManApp extends Application {
 //        view.launch(controller);
         
         stage.setTitle("Pac-Man");
-        stage.setMaximized(true);
         stage.show();
         GameViewController test = new GameViewController(stage);
+        stage.setFullScreen(true);
     }
 
     /**
