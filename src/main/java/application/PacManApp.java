@@ -8,6 +8,7 @@ import model.GameModel;
 import model.GameModelImpl;
 import view.View;
 import view.cotrollers.GameViewController;
+import view.cotrollers.MainMenuController;
 
 /**
  * This class represent the Main class of the JavaFX-based application.
@@ -21,10 +22,9 @@ public final class PacManApp extends Application {
 //        final GameModel model = new GameModelImpl();
 //        final ViewObserver controller = new ControllerImpl(model, view);
 //        view.launch(controller);
-        
         stage.setTitle("Pac-Man");
         stage.show();
-        GameViewController test = new GameViewController(stage);
+        /*GameViewController test = GameViewController(stage);*/
         stage.setFullScreen(true);
     }
 
