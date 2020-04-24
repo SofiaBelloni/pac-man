@@ -1,0 +1,15 @@
+.mainPane {
+	-fx-min-width: 100%;
+	-fx-min-height: 100%;
+}
+
+.gamePane {
+	-fx-min-height: 100%;
+	-fx-min-width: 49%;
+	-fx-background-color: #ffffff;
+}
+
+.labelBox {
+	-fx-min-height: 100%;
+	-fx-min-width: 51%;
+}
