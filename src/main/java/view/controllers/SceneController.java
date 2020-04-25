@@ -18,7 +18,7 @@ public abstract class SceneController {
      * @param view 
      *      the controller of the view.
      */
-    public SceneController(final Controller controller, final View view) {
+    public void init(final Controller controller, final View view) {
         this.controller = controller;
         this.view = view;
     }
