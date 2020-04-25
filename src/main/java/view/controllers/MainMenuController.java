@@ -37,7 +37,7 @@ public class MainMenuController extends SceneController {
     private final Stage stage;
 
     public MainMenuController(final Controller controller, final View view, final Stage stage) throws IOException {
-        super(controller, view);
+        super.init(controller, view);
         this.stage = stage;
     }
 
