@@ -1,4 +1,4 @@
-package view.cotrollers;
+package view.controllers;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
