@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -29,8 +31,13 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="TIME:" />
-                  <Label fx:id="time" text="0" />
+                  <ProgressBar fx:id="timer" centerShape="false" prefHeight="13.0" prefWidth="179.0" progress="1.0" style="-fx-accent: rgb(0, 255, 0);">
+                     <HBox.margin>
+                        <Insets left="110.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="-2.0" />
+                     </padding></ProgressBar>
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">

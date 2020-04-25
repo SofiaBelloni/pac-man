@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -29,13 +30,14 @@ public class GameViewController extends SceneController {
     private Label level;
 
     @FXML
-    private Label time;
+    private ProgressBar timer;
 
     @FXML
     private Label lives;
     
     public final void init(final Controller controller, final View view) {
         super.init(controller, view);
+        this.highScore.setText(String.valueOf(controller.getHighScore()));
 //        this.stage = stage;
 //        Group root = new Group();
 //        this.gameScene = new Scene(root);
@@ -66,5 +68,21 @@ public class GameViewController extends SceneController {
 //        if (x.getCode().equals(KeyCode.D)) {
 //            this.pacMan.moveRight();
 //        }
+    }
+    
+    public void updateScore(int currentScore) {
+        this.score.setText(String.valueOf(currentScore));
+    }
+    
+    public void updateLevel(int level) {
+        this.level.setText(String.valueOf(level));
+    }
+        
+    public void setTimer(double value) {
+        this.timer.setProgress(value);
+    }
+    
+    public void setLive(int livesNumber) {
+        this.lives.setText(String.valueOf(livesNumber));
     }
 }
