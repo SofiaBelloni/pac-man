@@ -21,8 +21,8 @@ public final class GameOverController extends SceneController {
     @FXML
     private Label labelScoreHere;
 
-    public void init(final Controller controller, final View view) {
-        super.init(controller, view);
+    public GameOverController(final Controller controller, final View view) {
+        super(controller, view);
         this.labelScoreHere.setText(String.valueOf(controller.getHighScore()));
     }
 
