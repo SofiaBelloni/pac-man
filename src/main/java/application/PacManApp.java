@@ -7,8 +7,8 @@ import javafx.stage.Stage;
 import model.GameModel;
 import model.GameModelImpl;
 import view.View;
-import view.cotrollers.GameViewController;
-import view.cotrollers.MainMenuController;
+import view.controllers.GameViewController;
+import view.controllers.MainMenuController;
 
 /**
  * This class represent the Main class of the JavaFX-based application.

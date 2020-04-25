@@ -3,6 +3,9 @@ package model;
 import java.io.IOException;
 import java.util.Optional;
 
+import controller.GameMapLoader;
+import controller.GameMapLoaderImpl;
+
 public class GameMapFactory {
 
     public final GameMap createMap(final Optional<Integer> pillScore) {

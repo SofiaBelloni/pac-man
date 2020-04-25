@@ -1,5 +1,7 @@
 package controller;
 
+import model.Directions;
+
 public interface Controller {
     /**
      * Sets the map to use.
@@ -32,5 +34,5 @@ public interface Controller {
      * @param newDirection The new directions of Pac-Man
      **/
     void newPacManDirection(Directions newDirection);
-    
+
 }
