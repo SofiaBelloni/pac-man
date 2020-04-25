@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 
 abstract class TextureLoader {
 
-    private static final String TEXTURE_PATH = "textures/";
+    private static final String TEXTURE_PATH = "textures";
     private static final String SEPARATOR = "/";
     private static final String FILE_TYPE = ".png";
 
