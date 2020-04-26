@@ -1,6 +1,6 @@
 .mainPane {
-	-fx-min-width: 1024px;
-	-fx-min-height: 576px;
+	-fx-min-width: 700px;
+	-fx-min-height: 500px;
 	-fx-background-color: black;
 }
 
@@ -13,10 +13,6 @@
 .labelBox {
 	-fx-height: 100%;
 	-fx-width: 51%;
-}
-
-.background {
-    -fx-background-color: #000000;
 }
 
 .button {
