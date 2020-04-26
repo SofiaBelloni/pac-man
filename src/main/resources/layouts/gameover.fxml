@@ -6,30 +6,30 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.GameOverController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="mainPane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.GameOverController">
    <children>
-      <Label fx:id="labelScore" alignment="TOP_CENTER" layoutX="193.0" layoutY="211.0" text="Score:" textAlignment="CENTER" AnchorPane.leftAnchor="193.0" AnchorPane.rightAnchor="359.0000016645951" AnchorPane.topAnchor="211.0">
+      <Label fx:id="labelScore" alignment="TOP_CENTER" layoutX="412.0" layoutY="288.0" prefHeight="27.0" prefWidth="96.0" text="Score:" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="412.0" AnchorPane.rightAnchor="516.0" AnchorPane.topAnchor="288.0">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="labelName" alignment="CENTER" contentDisplay="CENTER" layoutX="175.0" layoutY="161.0" text="Username:" textAlignment="CENTER" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="340.345457481195" AnchorPane.topAnchor="161.0">
+      <Label fx:id="labelName" alignment="CENTER" contentDisplay="CENTER" layoutX="358.0" layoutY="215.0" prefHeight="27.0" prefWidth="154.0" text="Username:" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="358.0" AnchorPane.rightAnchor="512.0" AnchorPane.topAnchor="215.0">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="textUserName" alignment="TOP_CENTER" layoutX="271.0" layoutY="161.0" prefHeight="27.0" prefWidth="153.0" AnchorPane.rightAnchor="175.40000532670436" AnchorPane.topAnchor="161.0" />
-      <Label alignment="TOP_CENTER" layoutX="135.0" layoutY="14.0" text="GAME OVER" textAlignment="CENTER" underline="true" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="135.1091023493991" AnchorPane.topAnchor="14.0">
+      <TextField fx:id="textUserName" alignment="TOP_CENTER" layoutX="512.0" layoutY="215.0" prefHeight="27.0" prefWidth="153.0" AnchorPane.rightAnchor="358.40000532670433" AnchorPane.topAnchor="215.0" />
+      <Label alignment="TOP_CENTER" layoutX="131.0" layoutY="14.0" text="GAME OVER" textAlignment="CENTER" textFill="WHITE" underline="true" AnchorPane.leftAnchor="131.0" AnchorPane.rightAnchor="139.1091023493991" AnchorPane.topAnchor="14.0">
          <font>
             <Font size="60.0" />
          </font>
       </Label>
-      <Button fx:id="buttonSave" alignment="CENTER" layoutX="228.0" layoutY="296.0" mnemonicParsing="false" onAction="#saveAndGoNextScene" prefHeight="61.0" prefWidth="143.0" text="SAVE" textAlignment="CENTER" AnchorPane.bottomAnchor="42.90909302766653" AnchorPane.leftAnchor="228.0" AnchorPane.rightAnchor="228.87273223624726">
+      <Button fx:id="buttonSave" alignment="CENTER" layoutX="389.0" layoutY="446.0" mnemonicParsing="false" onAction="#saveAndGoNextScene" prefHeight="61.0" prefWidth="246.0" stylesheets="@style.css" text="SAVE" textAlignment="CENTER" AnchorPane.bottomAnchor="68.90909302766653" AnchorPane.leftAnchor="389.0" AnchorPane.rightAnchor="389.0">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Label fx:id="labelScoreHere" alignment="TOP_CENTER" layoutX="271.0" layoutY="211.0" text="Score here" textAlignment="CENTER" AnchorPane.leftAnchor="271.0" AnchorPane.rightAnchor="244.345457481195" AnchorPane.topAnchor="211.0">
+      <Label fx:id="labelScoreHere" layoutX="512.0" layoutY="288.0" prefHeight="27.0" prefWidth="126.0" text="Score here" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="386.0" AnchorPane.topAnchor="288.0">
          <font>
             <Font size="18.0" />
          </font>
