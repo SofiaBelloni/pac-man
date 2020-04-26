@@ -54,7 +54,6 @@ public class GameViewController extends SceneController {
     
     public final void init(final Controller controller, final View view) {
         super.init(controller, view);
-        this.highScore.setText(String.valueOf(controller.getHighScore()));
 //        this.stage = stage;
 //        Group root = new Group();
 //        this.gameScene = new Scene(root);
