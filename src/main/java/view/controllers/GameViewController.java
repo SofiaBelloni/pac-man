@@ -3,12 +3,23 @@ package view.controllers;
 import controller.Controller;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import view.AnimatedSprite;
 import view.SpritesFactory;
@@ -19,6 +30,12 @@ public class GameViewController extends SceneController {
 //    private final Scene gameScene;
     //private final AnimatedSprite pacMan;
     //private final SpritesFactory spritesFactory;
+    
+    @FXML
+    private HBox rootBox;
+    
+    @FXML
+    private StackPane gamePane;
 
     @FXML
     private Label highScore;
@@ -49,6 +66,20 @@ public class GameViewController extends SceneController {
         //this.pacMan = spritesFactory.pacMan(canvas);
         
         //this.pacMan.startAnimation();
+        GridPane grid = new GridPane();
+        for (int row = 0; row < 31; row++) {
+            for (int col = 0; col < 28; col++) {
+                Rectangle rec = new Rectangle();
+                rec.setWidth(2);
+                rec.setHeight(2);
+                rec.setFill(Color.AQUA);
+                GridPane.setRowIndex(rec, row);
+                GridPane.setColumnIndex(rec, col);
+                grid.getChildren().addAll(rec);
+            }
+        }
+        
+        this.gamePane.getChildren().add(grid);
     }
     
     @FXML
