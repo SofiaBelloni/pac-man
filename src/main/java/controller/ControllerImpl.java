@@ -2,9 +2,11 @@ package controller;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.Set;
 
 import model.Directions;
 import model.GameModel;
+import model.Pair;
 import view.View;
 
 /**
@@ -80,13 +82,33 @@ public class ControllerImpl implements Controller {
     @Override
     public void savePlayer(final String name) {
         this.fileManager.savePlayer(name, this.model.getLevelNumber(), this.model.getScores());
-
     }
 
     @Override
-    public void newPacManDirection(Directions newDirection) {
+    public void newPacManDirection(final Directions newDirection) {
         // TODO Auto-generated method stub
         this.model.setPacManDirection(newDirection);
+    }
+
+    @Override
+    public final int getxMapSize() {
+        // TODO Auto-generated method stub
+        return this.model.getxMapSize();
+    }
+
+    @Override
+    public final int getyMapSize() {
+        return this.model.getyMapSize();
+    }
+
+    @Override
+    public final Set<Pair<Integer, Integer>> getWallsPositions() {
+        return this.model.getWallsPositions();
+    }
+
+    @Override
+    public final Set<Pair<Integer, Integer>> getPillsPositions() {
+        return this.model.getPillsPositions();
     }
 
 }

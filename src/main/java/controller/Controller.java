@@ -1,6 +1,9 @@
 package controller;
 
+import java.util.Set;
+
 import model.Directions;
+import model.Pair;
 
 public interface Controller {
     /**
@@ -34,5 +37,21 @@ public interface Controller {
      * @param newDirection The new directions of Pac-Man
      **/
     void newPacManDirection(Directions newDirection);
+    /**
+     * @return the size of the map on the x-axis
+     */
+    int getxMapSize();
+    /**
+     * @return the size of the map on the y-axis
+     */
+    int getyMapSize();
+    /**
+     * @return a Set containing the wall's positions;
+     */
+    Set<Pair<Integer, Integer>> getWallsPositions();
+    /**
+     * @return a Set containing the pill's positions;
+     */
+    Set<Pair<Integer, Integer>> getPillsPositions();
 
 }
