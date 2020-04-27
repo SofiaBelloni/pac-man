@@ -39,6 +39,7 @@ public class ControllerImpl implements Controller {
         this.defaultMapName = "game_map_1";
         this.gameMapLoader = Optional.empty();
     }
+
     @Override
     public void setGameMap(final String mapName) {
         try {
@@ -47,6 +48,7 @@ public class ControllerImpl implements Controller {
             e.printStackTrace();
         }
     }
+
     @Override
     public int getHighScore() {
         return this.highScore;
@@ -110,5 +112,8 @@ public class ControllerImpl implements Controller {
     public final Set<Pair<Integer, Integer>> getPillsPositions() {
         return this.model.getPillsPositions();
     }
-
+    
+    public DataUpdater getData() {
+        return this.gameLoop.getData();
+    }
 }

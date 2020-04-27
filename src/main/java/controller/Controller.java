@@ -53,5 +53,7 @@ public interface Controller {
      * @return a Set containing the pill's positions;
      */
     Set<Pair<Integer, Integer>> getPillsPositions();
+    
+    DataUpdater getData();
 
 }
