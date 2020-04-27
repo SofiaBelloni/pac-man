@@ -174,14 +174,14 @@ public class GameModelImpl implements GameModel {
     public final Boolean isGameEnded() {
         return this.pacMan.getLives() == 0;
     }
-    
+
     @Override
-    public int getxMapSize() {
+    public final int getxMapSize() {
         return this.gameMap.getxMapSize();
     }
-    
+
     @Override
-    public int getyMapSize() {
+    public final int getyMapSize() {
         return this.gameMap.getyMapSize();
     }
 }
