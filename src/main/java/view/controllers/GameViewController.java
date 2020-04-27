@@ -24,6 +24,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import model.Pair;
+import model.PairImpl;
 import view.AnimatedSprite;
 import view.SpritesFactory;
 import view.View;
@@ -76,13 +78,26 @@ public class GameViewController extends SceneController {
         HBox.setHgrow(this.labelBox, Priority.SOMETIMES);
         GridPane gridPane = new GridPane();
         this.gamePane.getChildren().add(gridPane);
-        for (int i = 0; i < controller.getyMapSize(); i++) {
-            for (int j = 0; j < controller.getxMapSize(); j++) {
-                ImageView image = new ImageView("textures/wall/wall.png");
-                image.setFitWidth(squareSize);
-                image.setFitHeight(squareSize);
-                gridPane.add(image, j, i);
-            }
+//        for (int i = 0; i < controller.getyMapSize(); i++) {
+//            for (int j = 0; j < controller.getxMapSize(); j++) {
+//                ImageView image = new ImageView();
+//                image.setFitWidth(squareSize);
+//                image.setFitHeight(squareSize);
+//                gridPane.add(image, j, i);
+//            }
+//        }
+        for (Pair<Integer, Integer> e : this.getController().getWallsPositions()) {
+            ImageView image = new ImageView("textures/wall/wall.png");
+            image.setFitWidth(squareSize);
+            image.setFitHeight(squareSize);
+            gridPane.add(image, e.getX(), e.getY());
+        }
+        
+        for (Pair<Integer, Integer> e : this.getController().getPillsPositions()) {
+            ImageView image = new ImageView("textures/pill/pill.png");
+            image.setFitWidth(squareSize);
+            image.setFitHeight(squareSize);
+            gridPane.add(image, e.getX(), e.getY());
         }
         //this.gamePane.resize(width, this.gamePane.getHeight());
     }
