@@ -1,58 +1,41 @@
 package view.controllers;
 
-import java.io.IOException;
-
-import com.sun.tools.javac.Main;
-
-import application.Launcher;
-import application.PacManApp;
-import controller.Controller;
-import javafx.scene.Group;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import view.View;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
+import javafx.scene.Node;
 import javafx.stage.Stage;
+import view.SceneLoader;
+import view.View;
+
+import java.io.IOException;
+
+import controller.Controller;
 
 public class MainMenuController extends SceneController {
 
-
-    @FXML
-    private ImageView title;
-
-    @FXML
-    private Button newGameButton;
-
-    @FXML
-    private Button settingsButton;
-
-    @FXML
-    private Button scoreButton;
-
-    private final Stage stage;
-
-    public MainMenuController(final Controller controller, final View view, final Stage stage) throws IOException {
+    public final void init(final Controller controller, final View view) {
         super.init(controller, view);
-        this.stage = stage;
     }
 
     @FXML
     private void onNewGameClick(final ActionEvent event) throws IOException {
-       
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(SceneLoader.loadScene("game").getX());
+        window.show();
     }
 
     @FXML
     private void onScoreClick(final ActionEvent event) throws IOException {
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(SceneLoader.loadScene("score").getX());
+        window.show();
     }
 
     @FXML
     private void onSettingsClick(final ActionEvent event) throws IOException {
-
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(SceneLoader.loadScene("settings").getX());
+        window.show();
     }
 }
 
