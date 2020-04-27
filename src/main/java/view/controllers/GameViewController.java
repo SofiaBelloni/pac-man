@@ -29,10 +29,6 @@ import view.SpritesFactory;
 import view.View;
 
 public class GameViewController extends SceneController {
-//    private final Stage stage;
-//    private final Scene gameScene;
-    //private final AnimatedSprite pacMan;
-    //private final SpritesFactory spritesFactory;
     
     @FXML
     private HBox rootBox;
@@ -72,16 +68,16 @@ public class GameViewController extends SceneController {
         
         //this.pacMan.startAnimation();
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-        int squareSize = (int) (screenBounds.getHeight() / 31);
-        int width = squareSize * 28;
-        int height = squareSize * 31;
+        int squareSize = (int) (screenBounds.getHeight() / controller.getyMapSize());
+        int width = squareSize * controller.getxMapSize();
+        int height = squareSize * controller.getyMapSize();
         this.gamePane.setMinSize(width, height);
         this.gamePane.setMaxSize(width, height);
-        //HBox.setHgrow(this.labelBox, Priority.SOMETIMES);
+        HBox.setHgrow(this.labelBox, Priority.SOMETIMES);
         GridPane gridPane = new GridPane();
         this.gamePane.getChildren().add(gridPane);
-        for (int i = 0; i < 31; i++) {
-            for (int j = 0; j < 28; j++) {
+        for (int i = 0; i < controller.getyMapSize(); i++) {
+            for (int j = 0; j < controller.getxMapSize(); j++) {
                 ImageView image = new ImageView("textures/wall/wall.png");
                 image.setFitWidth(squareSize);
                 image.setFitHeight(squareSize);

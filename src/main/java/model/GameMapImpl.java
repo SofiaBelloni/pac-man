@@ -1,11 +1,10 @@
 package model;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * This class is used to manage the map of the game, with walls pills, etc.
@@ -133,9 +132,10 @@ public final class GameMapImpl implements GameMap {
 
     @Override
     public Set<Pair<Integer, Integer>> getNoWallsPositions() {
-        return Stream.concat(this.getPillsPositions().stream(),
-                this.gameMap.get(TileType.FREE).stream())
-                .collect(Collectors.toSet());
+        final Set<Pair<Integer, Integer>> freePositions = new HashSet<>();
+        freePositions.addAll(this.getPillsPositions());
+        freePositions.addAll(this.gameMap.getOrDefault(TileType.FREE, new HashSet<>()));
+        return freePositions;
     }
 
     @Override
