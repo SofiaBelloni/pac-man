@@ -58,4 +58,12 @@ public interface GameModel {
      * @return true if the game is ended, false otherwise
      */
     Boolean isGameEnded();
+    /**
+     * @return the X GameMap size
+     */
+    int getyMapSize();
+    /**
+     * @return the Y GameMap size
+     */
+    int getxMapSize();
 }
