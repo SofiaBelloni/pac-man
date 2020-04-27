@@ -14,9 +14,8 @@ public class GameLoopImpl implements Runnable, GameLoop {
     private Thread thread;
     private boolean running;
     private boolean paused;
-    private GameModel model;
-    private View view;
     private LevelTimer levelTimer;
+    private DataUpdater data;
     /**
      * Constructor.
      * @param model
@@ -24,13 +23,13 @@ public class GameLoopImpl implements Runnable, GameLoop {
      * @param view
      *      the view reference
      */
-    public GameLoopImpl(GameModel model, View view) {
-        this.model = model;
-        this.view = view;
+    public GameLoopImpl(final GameModel model, final View view) {
+        this.data = new DataUpdater(model, view);
         this.running = false;
         this.paused = false;
-        this.levelTimer = new LevelTimer(this.model);
+        this.levelTimer = new LevelTimer(model);
     }
+
     @Override
     public void start() {
         thread = new Thread(this);
@@ -87,15 +86,21 @@ public class GameLoopImpl implements Runnable, GameLoop {
         this.paused = false;
         this.thread.notifyAll();
     }
+    
+    public DataUpdater getData() {
+        return this.data;
+    }
 
     private void render(final double delta) {
+      //delegate method
       //TODO: Render game
       //all time-related values must be multiplied by delta
+        this.data.render();
 
     }
 
     private void update() {
-      //TODO: Update game
-        this.model.moveEntitiesNextPosition();
+      //delegate method
+        this.data.updateModel();
     }
 }

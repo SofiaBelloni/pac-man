@@ -18,4 +18,5 @@ public interface GameLoop {
      */
     void resume();
 
+    DataUpdater getData();
 }
