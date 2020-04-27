@@ -2,6 +2,7 @@ package view.controllers;
 
 import controller.Controller;
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -17,9 +18,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import view.AnimatedSprite;
 import view.SpritesFactory;
@@ -33,6 +36,9 @@ public class GameViewController extends SceneController {
     
     @FXML
     private HBox rootBox;
+    
+    @FXML
+    private VBox labelBox;
     
     @FXML
     private StackPane gamePane;
@@ -65,20 +71,24 @@ public class GameViewController extends SceneController {
         //this.pacMan = spritesFactory.pacMan(canvas);
         
         //this.pacMan.startAnimation();
-        GridPane grid = new GridPane();
-        for (int row = 0; row < 31; row++) {
-            for (int col = 0; col < 28; col++) {
-                Rectangle rec = new Rectangle();
-                rec.setWidth(2);
-                rec.setHeight(2);
-                rec.setFill(Color.AQUA);
-                GridPane.setRowIndex(rec, row);
-                GridPane.setColumnIndex(rec, col);
-                grid.getChildren().addAll(rec);
+        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+        int squareSize = (int) (screenBounds.getHeight() / 31);
+        int width = squareSize * 28;
+        int height = squareSize * 31;
+        this.gamePane.setMinSize(width, height);
+        this.gamePane.setMaxSize(width, height);
+        //HBox.setHgrow(this.labelBox, Priority.SOMETIMES);
+        GridPane gridPane = new GridPane();
+        this.gamePane.getChildren().add(gridPane);
+        for (int i = 0; i < 31; i++) {
+            for (int j = 0; j < 28; j++) {
+                ImageView image = new ImageView("textures/wall/wall.png");
+                image.setFitWidth(squareSize);
+                image.setFitHeight(squareSize);
+                gridPane.add(image, j, i);
             }
         }
-        
-        this.gamePane.getChildren().add(grid);
+        //this.gamePane.resize(width, this.gamePane.getHeight());
     }
     
     @FXML
@@ -98,21 +108,21 @@ public class GameViewController extends SceneController {
 //        if (x.getCode().equals(KeyCode.D)) {
 //            this.pacMan.moveRight();
 //        }
-    }
+        }
     
-    public void updateScore(int currentScore) {
+    public final void updateScore(int currentScore) {
         this.score.setText(String.valueOf(currentScore));
     }
     
-    public void updateLevel(int level) {
+    public final void updateLevel(int level) {
         this.level.setText(String.valueOf(level));
     }
         
-    public void setTimer(double value) {
+    public final void setTimer(double value) {
         this.timer.setProgress(value);
     }
     
-    public void setLive(int livesNumber) {
+    public final void setLive(int livesNumber) {
         this.lives.setText(String.valueOf(livesNumber));
     }
 }
