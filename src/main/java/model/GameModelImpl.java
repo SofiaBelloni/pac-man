@@ -50,11 +50,13 @@ public class GameModelImpl implements GameModel {
             ghost = this.ghostFactory.pinky();
         } else if (ghostName.equals(Ghosts.INKY)) {
             final Ghost blinky = this.ghostFactory.blinky();
+            blinky.create();
             ghost = this.ghostFactory.inky(blinky);
             this.ghosts.add(blinky);
         } else {
             ghost = this.ghostFactory.clyde();
         }
+        ghost.create();
         this.ghosts.add(ghost);
     }
 
