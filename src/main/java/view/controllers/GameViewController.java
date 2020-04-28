@@ -100,6 +100,11 @@ public class GameViewController extends SceneController {
             gridPane.add(image, e.getX(), e.getY());
         }
         //this.gamePane.resize(width, this.gamePane.getHeight());
+        
+        //Inizialize HUD
+        this.highScore.setText(String.valueOf(controller.getHighScore()));
+        this.lives.setText(String.valueOf(controller.getData().getLives()));
+        this.level.setText(String.valueOf(controller.getData().getLevel()));
     }
     
     @FXML
@@ -120,20 +125,30 @@ public class GameViewController extends SceneController {
 //            this.pacMan.moveRight();
 //        }
         }
-    
-    public final void updateScore(int currentScore) {
-        this.score.setText(String.valueOf(currentScore));
+
+    /**
+     * Method that update the HUD data value.
+     */
+    public final void update() {
+        this.score.setText(String.valueOf(this.getController().getData().getCurrentScore()));
+        this.timer.setProgress(this.getController().getData().getLevelTimePercentage());
+        this.lives.setText(String.valueOf(this.getController().getData().getLives()));
+        this.level.setText(String.valueOf(this.getController().getData().getLevel()));
     }
-    
-    public final void updateLevel(int level) {
-        this.level.setText(String.valueOf(level));
-    }
-        
-    public final void setTimer(double value) {
-        this.timer.setProgress(value);
-    }
-    
-    public final void setLive(int livesNumber) {
-        this.lives.setText(String.valueOf(livesNumber));
-    }
+
+//    public final void updateScore(int currentScore) {
+//        this.score.setText(String.valueOf(currentScore));
+//    }
+//    
+//    public final void updateLevel(int level) {
+//        this.level.setText(String.valueOf(level));
+//    }
+//        
+//    public final void setTimer(double value) {
+//        this.timer.setProgress(value);
+//    }
+//    
+//    public final void setLive(int livesNumber) {
+//        this.lives.setText(String.valueOf(livesNumber));
+//    }
 }
