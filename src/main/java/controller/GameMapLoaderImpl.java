@@ -8,8 +8,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import model.Pair;
-import model.PairImpl;
+import utils.Pair;
+import utils.PairImpl;
 
 public class GameMapLoaderImpl implements GameMapLoader {
     private static final String GAME_MAP_PATH = "game_maps/";

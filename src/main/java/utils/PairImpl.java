@@ -1,4 +1,4 @@
-package model;
+package utils;
 
 public class PairImpl<X, Y> implements Pair<X, Y> {
     private final X x;

@@ -6,7 +6,7 @@ import java.util.Set;
 
 import model.GameModel;
 import model.Ghosts;
-import model.Pair;
+import utils.Pair;
 import view.View;
 
 public class DataUpdater {

@@ -4,6 +4,8 @@ package model;
 import java.util.List;
 import java.util.Set;
 
+import utils.Pair;
+
 /**
 * this class implements the Clyde behaviour.
 *

@@ -9,7 +9,7 @@ import controller.GameMapLoader;
 import controller.GameMapLoaderImpl;
 import model.GameMap;
 import model.GameMapImpl;
-import model.PairImpl;
+import utils.PairImpl;
 
 public class TestGameMapLoader {
 

@@ -3,6 +3,7 @@ package model;
 import java.util.Set;
 
 import model.GameMapImpl.Builder;
+import utils.Pair;
 
 public interface GameMapBuilder {
     /**

@@ -2,6 +2,8 @@ package model;
 
 import java.util.Set;
 
+import utils.Pair;
+
 /**
  * this interface is used to manage the game map and all its immobile entities.
  *

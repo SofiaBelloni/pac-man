@@ -1,5 +1,7 @@
 package model;
 
+import utils.Pair;
+
 /**
  * This interface represents a generic game entity (ghosts, walls, pills, etc.).
  */

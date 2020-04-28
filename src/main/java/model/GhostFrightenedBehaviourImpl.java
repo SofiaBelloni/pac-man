@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+
+import utils.Pair;
+import utils.PairImpl;
+
 import static model.Directions.UP;
 import static model.Directions.DOWN;
 import static model.Directions.RIGHT;

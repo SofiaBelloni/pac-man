@@ -1,5 +1,7 @@
 package model;
 
+import utils.Pair;
+
 /**
  * The Interface GhostBehaviour.
  */

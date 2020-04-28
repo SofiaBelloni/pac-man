@@ -6,7 +6,7 @@ import java.util.Set;
 
 import model.Directions;
 import model.GameModel;
-import model.Pair;
+import utils.Pair;
 import view.View;
 
 /**

@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import model.Pair;
-import model.PairImpl;
+import utils.Pair;
+import utils.PairImpl;
 import view.controllers.SceneController;
 
 public abstract class SceneLoader {

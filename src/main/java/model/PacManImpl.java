@@ -3,6 +3,9 @@ package model;
 import java.util.Optional;
 import java.util.Set;
 
+import utils.Pair;
+import utils.PairImpl;
+
 public final class PacManImpl extends EntityAbstractImpl implements PacMan {
 
     private Directions currentDirection;

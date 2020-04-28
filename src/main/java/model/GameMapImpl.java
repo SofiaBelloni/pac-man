@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import utils.Pair;
+
 /**
  * This class is used to manage the map of the game, with walls pills, etc.
  *

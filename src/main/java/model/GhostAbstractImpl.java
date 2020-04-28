@@ -1,5 +1,6 @@
 package model;
 
+import utils.Pair;
 
 /**
  * this class implements a generic Ghost Entity.

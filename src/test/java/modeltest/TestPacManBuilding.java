@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 import model.Directions;
 import model.PacMan;
 import model.PacManImpl;
-import model.Pair;
-import model.PairImpl;
+import utils.Pair;
+import utils.PairImpl;
 
 /**
  * JUnit test that creates objects.

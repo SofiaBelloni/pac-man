@@ -1,6 +1,8 @@
 
 package model;
 
+import utils.Pair;
+import utils.PairImpl;
 
 /**
  * this class implements a generic Entity that can be moved.

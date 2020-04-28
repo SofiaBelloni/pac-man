@@ -15,7 +15,7 @@ import model.GameMap;
 import model.GameMapImpl;
 import model.GameModel;
 import model.GameModelImpl;
-import model.Pair;
+import utils.Pair;
 import view.SceneLoader;
 import view.View;
 import view.controllers.GameViewController;

@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import model.GameMap;
 import model.GameMapImpl;
-import model.Pair;
-import model.PairImpl;
+import utils.Pair;
+import utils.PairImpl;
 
 public class TestGameMapBuilding {
 

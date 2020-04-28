@@ -2,6 +2,10 @@ package model;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import utils.Pair;
+import utils.PairImpl;
+
 import static model.Directions.UP;
 import static model.Directions.DOWN;
 import static model.Directions.RIGHT;

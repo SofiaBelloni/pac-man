@@ -3,7 +3,7 @@ package controller;
 import java.util.Set;
 
 import model.Directions;
-import model.Pair;
+import utils.Pair;
 
 public interface Controller {
     /**

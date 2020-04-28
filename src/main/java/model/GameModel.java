@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import utils.Pair;
+
 /**
  * This interface represents the main class of the model.
  * Its purpose is to manage all the logic of the game, such as the position of the entities, the scores, etc.

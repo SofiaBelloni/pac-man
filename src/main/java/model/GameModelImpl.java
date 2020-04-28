@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import utils.Pair;
+
 public class GameModelImpl implements GameModel {
 
     private static final int PAC_MAN_LIVES = 3;
