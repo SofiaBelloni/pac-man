@@ -13,17 +13,21 @@ import view.View;
 public final class GameOverController extends SceneController {
 
     @FXML
-    private TextField textUserName;
+    private Label levelLabel;
 
     @FXML
-    private Button buttonSave;
+    private Label scoreLabel;
 
     @FXML
-    private Label labelScoreHere;
+    private TextField playerNameText;
+
+    @FXML
+    private Button saveButton;
 
     public void init(final Controller controller, final View view) {
         super.init(controller, view);
-        this.labelScoreHere.setText(String.valueOf(controller.getHighScore()));
+        this.scoreLabel.setText("Level: " + String.valueOf(controller.getData().getLevel()));
+        this.scoreLabel.setText("Score: " + String.valueOf(controller.getHighScore()));
     }
 
     @FXML

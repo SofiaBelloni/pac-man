@@ -1,38 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="mainPane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.GameOverController">
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="mainPane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameOverController">
    <children>
-      <Label fx:id="labelScore" alignment="TOP_CENTER" layoutX="412.0" layoutY="288.0" prefHeight="27.0" prefWidth="96.0" text="Score:" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="412.0" AnchorPane.rightAnchor="516.0" AnchorPane.topAnchor="288.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="labelName" alignment="CENTER" contentDisplay="CENTER" layoutX="358.0" layoutY="215.0" prefHeight="27.0" prefWidth="154.0" text="Username:" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="358.0" AnchorPane.rightAnchor="512.0" AnchorPane.topAnchor="215.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <TextField fx:id="textUserName" alignment="TOP_CENTER" layoutX="512.0" layoutY="215.0" prefHeight="27.0" prefWidth="153.0" AnchorPane.rightAnchor="358.40000532670433" AnchorPane.topAnchor="215.0" />
-      <Label alignment="TOP_CENTER" layoutX="131.0" layoutY="14.0" text="GAME OVER" textAlignment="CENTER" textFill="WHITE" underline="true" AnchorPane.leftAnchor="131.0" AnchorPane.rightAnchor="139.1091023493991" AnchorPane.topAnchor="14.0">
-         <font>
-            <Font size="60.0" />
-         </font>
-      </Label>
-      <Button fx:id="buttonSave" alignment="CENTER" layoutX="389.0" layoutY="446.0" mnemonicParsing="false" onAction="#saveAndGoNextScene" prefHeight="61.0" prefWidth="246.0" stylesheets="@style.css" text="SAVE" textAlignment="CENTER" AnchorPane.bottomAnchor="68.90909302766653" AnchorPane.leftAnchor="389.0" AnchorPane.rightAnchor="389.0">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Button>
-      <Label fx:id="labelScoreHere" layoutX="512.0" layoutY="288.0" prefHeight="27.0" prefWidth="126.0" text="Score here" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="386.0" AnchorPane.topAnchor="288.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
+      <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" scaleX="2.5" scaleY="2.5" scaleZ="2.5">
+         <image>
+            <Image url="@../textures/images/TitleGameOver.png" />
+         </image>
+         <VBox.margin>
+            <Insets top="30.0" />
+         </VBox.margin>
+         <viewport>
+            <Rectangle2D />
+         </viewport>
+      </ImageView>
+      <HBox alignment="BOTTOM_CENTER" prefHeight="139.0" prefWidth="701.0" VBox.vgrow="ALWAYS">
+         <children>
+            <VBox alignment="CENTER" prefHeight="285.0" prefWidth="702.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label fx:id="levelLabel" alignment="CENTER" text="Level: 12" textFill="#ffe800">
+                     <font>
+                        <Font size="43.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="scoreLabel" alignment="CENTER" text="Score: 1234" textFill="#ffe800">
+                     <font>
+                        <Font size="43.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox alignment="BOTTOM_CENTER" prefHeight="0.0" prefWidth="701.0" VBox.vgrow="ALWAYS">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <children>
+            <TextField fx:id="playerNameText" alignment="CENTER" prefHeight="41.0" prefWidth="217.0" promptText="Player Name" />
+         </children>
+      </HBox>
+      <HBox alignment="TOP_CENTER" prefHeight="134.0" prefWidth="701.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Button fx:id="saveButton" alignment="CENTER" mnemonicParsing="false" onAction="#saveAndGoNextScene" text="SAVE" />
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </HBox>
    </children>
-</AnchorPane>
+</VBox>
