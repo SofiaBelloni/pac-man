@@ -1,6 +1,7 @@
 package view.controllers;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import controller.Controller;
 import javafx.event.ActionEvent;
@@ -37,8 +38,11 @@ public final class GameOverController extends SceneController {
 
     @FXML
     void saveAndGoNextScene(final ActionEvent event) throws IOException {
+        this.getController().savePlayer(Optional.of(playerNameText.getText()).filter(t -> !t.isBlank()).orElse("Guest"));
+        //da fare this.getView().goToView("mainview");
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(SceneLoader.loadScene("mainmenu").getX());
         window.show();
     }
+
 }
