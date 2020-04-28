@@ -29,6 +29,8 @@ import utils.PairImpl;
 import view.AnimatedSprite;
 import view.SpritesFactory;
 import view.View;
+import view.utils.EntityTextureIterator;
+import view.utils.PacManTextureIterator;
 
 public class GameViewController extends SceneController {
     
@@ -56,6 +58,8 @@ public class GameViewController extends SceneController {
     @FXML
     private Label lives;
     
+    private Pair<Integer, Integer> pacManPosition;
+    
     public final void init(final Controller controller, final View view) {
         super.init(controller, view);
 //        this.stage = stage;
@@ -73,6 +77,7 @@ public class GameViewController extends SceneController {
         int squareSize = (int) (screenBounds.getHeight() / controller.getyMapSize());
         int width = squareSize * controller.getxMapSize();
         int height = squareSize * controller.getyMapSize();
+        EntityTextureIterator pacManImage = new PacManTextureIterator();
         this.gamePane.setMinSize(width, height);
         this.gamePane.setMaxSize(width, height);
         HBox.setHgrow(this.labelBox, Priority.SOMETIMES);
@@ -100,6 +105,30 @@ public class GameViewController extends SceneController {
             gridPane.add(image, e.getX(), e.getY());
         }
         //this.gamePane.resize(width, this.gamePane.getHeight());
+        
+        //test iteratore immagini pacman
+        System.out.println(pacManImage.nextImage());
+        System.out.println(pacManImage.nextImage());
+        System.out.println(pacManImage.nextImage());
+        System.out.println(pacManImage.nextImage());
+        System.out.println(pacManImage.nextImage());
+        System.out.println(pacManImage.nextImage());
+        System.out.println(pacManImage.nextImage());
+        System.out.println(pacManImage.nextImage());
+        System.out.println(pacManImage.nextImage());
+        System.out.println(pacManImage.nextImage());
+        System.out.println(pacManImage.nextImage());
+        System.out.println(pacManImage.nextImage());
+        System.out.println(pacManImage.nextImage());
+        System.out.println(pacManImage.nextImage());
+        ImageView image = new ImageView(pacManImage.nextImage());
+        image.setRotate(90); //al posto di 90 chiamare metodo getAngle che restituisce i gradi in base alla direzione
+        image.setFitWidth(squareSize);
+        image.setFitHeight(squareSize);
+        gridPane.add(image, this.getController().getData().getPacManXPosition(), this.getController().getData().getPacManYPosition());
+    
+        
+        
         
         //Inizialize HUD
         this.highScore.setText(String.valueOf(controller.getHighScore()));
@@ -135,6 +164,11 @@ public class GameViewController extends SceneController {
         this.lives.setText(String.valueOf(this.getController().getData().getLives()));
         this.level.setText(String.valueOf(this.getController().getData().getLevel()));
     }
+    
+    /**
+     * Method that show PacMan by getting his exact position from the controller.
+     */
+
 
 //    public final void updateScore(int currentScore) {
 //        this.score.setText(String.valueOf(currentScore));
