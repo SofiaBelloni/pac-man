@@ -1,6 +1,11 @@
 package view.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 import controller.Controller;
+import javafx.animation.PathTransition;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
@@ -9,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -21,9 +27,14 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import model.Directions;
+import model.Ghost;
+import model.Ghosts;
 import utils.Pair;
 import utils.PairImpl;
 import view.AnimatedSprite;
@@ -57,8 +68,12 @@ public class GameViewController extends SceneController {
 
     @FXML
     private Label lives;
-    
+
     private Pair<Integer, Integer> pacManPosition;
+
+    int squareSize;
+
+    private final Map<Integer, ImageView> ghostView = new HashMap<>();
     
     public final void init(final Controller controller, final View view) {
         super.init(controller, view);
@@ -74,7 +89,7 @@ public class GameViewController extends SceneController {
         
         //this.pacMan.startAnimation();
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-        int squareSize = (int) (screenBounds.getHeight() / controller.getData().getyMapSize());
+        squareSize = (int) (screenBounds.getHeight() / controller.getData().getyMapSize());
         int width = squareSize * controller.getData().getxMapSize();
         int height = squareSize * controller.getData().getyMapSize();
         EntityTextureIterator pacManImage = new PacManTextureIterator();
@@ -126,6 +141,7 @@ public class GameViewController extends SceneController {
         image.setFitWidth(squareSize);
         image.setFitHeight(squareSize);
         gridPane.add(image, this.getController().getData().getPacManXPosition(), this.getController().getData().getPacManYPosition());
+        this.ghostSpawn(1, Ghosts.BLINKY, false);
     
         
         
@@ -164,7 +180,59 @@ public class GameViewController extends SceneController {
         this.lives.setText(String.valueOf(this.getController().getData().getLives()));
         this.level.setText(String.valueOf(this.getController().getData().getLevel()));
     }
-    
+
+    public final void ghostSpawn(final int value, final Ghosts name, final boolean eatable) {
+        ImageView ghost = new ImageView();
+        ghost.setFitWidth(squareSize);
+        ghost.setFitHeight(squareSize);
+        ghost.setX(0);
+        if (eatable) {
+            ghost.setImage(new Image("textures/ghost/eatable.png"));
+        } else {
+            ghost.setImage(new Image("textures/" + name.toString() + "/RIGHT.png"));
+        }
+        ghostView.put(value, ghost);
+        if (name.equals(Ghosts.BLINKY)) {
+            gamePane.getChildren().add(ghostView.get(value));
+        }/* else if (name.equals(Ghosts.BLINKY)) {
+            gamePane.add(ghostView.get(value), columnIndex, rowIndex);
+        } else if (name.equals(Ghosts.PINKY)) {
+            gamePane.add(ghostView.get(value), columnIndex, rowIndex);
+        } else {
+        }*/
+    }
+
+    public final void ghostRender(final Ghosts name, final Directions dir, final boolean eatable, final int value) {
+            final ImageView ghostImage = this.ghostView.get(value); 
+            if (eatable) {
+                ghostImage.setImage(new Image("textures/ghost/eatable.png"));
+            } else {
+                ghostImage.setImage(new Image("textures/" + name.toString() + "/" + dir.toString() + ".png"));
+            }
+            PathTransition p = new PathTransition();
+            p.setNode(ghostImage);
+            p.setDuration(Duration.seconds(0.5));
+            if (dir.equals(Directions.RIGHT)) {
+                p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
+                        ghostImage.getX() +  this.squareSize * 3 / 2, ghostImage.getY() + this.squareSize / 2));
+                ghostImage.setX(ghostImage.getX() + this.squareSize); 
+            } else   if (dir.equals(Directions.UP)) {
+                p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
+                        ghostImage.getX() + this.squareSize / 2, ghostImage.getY() - this.squareSize));
+                ghostImage.setY(ghostImage.getY() -  this.squareSize * 3 / 2); 
+            } else   if (dir.equals(Directions.LEFT)) {
+                p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
+                        ghostImage.getX() - this.squareSize, ghostImage.getY() + this.squareSize / 2));
+                ghostImage.setX(ghostImage.getX() - this.squareSize * 3 / 2); 
+            } else {
+                p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
+                        ghostImage.getX() +  this.squareSize / 2, ghostImage.getY() + this.squareSize * 3 / 2));
+                ghostImage.setY(ghostImage.getY() + this.squareSize);
+            }
+            p.setCycleCount(1);
+            p.play();
+        }
+
     /**
      * Method that show PacMan by getting his exact position from the controller.
      */

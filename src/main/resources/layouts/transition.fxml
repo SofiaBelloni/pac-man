@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="mainPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="davideviewtest.Transition">
+   <children>
+      <ImageView fx:id="blinky" fitHeight="60.0" fitWidth="80.0" layoutX="356.0" layoutY="254.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../textures/BLINKY/UP.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="right" layoutX="38.0" layoutY="209.0" mnemonicParsing="false" onAction="#onRightPressed" text="RIGHT" />
+      <Button fx:id="right1" layoutX="38.0" layoutY="171.0" mnemonicParsing="false" onAction="#onLeftPressed" text="LEFT" />
+      <Button fx:id="right2" layoutX="38.0" layoutY="135.0" mnemonicParsing="false" onAction="#onDownPressed" text="DOWN" />
+      <Button layoutX="38.0" layoutY="99.0" mnemonicParsing="false" onAction="#onUpPressed" text="UP" />
+   </children>
+</Pane>
