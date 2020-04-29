@@ -74,9 +74,9 @@ public class GameViewController extends SceneController {
         
         //this.pacMan.startAnimation();
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-        int squareSize = (int) (screenBounds.getHeight() / controller.getyMapSize());
-        int width = squareSize * controller.getxMapSize();
-        int height = squareSize * controller.getyMapSize();
+        int squareSize = (int) (screenBounds.getHeight() / controller.getData().getyMapSize());
+        int width = squareSize * controller.getData().getxMapSize();
+        int height = squareSize * controller.getData().getyMapSize();
         EntityTextureIterator pacManImage = new PacManTextureIterator();
         this.gamePane.setMinSize(width, height);
         this.gamePane.setMaxSize(width, height);
@@ -91,14 +91,14 @@ public class GameViewController extends SceneController {
 //                gridPane.add(image, j, i);
 //            }
 //        }
-        for (Pair<Integer, Integer> e : this.getController().getWallsPositions()) {
+        for (Pair<Integer, Integer> e : this.getController().getData().getWallsPositions()) {
             ImageView image = new ImageView("textures/wall/wall.png");
             image.setFitWidth(squareSize);
             image.setFitHeight(squareSize);
             gridPane.add(image, e.getX(), e.getY());
         }
         
-        for (Pair<Integer, Integer> e : this.getController().getPillsPositions()) {
+        for (Pair<Integer, Integer> e : this.getController().getData().getPillsPositions()) {
             ImageView image = new ImageView("textures/pill/pill.png");
             image.setFitWidth(squareSize);
             image.setFitHeight(squareSize);
