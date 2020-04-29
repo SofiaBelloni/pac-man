@@ -67,11 +67,9 @@ public class GameViewController extends SceneController {
     private ProgressBar timer;
 
     @FXML
-<<<<<<< HEAD
     private Label lives;
-=======
+
     private HBox livesContainer;
->>>>>>> be89b39148f30c2f931ffe9b746e89046c8c2d78
 
     private Pair<Integer, Integer> pacManPosition;
 
@@ -189,7 +187,6 @@ public class GameViewController extends SceneController {
             }
         }
     }
-<<<<<<< HEAD
 
     public final void ghostSpawn(final int value, final Ghosts name, final boolean eatable) {
         ImageView ghost = new ImageView();
@@ -242,9 +239,6 @@ public class GameViewController extends SceneController {
             p.setCycleCount(1);
             p.play();
         }
-
-=======
->>>>>>> be89b39148f30c2f931ffe9b746e89046c8c2d78
     /**
      * Method that show PacMan by getting his exact position from the controller.
      */
