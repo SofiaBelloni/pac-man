@@ -8,6 +8,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import model.Directions;
@@ -145,5 +147,29 @@ public class Transition  extends SceneController {
         }
         p.setCycleCount(1);
         p.play();
+    }
+
+    @FXML
+    private void keyPressed(final KeyEvent event) throws IOException {
+        switch (event.getCode()) {
+        case W:
+        case UP:
+            this.onUpPressed(null);
+            break;
+        case S:
+        case DOWN:
+            this.onDownPressed(null);
+            break;
+        case A:
+        case LEFT:
+            this.onLeftPressed(null);
+            break;
+        case D:
+        case RIGHT:
+            this.onRightPressed(null);
+            break;
+        default:
+            break;
+        }
     }
 }
