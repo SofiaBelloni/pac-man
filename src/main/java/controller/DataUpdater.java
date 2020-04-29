@@ -85,7 +85,7 @@ public class DataUpdater {
     /**
      * @return a Set containing the wall's positions;
      */
-    Set<Pair<Integer, Integer>> getWallsPositions(){
+    public Set<Pair<Integer, Integer>> getWallsPositions(){
         return this.model.getWallsPositions();
     }
     /**
@@ -96,5 +96,16 @@ public class DataUpdater {
         // TODO passare da Ghost a Entity
 
     }
-
+    /**
+     * @return the size of the map on the x-axis
+     */
+    public int getxMapSize() {
+        return this.model.getxMapSize();
+    }
+    /**
+     * @return the size of the map on the y-axis
+     */
+    public int getyMapSize() {
+        return this.model.getyMapSize();
+    }
 }
