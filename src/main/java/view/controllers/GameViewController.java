@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -36,10 +37,10 @@ public class GameViewController extends SceneController {
     
     @FXML
     private HBox rootBox;
-    
+
     @FXML
     private VBox labelBox;
-    
+
     @FXML
     private StackPane gamePane;
 
@@ -56,8 +57,8 @@ public class GameViewController extends SceneController {
     private ProgressBar timer;
 
     @FXML
-    private Label lives;
-    
+    private HBox livesContainer;
+
     private Pair<Integer, Integer> pacManPosition;
     
     public final void init(final Controller controller, final View view) {
@@ -129,11 +130,12 @@ public class GameViewController extends SceneController {
     
         
         
-        
         //Inizialize HUD
         this.highScore.setText(String.valueOf(controller.getHighScore()));
-        this.lives.setText(String.valueOf(controller.getData().getLives()));
         this.level.setText(String.valueOf(controller.getData().getLevel()));
+        for (int i = 0; i < controller.getData().getLives(); i++) {
+            this.livesContainer.getChildren().add(this.lifeIcon());
+        }
     }
     
     @FXML
@@ -161,28 +163,27 @@ public class GameViewController extends SceneController {
     public final void update() {
         this.score.setText(String.valueOf(this.getController().getData().getCurrentScore()));
         this.timer.setProgress(this.getController().getData().getLevelTimePercentage());
-        this.lives.setText(String.valueOf(this.getController().getData().getLives()));
         this.level.setText(String.valueOf(this.getController().getData().getLevel()));
+        if (this.livesContainer.getChildren().size() != this.getController().getData().getLives()) {
+            for (int i = 0; i < this.getController().getData().getLives(); i++) {
+                this.livesContainer.getChildren().add(this.lifeIcon());
+            }
+        }
     }
-    
     /**
      * Method that show PacMan by getting his exact position from the controller.
      */
 
 
-//    public final void updateScore(int currentScore) {
-//        this.score.setText(String.valueOf(currentScore));
-//    }
-//    
-//    public final void updateLevel(int level) {
-//        this.level.setText(String.valueOf(level));
-//    }
-//        
-//    public final void setTimer(double value) {
-//        this.timer.setProgress(value);
-//    }
-//    
-//    public final void setLive(int livesNumber) {
-//        this.lives.setText(String.valueOf(livesNumber));
-//    }
+    private Node lifeIcon() { 
+        // TODO forse meglio se si crea una factory
+        Image image = new Image("textures/pac_man/pac_man2.png"); 
+        final ImageView imageView = new ImageView(); 
+        imageView.setImage(image);
+        imageView.setRotate(90);
+        imageView.setFitWidth(50);
+        imageView.setFitHeight(50);
+        return imageView; 
+  }
+
 }
