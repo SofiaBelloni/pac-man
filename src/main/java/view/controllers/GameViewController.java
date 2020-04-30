@@ -165,55 +165,61 @@ public class GameViewController extends SceneController {
     }
 
     public final void ghostSpawn(final int value, final Ghosts name, final boolean eatable) {
-        ImageView ghost = new ImageView();
-        ghost.setFitWidth(squareSize);
-        ghost.setFitHeight(squareSize);
-        ghost.setX(0);
-        if (eatable) {
-            ghost.setImage(new Image("textures/ghost/eatable.png"));
-        } else {
-            ghost.setImage(new Image("textures/" + name.toString() + "/RIGHT.png"));
+        if (!ghostView.containsKey(value)) {
+            ImageView ghost = new ImageView();
+            ghost.setFitWidth(squareSize);
+            ghost.setFitHeight(squareSize);
+            ghost.setX(0);
+            ghostView.put(value, ghost);
+            /*if (name.equals(Ghosts.BLINKY)) {
+                gamePane.getChildren().add(ghostView.get(value));
+            } else if (name.equals(Ghosts.BLINKY)) {
+                gamePane.add(ghostView.get(value), columnIndex, rowIndex);
+            } else if (name.equals(Ghosts.PINKY)) {
+                gamePane.add(ghostView.get(value), columnIndex, rowIndex);
+            } else {
+            }*/
         }
-        ghostView.put(value, ghost);
-        if (name.equals(Ghosts.BLINKY)) {
-            gamePane.getChildren().add(ghostView.get(value));
-        }/* else if (name.equals(Ghosts.BLINKY)) {
-            gamePane.add(ghostView.get(value), columnIndex, rowIndex);
-        } else if (name.equals(Ghosts.PINKY)) {
-            gamePane.add(ghostView.get(value), columnIndex, rowIndex);
+        if (eatable) {
+            ghostView.get(value).setImage(new Image("textures/ghost/eatable.png"));
         } else {
-        }*/
+            ghostView.get(value).setImage(new Image("textures/" + name.toString() + "/RIGHT.png"));
+        }
     }
 
-    public final void ghostRender(final Ghosts name, final Directions dir, final boolean eatable, final int value) {
-            final ImageView ghostImage = this.ghostView.get(value); 
-            if (eatable) {
-                ghostImage.setImage(new Image("textures/ghost/eatable.png"));
+    public final void ghostRender(final Ghosts name, final Directions dir, final boolean eatable, final boolean returnHome, final int value) {
+            final ImageView ghostImage = this.ghostView.get(value);
+            if (returnHome) {
+                this.ghostSpawn(value, name, eatable);
             } else {
-                ghostImage.setImage(new Image("textures/" + name.toString() + "/" + dir.toString() + ".png"));
+                if (eatable) {
+                    ghostImage.setImage(new Image("textures/ghost/eatable.png"));
+                } else {
+                    ghostImage.setImage(new Image("textures/" + name.toString() + "/" + dir.toString() + ".png"));
+                }
+                PathTransition p = new PathTransition();
+                p.setNode(ghostImage);
+                p.setDuration(Duration.seconds(0.5));
+                if (dir.equals(Directions.RIGHT)) {
+                    p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
+                            ghostImage.getX() +  this.squareSize * 3 / 2, ghostImage.getY() + this.squareSize / 2));
+                    ghostImage.setX(ghostImage.getX() + this.squareSize); 
+                } else   if (dir.equals(Directions.UP)) {
+                    p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
+                            ghostImage.getX() + this.squareSize / 2, ghostImage.getY() - this.squareSize));
+                    ghostImage.setY(ghostImage.getY() -  this.squareSize * 3 / 2); 
+                } else   if (dir.equals(Directions.LEFT)) {
+                    p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
+                            ghostImage.getX() - this.squareSize, ghostImage.getY() + this.squareSize / 2));
+                    ghostImage.setX(ghostImage.getX() - this.squareSize * 3 / 2); 
+                } else {
+                    p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
+                            ghostImage.getX() +  this.squareSize / 2, ghostImage.getY() + this.squareSize * 3 / 2));
+                    ghostImage.setY(ghostImage.getY() + this.squareSize);
+                }
+                p.setCycleCount(1);
+                p.play();
             }
-            PathTransition p = new PathTransition();
-            p.setNode(ghostImage);
-            p.setDuration(Duration.seconds(0.5));
-            if (dir.equals(Directions.RIGHT)) {
-                p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
-                        ghostImage.getX() +  this.squareSize * 3 / 2, ghostImage.getY() + this.squareSize / 2));
-                ghostImage.setX(ghostImage.getX() + this.squareSize); 
-            } else   if (dir.equals(Directions.UP)) {
-                p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
-                        ghostImage.getX() + this.squareSize / 2, ghostImage.getY() - this.squareSize));
-                ghostImage.setY(ghostImage.getY() -  this.squareSize * 3 / 2); 
-            } else   if (dir.equals(Directions.LEFT)) {
-                p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
-                        ghostImage.getX() - this.squareSize, ghostImage.getY() + this.squareSize / 2));
-                ghostImage.setX(ghostImage.getX() - this.squareSize * 3 / 2); 
-            } else {
-                p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
-                        ghostImage.getX() +  this.squareSize / 2, ghostImage.getY() + this.squareSize * 3 / 2));
-                ghostImage.setY(ghostImage.getY() + this.squareSize);
-            }
-            p.setCycleCount(1);
-            p.play();
         }
     /**
      * Method that show PacMan by getting his exact position from the controller.
