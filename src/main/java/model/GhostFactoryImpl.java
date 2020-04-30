@@ -14,15 +14,15 @@ import utils.PairImpl;
  */
 public final class GhostFactoryImpl implements GhostFactory {
 
-    private static final int BLINKY_X_START_POSITION = 11;
+    private static final int BLINKY_X_START_POSITION = 12;
 
-    private static final int PINKY_X_START_POSITION = 12;
+    private static final int PINKY_X_START_POSITION = 13;
 
-    private static final int INKY_X_START_POSITION = 13;
+    private static final int INKY_X_START_POSITION = 14;
 
-    private static final int CLYDE_X_START_POSITION = 14;
+    private static final int CLYDE_X_START_POSITION = 15;
 
-    private static final int GHOST_Y_START_POSITION = 13;
+    private static final int GHOST_Y_START_POSITION = 14;
 
     private final Set<Pair<Integer, Integer>> walls;
     private final List<Pair<Integer, Integer>> ghostHouse;
@@ -122,7 +122,7 @@ public final class GhostFactoryImpl implements GhostFactory {
             public void create() {
                 this.setCreated();
                 this.setName(Ghosts.BLINKY);
-                this.setStartPosition(new PairImpl<>(GHOST_Y_START_POSITION, BLINKY_X_START_POSITION));
+                this.setStartPosition(new PairImpl<>(BLINKY_X_START_POSITION, GHOST_Y_START_POSITION));
                 this.setMyBehaviour(new GhostBlinkyBehaviour(walls, pacMan, ghostHouse,
                         xMapSize, yMapSize, new PairImpl<>(xMapSize - 1, 0), this.getStartPosition()));
             }
@@ -136,7 +136,7 @@ public final class GhostFactoryImpl implements GhostFactory {
             public void create() {
                 this.setCreated();
                 this.setName(Ghosts.PINKY);
-                this.setStartPosition(new PairImpl<>(GHOST_Y_START_POSITION, PINKY_X_START_POSITION));
+                this.setStartPosition(new PairImpl<>(PINKY_X_START_POSITION, GHOST_Y_START_POSITION));
                 this.setMyBehaviour(new GhostPinkyBehaviour(walls, pacMan, ghostHouse,
                         xMapSize, yMapSize, new PairImpl<>(0, 0), this.getStartPosition()));
             }
@@ -153,7 +153,7 @@ public final class GhostFactoryImpl implements GhostFactory {
             public void create() {
                 this.setCreated();
                 this.setName(Ghosts.INKY);
-                this.setStartPosition(new PairImpl<>(GHOST_Y_START_POSITION, INKY_X_START_POSITION));
+                this.setStartPosition(new PairImpl<>(INKY_X_START_POSITION, GHOST_Y_START_POSITION));
                 this.setMyBehaviour(new GhostInkyBehaviour(blinky, walls, pacMan, ghostHouse,
                         xMapSize, yMapSize, new PairImpl<>(xMapSize - 1, yMapSize - 1), this.getStartPosition()));
             }
@@ -167,7 +167,7 @@ public final class GhostFactoryImpl implements GhostFactory {
             public void create() {
                 this.setCreated();
                 this.setName(Ghosts.CLYDE);
-                this.setStartPosition(new PairImpl<>(GHOST_Y_START_POSITION, CLYDE_X_START_POSITION));
+                this.setStartPosition(new PairImpl<>(CLYDE_X_START_POSITION, GHOST_Y_START_POSITION));
                 this.setMyBehaviour(new GhostClydeBehaviour(walls, pacMan, ghostHouse,
                         xMapSize, yMapSize, new PairImpl<>(0, yMapSize - 1), this.getStartPosition()));
             }
