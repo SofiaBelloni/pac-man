@@ -56,7 +56,7 @@ public class DataUpdater {
     /**
      * @return the Pacman direction.
      */
-    Directions getPacManDirection() {
+    public Directions getPacManDirection() {
         return this.model.getPacManDirection();
     }
     /**
