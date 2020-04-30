@@ -38,7 +38,17 @@ import view.utils.EntityTextureIterator;
 import view.utils.PacManTextureIterator;
 
 public class GameViewController extends SceneController {
-    
+
+    private static final int BLINKY_X_START_POSITION = 12;
+
+    private static final int PINKY_X_START_POSITION = 13;
+
+    private static final int INKY_X_START_POSITION = 14;
+
+    private static final int CLYDE_X_START_POSITION = 15;
+
+    private static final int GHOST_Y_START_POSITION = 14;
+
     @FXML
     private HBox rootBox;
 
@@ -171,30 +181,30 @@ public class GameViewController extends SceneController {
     }
 
     public final void ghostSpawn(final int value, final Ghosts name, final boolean eatable) {
-        if (!ghostView.containsKey(value)) {
+        if (!this.ghostView.containsKey(value)) {
             ImageView ghost = new ImageView();
-            ghost.setFitWidth(squareSize);
-            ghost.setFitHeight(squareSize);
-            ghostView.put(value, ghost);
-            ghost.setY(squareSize * 14);
+            ghost.setFitWidth(this.squareSize);
+            ghost.setFitHeight(this.squareSize);
+            this.ghostView.put(value, ghost);
+            ghost.setY(this.squareSize * GHOST_Y_START_POSITION);
             if (name.equals(Ghosts.BLINKY)) {
-                entityPane.getChildren().add(ghostView.get(value));
-                ghost.setX(squareSize * 12);
+                this.entityPane.getChildren().add(this.ghostView.get(value));
+                ghost.setX(this.squareSize * BLINKY_X_START_POSITION);
             } else if (name.equals(Ghosts.PINKY)) {
-                entityPane.getChildren().add(ghostView.get(value));
-                ghost.setX(squareSize * 13);
+                this.entityPane.getChildren().add(this.ghostView.get(value));
+                ghost.setX(this.squareSize * PINKY_X_START_POSITION);
             } else if (name.equals(Ghosts.INKY)) {
-                entityPane.getChildren().add(ghostView.get(value));
-                ghost.setX(squareSize * 14);
+                this.entityPane.getChildren().add(this.ghostView.get(value));
+                ghost.setX(this.squareSize * INKY_X_START_POSITION);
             } else {
-                entityPane.getChildren().add(ghostView.get(value));
-                ghost.setX(squareSize * 15);
+                this.entityPane.getChildren().add(this.ghostView.get(value));
+                ghost.setX(this.squareSize * CLYDE_X_START_POSITION);
             }
         }
         if (eatable) {
-            ghostView.get(value).setImage(new Image("textures/ghost/eatable.png"));
+            this.ghostView.get(value).setImage(new Image("textures/ghost/eatable.png"));
         } else {
-            ghostView.get(value).setImage(new Image("textures/" + name.toString() + "/RIGHT.png"));
+            this.ghostView.get(value).setImage(new Image("textures/" + name.toString() + "/RIGHT.png"));
         }
     }
 
