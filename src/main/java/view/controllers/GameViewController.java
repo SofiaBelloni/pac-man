@@ -206,12 +206,12 @@ public class GameViewController extends SceneController {
                     ghostImage.setX(ghostImage.getX() + this.squareSize); 
                 } else   if (dir.equals(Directions.UP)) {
                     p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
-                            ghostImage.getX() + this.squareSize / 2, ghostImage.getY() - this.squareSize));
-                    ghostImage.setY(ghostImage.getY() -  this.squareSize * 3 / 2); 
+                            ghostImage.getX() + this.squareSize / 2, ghostImage.getY() - this.squareSize / 2));
+                    ghostImage.setY(ghostImage.getY() -  this.squareSize); 
                 } else   if (dir.equals(Directions.LEFT)) {
                     p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
-                            ghostImage.getX() - this.squareSize, ghostImage.getY() + this.squareSize / 2));
-                    ghostImage.setX(ghostImage.getX() - this.squareSize * 3 / 2); 
+                            ghostImage.getX() - this.squareSize / 2, ghostImage.getY() + this.squareSize / 2));
+                    ghostImage.setX(ghostImage.getX() - this.squareSize); 
                 } else {
                     p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
                             ghostImage.getX() +  this.squareSize / 2, ghostImage.getY() + this.squareSize * 3 / 2));
