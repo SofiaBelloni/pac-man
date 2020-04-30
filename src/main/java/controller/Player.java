@@ -1,6 +1,6 @@
 package controller;
 /**
- * Class that is used to store the information of the players at the end of a game.
+ * Class that is used to store the information of a player at the end of a game.
  */
 public class Player {
 
@@ -48,15 +48,62 @@ public class Player {
      * @return 
      *      a negative integer, zero, or a positive integer as the first argument is less than, equal to, or greater than the second.
      */
-    public int compareTo(final Player anotherPlayer) {
-        Integer anotherPlayerScore = anotherPlayer.score;
-        Integer thisPlayerScore = this.score;
-        return anotherPlayerScore.compareTo(thisPlayerScore);
+    public int compareByScore(final Player anotherPlayer) {
+        return Integer.compare(anotherPlayer.score, this.score);
+    }
+
+    /**
+     * This method compare the level of two players.
+     * @param anotherPlayer
+     *      the Player to compare.
+     * @return 
+     *      a negative integer, zero, or a positive integer as the first argument is less than, equal to, or greater than the second.
+     */
+    public int compareByLevel(final Player anotherPlayer) {
+        return Integer.compare(anotherPlayer.level, this.level);
     }
 
     @Override
     public String toString() {
         return "Player [name=" + name + ", level=" + level + ", score=" + score + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + level;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + score;
+        return result;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Player other = (Player) obj;
+        if (level != other.level) {
+            return false;
+        }
+        if (name == null) {
+            if (other.name != null) {
+                return false;
+            }
+        } else if (!name.equals(other.name)) {
+            return false;
+        }
+        if (score != other.score) {
+            return false;
+        }
+        return true;
     }
 
 }
