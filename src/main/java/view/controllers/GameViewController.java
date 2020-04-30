@@ -18,13 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
@@ -79,17 +73,6 @@ public class GameViewController extends SceneController {
     
     public final void init(final Controller controller, final View view) {
         super.init(controller, view);
-//        this.stage = stage;
-//        Group root = new Group();
-//        this.gameScene = new Scene(root);
-//        this.stage.setScene(gameScene);
-        //spritesFactory = new SpritesFactory();
-        
-        //Canvas canvas = new Canvas(1920, 1080);
-        //root.getChildren().add(canvas);
-        //this.pacMan = spritesFactory.pacMan(canvas);
-        
-        //this.pacMan.startAnimation();
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         squareSize = (int) (screenBounds.getHeight() / controller.getData().getyMapSize());
         int width = squareSize * controller.getData().getxMapSize();
@@ -100,14 +83,6 @@ public class GameViewController extends SceneController {
         HBox.setHgrow(this.labelBox, Priority.SOMETIMES);
         GridPane gridPane = new GridPane();
         this.gamePane.getChildren().add(gridPane);
-//        for (int i = 0; i < controller.getyMapSize(); i++) {
-//            for (int j = 0; j < controller.getxMapSize(); j++) {
-//                ImageView image = new ImageView();
-//                image.setFitWidth(squareSize);
-//                image.setFitHeight(squareSize);
-//                gridPane.add(image, j, i);
-//            }
-//        }
         for (Pair<Integer, Integer> e : this.getController().getData().getWallsPositions()) {
             ImageView image = new ImageView("textures/wall/wall.png");
             image.setFitWidth(squareSize);
@@ -121,7 +96,8 @@ public class GameViewController extends SceneController {
             image.setFitHeight(squareSize);
             gridPane.add(image, e.getX(), e.getY());
         }
-        //this.gamePane.resize(width, this.gamePane.getHeight());
+        Pane entityPane = new Pane();
+        this.gamePane.getChildren().add(entityPane);
         
         //test iteratore immagini pacman
         System.out.println(pacManImage.nextImage());
