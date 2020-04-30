@@ -1,7 +1,9 @@
 package controller;
 
 import model.Directions;
-
+/**
+ * This interface represents the controller of the application.
+ **/
 public interface Controller {
     /**
      * Sets the map to use.
@@ -31,10 +33,13 @@ public interface Controller {
      **/
     void savePlayer(String name);
     /**
-     * @param newDirection The new directions of Pac-Man
+     * Sets the new direction of Pac-Man.
+     * @param newDirection The new direction of Pac-Man
      **/
     void newPacManDirection(Directions newDirection);
-    
+    /**
+     * @return a {@link DataUpdater} object that allows to access to all the mappable data of the game.
+     **/
     DataUpdater getData();
 
 }

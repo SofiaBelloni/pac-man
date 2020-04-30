@@ -12,7 +12,7 @@ public class GameTimer extends TimerTask {
     /**
      * Constructor.
      * @param model
-     *      the model reference
+     *      the {@link GameModel} reference
      */
     public GameTimer(final GameModel model) {
         this.model = model;
@@ -20,7 +20,7 @@ public class GameTimer extends TimerTask {
     }
 
     @Override
-    public void run() {
+    public final void run() {
         if (this.model.getLevelTime() > 0) {
             this.model.decLevelTime();
         } else {
@@ -29,14 +29,14 @@ public class GameTimer extends TimerTask {
         }
     }
     /**
-     * @return true if GameTimer is running, otherwise false.
+     * @return true if {@link GameTimer} is running, otherwise false.
      */
     public boolean isRunning() {
         return isRunning;
     }
     /** 
      * @param isRunning
-     *      represents the run method state, i.e. if GameTimer is running or not.
+     *      represents the run method state, i.e. if {@link GameTimer} is running or not.
      */
     public void setRunning(final boolean isRunning) {
         this.isRunning = isRunning;

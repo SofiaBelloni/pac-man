@@ -14,8 +14,8 @@ public class GameLoopImpl implements Runnable, GameLoop {
     private Thread thread;
     private boolean running;
     private boolean paused;
-    private LevelTimer levelTimer;
-    private DataUpdater data;
+    private final LevelTimer levelTimer;
+    private final DataUpdater data;
     /**
      * Constructor.
      * @param model
@@ -31,13 +31,13 @@ public class GameLoopImpl implements Runnable, GameLoop {
     }
 
     @Override
-    public void start() {
+    public final void start() {
         thread = new Thread(this);
         thread.run();
     }
 
     @Override
-    public void run() {
+    public final void run() {
         this.levelTimer.startTimer();
         this.running = true;
         long now = 0;
@@ -47,7 +47,6 @@ public class GameLoopImpl implements Runnable, GameLoop {
             if (this.paused) {
                 synchronized (this.thread) {
                     while (this.paused) {
-                        this.levelTimer.stopTimer();
                         try {
                             this.thread.wait();
                         } catch (InterruptedException e) {
@@ -55,7 +54,6 @@ public class GameLoopImpl implements Runnable, GameLoop {
                         }
                     }
                 }
-                this.levelTimer.startTimer();
                 lastUpdateTime = System.currentTimeMillis();
             }
             now = System.currentTimeMillis();
@@ -72,22 +70,29 @@ public class GameLoopImpl implements Runnable, GameLoop {
             lastUpdateTime = now;
         }
     }
+
     @Override
-    public synchronized void stop() {
+    public final synchronized void stop() {
         this.running = false;
+        this.levelTimer.stopTimer();
         this.thread.interrupt();
     }
+
     @Override
-    public synchronized void pause() {
+    public final synchronized void pause() {
         this.paused = true;
+        this.levelTimer.stopTimer();
     }
+
     @Override
-    public synchronized void resume() {
+    public final synchronized void resume() {
         this.paused = false;
+        this.levelTimer.startTimer();
         this.thread.notifyAll();
     }
-    
-    public DataUpdater getData() {
+
+    @Override
+    public final DataUpdater getData() {
         return this.data;
     }
 
@@ -96,7 +101,6 @@ public class GameLoopImpl implements Runnable, GameLoop {
       //TODO: Render game
       //all time-related values must be multiplied by delta
         this.data.render();
-
     }
 
     private void update() {

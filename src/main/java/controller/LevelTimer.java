@@ -14,7 +14,7 @@ public class LevelTimer {
     /**
      * Constructor.
      * @param model
-     *      the model reference
+     *      the {@link GameModel} reference
      */
     public LevelTimer(final GameModel model) {
         this.timer = new Timer();

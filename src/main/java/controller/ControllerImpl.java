@@ -8,14 +8,14 @@ import view.View;
 
 /**
  * 
- * This class represents the controller of the game.
+ * This class represents the implementation of controller interface.
  *
  */
 public class ControllerImpl implements Controller {
     private final GameModel model;
-    private View view;
-    private GameLoop gameLoop;
-    private FileManager fileManager;
+    private final View view;
+    private final GameLoop gameLoop;
+    private final FileManager fileManager;
     private int highScore;
     private final String defaultMapName;
     private Optional<GameMapLoader> gameMapLoader;
@@ -23,9 +23,9 @@ public class ControllerImpl implements Controller {
     /**
      * Constructor.
      * @param model
-     *      the model reference
+     *      the {@link GameModel} reference
      * @param view
-     *      the view reference
+     *      the {@link View} reference
      */
     public ControllerImpl(final GameModel model, final View view) {
         this.model = model;
@@ -53,7 +53,6 @@ public class ControllerImpl implements Controller {
 
     @Override
     public final void startGame() {
-        // TODO Auto-generated method stub
         if (this.gameMapLoader.isEmpty()) {
             try {
                 this.gameMapLoader = Optional.of(new GameMapLoaderImpl(this.defaultMapName));
@@ -67,13 +66,11 @@ public class ControllerImpl implements Controller {
 
     @Override
     public final void pauseGame() {
-        // TODO Auto-generated method stub
         this.gameLoop.pause();
     }
 
     @Override
     public final void resumeGame() {
-        // TODO Auto-generated method stub
         this.gameLoop.resume();
 
     }
@@ -85,10 +82,10 @@ public class ControllerImpl implements Controller {
 
     @Override
     public void newPacManDirection(final Directions newDirection) {
-        // TODO Auto-generated method stub
         this.model.setPacManDirection(newDirection);
     }
-    
+
+    @Override
     public DataUpdater getData() {
         return this.gameLoop.getData();
     }
