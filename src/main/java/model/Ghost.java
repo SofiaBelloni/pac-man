@@ -11,6 +11,13 @@ public interface Ghost extends Entity {
     void create();
 
     /**
+     * Checks if the ghost is eatable.
+     *
+     * @return true, if is eatable
+     */
+    boolean isEatable();
+
+    /**
      * Sets the eatable.
      *
      * @param eatable the new eatable

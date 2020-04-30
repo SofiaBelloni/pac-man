@@ -34,11 +34,11 @@ public class GhostInkyBehaviour extends GhostBraveAbstractBehaviour {
         int targetY;
         final Directions pacManDirection = pacMan.getDirection();
         if (pacManDirection.equals(Directions.UP)) {
-            appo = new PairImpl<>(pacManPosition.getX(), pacManPosition.getY() + 2);
+            appo = new PairImpl<>(pacManPosition.getX(), pacManPosition.getY() - 2);
         } else if (pacManDirection.equals(Directions.RIGHT)) {
             appo = new PairImpl<>(pacManPosition.getX() + 2, pacManPosition.getY());
         } else if (pacManDirection.equals(Directions.DOWN)) {
-            appo = new PairImpl<>(pacManPosition.getX(), pacManPosition.getY() - 2);
+            appo = new PairImpl<>(pacManPosition.getX(), pacManPosition.getY() + 2);
         } else {
             appo = new PairImpl<>(pacManPosition.getX() - 2, pacManPosition.getY());
         }
@@ -66,13 +66,17 @@ public class GhostInkyBehaviour extends GhostBraveAbstractBehaviour {
             this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), 0);
         }
         if (this.getCurrentPosition().equals(this.chaseTarget)) {
-            if (this.chaseTarget.getY() + 1 < this.getyMapSize() && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() + 1))) {
+            if (this.chaseTarget.getY() + 1 < this.getyMapSize() 
+                    && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() + 1))) {
                 this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() + 1);
-            } else if (this.chaseTarget.getX() + 1 < this.getxMapSize() && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX() + 1, this.chaseTarget.getY()))) {
+            } else if (this.chaseTarget.getX() + 1 < this.getxMapSize() 
+                    && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX() + 1, this.chaseTarget.getY()))) {
                 this.chaseTarget = new PairImpl<>(this.chaseTarget.getX() + 1, this.chaseTarget.getY());
-            } else if (this.chaseTarget.getX() - 1 >= 0 && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX() - 1, this.chaseTarget.getY()))) {
+            } else if (this.chaseTarget.getX() - 1 >= 0 
+                    && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX() - 1, this.chaseTarget.getY()))) {
                 this.chaseTarget = new PairImpl<>(this.chaseTarget.getX() - 1, this.chaseTarget.getY());
-            } else if (this.chaseTarget.getY() - 1 >= 0 && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() - 1))) {
+            } else if (this.chaseTarget.getY() - 1 >= 0 
+                    && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() - 1))) {
                 this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() - 1);
             }
         }

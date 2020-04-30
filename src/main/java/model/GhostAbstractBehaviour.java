@@ -78,8 +78,8 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
      */
     protected final void setAdj(final Pair<Integer, Integer> position) {
         this.mapAdj = new HashMap<>();
-        this.mapAdj.put(UP, new PairImpl<>(position.getX(), position.getY() + 1));
-        this.mapAdj.put(DOWN, new PairImpl<>(position.getX(), position.getY() - 1));
+        this.mapAdj.put(UP, new PairImpl<>(position.getX(), position.getY() - 1));
+        this.mapAdj.put(DOWN, new PairImpl<>(position.getX(), position.getY() + 1));
         this.mapAdj.put(RIGHT, new PairImpl<>(position.getX() + 1, position.getY()));
         this.mapAdj.put(LEFT, new PairImpl<>(position.getX() - 1, position.getY()));
     }

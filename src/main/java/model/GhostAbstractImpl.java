@@ -43,6 +43,11 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     }
 
     @Override
+    public final boolean isEatable() {
+        this.checkCreation();
+        return this.eatable;
+    }
+    @Override
     public final void setEatable(final boolean eatable) {
         this.checkCreation();
         this.eatable = eatable;

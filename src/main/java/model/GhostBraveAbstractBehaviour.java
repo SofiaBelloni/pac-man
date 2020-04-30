@@ -71,10 +71,10 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
         }
         this.mapDijkstra.put(this.getCurrentPosition(), distance++);
         this.setAdj(this.getCurrentPosition());
-        if (this.getAdj(UP).getY() < yMapSize && !this.setWall.contains(this.getAdj(UP)) && !this.getCurrentDirection().equals(DOWN)) {
+        if (this.getAdj(UP).getY() >= 0 && !this.setWall.contains(this.getAdj(UP)) && !this.getCurrentDirection().equals(DOWN)) {
             this.mapDijkstra.put(this.getAdj(UP), distance);
         }
-        if (this.getAdj(DOWN).getY() >= 0 && !this.setWall.contains(this.getAdj(DOWN)) && !this.getCurrentDirection().equals(UP)) {
+        if (this.getAdj(DOWN).getY() < yMapSize && !this.setWall.contains(this.getAdj(DOWN)) && !this.getCurrentDirection().equals(UP)) {
             this.mapDijkstra.put(this.getAdj(DOWN), distance);
         }
         if (this.getAdj(RIGHT).getX() < xMapSize && !this.setWall.contains(this.getAdj(RIGHT)) && !this.getCurrentDirection().equals(LEFT)) {
@@ -90,7 +90,7 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
             for (final Pair<Integer, Integer> p : this.mapDijkstra.keySet()) {
                 if (this.mapDijkstra.get(p).equals(distance)) {
                     this.setAdj(p);
-                    if (this.getAdj(UP).getY() < yMapSize && !this.setWall.contains(this.getAdj(UP)) && distance < this.mapDijkstra.get(this.getAdj(UP))) {
+                    if (this.getAdj(UP).getY() >= 0 && !this.setWall.contains(this.getAdj(UP)) && distance < this.mapDijkstra.get(this.getAdj(UP))) {
                         this.mapDijkstra.put(this.getAdj(UP), distance + 1);
                     }
                     if (this.getAdj(RIGHT).getX() < xMapSize && !this.setWall.contains(this.getAdj(RIGHT)) && distance < this.mapDijkstra.get(this.getAdj(RIGHT))) {
@@ -99,7 +99,7 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
                     if (this.getAdj(LEFT).getX() >= 0 && !this.setWall.contains(this.getAdj(LEFT)) && distance < this.mapDijkstra.get(this.getAdj(LEFT))) {
                         this.mapDijkstra.put(this.getAdj(LEFT), distance + 1);
                     } 
-                    if (this.getAdj(DOWN).getY() >= 0 && !this.setWall.contains(this.getAdj(DOWN)) && distance < this.mapDijkstra.get(this.getAdj(DOWN))) {
+                    if (this.getAdj(DOWN).getY() < yMapSize && !this.setWall.contains(this.getAdj(DOWN)) && distance < this.mapDijkstra.get(this.getAdj(DOWN))) {
                         this.mapDijkstra.put(this.getAdj(DOWN), distance + 1);
                     }
                     if (this.mapDijkstra.get(pair) < UPPERBOUND) {
@@ -122,11 +122,11 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
         int i = this.mapDijkstra.get(this.getCurrentPosition());
         while (i > 1) {
             setAdj(this.getCurrentPosition());
-            if (this.getAdj(UP).getY() < yMapSize && !this.setWall.contains(this.getAdj(UP)) && this.mapDijkstra.get(this.getAdj(UP)).equals(i - 1)) {
+            if (this.getAdj(UP).getY() >= 0 && !this.setWall.contains(this.getAdj(UP)) && this.mapDijkstra.get(this.getAdj(UP)).equals(i - 1)) {
                 this.setCurrentPosition(this.getAdj(UP));
             } else if (this.getAdj(RIGHT).getX() < xMapSize && !this.setWall.contains(this.getAdj(RIGHT)) && this.mapDijkstra.get(this.getAdj(RIGHT)).equals(i - 1)) {
                 this.setCurrentPosition(this.getAdj(RIGHT));
-            } else if (this.getAdj(DOWN).getY() >= 0 && !this.setWall.contains(this.getAdj(DOWN)) && this.mapDijkstra.get(this.getAdj(DOWN)).equals(i - 1)) {
+            } else if (this.getAdj(DOWN).getY() < yMapSize && !this.setWall.contains(this.getAdj(DOWN)) && this.mapDijkstra.get(this.getAdj(DOWN)).equals(i - 1)) {
                 this.setCurrentPosition(this.getAdj(DOWN));
             } else if (this.getAdj(LEFT).getX() >= 0 && !this.setWall.contains(this.getAdj(LEFT)) && this.mapDijkstra.get(this.getAdj(LEFT)).equals(i - 1)) {
                 this.setCurrentPosition(this.getAdj(LEFT));
