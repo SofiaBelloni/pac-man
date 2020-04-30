@@ -167,7 +167,7 @@ public final class GhostFactoryImpl implements GhostFactory {
             public void create() {
                 this.setCreated();
                 this.setName(Ghosts.CLYDE);
-                this.setStartPosition(new PairImpl<>(GHOST_Y_START_POSITION, BLINKY_X_START_POSITION));
+                this.setStartPosition(new PairImpl<>(GHOST_Y_START_POSITION, CLYDE_X_START_POSITION));
                 this.setMyBehaviour(new GhostClydeBehaviour(walls, pacMan, ghostHouse,
                         xMapSize, yMapSize, new PairImpl<>(0, yMapSize - 1), this.getStartPosition()));
             }
