@@ -17,11 +17,11 @@ public enum GameScene {
      */
     GAMEOVER,
     /**
-     * The game over scene.
+     * The pause scene.
      */
     PAUSE,
     /**
-     * The scene where the user can see the leader board.
+     * The scene with the leader board.
      */
     LEADERBOARD,
     /**
