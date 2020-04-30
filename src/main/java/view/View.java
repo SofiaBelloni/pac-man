@@ -1,21 +1,27 @@
 package view;
 
 import controller.Controller;
-import javafx.scene.Scene;
-
+/**
+ * This interface represents the main class of the view.
+ */
 public interface View {
+    /**
+     * Sets the controller to be used and makes the view start.
+     * @param controller  the {@link Controller} to use.
+     */
     void setController(Controller controller);
     /**
-     * set the view to visible.
+     * Sets the view to visible.
      */
     void setVisible();
     /**
-     * update the view.
+     * Updates the view.
      */
     void render();
     /**
-     * @param scene
-     * set the view Scene
+     * Sets the view Scene.
+     * @param scene  the name of the scene to be loaded.
+     * 
      */
-    void setScene(Scene scene);
+    void setScene(GameScene scene);
 }
