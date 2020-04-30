@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import model.Directions;
 import model.GameModel;
 import model.Ghosts;
 import utils.Pair;
@@ -51,6 +52,12 @@ public class DataUpdater {
      */
     public int getPacManYPosition() {
         return this.model.getPacManPosition().getY();
+    }
+    /**
+     * @return the Pacman direction.
+     */
+    Directions getPacManDirection() {
+        return this.model.getPacManDirection();
     }
     /**
      * @return a value between 0 and 1 that indicates the level-timer progress. 
