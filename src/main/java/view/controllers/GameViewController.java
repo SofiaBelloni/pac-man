@@ -84,6 +84,8 @@ public class GameViewController extends SceneController {
 
     private final Map<Integer, ImageView> ghostView = new HashMap<>();
     
+    private ImageView pacmanImage;
+    
     public final void init(final Controller controller, final View view) {
         super.init(controller, view);
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
@@ -224,14 +226,23 @@ public class GameViewController extends SceneController {
             }
         }
 
-    private final void pacmanSpawn() {
-        ImageView pacman = new ImageView();
-        pacman.setFitWidth(this.squareSize);
-        pacman.setFitHeight(this.squareSize);
-        pacman.setX(this.squareSize * this.getController().getData().getPacManXPosition());
-        pacman.setY(this.squareSize * this.getController().getData().getPacManYPosition());
-        this.entityPane.getChildren().add(pacman);
-        pacman.setImage(new Image("textures/pac_man/pac_man1.png"));
+    private void pacmanSpawn() {
+        this.pacmanImage = new ImageView();
+        this.pacmanImage.setFitWidth(this.squareSize);
+        this.pacmanImage.setFitHeight(this.squareSize);
+        this.pacmanImage.setX(this.squareSize * this.getController().getData().getPacManXPosition());
+        this.pacmanImage.setY(this.squareSize * this.getController().getData().getPacManYPosition());
+        this.entityPane.getChildren().add(this.pacmanImage);
+        this.pacmanImage.setImage(new Image("textures/pac_man/pac_man2.png"));
+        this.pacmanImage.setRotate(90);
+    }
+    
+    private void pacmanRender() {
+        PathTransition p = new PathTransition();
+        p.setNode(this.pacmanImage);
+        p.setDuration(Duration.seconds(0.5));
+        switch (this.getController().getData().
+        
     }
 
 
