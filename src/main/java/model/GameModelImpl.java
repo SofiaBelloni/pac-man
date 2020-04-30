@@ -188,4 +188,9 @@ public class GameModelImpl implements GameModel {
     public final int getyMapSize() {
         return this.gameMap.getyMapSize();
     }
+
+    @Override
+    public final Directions getPacManDirection() {
+        return this.pacMan.getDirection();
+    }
 }
