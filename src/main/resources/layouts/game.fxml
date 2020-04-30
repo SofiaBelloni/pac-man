@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="rootBox" alignment="CENTER_LEFT" minHeight="576.0" minWidth="1024.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.GameViewController">
+<HBox fx:id="rootBox" alignment="CENTER_LEFT" minHeight="576.0" minWidth="1024.0" onKeyPressed="#onKeyPressed" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.GameViewController">
    <children>
       <StackPane fx:id="gamePane" minHeight="558.0" minWidth="504.0" />
       <VBox fx:id="labelBox" alignment="CENTER" minHeight="576.0" minWidth="466.0" spacing="20.0" style="-fx-background-color: black;" styleClass="labelBox" stylesheets="@style.css" HBox.hgrow="SOMETIMES">
