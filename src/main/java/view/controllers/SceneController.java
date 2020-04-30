@@ -40,4 +40,9 @@ public abstract class SceneController {
     protected View getView() {
         return this.view;
     }
+    /**
+     * Method that update the Scene
+     */
+    public void render() {
+    }
 }
