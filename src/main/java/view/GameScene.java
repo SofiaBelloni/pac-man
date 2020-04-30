@@ -7,7 +7,7 @@ public enum GameScene {
     /**
      * The Main Menu scene.
      */
-    MAIN_MENU,
+    MAINMENU,
     /**
      * The game scene.
      */
@@ -23,7 +23,7 @@ public enum GameScene {
     /**
      * The scene with the leader board.
      */
-    LEADERBOARD,
+    SCORE,
     /**
      * The scene with the settings of the game.
      */
