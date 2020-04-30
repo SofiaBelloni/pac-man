@@ -35,11 +35,11 @@ public class FileManagerImpl implements FileManager {
      */
     public FileManagerImpl() {
         this.file = new File(HOME + SEPARATOR + DEFAULT_FILE);
-        this.scoreList = new LinkedList<Player>(Collections.emptyList());
+        this.scoreList = new LinkedList<>(Collections.emptyList());
         try {
             if (!this.file.createNewFile()) {
                 this.read();
-                this.scoreList.sort((a, b) -> a.compareTo(b));
+                this.scoreList.sort((a, b) -> a.compareByScore(b));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,7 +58,7 @@ public class FileManagerImpl implements FileManager {
     @Override
     public void savePlayer(final String name, final int level, final int score) {
         this.scoreList.add(new Player(name, level, score));
-        this.scoreList.sort((a, b) -> a.compareTo(b));
+        this.scoreList.sort((a, b) -> a.compareByScore(b));
         if (this.scoreList.size() > MAX_SAVED_PLAYERS) {
             this.scoreList.remove(this.scoreList.size() - 1);
         }
