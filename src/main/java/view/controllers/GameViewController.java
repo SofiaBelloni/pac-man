@@ -128,6 +128,8 @@ public class GameViewController extends SceneController {
         }
     }
     
+    
+    
     @FXML
     void onKeyPressed(final KeyEvent event) {
 //        if (x.getCode().equals(KeyCode.W)) {
@@ -146,19 +148,11 @@ public class GameViewController extends SceneController {
 //            this.pacMan.moveRight();
 //        }
         }
-
-    /**
-     * Method that update the HUD data value.
-     */
-    public final void update() {
-        this.score.setText(String.valueOf(this.getController().getData().getCurrentScore()));
-        this.timer.setProgress(this.getController().getData().getLevelTimePercentage());
-        this.level.setText(String.valueOf(this.getController().getData().getLevel()));
-        if (this.livesContainer.getChildren().size() != this.getController().getData().getLives()) {
-            for (int i = 0; i < this.getController().getData().getLives(); i++) {
-                this.livesContainer.getChildren().add(this.lifeIcon());
-            }
-        }
+    
+    @Override
+    public void render() {
+        this.update();
+        // TODO
     }
 
     public final void ghostSpawn(final int value, final Ghosts name, final boolean eatable) {
@@ -234,6 +228,19 @@ public class GameViewController extends SceneController {
         pacman.setImage(new Image("textures/pac_man/pac_man1.png"));
     }
 
+    /**
+     * Method that update the HUD data value.
+     */
+    private void update() {
+        this.score.setText(String.valueOf(this.getController().getData().getCurrentScore()));
+        this.timer.setProgress(this.getController().getData().getLevelTimePercentage());
+        this.level.setText(String.valueOf(this.getController().getData().getLevel()));
+        if (this.livesContainer.getChildren().size() != this.getController().getData().getLives()) {
+            for (int i = 0; i < this.getController().getData().getLives(); i++) {
+                this.livesContainer.getChildren().add(this.lifeIcon());
+            }
+        }
+    }
 
     private Node lifeIcon() { 
         // TODO forse meglio se si crea una factory
