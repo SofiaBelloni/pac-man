@@ -80,7 +80,7 @@ public class GameViewController extends SceneController {
 
     private Pair<Integer, Integer> pacManPosition;
 
-    int squareSize;
+    private int squareSize;
 
     private final Map<Integer, ImageView> ghostView = new HashMap<>();
     
@@ -112,30 +112,11 @@ public class GameViewController extends SceneController {
         entityPane = new Pane();
         this.gamePane.getChildren().add(entityPane);
         
-        //test iteratore immagini pacman
-        System.out.println(pacManImage.nextImage());
-        System.out.println(pacManImage.nextImage());
-        System.out.println(pacManImage.nextImage());
-        System.out.println(pacManImage.nextImage());
-        System.out.println(pacManImage.nextImage());
-        System.out.println(pacManImage.nextImage());
-        System.out.println(pacManImage.nextImage());
-        System.out.println(pacManImage.nextImage());
-        System.out.println(pacManImage.nextImage());
-        System.out.println(pacManImage.nextImage());
-        System.out.println(pacManImage.nextImage());
-        System.out.println(pacManImage.nextImage());
-        System.out.println(pacManImage.nextImage());
-        System.out.println(pacManImage.nextImage());
-        ImageView image = new ImageView(pacManImage.nextImage());
-        image.setRotate(90); //al posto di 90 chiamare metodo getAngle che restituisce i gradi in base alla direzione
-        image.setFitWidth(squareSize);
-        image.setFitHeight(squareSize);
-        gridPane.add(image, this.getController().getData().getPacManXPosition(), this.getController().getData().getPacManYPosition());
         this.ghostSpawn(1, Ghosts.BLINKY, false);
         this.ghostSpawn(2, Ghosts.INKY, false);
         this.ghostSpawn(3, Ghosts.PINKY, false);
         this.ghostSpawn(4, Ghosts.CLYDE, false);
+        this.pacmanSpawn();
     
         
         
@@ -242,9 +223,16 @@ public class GameViewController extends SceneController {
                 p.play();
             }
         }
-    /**
-     * Method that show PacMan by getting his exact position from the controller.
-     */
+
+    private final void pacmanSpawn() {
+        ImageView pacman = new ImageView();
+        pacman.setFitWidth(this.squareSize);
+        pacman.setFitHeight(this.squareSize);
+        pacman.setX(this.squareSize * this.getController().getData().getPacManXPosition());
+        pacman.setY(this.squareSize * this.getController().getData().getPacManYPosition());
+        this.entityPane.getChildren().add(pacman);
+        pacman.setImage(new Image("textures/pac_man/pac_man1.png"));
+    }
 
 
     private Node lifeIcon() { 
