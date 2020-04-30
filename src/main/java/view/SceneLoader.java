@@ -12,7 +12,7 @@ public abstract class SceneLoader {
     private static final String SCENE_PATH = "layouts/";
     private static final String FILE_EXTENSION = ".fxml";
 
-    public static final Pair<Scene, SceneController> loadScene(final String sceneName) throws IOException {
+    public static final Pair<Scene, SceneController> loadScene(final GameScene sceneName) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(ClassLoader.getSystemResource(SCENE_PATH
                 + sceneName
