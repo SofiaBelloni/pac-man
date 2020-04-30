@@ -53,25 +53,12 @@ public class Transition  extends SceneController {
 
     @FXML
     private void keyPressed(final KeyEvent event) throws IOException {
-        switch (event.getCode()) {
-        case W:
-        case UP:
-            this.onUpPressed(null);
-            break;
-        case S:
-        case DOWN:
-            this.onDownPressed(null);
-            break;
-        case A:
-        case LEFT:
-            this.onLeftPressed(null);
-            break;
-        case D:
-        case RIGHT:
-            this.onRightPressed(null);
-            break;
-        default:
-            break;
-        }
+        /*
+         * switch (event.getCode()) { case W: case UP: this.onUpPressed(null); break;
+         * case S: case DOWN: this.onDownPressed(null); break; case A: case LEFT:
+         * this.onLeftPressed(null); break; case D: case RIGHT:
+         * this.onRightPressed(null); break; default: break; }
+         */
+        System.out.println(event.getCode());
     }
 }
