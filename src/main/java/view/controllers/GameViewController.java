@@ -49,6 +49,9 @@ public class GameViewController extends SceneController {
     private StackPane gamePane;
 
     @FXML
+    private Pane entityPane;
+
+    @FXML
     private Label highScore;
 
     @FXML
@@ -96,7 +99,7 @@ public class GameViewController extends SceneController {
             image.setFitHeight(squareSize);
             gridPane.add(image, e.getX(), e.getY());
         }
-        Pane entityPane = new Pane();
+        entityPane = new Pane();
         this.gamePane.getChildren().add(entityPane);
         
         //test iteratore immagini pacman
@@ -120,6 +123,9 @@ public class GameViewController extends SceneController {
         image.setFitHeight(squareSize);
         gridPane.add(image, this.getController().getData().getPacManXPosition(), this.getController().getData().getPacManYPosition());
         this.ghostSpawn(1, Ghosts.BLINKY, false);
+        this.ghostSpawn(2, Ghosts.INKY, false);
+        this.ghostSpawn(3, Ghosts.PINKY, false);
+        this.ghostSpawn(4, Ghosts.CLYDE, false);
     
         
         
@@ -169,16 +175,21 @@ public class GameViewController extends SceneController {
             ImageView ghost = new ImageView();
             ghost.setFitWidth(squareSize);
             ghost.setFitHeight(squareSize);
-            ghost.setX(0);
             ghostView.put(value, ghost);
-            /*if (name.equals(Ghosts.BLINKY)) {
-                gamePane.getChildren().add(ghostView.get(value));
-            } else if (name.equals(Ghosts.BLINKY)) {
-                gamePane.add(ghostView.get(value), columnIndex, rowIndex);
+            ghost.setY(squareSize * 14);
+            if (name.equals(Ghosts.BLINKY)) {
+                entityPane.getChildren().add(ghostView.get(value));
+                ghost.setX(squareSize * 12);
             } else if (name.equals(Ghosts.PINKY)) {
-                gamePane.add(ghostView.get(value), columnIndex, rowIndex);
+                entityPane.getChildren().add(ghostView.get(value));
+                ghost.setX(squareSize * 13);
+            } else if (name.equals(Ghosts.INKY)) {
+                entityPane.getChildren().add(ghostView.get(value));
+                ghost.setX(squareSize * 14);
             } else {
-            }*/
+                entityPane.getChildren().add(ghostView.get(value));
+                ghost.setX(squareSize * 15);
+            }
         }
         if (eatable) {
             ghostView.get(value).setImage(new Image("textures/ghost/eatable.png"));
