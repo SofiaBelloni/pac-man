@@ -38,7 +38,7 @@ public class ViewImpl implements View {
         this.stage.setFullScreen(true);
         this.stage.setResizable(false);
         this.stage.setTitle(TITLE);
-        this.setScene(GameScene.MAINMENU);
+        this.setScene(GameScene.GAME);
     }
 
     @Override

@@ -131,7 +131,34 @@ public class GameViewController extends SceneController {
 
     @Override
     public void onKeyPressed(final KeyEvent event) {
-        System.out.println("casa");
+        switch (event.getCode()) {
+        case UP:
+        case W:
+            this.getController().newPacManDirection(Directions.UP);
+            System.out.println(event.getCode());
+            this.pacmanRender();
+            break;
+        case DOWN:
+        case S:
+            this.getController().newPacManDirection(Directions.DOWN);
+            System.out.println(event.getCode());
+            this.pacmanRender();
+            break;
+        case LEFT:
+        case A:
+            this.getController().newPacManDirection(Directions.LEFT);
+            System.out.println(event.getCode());
+            this.pacmanRender();
+            break;
+        case RIGHT:
+        case D:
+            this.getController().newPacManDirection(Directions.RIGHT);
+            System.out.println(event.getCode());
+            this.pacmanRender();
+            break;
+        default:
+            break;
+        }
 
         // if (event.getCode().equals(KeyCode.W)) {
         // this.pacMan.moveUp();
@@ -234,13 +261,14 @@ public class GameViewController extends SceneController {
 
     private void pacmanRender() {
         Pair<Integer, Integer> newPosition = new PairImpl<>(this.getController().getData().getPacManXPosition(), this.getController().getData().getPacManYPosition());
-        if (!this.pacmanPosition.equals(newPosition)) {
+       // if (!this.pacmanPosition.equals(newPosition)) {
             this.pacmanPosition = newPosition;
             PathTransition p = new PathTransition();
             p.setNode(this.pacmanImage);
             p.setDuration(Duration.seconds(0.5));
             switch (this.getController().getData().getPacManDirection()) {
             case UP:
+                this.pacmanImage.setRotate(0);
                 p.setPath(new Line(this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2,
                         this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() - this.squareSize / 2));
                 this.pacmanImage.setY(this.pacmanImage.getY() -  this.squareSize);
@@ -266,7 +294,7 @@ public class GameViewController extends SceneController {
             default:
                 break;
             } 
-        }
+       // }
     }
 
     /**
