@@ -21,6 +21,7 @@ public class ViewImpl implements View {
     private Controller controller;
     private SceneController sceneController;
     private final Stage stage;
+    private boolean viewStarted;
     /**
      * Constructor.
      * @param stage
@@ -28,6 +29,7 @@ public class ViewImpl implements View {
      */
     public ViewImpl(final Stage stage) {
         this.stage = stage;
+        this.viewStarted = false;
         stage.setOnCloseRequest(e -> {
             Platform.exit();
             System.exit(0);
@@ -43,7 +45,7 @@ public class ViewImpl implements View {
         this.stage.setWidth(screenBounds.getWidth() * 90 / 100);
         this.stage.setResizable(false);
         this.stage.setTitle(TITLE);
-        this.setScene(GameScene.GAME);
+        this.setScene(GameScene.GAMEOVER);
     }
 
     @Override
@@ -64,8 +66,15 @@ public class ViewImpl implements View {
             Pair<Scene, SceneController> gameScene = SceneLoader.loadScene(scene);
             gameScene.getX().getRoot().requestFocus();
             gameScene.getX().getRoot().setOnKeyPressed(gameScene.getY()::onKeyPressed);
+            final double oldWidth = this.stage.getWidth();
+            final double oldHeight = this.stage.getHeight();
             stage.setScene(gameScene.getX());
-            stage.show();
+            this.stage.setWidth(oldWidth);
+            this.stage.setHeight(oldHeight);
+            if (!this.viewStarted) {
+                this.stage.show();
+                this.viewStarted = true;
+            }
             gameScene.getY().init(controller, this);
             this.sceneController = gameScene.getY();
         } catch (IOException e) {
