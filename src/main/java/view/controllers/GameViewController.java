@@ -187,11 +187,8 @@ public class GameViewController extends SceneController {
         }
     }
 
-    public final void ghostRender(final Ghosts name, final Directions dir, final boolean eatable, final boolean returnHome, final int value) {
+    public final void ghostRender(final Ghosts name, final Directions dir, final boolean eatable, final boolean returnHome, final boolean dead, final int value) {
             final ImageView ghostImage = this.ghostView.get(value);
-            if (returnHome) {
-                this.ghostSpawn(value, name, eatable);
-            } else {
                 if (eatable) {
                     ghostImage.setImage(new Image("textures/ghost/eatable.png"));
                 } else {
@@ -219,8 +216,12 @@ public class GameViewController extends SceneController {
                 }
                 p.setCycleCount(1);
                 p.play();
+                if (returnHome) {
+                    this.ghostSpawn(value, name, eatable);
+                } else if (dead) {
+                    this.entityPane.getChildren().remove(ghostImage);
+                }
             }
-        }
 
     private void pacmanSpawn() {
         this.pacmanImage = new ImageView();
