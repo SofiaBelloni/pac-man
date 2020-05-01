@@ -19,6 +19,7 @@ import utils.Pair;
 import view.GameScene;
 import view.SceneLoader;
 import view.View;
+import view.ViewImpl;
 import view.controllers.GameViewController;
 import view.controllers.MainMenuController;
 import view.controllers.SceneController;
@@ -39,15 +40,9 @@ public final class PacManApp extends Application {
                 .pills(mapLoader.getPills())
                 .walls(mapLoader.getWalls())
                 .build());
-        Controller controller = new ControllerImpl(model, null);
-        
-        Pair<Scene, SceneController> gameScene = SceneLoader.loadScene(GameScene.GAME);
-        stage.setTitle("PacMan");
-        stage.setScene(gameScene.getX());
-        stage.show();
-        stage.setFullScreen(true);
-        stage.setResizable(false);
-        gameScene.getY().init(controller, null);
+        View view = new ViewImpl(stage);
+        Controller controller = new ControllerImpl(model, view);
+        view.setController(controller);
     }
 
     /**
