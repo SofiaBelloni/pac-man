@@ -78,21 +78,19 @@ public class GameViewController extends SceneController {
 
     private HBox livesContainer;
 
-    private Pair<Integer, Integer> pacManPosition;
-
     private int squareSize;
 
     private final Map<Integer, ImageView> ghostView = new HashMap<>();
-    
+
     private ImageView pacmanImage;
-    
+    private Pair<Integer, Integer> pacmanPosition;
+
     public final void init(final Controller controller, final View view) {
         super.init(controller, view);
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         squareSize = (int) (screenBounds.getHeight() / controller.getData().getyMapSize());
         int width = squareSize * controller.getData().getxMapSize();
         int height = squareSize * controller.getData().getyMapSize();
-        EntityTextureIterator pacManImage = new PacManTextureIterator();
         this.gamePane.setMinSize(width, height);
         this.gamePane.setMaxSize(width, height);
         HBox.setHgrow(this.labelBox, Priority.SOMETIMES);
@@ -224,47 +222,52 @@ public class GameViewController extends SceneController {
             }
 
     private void pacmanSpawn() {
+        this.pacmanPosition = new PairImpl<>(this.getController().getData().getPacManXPosition(), this.getController().getData().getPacManYPosition());
         this.pacmanImage = new ImageView();
         this.pacmanImage.setFitWidth(this.squareSize);
         this.pacmanImage.setFitHeight(this.squareSize);
-        this.pacmanImage.setX(this.squareSize * this.getController().getData().getPacManXPosition());
-        this.pacmanImage.setY(this.squareSize * this.getController().getData().getPacManYPosition());
+        this.pacmanImage.setX(this.squareSize * this.pacmanPosition.getX());
+        this.pacmanImage.setY(this.squareSize * this.pacmanPosition.getY());
         this.entityPane.getChildren().add(this.pacmanImage);
         this.pacmanImage.setImage(new Image("textures/pac_man/pac_man2.png"));
         this.pacmanImage.setRotate(90);
     }
 
     private void pacmanRender() {
-        PathTransition p = new PathTransition();
-        p.setNode(this.pacmanImage);
-        p.setDuration(Duration.seconds(0.5));
-        switch (this.getController().getData().getPacManDirection()) {
-        case UP:
-            p.setPath(new Line(this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2,
-                    this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() - this.squareSize / 2));
-            this.pacmanImage.setY(this.pacmanImage.getY() -  this.squareSize);
-            break;
-        case DOWN:
-            this.pacmanImage.setRotate(180);
-            p.setPath(new Line(this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2,
-                    this.pacmanImage.getX() +  this.squareSize / 2, this.pacmanImage.getY() + this.squareSize * 3 / 2));
-            this.pacmanImage.setY(this.pacmanImage.getY() + this.squareSize);
-            break;
-        case LEFT:
-            this.pacmanImage.setRotate(270);
-            p.setPath(new Line(this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2,
-                    this.pacmanImage.getX() - this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2));
-            this.pacmanImage.setX(this.pacmanImage.getX() - this.squareSize); 
-            break;
-        case RIGHT:
-            this.pacmanImage.setRotate(90);
-            p.setPath(new Line(this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2,
-                    this.pacmanImage.getX() +  this.squareSize * 3 / 2, this.pacmanImage.getY() + this.squareSize / 2));
-            this.pacmanImage.setX(this.pacmanImage.getX() + this.squareSize); 
-            break;
-        default:
-            break;
-        } 
+        Pair<Integer, Integer> newPosition = new PairImpl<>(this.getController().getData().getPacManXPosition(), this.getController().getData().getPacManYPosition());
+        if (!this.pacmanPosition.equals(newPosition)) {
+            this.pacmanPosition = newPosition;
+            PathTransition p = new PathTransition();
+            p.setNode(this.pacmanImage);
+            p.setDuration(Duration.seconds(0.5));
+            switch (this.getController().getData().getPacManDirection()) {
+            case UP:
+                p.setPath(new Line(this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2,
+                        this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() - this.squareSize / 2));
+                this.pacmanImage.setY(this.pacmanImage.getY() -  this.squareSize);
+                break;
+            case DOWN:
+                this.pacmanImage.setRotate(180);
+                p.setPath(new Line(this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2,
+                        this.pacmanImage.getX() +  this.squareSize / 2, this.pacmanImage.getY() + this.squareSize * 3 / 2));
+                this.pacmanImage.setY(this.pacmanImage.getY() + this.squareSize);
+                break;
+            case LEFT:
+                this.pacmanImage.setRotate(270);
+                p.setPath(new Line(this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2,
+                        this.pacmanImage.getX() - this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2));
+                this.pacmanImage.setX(this.pacmanImage.getX() - this.squareSize); 
+                break;
+            case RIGHT:
+                this.pacmanImage.setRotate(90);
+                p.setPath(new Line(this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2,
+                        this.pacmanImage.getX() +  this.squareSize * 3 / 2, this.pacmanImage.getY() + this.squareSize / 2));
+                this.pacmanImage.setX(this.pacmanImage.getX() + this.squareSize); 
+                break;
+            default:
+                break;
+            } 
+        }
     }
 
     /**
