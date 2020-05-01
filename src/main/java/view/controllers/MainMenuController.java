@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.stage.Stage;
+import view.GameScene;
 import view.SceneLoader;
 import view.View;
 
@@ -19,23 +20,17 @@ public class MainMenuController extends SceneController {
 
     @FXML
     private void onNewGameClick(final ActionEvent event) throws IOException {
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(SceneLoader.loadScene("game").getX());
-        window.show();
+        this.getView().setScene(GameScene.GAME);
     }
 
     @FXML
     private void onScoreClick(final ActionEvent event) throws IOException {
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(SceneLoader.loadScene("score").getX());
-        window.show();
+        this.getView().setScene(GameScene.SCORE);
     }
 
     @FXML
     private void onSettingsClick(final ActionEvent event) throws IOException {
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(SceneLoader.loadScene("settings").getX());
-        window.show();
+        this.getView().setScene(GameScene.SETTINGS);
     }
 }
 
