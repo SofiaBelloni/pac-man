@@ -239,10 +239,9 @@ public class GameViewController extends SceneController {
         p.setDuration(Duration.seconds(0.5));
         switch (this.getController().getData().getPacManDirection()) {
         case UP:
-            this.pacmanImage.setRotate(0);
             p.setPath(new Line(this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2,
-                    this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() - this.squareSize));
-            this.pacmanImage.setY(this.pacmanImage.getY() -  this.squareSize * 3 / 2); 
+                    this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() - this.squareSize / 2));
+            this.pacmanImage.setY(this.pacmanImage.getY() -  this.squareSize);
             break;
         case DOWN:
             this.pacmanImage.setRotate(180);
@@ -251,10 +250,10 @@ public class GameViewController extends SceneController {
             this.pacmanImage.setY(this.pacmanImage.getY() + this.squareSize);
             break;
         case LEFT:
-            //this.pacmanImage.setRotate(270);
+            this.pacmanImage.setRotate(270);
             p.setPath(new Line(this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2,
-                    this.pacmanImage.getX() - this.squareSize, this.pacmanImage.getY() + this.squareSize / 2));
-            this.pacmanImage.setX(this.pacmanImage.getX() - this.squareSize * 3 / 2); 
+                    this.pacmanImage.getX() - this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2));
+            this.pacmanImage.setX(this.pacmanImage.getX() - this.squareSize); 
             break;
         case RIGHT:
             this.pacmanImage.setRotate(90);
