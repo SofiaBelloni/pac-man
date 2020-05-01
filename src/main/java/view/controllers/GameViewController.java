@@ -295,6 +295,8 @@ public class GameViewController extends SceneController {
             default:
                 break;
             } 
+            p.setCycleCount(1);
+            p.play();
        // }
     }
 
