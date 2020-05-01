@@ -87,8 +87,9 @@ public class GameViewController extends SceneController {
 
     public final void init(final Controller controller, final View view) {
         super.init(controller, view);
-        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-        squareSize = (int) (screenBounds.getHeight() / controller.getData().getyMapSize());
+        //Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+        //squareSize = (int) (screenBounds.getHeight() / controller.getData().getyMapSize());
+        this.squareSize = (int) (this.rootBox.getHeight() / controller.getData().getyMapSize());
         int width = squareSize * controller.getData().getxMapSize();
         int height = squareSize * controller.getData().getyMapSize();
         this.gamePane.setMinSize(width, height);

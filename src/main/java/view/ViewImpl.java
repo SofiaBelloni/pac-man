@@ -5,7 +5,9 @@ import java.io.IOException;
 
 import controller.Controller;
 import javafx.application.Platform;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import utils.Pair;
 import view.controllers.SceneController;
@@ -35,7 +37,10 @@ public class ViewImpl implements View {
     @Override
     public void setController(final Controller controller) {
         this.controller = controller;
-        this.stage.setFullScreen(true);
+        //this.stage.setFullScreen(true);
+        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+        this.stage.setHeight(screenBounds.getHeight() * 90 / 100);
+        this.stage.setWidth(screenBounds.getWidth() * 90 / 100);
         this.stage.setResizable(false);
         this.stage.setTitle(TITLE);
         this.setScene(GameScene.GAME);
