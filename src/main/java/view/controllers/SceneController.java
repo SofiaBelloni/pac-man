@@ -1,6 +1,8 @@
 package view.controllers;
 
 import controller.Controller;
+import javafx.fxml.FXML;
+import javafx.scene.input.KeyEvent;
 import view.View;
 
 /**
@@ -41,8 +43,18 @@ public abstract class SceneController {
         return this.view;
     }
     /**
-     * Method that update the Scene
+     * Method that update the Scene.
      */
     public void render() {
+    }
+
+    /**
+     * Event handler for when a key is pressed in this scene.
+     * @param event
+     *      the information about the event.
+     */
+    @FXML
+    public void onKeyPressed(final KeyEvent event) {
+        // Left empty to let subclasses free of not overriding this method.
     }
 }

@@ -57,6 +57,8 @@ public class ViewImpl implements View {
     public void setScene(final GameScene scene) {
         try {
             Pair<Scene, SceneController> gameScene = SceneLoader.loadScene(scene);
+            gameScene.getX().getRoot().requestFocus();
+            gameScene.getX().getRoot().setOnKeyPressed(gameScene.getY()::onKeyPressed);
             stage.setScene(gameScene.getX());
             stage.show();
             gameScene.getY().init(controller, this);

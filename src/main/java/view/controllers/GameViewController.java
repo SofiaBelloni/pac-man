@@ -128,29 +128,28 @@ public class GameViewController extends SceneController {
             /*this.livesContainer.getChildren().add(this.lifeIcon());*/
         }
     }
-    
-    
-    
-    @FXML
-    void onKeyPressed(final KeyEvent event) {
-//        if (event.getCode().equals(KeyCode.W)) {
-//            this.pacMan.moveUp();
-//        }
-//        
-//        if (event.getCode().equals(KeyCode.S)) {
-//            this.pacMan.moveDown();
-//        }
-//        
-//        if (event.getCode().equals(KeyCode.A)) {
-//            this.pacMan.moveLeft();
-//        }
-//        
-//        if (event.getCode().equals(KeyCode.D)) {
-//            this.pacMan.moveRight();
-//        }
+
+    @Override
+    public void onKeyPressed(final KeyEvent event) {
         System.out.println("casa");
-        }
-    
+
+        // if (event.getCode().equals(KeyCode.W)) {
+        // this.pacMan.moveUp();
+        // }
+        //
+        // if (event.getCode().equals(KeyCode.S)) {
+        // this.pacMan.moveDown();
+        // }
+        //
+        // if (event.getCode().equals(KeyCode.A)) {
+        // this.pacMan.moveLeft();
+        // }
+        //
+        // if (event.getCode().equals(KeyCode.D)) {
+        // this.pacMan.moveRight();
+        // }
+    }
+
     @Override
     public void render() {
         this.update();
