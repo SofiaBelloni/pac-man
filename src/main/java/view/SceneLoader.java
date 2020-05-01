@@ -1,6 +1,7 @@
 package view;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,7 +16,7 @@ public abstract class SceneLoader {
     public static final Pair<Scene, SceneController> loadScene(final GameScene sceneName) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(ClassLoader.getSystemResource(SCENE_PATH
-                + sceneName
+                + sceneName.toString().toLowerCase(Locale.ROOT)
                 + FILE_EXTENSION));
         return new PairImpl<Scene, SceneController>(
         new  Scene(loader.load()),
