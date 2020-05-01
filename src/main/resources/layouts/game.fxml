@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="rootBox" alignment="CENTER_LEFT" minHeight="576.0" minWidth="1024.0" onKeyPressed="#onKeyPressed" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.GameViewController">
+   <children>
+      <StackPane fx:id="gamePane" minHeight="558.0" minWidth="504.0" />
+      <VBox fx:id="labelBox" alignment="CENTER" minHeight="576.0" minWidth="466.0" spacing="20.0" style="-fx-background-color: black;" styleClass="labelBox" stylesheets="@style.css" HBox.hgrow="SOMETIMES">
+         <children>
+            <HBox alignment="BOTTOM_LEFT" prefHeight="60.0" prefWidth="520.0">
+               <children>
+                  <Label contentDisplay="CENTER" text="HIGH SCORE:" textFill="#b2a6a6">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="170.0" />
+                     </HBox.margin></Label>
+                  <Label fx:id="highScore" text="0" textFill="#b2a6a6">
+                     <HBox.margin>
+                        <Insets left="50.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="28.0" />
+                     </font></Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="520.0">
+               <children>
+                  <Label text="SCORE:" textFill="#b2a6a6">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="170.0" />
+                     </HBox.margin></Label>
+                  <Label fx:id="score" text="0" textFill="#b2a6a6">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="50.0" />
+                     </HBox.margin></Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="520.0">
+               <children>
+                  <Label text="LEVEL:" textFill="#b2a6a6">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="170.0" />
+                     </HBox.margin></Label>
+                  <Label fx:id="level" text="0" textFill="#b0a5a5">
+                     <HBox.margin>
+                        <Insets left="60.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="28.0" />
+                     </font></Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="520.0">
+               <children>
+                  <ProgressBar fx:id="timer" centerShape="false" prefHeight="25.0" prefWidth="300.0" progress="1.0" style="-fx-accent: #412FE9;">
+                     <HBox.margin>
+                        <Insets left="170.0" />
+                     </HBox.margin>
+                  </ProgressBar>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="520.0">
+               <children>
+                  <HBox fx:id="livesContainer" prefHeight="100.0" prefWidth="200.0">
+                     <HBox.margin>
+                        <Insets left="172.0" />
+                     </HBox.margin>
+                  </HBox>
+               </children>
+            </HBox>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </VBox>
+   </children>
+</HBox>
