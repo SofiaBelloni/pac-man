@@ -4,6 +4,7 @@ package view;
 import java.io.IOException;
 
 import controller.Controller;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import utils.Pair;
@@ -25,6 +26,10 @@ public class ViewImpl implements View {
      */
     public ViewImpl(final Stage stage) {
         this.stage = stage;
+        stage.setOnCloseRequest(e -> {
+            Platform.exit();
+            System.exit(0);
+        });
     }
 
     @Override
