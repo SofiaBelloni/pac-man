@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import view.GameScene;
 import view.SceneLoader;
 import view.View;
 
@@ -41,7 +42,7 @@ public final class GameOverController extends SceneController {
         this.getController().savePlayer(Optional.of(playerNameText.getText()).filter(t -> !t.isBlank()).orElse("Guest"));
         //da fare this.getView().goToView("mainview");
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(SceneLoader.loadScene("mainmenu").getX());
+        window.setScene(SceneLoader.loadScene(GameScene.MAINMENU).getX());
         window.show();
     }
 

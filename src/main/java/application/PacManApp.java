@@ -16,6 +16,7 @@ import model.GameMapImpl;
 import model.GameModel;
 import model.GameModelImpl;
 import utils.Pair;
+import view.GameScene;
 import view.SceneLoader;
 import view.View;
 import view.controllers.GameViewController;
@@ -40,7 +41,7 @@ public final class PacManApp extends Application {
                 .build());
         Controller controller = new ControllerImpl(model, null);
         
-        Pair<Scene, SceneController> gameScene = SceneLoader.loadScene("game");
+        Pair<Scene, SceneController> gameScene = SceneLoader.loadScene(GameScene.GAME);
         stage.setTitle("PacMan");
         stage.setScene(gameScene.getX());
         stage.show();
