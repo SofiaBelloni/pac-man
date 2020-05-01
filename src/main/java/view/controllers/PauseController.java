@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import view.GameScene;
 import view.SceneLoader;
 import view.View;
 
@@ -32,22 +33,16 @@ public class PauseController extends SceneController {
 
     @FXML
     public final void onExitClick(final Event event) throws IOException {
-       Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-       window.setScene(SceneLoader.loadScene("mainmenu").getX());
-       window.show();
+        this.getView().setScene(GameScene.MAINMENU);
     }
 
     @FXML
     public final void onRestartClick(final Event event) throws IOException {
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(SceneLoader.loadScene("game").getX());
-        window.show();
+        this.getView().setScene(GameScene.GAME);
     }
 
     @FXML
     public final void onResumeClick(final Event event) throws IOException {
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(SceneLoader.loadScene("game").getX());
-        window.show();
+        this.getView().setScene(GameScene.GAME);
     }
 }
