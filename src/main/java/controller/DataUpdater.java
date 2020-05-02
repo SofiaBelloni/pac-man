@@ -76,7 +76,7 @@ public class DataUpdater {
      * @return a value between 0 and 1 that indicates the level-timer progress. 
      */
     public double getLevelTimePercentage() {
-        return this.model.getLevelTime() / 60; //TODO 
+        return this.model.getLevelTime() / 60.0; //TODO 
     }
     /**
      * @return the scores of the current game

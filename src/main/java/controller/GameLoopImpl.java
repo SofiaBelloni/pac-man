@@ -38,7 +38,7 @@ public class GameLoopImpl implements Runnable, GameLoop {
 
     @Override
     public final void run() {
-        //this.levelTimer.startTimer();
+        this.levelTimer.startTimer();
         this.running = true;
         long now = 0;
         long lastUpdateTime = System.currentTimeMillis();
