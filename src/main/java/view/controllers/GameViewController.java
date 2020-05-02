@@ -149,67 +149,74 @@ public class GameViewController extends SceneController {
     }
 
     public final void ghostSpawn() {
-        if (!this.ghostView.containsKey(value)) {
-            ImageView ghost = new ImageView();
-            ghost.setFitWidth(this.squareSize);
-            ghost.setFitHeight(this.squareSize);
-            this.ghostView.put(value, ghost);
-            ghost.setY(this.squareSize * GHOST_Y_START_POSITION);
-            if (name.equals(Ghosts.BLINKY)) {
-                this.entityPane.getChildren().add(this.ghostView.get(value));
-                ghost.setX(this.squareSize * BLINKY_X_START_POSITION);
-            } else if (name.equals(Ghosts.PINKY)) {
-                this.entityPane.getChildren().add(this.ghostView.get(value));
-                ghost.setX(this.squareSize * PINKY_X_START_POSITION);
-            } else if (name.equals(Ghosts.INKY)) {
-                this.entityPane.getChildren().add(this.ghostView.get(value));
-                ghost.setX(this.squareSize * INKY_X_START_POSITION);
-            } else {
-                this.entityPane.getChildren().add(this.ghostView.get(value));
-                ghost.setX(this.squareSize * CLYDE_X_START_POSITION);
-            }
-            if (eatable) {
-                this.ghostView.get(value).setImage(new Image("textures/ghost/eatable.png"));
-            } else {
-                this.ghostView.get(value).setImage(new Image("textures/" + name.toString() + "/RIGHT.png"));
+        for (int id : this.getController().getData().getGhostsDirections().keySet()) {        
+            final Ghosts name = this.getController().getData().getGhostsTypes().get(id);
+            if (!this.ghostView.containsKey(id)) {
+                ImageView ghost = new ImageView();
+                ghost.setFitWidth(this.squareSize);
+                ghost.setFitHeight(this.squareSize);
+                this.ghostView.put(id, ghost);
+                ghost.setY(this.squareSize * GHOST_Y_START_POSITION);
+                if (name.equals(Ghosts.BLINKY)) {
+                    this.entityPane.getChildren().add(this.ghostView.get(id));
+                    ghost.setX(this.squareSize * BLINKY_X_START_POSITION);
+                } else if (name.equals(Ghosts.PINKY)) {
+                    this.entityPane.getChildren().add(this.ghostView.get(id));
+                    ghost.setX(this.squareSize * PINKY_X_START_POSITION);
+                } else if (name.equals(Ghosts.INKY)) {
+                    this.entityPane.getChildren().add(this.ghostView.get(id));
+                    ghost.setX(this.squareSize * INKY_X_START_POSITION);
+                } else {
+                    this.entityPane.getChildren().add(this.ghostView.get(id));
+                    ghost.setX(this.squareSize * CLYDE_X_START_POSITION);
+                }
+                if (this.getController().getData().isGameInverted()) {
+                    this.ghostView.get(id).setImage(new Image("textures/ghost/eatable.png"));
+                } else {
+                    this.ghostView.get(id).setImage(new Image("textures/" + name.toString() + "/RIGHT.png"));
+                }
             }
         }
     }
 
     public final void ghostRender() {
-        final ImageView ghostImage = this.ghostView.get(value);
-        if (eatable) {
-            ghostImage.setImage(new Image("textures/ghost/eatable.png"));
-        } else {
-            ghostImage.setImage(new Image("textures/" + name.toString() + "/" + dir.toString() + ".png"));
-        }
-        PathTransition p = new PathTransition();
-        p.setNode(ghostImage);
-        p.setDuration(Duration.seconds(0.5));
-        if (dir.equals(Directions.RIGHT)) {
-            p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
-                    ghostImage.getX() + this.squareSize * 3 / 2, ghostImage.getY() + this.squareSize / 2));
-            ghostImage.setX(ghostImage.getX() + this.squareSize);
-        } else if (dir.equals(Directions.UP)) {
-            p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
-                    ghostImage.getX() + this.squareSize / 2, ghostImage.getY() - this.squareSize / 2));
-            ghostImage.setY(ghostImage.getY() - this.squareSize);
-        } else if (dir.equals(Directions.LEFT)) {
-            p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
-                    ghostImage.getX() - this.squareSize / 2, ghostImage.getY() + this.squareSize / 2));
-            ghostImage.setX(ghostImage.getX() - this.squareSize);
-        } else {
-            p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
-                    ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize * 3 / 2));
-            ghostImage.setY(ghostImage.getY() + this.squareSize);
-        }
-        p.setCycleCount(1);
-        p.play();
-        if (returnHome) {
-            this.ghostView.remove(ghostImage);
-            this.ghostSpawn(value, name, eatable);
-        } else if (dead) {
-            this.entityPane.getChildren().remove(ghostImage);
+        for (int id : this.ghostView.keySet()) {        
+            final Directions dir = this.getController().getData().getGhostsDirections().get(id);
+            final ImageView ghostImage = this.ghostView.get(id);
+            if (this.getController().getData().isGameInverted()) {
+                ghostImage.setImage(new Image("textures/ghost/eatable.png"));
+            } else {
+                ghostImage.setImage(new Image("textures/" + this.getController().getData().getGhostsTypes().get(id).toString() + "/" +
+            dir.toString() + ".png"));
+            }
+            PathTransition p = new PathTransition();
+            p.setNode(ghostImage);
+            p.setDuration(Duration.seconds(0.5));
+            if (dir.equals(Directions.RIGHT)) {
+                p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
+                        ghostImage.getX() + this.squareSize * 3 / 2, ghostImage.getY() + this.squareSize / 2));
+                ghostImage.setX(ghostImage.getX() + this.squareSize);
+            } else if (dir.equals(Directions.UP)) {
+                p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
+                        ghostImage.getX() + this.squareSize / 2, ghostImage.getY() - this.squareSize / 2));
+                ghostImage.setY(ghostImage.getY() - this.squareSize);
+            } else if (dir.equals(Directions.LEFT)) {
+                p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
+                        ghostImage.getX() - this.squareSize / 2, ghostImage.getY() + this.squareSize / 2));
+                ghostImage.setX(ghostImage.getX() - this.squareSize);
+            } else {
+                p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
+                        ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize * 3 / 2));
+                ghostImage.setY(ghostImage.getY() + this.squareSize);
+            }
+            p.setCycleCount(1);
+            p.play();
+            /*if (returnHome) {
+                this.ghostView.remove(ghostImage);
+                this.ghostSpawn(value, name, eatable);
+            } else if (dead) {
+                this.entityPane.getChildren().remove(ghostImage);
+            }*/
         }
     }
 
