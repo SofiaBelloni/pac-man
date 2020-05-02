@@ -67,6 +67,7 @@ public class GameModelImpl implements GameModel {
             }
         } else {
             if (this.checkPillCollision()) {
+                this.gameMap.get().removePill(this.pacMan.getPosition());
                 final boolean oldIsGameInverted = this.levelManager.isGameInverted();
                 this.levelManager.incScores(this.gameMap.get().getPillScore());
                 if (!oldIsGameInverted && this.levelManager.isGameInverted()) {
