@@ -37,4 +37,10 @@ public interface Ghost extends Entity {
      */
     void blinkyIsDead();
 
+    /**
+     * 
+     * @return the ghost id
+     */
+    int getId();
+
 }

@@ -14,6 +14,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     private GhostBraveBehaviour myBehaviour;
     private boolean timeToTurn;
     private Pair<Integer, Integer> startPosition;
+    private int id;
 
     public GhostAbstractImpl(final int xMapSize, final int yMapSize) {
         super(xMapSize, yMapSize);
@@ -85,11 +86,22 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     }
 
     protected final Pair<Integer, Integer> getStartPosition() {
+        this.checkCreation();
         return this.startPosition;
     }
 
     protected final void setStartPosition(final Pair<Integer, Integer> startPosition) {
         this.startPosition = startPosition;
+    }
+
+    @Override
+    public final int getId() {
+        this.checkCreation();
+        return this.id;
+    }
+
+    protected final void setId(final int id) {
+        this.id = id;
     }
 
     private void checkCreation() {
