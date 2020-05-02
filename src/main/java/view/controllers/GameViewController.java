@@ -87,8 +87,9 @@ public class GameViewController extends SceneController {
 
     public final void init(final Controller controller, final View view) {
         super.init(controller, view);
-        //Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-        //squareSize = (int) (screenBounds.getHeight() / controller.getData().getyMapSize());
+        // Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+        // squareSize = (int) (screenBounds.getHeight() /
+        // controller.getData().getyMapSize());
         this.squareSize = (int) (this.rootBox.getHeight() / controller.getData().getyMapSize());
         int width = squareSize * controller.getData().getxMapSize();
         int height = squareSize * controller.getData().getyMapSize();
@@ -103,7 +104,7 @@ public class GameViewController extends SceneController {
             image.setFitHeight(squareSize);
             gridPane.add(image, e.getX(), e.getY());
         }
-        
+
         for (Pair<Integer, Integer> e : this.getController().getData().getPillsPositions()) {
             ImageView image = new ImageView("textures/pill/pill.png");
             image.setFitWidth(squareSize);
@@ -112,21 +113,19 @@ public class GameViewController extends SceneController {
         }
         entityPane = new Pane();
         this.gamePane.getChildren().add(entityPane);
-        
+
         this.ghostSpawn(1, Ghosts.BLINKY, false);
         this.ghostSpawn(2, Ghosts.INKY, false);
         this.ghostSpawn(3, Ghosts.PINKY, false);
         this.ghostSpawn(4, Ghosts.CLYDE, false);
         this.pacmanSpawn();
         this.pacmanRender();
-    
-        
-        
-        //Inizialize HUD
+
+        // Inizialize HUD
         this.highScore.setText(String.valueOf(controller.getHighScore()));
         this.level.setText(String.valueOf(controller.getData().getLevel()));
         for (int i = 0; i < controller.getData().getLives(); i++) {
-            /*this.livesContainer.getChildren().add(this.lifeIcon());*/
+            /* this.livesContainer.getChildren().add(this.lifeIcon()); */
         }
     }
 
@@ -136,51 +135,28 @@ public class GameViewController extends SceneController {
         case UP:
         case W:
             this.getController().newPacManDirection(Directions.UP);
-            System.out.println(event.getCode());
-            this.pacmanRender();
             break;
         case DOWN:
         case S:
             this.getController().newPacManDirection(Directions.DOWN);
-            System.out.println(event.getCode());
-            this.pacmanRender();
             break;
         case LEFT:
         case A:
             this.getController().newPacManDirection(Directions.LEFT);
-            System.out.println(event.getCode());
-            this.pacmanRender();
             break;
         case RIGHT:
         case D:
             this.getController().newPacManDirection(Directions.RIGHT);
-            System.out.println(event.getCode());
-            this.pacmanRender();
             break;
         default:
             break;
         }
-
-        // if (event.getCode().equals(KeyCode.W)) {
-        // this.pacMan.moveUp();
-        // }
-        //
-        // if (event.getCode().equals(KeyCode.S)) {
-        // this.pacMan.moveDown();
-        // }
-        //
-        // if (event.getCode().equals(KeyCode.A)) {
-        // this.pacMan.moveLeft();
-        // }
-        //
-        // if (event.getCode().equals(KeyCode.D)) {
-        // this.pacMan.moveRight();
-        // }
     }
 
     @Override
     public void render() {
         this.update();
+        this.pacmanRender();
         // TODO
     }
 
@@ -212,44 +188,46 @@ public class GameViewController extends SceneController {
         }
     }
 
-    public final void ghostRender(final Ghosts name, final Directions dir, final boolean eatable, final boolean returnHome, final boolean dead, final int value) {
-            final ImageView ghostImage = this.ghostView.get(value);
-                if (eatable) {
-                    ghostImage.setImage(new Image("textures/ghost/eatable.png"));
-                } else {
-                    ghostImage.setImage(new Image("textures/" + name.toString() + "/" + dir.toString() + ".png"));
-                }
-                PathTransition p = new PathTransition();
-                p.setNode(ghostImage);
-                p.setDuration(Duration.seconds(0.5));
-                if (dir.equals(Directions.RIGHT)) {
-                    p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
-                            ghostImage.getX() +  this.squareSize * 3 / 2, ghostImage.getY() + this.squareSize / 2));
-                    ghostImage.setX(ghostImage.getX() + this.squareSize); 
-                } else   if (dir.equals(Directions.UP)) {
-                    p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
-                            ghostImage.getX() + this.squareSize / 2, ghostImage.getY() - this.squareSize / 2));
-                    ghostImage.setY(ghostImage.getY() -  this.squareSize); 
-                } else   if (dir.equals(Directions.LEFT)) {
-                    p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
-                            ghostImage.getX() - this.squareSize / 2, ghostImage.getY() + this.squareSize / 2));
-                    ghostImage.setX(ghostImage.getX() - this.squareSize); 
-                } else {
-                    p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
-                            ghostImage.getX() +  this.squareSize / 2, ghostImage.getY() + this.squareSize * 3 / 2));
-                    ghostImage.setY(ghostImage.getY() + this.squareSize);
-                }
-                p.setCycleCount(1);
-                p.play();
-                if (returnHome) {
-                    this.ghostSpawn(value, name, eatable);
-                } else if (dead) {
-                    this.entityPane.getChildren().remove(ghostImage);
-                }
-            }
+    public final void ghostRender(final Ghosts name, final Directions dir, final boolean eatable, final boolean returnHome,
+            final boolean dead, final int value) {
+        final ImageView ghostImage = this.ghostView.get(value);
+        if (eatable) {
+            ghostImage.setImage(new Image("textures/ghost/eatable.png"));
+        } else {
+            ghostImage.setImage(new Image("textures/" + name.toString() + "/" + dir.toString() + ".png"));
+        }
+        PathTransition p = new PathTransition();
+        p.setNode(ghostImage);
+        p.setDuration(Duration.seconds(0.5));
+        if (dir.equals(Directions.RIGHT)) {
+            p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
+                    ghostImage.getX() + this.squareSize * 3 / 2, ghostImage.getY() + this.squareSize / 2));
+            ghostImage.setX(ghostImage.getX() + this.squareSize);
+        } else if (dir.equals(Directions.UP)) {
+            p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
+                    ghostImage.getX() + this.squareSize / 2, ghostImage.getY() - this.squareSize / 2));
+            ghostImage.setY(ghostImage.getY() - this.squareSize);
+        } else if (dir.equals(Directions.LEFT)) {
+            p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
+                    ghostImage.getX() - this.squareSize / 2, ghostImage.getY() + this.squareSize / 2));
+            ghostImage.setX(ghostImage.getX() - this.squareSize);
+        } else {
+            p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
+                    ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize * 3 / 2));
+            ghostImage.setY(ghostImage.getY() + this.squareSize);
+        }
+        p.setCycleCount(1);
+        p.play();
+        if (returnHome) {
+            this.ghostSpawn(value, name, eatable);
+        } else if (dead) {
+            this.entityPane.getChildren().remove(ghostImage);
+        }
+    }
 
     private void pacmanSpawn() {
-        this.pacmanPosition = new PairImpl<>(this.getController().getData().getPacManXPosition(), this.getController().getData().getPacManYPosition());
+        this.pacmanPosition = new PairImpl<>(this.getController().getData().getPacManXPosition(),
+                this.getController().getData().getPacManYPosition());
         this.pacmanImage = new ImageView();
         this.pacmanImage.setFitWidth(this.squareSize);
         this.pacmanImage.setFitHeight(this.squareSize);
@@ -261,8 +239,9 @@ public class GameViewController extends SceneController {
     }
 
     private void pacmanRender() {
-        Pair<Integer, Integer> newPosition = new PairImpl<>(this.getController().getData().getPacManXPosition(), this.getController().getData().getPacManYPosition());
-       // if (!this.pacmanPosition.equals(newPosition)) {
+        Pair<Integer, Integer> newPosition = new PairImpl<>(this.getController().getData().getPacManXPosition(),
+                this.getController().getData().getPacManYPosition());
+        if (!this.pacmanPosition.equals(newPosition)) {
             this.pacmanPosition = newPosition;
             PathTransition p = new PathTransition();
             p.setNode(this.pacmanImage);
@@ -272,32 +251,32 @@ public class GameViewController extends SceneController {
                 this.pacmanImage.setRotate(0);
                 p.setPath(new Line(this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2,
                         this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() - this.squareSize / 2));
-                this.pacmanImage.setY(this.pacmanImage.getY() -  this.squareSize);
+                this.pacmanImage.setY(this.pacmanImage.getY() - this.squareSize);
                 break;
             case DOWN:
                 this.pacmanImage.setRotate(180);
                 p.setPath(new Line(this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2,
-                        this.pacmanImage.getX() +  this.squareSize / 2, this.pacmanImage.getY() + this.squareSize * 3 / 2));
+                        this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() + this.squareSize * 3 / 2));
                 this.pacmanImage.setY(this.pacmanImage.getY() + this.squareSize);
                 break;
             case LEFT:
                 this.pacmanImage.setRotate(270);
                 p.setPath(new Line(this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2,
                         this.pacmanImage.getX() - this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2));
-                this.pacmanImage.setX(this.pacmanImage.getX() - this.squareSize); 
+                this.pacmanImage.setX(this.pacmanImage.getX() - this.squareSize);
                 break;
             case RIGHT:
                 this.pacmanImage.setRotate(90);
                 p.setPath(new Line(this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2,
-                        this.pacmanImage.getX() +  this.squareSize * 3 / 2, this.pacmanImage.getY() + this.squareSize / 2));
-                this.pacmanImage.setX(this.pacmanImage.getX() + this.squareSize); 
+                        this.pacmanImage.getX() + this.squareSize * 3 / 2, this.pacmanImage.getY() + this.squareSize / 2));
+                this.pacmanImage.setX(this.pacmanImage.getX() + this.squareSize);
                 break;
             default:
                 break;
-            } 
+            }
             p.setCycleCount(1);
             p.play();
-       // }
+        }
     }
 
     /**
@@ -314,15 +293,15 @@ public class GameViewController extends SceneController {
         }
     }
 
-    private Node lifeIcon() { 
+    private Node lifeIcon() {
         // TODO forse meglio se si crea una factory
-        Image image = new Image("textures/pac_man/pac_man2.png"); 
-        final ImageView imageView = new ImageView(); 
+        Image image = new Image("textures/pac_man/pac_man2.png");
+        final ImageView imageView = new ImageView();
         imageView.setImage(image);
         imageView.setRotate(90);
         imageView.setFitWidth(50);
         imageView.setFitHeight(50);
-        return imageView; 
-  }
+        return imageView;
+    }
 
 }
