@@ -121,18 +121,22 @@ public class GameViewController extends SceneController {
         switch (event.getCode()) {
         case UP:
         case W:
+            this.pacmanImage.setRotate(0);
             this.getController().newPacManDirection(Directions.UP);
             break;
         case DOWN:
         case S:
+            this.pacmanImage.setRotate(180);
             this.getController().newPacManDirection(Directions.DOWN);
             break;
         case LEFT:
         case A:
+            this.pacmanImage.setRotate(270);
             this.getController().newPacManDirection(Directions.LEFT);
             break;
         case RIGHT:
         case D:
+            this.pacmanImage.setRotate(90);
             this.getController().newPacManDirection(Directions.RIGHT);
             break;
         default:
@@ -149,7 +153,7 @@ public class GameViewController extends SceneController {
     }
 
     public final void ghostSpawn() {
-        for (int id : this.getController().getData().getGhostsDirections().keySet()) {        
+        for (int id : this.getController().getData().getGhostsDirections().keySet()) {
             final Ghosts name = this.getController().getData().getGhostsTypes().get(id);
             if (!this.ghostView.containsKey(id)) {
                 ImageView ghost = new ImageView();
@@ -180,7 +184,7 @@ public class GameViewController extends SceneController {
     }
 
     public final void ghostRender() {
-        for (int id : this.ghostView.keySet()) {        
+        for (int id : this.ghostView.keySet()) {
             final Directions dir = this.getController().getData().getGhostsDirections().get(id);
             final ImageView ghostImage = this.ghostView.get(id);
             if (this.getController().getData().isGameInverted()) {
