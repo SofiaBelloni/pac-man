@@ -20,7 +20,6 @@ public class ControllerImpl implements Controller {
     private final View view;
     private final GameLoop gameLoop;
     private final FileManager fileManager;
-    private int highScore;
 
     /**
      * Constructor.
@@ -35,7 +34,6 @@ public class ControllerImpl implements Controller {
         this.view = view;
         this.gameLoop = new GameLoopImpl(this.model, this.view);
         this.fileManager = new FileManagerImpl();
-        this.highScore = this.fileManager.getHighScore();
     }
 
     @Override
@@ -56,24 +54,23 @@ public class ControllerImpl implements Controller {
 
     @Override
     public int getHighScore() {
-        return this.highScore;
+        return this.fileManager.getHighScore();
     }
 
     @Override
-    public final void startGame() {
+    public void startGame() {
         this.gameLoop.start();
 
     }
 
     @Override
-    public final void pauseGame() {
+    public void pauseGame() {
         this.gameLoop.pause();
     }
 
     @Override
-    public final void resumeGame() {
+    public void resumeGame() {
         this.gameLoop.resume();
-
     }
 
     @Override
