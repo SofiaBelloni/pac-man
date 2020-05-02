@@ -135,10 +135,11 @@ public final class GameMapImpl implements GameMap {
 
     @Override
     public Set<Pair<Integer, Integer>> getNoWallsPositions() {
-        final Set<Pair<Integer, Integer>> noWall = new HashSet<>();
-        noWall.addAll(this.getPillsPositions());
-        noWall.addAll(this.gameMap.get(TileType.FREE));
-        return noWall;
+        final Set<Pair<Integer, Integer>> noWalls = new HashSet<>();
+        noWalls.addAll(this.getPillsPositions());
+        noWalls.addAll(this.gameMap.get(TileType.FREE));
+        noWalls.add(this.getPacManStartPosition());
+        return noWalls;
     }
 
     @Override
