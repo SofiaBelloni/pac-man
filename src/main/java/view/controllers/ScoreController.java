@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import view.GameScene;
 import view.View;
 
 public class ScoreController extends SceneController {
@@ -45,11 +46,7 @@ public class ScoreController extends SceneController {
 
     @FXML
     void goBack(final ActionEvent event) throws IOException {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setHeaderText(null);
-        alert.setContentText("PASSARE AL MENU' PRINCIPALE!");
-        alert.showAndWait();
-        // TODO passare alla schermata di pausa
+        this.getView().setScene(GameScene.MAINMENU);
     }
 
 }
