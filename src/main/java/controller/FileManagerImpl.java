@@ -23,19 +23,24 @@ public class FileManagerImpl implements FileManager {
 
     private static final String HOME = System.getProperty("user.home");
     private static final String SEPARATOR = System.getProperty("file.separator");
+    private static final String DEFAULT_DIR = ".PacMan";
     private static final String DEFAULT_FILE = "PacManScore.json";
 
-    private static final int MAX_SAVED_PLAYERS = 5;
+    private static final int MAX_SAVED_PLAYERS = 1;
 
     private final File file;
-    private List<Player> scoreList;
+    private final List<Player> scoreList;
 
     /**
      * Constructor.
      */
     public FileManagerImpl() {
-        this.file = new File(HOME + SEPARATOR + DEFAULT_FILE);
         this.scoreList = new LinkedList<>(Collections.emptyList());
+        final File directory = new File(HOME + SEPARATOR + DEFAULT_DIR);
+        if (!directory.exists()) {
+            directory.mkdir();
+        }
+        this.file = new File(HOME + SEPARATOR + DEFAULT_DIR + SEPARATOR + DEFAULT_FILE);
         try {
             if (!this.file.createNewFile()) {
                 this.read();
