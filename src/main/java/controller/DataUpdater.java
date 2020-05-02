@@ -1,6 +1,5 @@
 package controller;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -47,6 +46,13 @@ public class DataUpdater {
      */
     public boolean isGameEnded() {
         return this.model.isGameEnded();
+    }
+    /**
+    *
+    * @return true if the game is inverted, false otherwise
+    */
+    public boolean isGameInverted() {
+        return this.model.isGameInverted();
     }
     /**
      * @return the X position of Pac-Man
@@ -103,12 +109,22 @@ public class DataUpdater {
         return this.model.getWallsPositions();
     }
     /**
-     * return a Set containing all the ghosts positions.
+     * @return a Map containing KEY -> Id, VALUE -> type.
      */
-    /*public void getGhostsPositions() {
-        Map<Ghosts, List<Pair<Integer, Integer>>> ghostsPositions = this.model.getGhostsPositions();
-        // TODO passare da Ghost a Entity
-
+    public Map<Integer, Ghosts> getGhostsTypes() {
+        return this.model.getGhostsTypes();
+    }
+    /**
+     * @return a Map containing KEY -> Id, VALUE -> position.
+     */
+    public Map<Integer, Pair<Integer, Integer>> getGhostsPositions() {
+        return this.model.getGhostsPositions();
+    }
+    /**
+     * @return a Map containing KEY -> Id, VALUE -> direction.
+     */
+    public Map<Integer, Directions> getGhostsDirections() {
+        return this.model.getGhostsDirections();
     }
     /**
      * @return the size of the map on the x-axis

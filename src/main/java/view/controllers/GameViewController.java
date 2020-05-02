@@ -103,11 +103,7 @@ public class GameViewController extends SceneController {
         }
         entityPane = new Pane();
         this.gamePane.getChildren().add(entityPane);
-
-        this.ghostSpawn(1, Ghosts.BLINKY, false);
-        this.ghostSpawn(2, Ghosts.INKY, false);
-        this.ghostSpawn(3, Ghosts.PINKY, false);
-        this.ghostSpawn(4, Ghosts.CLYDE, false);
+        this.ghostSpawn();
         this.pacmanSpawn();
 
         // Inizialize HUD
@@ -147,11 +143,12 @@ public class GameViewController extends SceneController {
     @Override
     public void render() {
         this.update();
+        this.ghostRender();
         this.pacmanRender();
         // TODO
     }
 
-    public final void ghostSpawn(final int value, final Ghosts name, final boolean eatable) {
+    public final void ghostSpawn() {
         if (!this.ghostView.containsKey(value)) {
             ImageView ghost = new ImageView();
             ghost.setFitWidth(this.squareSize);
@@ -171,16 +168,15 @@ public class GameViewController extends SceneController {
                 this.entityPane.getChildren().add(this.ghostView.get(value));
                 ghost.setX(this.squareSize * CLYDE_X_START_POSITION);
             }
-        }
-        if (eatable) {
-            this.ghostView.get(value).setImage(new Image("textures/ghost/eatable.png"));
-        } else {
-            this.ghostView.get(value).setImage(new Image("textures/" + name.toString() + "/RIGHT.png"));
+            if (eatable) {
+                this.ghostView.get(value).setImage(new Image("textures/ghost/eatable.png"));
+            } else {
+                this.ghostView.get(value).setImage(new Image("textures/" + name.toString() + "/RIGHT.png"));
+            }
         }
     }
 
-    public final void ghostRender(final Ghosts name, final Directions dir, final boolean eatable, final boolean returnHome,
-            final boolean dead, final int value) {
+    public final void ghostRender() {
         final ImageView ghostImage = this.ghostView.get(value);
         if (eatable) {
             ghostImage.setImage(new Image("textures/ghost/eatable.png"));
@@ -210,6 +206,7 @@ public class GameViewController extends SceneController {
         p.setCycleCount(1);
         p.play();
         if (returnHome) {
+            this.ghostView.remove(ghostImage);
             this.ghostSpawn(value, name, eatable);
         } else if (dead) {
             this.entityPane.getChildren().remove(ghostImage);
