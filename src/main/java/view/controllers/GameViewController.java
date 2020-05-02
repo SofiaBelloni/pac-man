@@ -76,6 +76,7 @@ public class GameViewController extends SceneController {
     @FXML
     private Label lives;
 
+    @FXML
     private HBox livesContainer;
 
     private int squareSize;
@@ -125,7 +126,7 @@ public class GameViewController extends SceneController {
         this.highScore.setText(String.valueOf(controller.getHighScore()));
         this.level.setText(String.valueOf(controller.getData().getLevel()));
         for (int i = 0; i < controller.getData().getLives(); i++) {
-            /* this.livesContainer.getChildren().add(this.lifeIcon()); */
+            this.livesContainer.getChildren().add(this.lifeIcon());
         }
     }
 
