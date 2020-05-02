@@ -7,30 +7,26 @@ public interface GhostFactory {
     /**
      * Blinky.
      *
-     *@param id the ghost id
      * @return the ghost
      */
-    Ghost blinky(int id);
+    Ghost blinky();
     /**
      * Pinky.
      *
-     *@param id the ghost id
      * @return the ghost
      */
-    Ghost pinky(int id);
+    Ghost pinky();
     /**
      * Inky.
      *
-     *@param id the ghost id
      * @param blinky 
      * @return the ghost
      */
-    Ghost inky(Ghost blinky, int id);
+    Ghost inky(Ghost blinky);
     /**
      * Clyde.
      *
-     *@param id the ghost id
      * @return the ghost
      */
-    Ghost clyde(int id);
+    Ghost clyde();
 }

@@ -14,13 +14,14 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     private GhostBraveBehaviour myBehaviour;
     private boolean timeToTurn;
     private Pair<Integer, Integer> startPosition;
-    private int id;
+    private final int id;
 
-    public GhostAbstractImpl(final int xMapSize, final int yMapSize) {
+    public GhostAbstractImpl(final int xMapSize, final int yMapSize, final int id) {
         super(xMapSize, yMapSize);
         this.created = false;
         this.eatable = false;
         this.timeToTurn = false;
+        this.id = id;
     }
 
     @Override
@@ -105,9 +106,6 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         return this.id;
     }
 
-    protected final void setId(final int id) {
-        this.id = id;
-    }
 
     private void checkCreation() {
         if (!this.created) {
