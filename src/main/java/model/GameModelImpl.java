@@ -1,11 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import utils.Pair;
 
@@ -17,27 +12,29 @@ public class GameModelImpl implements GameModel {
     private final Set<Ghost> ghosts;
     private final GhostFactory ghostFactory;
     private final PacMan pacMan;
-    private final GameMap gameMap;
+    private Optional<GameMap> gameMap = Optional.empty();
     private final LevelManager levelManager;
 
-    public GameModelImpl(final GameMap gameMap) {
-        this.gameMap = gameMap;
+    public GameModelImpl() {
+        if(this.gameMap.isEmpty()){
+            throw new IllegalStateException();
+        }
         this.levelManager = new LevelManagerImpl(LEVEL_DURATION,
                 INVERTED_GAME_DURATION,
-                this.gameMap.getPillsPositions().size() * this.gameMap.getPillScore());
+                this.gameMap.get().getPillsPositions().size() * this.gameMap.get().getPillScore());
         this.ghosts = new HashSet<>();
         this.pacMan = new PacManImpl.Builder()
                             .currentDirection(Directions.LEFT)
-                            .mapSize(this.gameMap.getxMapSize(), this.gameMap.getxMapSize())
+                            .mapSize(this.gameMap.get().getxMapSize(), this.gameMap.get().getxMapSize())
                             .lives(PAC_MAN_LIVES)
-                            .noWalls(this.gameMap.getNoWallsPositions())
-                            .startPosition(this.gameMap.getPacManStartPosition())
+                            .noWalls(this.gameMap.get().getNoWallsPositions())
+                            .startPosition(this.gameMap.get().getPacManStartPosition())
                             .build();
         this.ghostFactory = new GhostFactoryImpl.Builder()
-                .walls(this.gameMap.getWallsPositions())
-                .ghostHouse(this.gameMap.getGhostHousePosition())
+                .walls(this.gameMap.get().getWallsPositions())
+                .ghostHouse(this.gameMap.get().getGhostHousePosition())
                 .pacMan(pacMan)
-                .mapSize(this.gameMap.getxMapSize(), this.gameMap.getyMapSize())
+                .mapSize(this.gameMap.get().getxMapSize(), this.gameMap.get().getyMapSize())
                 .build();
         this.createGhost(Ghosts.CLYDE);
         this.createGhost(Ghosts.INKY);
@@ -99,7 +96,7 @@ public class GameModelImpl implements GameModel {
         } else {
             if (this.checkPillCollision()) {
                 final boolean oldIsGameInverted = this.levelManager.isGameInverted();
-                this.levelManager.incScores(this.gameMap.getPillScore());
+                this.levelManager.incScores(this.gameMap.get().getPillScore());
                 if (!oldIsGameInverted && this.levelManager.isGameInverted()) {
                     this.ghosts.forEach(x -> x.setEatable(true));
                 }
@@ -108,7 +105,7 @@ public class GameModelImpl implements GameModel {
     }
 
     private boolean checkPillCollision() {
-        return this.gameMap.isPill(this.getPacManPosition());
+        return this.gameMap.get().isPill(this.getPacManPosition());
     }
 
     private boolean checkPacmanGhostCollision() {
@@ -145,12 +142,12 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final Set<Pair<Integer, Integer>> getWallsPositions() {
-        return this.gameMap.getWallsPositions();
+        return this.gameMap.get().getWallsPositions();
     }
 
     @Override
     public final Set<Pair<Integer, Integer>> getPillsPositions() {
-        return this.gameMap.getPillsPositions();
+        return this.gameMap.get().getPillsPositions();
     }
 
     @Override
@@ -163,11 +160,19 @@ public class GameModelImpl implements GameModel {
         return this.levelManager.getLevelTime();
     }
 
+    public void setGameMap(final GameMap gameMap){
+        if (this.gameMap.isEmpty()){
+            this.gameMap = Optional.of(gameMap);
+        }else{
+            throw new IllegalStateException();
+        }
+    }
+
     private void nextLevel() {
         this.levelManager.nextLevel();
         this.ghosts.forEach(x -> x.returnToStartPosition());
         this.ghosts.forEach(x -> x.setEatable(false));
-        this.gameMap.restorePills();
+        this.gameMap.get().restorePills();
         this.pacMan.returnToStartPosition();
         this.createGhost(Ghosts.CLYDE);
         this.createGhost(Ghosts.INKY);
@@ -181,12 +186,12 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final int getxMapSize() {
-        return this.gameMap.getxMapSize();
+        return this.gameMap.get().getxMapSize();
     }
 
     @Override
     public final int getyMapSize() {
-        return this.gameMap.getyMapSize();
+        return this.gameMap.get().getyMapSize();
     }
 
     @Override

@@ -31,15 +31,7 @@ public final class PacManApp extends Application {
 
     @Override
     public void start(final Stage stage) throws Exception {
-
-        GameMapLoader mapLoader = new GameMapLoaderImpl("game_map_1");
-        final GameModel model = new GameModelImpl(new GameMapImpl.Builder()
-                .ghostsHouse(mapLoader.getGhostsHouse())
-                .mapSize(mapLoader.getxMapSize(), mapLoader.getyMapSize())
-                .pacManStartPosition(mapLoader.getPacManStartPosition())
-                .pills(mapLoader.getPills())
-                .walls(mapLoader.getWalls())
-                .build());
+        final GameModel model = new GameModelImpl();
         View view = new ViewImpl(stage);
         Controller controller = new ControllerImpl(model, view);
         view.setController(controller);
