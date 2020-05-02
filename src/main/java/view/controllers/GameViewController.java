@@ -151,6 +151,7 @@ public class GameViewController extends SceneController {
         default:
             break;
         }
+        this.getController().startGame();
     }
 
     @Override
