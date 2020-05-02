@@ -72,4 +72,9 @@ public interface GameModel {
      * @return the Y GameMap size
      */
     int getxMapSize();
+    /**
+     *
+     * @param gameMap
+     */
+    void setGameMap(final GameMap gameMap);
 }

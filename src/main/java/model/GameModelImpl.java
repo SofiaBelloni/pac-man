@@ -160,6 +160,7 @@ public class GameModelImpl implements GameModel {
         return this.levelManager.getLevelTime();
     }
 
+    @Override
     public void setGameMap(final GameMap gameMap){
         if (this.gameMap.isEmpty()){
             this.gameMap = Optional.of(gameMap);
