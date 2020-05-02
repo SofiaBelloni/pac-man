@@ -36,6 +36,7 @@ public final class GameMapImpl implements GameMap {
         this.gameMap.put(TileType.WALL, walls);
         this.gameMap.put(TileType.PILL, pills);
         this.gameMap.put(TileType.GHOSTS_HOUSE, ghostsHouse);
+        this.gameMap.put(TileType.FREE, new HashSet<>());
     }
     /**
      * This class uses builder pattern to build GameMapImpl objects.
