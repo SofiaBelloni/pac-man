@@ -1,6 +1,12 @@
 package model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 import utils.Pair;
 
@@ -15,7 +21,7 @@ public class GameModelImpl implements GameModel {
     private Optional<GameMap> gameMap = Optional.empty();
     private LevelManager levelManager;
 
-    public GameModelImpl() {}
+    public GameModelImpl() { }
 
     @Override
     public final void setPacManDirection(final Directions direction) {
@@ -32,7 +38,7 @@ public class GameModelImpl implements GameModel {
     }
 
     @Override
-    public final Map<Integer, Ghosts> getGhostsTypes(){
+    public final Map<Integer, Ghosts> getGhostsTypes() {
         this.checkGameMapPresence();
         final Map<Integer, Ghosts> gostsTypes = new HashMap<>();
         this.ghosts.forEach(x -> gostsTypes.put(x.getId(), x.getName()));
@@ -40,7 +46,7 @@ public class GameModelImpl implements GameModel {
     }
 
     @Override
-    public final Map<Integer, Directions> getGhostsDirections(){
+    public final Map<Integer, Directions> getGhostsDirections() {
         this.checkGameMapPresence();
         final Map<Integer, Directions> ghostsDirections = new HashMap<>();
         this.ghosts.forEach(x -> ghostsDirections.put(x.getId(), x.getDirection()));
@@ -128,8 +134,8 @@ public class GameModelImpl implements GameModel {
     }
 
     @Override
-    public void setGameMap(final GameMap gameMap){
-        if (this.gameMap.isPresent()){
+    public final void setGameMap(final GameMap gameMap) {
+        if (this.gameMap.isPresent()) {
             throw new IllegalStateException();
         }
         this.gameMap = Optional.of(gameMap);
@@ -139,7 +145,7 @@ public class GameModelImpl implements GameModel {
         this.ghosts = new HashSet<>();
         this.pacMan = new PacManImpl.Builder()
                 .currentDirection(Directions.LEFT)
-                .mapSize(this.gameMap.get().getxMapSize(), this.gameMap.get().getxMapSize())
+                .mapSize(this.gameMap.get().getxMapSize(), this.gameMap.get().getyMapSize())
                 .lives(PAC_MAN_LIVES)
                 .noWalls(this.gameMap.get().getNoWallsPositions())
                 .startPosition(this.gameMap.get().getPacManStartPosition())
@@ -179,8 +185,8 @@ public class GameModelImpl implements GameModel {
         return this.pacMan.getDirection();
     }
 
-    private void checkGameMapPresence(){
-        if (this.gameMap.isEmpty()){
+    private void checkGameMapPresence() {
+        if (this.gameMap.isEmpty()) {
             throw new IllegalStateException();
         }
     }
