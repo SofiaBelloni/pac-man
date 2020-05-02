@@ -9,63 +9,23 @@ public class GameModelImpl implements GameModel {
     private static final int PAC_MAN_LIVES = 3;
     private static final int LEVEL_DURATION = 60;
     private static final int INVERTED_GAME_DURATION = 10;
-    private final Set<Ghost> ghosts;
-    private final GhostFactory ghostFactory;
-    private final PacMan pacMan;
+    private Set<Ghost> ghosts;
+    private GhostFactory ghostFactory;
+    private PacMan pacMan;
     private Optional<GameMap> gameMap = Optional.empty();
-    private final LevelManager levelManager;
+    private LevelManager levelManager;
 
-    public GameModelImpl() {
-        if(this.gameMap.isEmpty()){
-            throw new IllegalStateException();
-        }
-        this.levelManager = new LevelManagerImpl(LEVEL_DURATION,
-                INVERTED_GAME_DURATION,
-                this.gameMap.get().getPillsPositions().size() * this.gameMap.get().getPillScore());
-        this.ghosts = new HashSet<>();
-        this.pacMan = new PacManImpl.Builder()
-                            .currentDirection(Directions.LEFT)
-                            .mapSize(this.gameMap.get().getxMapSize(), this.gameMap.get().getxMapSize())
-                            .lives(PAC_MAN_LIVES)
-                            .noWalls(this.gameMap.get().getNoWallsPositions())
-                            .startPosition(this.gameMap.get().getPacManStartPosition())
-                            .build();
-        this.ghostFactory = new GhostFactoryImpl.Builder()
-                .walls(this.gameMap.get().getWallsPositions())
-                .ghostHouse(this.gameMap.get().getGhostHousePosition())
-                .pacMan(pacMan)
-                .mapSize(this.gameMap.get().getxMapSize(), this.gameMap.get().getyMapSize())
-                .build();
-        this.createGhost(Ghosts.CLYDE);
-        this.createGhost(Ghosts.INKY);
-        this.createGhost(Ghosts.PINKY);
-    }
-
-    private void createGhost(final Ghosts ghostName) {
-        Ghost ghost;
-        if (ghostName.equals(Ghosts.BLINKY)) {
-            ghost = this.ghostFactory.blinky();
-        } else if (ghostName.equals(Ghosts.PINKY)) {
-            ghost = this.ghostFactory.pinky();
-        } else if (ghostName.equals(Ghosts.INKY)) {
-            final Ghost blinky = this.ghostFactory.blinky();
-            blinky.create();
-            ghost = this.ghostFactory.inky(blinky);
-            this.ghosts.add(blinky);
-        } else {
-            ghost = this.ghostFactory.clyde();
-        }
-        ghost.create();
-        this.ghosts.add(ghost);
-    }
+    public GameModelImpl() {}
 
     @Override
     public final void setPacManDirection(final Directions direction) {
+        this.checkGameMapPresence();
         this.pacMan.setDirection(direction);
     }
 
     @Override
     public final Map<Ghosts, List<Pair<Integer, Integer>>> getGhostsPositions() {
+        this.checkGameMapPresence();
         final Map<Ghosts, List<Pair<Integer, Integer>>> ghostsPositions = new HashMap<>();
         ghostsPositions.put(Ghosts.BLINKY, this.getGhostPositions(Ghosts.BLINKY));
         ghostsPositions.put(Ghosts.CLYDE, this.getGhostPositions(Ghosts.CLYDE));
@@ -74,15 +34,9 @@ public class GameModelImpl implements GameModel {
         return ghostsPositions;
     }
 
-    private List<Pair<Integer, Integer>> getGhostPositions(final Ghosts ghost) {
-        final List<Pair<Integer, Integer>> positions = new ArrayList<>();
-        this.ghosts.stream().filter(x -> x.getName().equals(ghost))
-        .forEach(x -> positions.add(x.getPosition()));
-        return positions;
-    }
-
     @Override
     public final void moveEntitiesNextPosition() {
+        this.checkGameMapPresence();
         this.pacMan.nextPosition();
         this.ghosts.forEach(x -> x.nextPosition());
         if (this.checkPacmanGhostCollision()) {
@@ -104,16 +58,9 @@ public class GameModelImpl implements GameModel {
         }
     }
 
-    private boolean checkPillCollision() {
-        return this.gameMap.get().isPill(this.getPacManPosition());
-    }
-
-    private boolean checkPacmanGhostCollision() {
-        return this.ghosts.stream().anyMatch(x -> x.getPosition().equals(this.pacMan.getPosition()));
-    }
-
     @Override
     public final void decLevelTime() {
+        this.checkGameMapPresence();
         if (this.levelManager.getLevelTime() == 0) {
             this.nextLevel();
         } else {
@@ -127,44 +74,100 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final int getScores() {
+        this.checkGameMapPresence();
         return this.levelManager.getScores();
     }
 
     @Override
     public final int getPacManLives() {
+        this.checkGameMapPresence();
         return this.pacMan.getLives();
     }
 
     @Override
     public final Pair<Integer, Integer> getPacManPosition() {
+        this.checkGameMapPresence();
         return this.pacMan.getPosition();
     }
 
     @Override
     public final Set<Pair<Integer, Integer>> getWallsPositions() {
+        this.checkGameMapPresence();
         return this.gameMap.get().getWallsPositions();
     }
 
     @Override
     public final Set<Pair<Integer, Integer>> getPillsPositions() {
+        this.checkGameMapPresence();
         return this.gameMap.get().getPillsPositions();
     }
 
     @Override
     public final int getLevelNumber() {
+        this.checkGameMapPresence();
         return this.levelManager.getLevelNumber();
     }
 
     @Override
     public final int getLevelTime() {
+        this.checkGameMapPresence();
         return this.levelManager.getLevelTime();
     }
 
     @Override
     public void setGameMap(final GameMap gameMap){
+        if (this.gameMap.isPresent()){
+            throw new IllegalStateException();
+        }
+        this.gameMap = Optional.of(gameMap);
+        this.levelManager = new LevelManagerImpl(LEVEL_DURATION,
+                INVERTED_GAME_DURATION,
+                this.gameMap.get().getPillsPositions().size() * this.gameMap.get().getPillScore());
+        this.ghosts = new HashSet<>();
+        this.pacMan = new PacManImpl.Builder()
+                .currentDirection(Directions.LEFT)
+                .mapSize(this.gameMap.get().getxMapSize(), this.gameMap.get().getxMapSize())
+                .lives(PAC_MAN_LIVES)
+                .noWalls(this.gameMap.get().getNoWallsPositions())
+                .startPosition(this.gameMap.get().getPacManStartPosition())
+                .build();
+        this.ghostFactory = new GhostFactoryImpl.Builder()
+                .walls(this.gameMap.get().getWallsPositions())
+                .ghostHouse(this.gameMap.get().getGhostHousePosition())
+                .pacMan(pacMan)
+                .mapSize(this.gameMap.get().getxMapSize(), this.gameMap.get().getyMapSize())
+                .build();
+        this.createGhost(Ghosts.CLYDE);
+        this.createGhost(Ghosts.INKY);
+        this.createGhost(Ghosts.PINKY);
+    }
+
+    @Override
+    public final Boolean isGameEnded() {
+        this.checkGameMapPresence();
+        return this.pacMan.getLives() == 0;
+    }
+
+    @Override
+    public final int getxMapSize() {
+        this.checkGameMapPresence();
+        return this.gameMap.get().getxMapSize();
+    }
+
+    @Override
+    public final int getyMapSize() {
+        this.checkGameMapPresence();
+        return this.gameMap.get().getyMapSize();
+    }
+
+    @Override
+    public final Directions getPacManDirection() {
+        this.checkGameMapPresence();
+        return this.pacMan.getDirection();
+    }
+
+    private void checkGameMapPresence(){
         if (this.gameMap.isEmpty()){
-            this.gameMap = Optional.of(gameMap);
-        }else{
             throw new IllegalStateException();
         }
     }
@@ -180,23 +183,36 @@ public class GameModelImpl implements GameModel {
         this.createGhost(Ghosts.PINKY);
     }
 
-    @Override
-    public final Boolean isGameEnded() {
-        return this.pacMan.getLives() == 0;
+    private boolean checkPillCollision() {
+        return this.gameMap.get().isPill(this.getPacManPosition());
     }
 
-    @Override
-    public final int getxMapSize() {
-        return this.gameMap.get().getxMapSize();
+    private boolean checkPacmanGhostCollision() {
+        return this.ghosts.stream().anyMatch(x -> x.getPosition().equals(this.pacMan.getPosition()));
     }
 
-    @Override
-    public final int getyMapSize() {
-        return this.gameMap.get().getyMapSize();
+    private List<Pair<Integer, Integer>> getGhostPositions(final Ghosts ghost) {
+        final List<Pair<Integer, Integer>> positions = new ArrayList<>();
+        this.ghosts.stream().filter(x -> x.getName().equals(ghost))
+                .forEach(x -> positions.add(x.getPosition()));
+        return positions;
     }
 
-    @Override
-    public final Directions getPacManDirection() {
-        return this.pacMan.getDirection();
+    private void createGhost(final Ghosts ghostName) {
+        Ghost ghost;
+        if (ghostName.equals(Ghosts.BLINKY)) {
+            ghost = this.ghostFactory.blinky();
+        } else if (ghostName.equals(Ghosts.PINKY)) {
+            ghost = this.ghostFactory.pinky();
+        } else if (ghostName.equals(Ghosts.INKY)) {
+            final Ghost blinky = this.ghostFactory.blinky();
+            blinky.create();
+            ghost = this.ghostFactory.inky(blinky);
+            this.ghosts.add(blinky);
+        } else {
+            ghost = this.ghostFactory.clyde();
+        }
+        ghost.create();
+        this.ghosts.add(ghost);
     }
 }
