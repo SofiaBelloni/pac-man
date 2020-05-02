@@ -17,10 +17,6 @@ public interface GameModel {
      */
     void setPacManDirection(Directions direction);
     /**
-     * @return a Set containing all the ghosts positions.
-     */
-    Map<Ghosts, List<Pair<Integer, Integer>>> getGhostsPositions();
-    /**
      * @return a Set containing the wall's positions;
      */
     Set<Pair<Integer, Integer>> getWallsPositions();
@@ -28,6 +24,18 @@ public interface GameModel {
      * @return a Set containing the pill's positions;
      */
     Set<Pair<Integer, Integer>> getPillsPositions();
+    /**
+     * @return a Map containing KEY -> Id, VALUE -> position.
+     */
+    Map<Integer, Pair<Integer, Integer>> getGhostsPositions();
+    /**
+     * @return a Map containing KEY -> Id, VALUE -> type.
+     */
+    Map<Integer, Ghosts> getGhostsTypes();
+    /**
+     * @return a Map containing KEY -> Id, VALUE -> direction.
+     */
+    Map<Integer, Directions> getGhostsDirections();
     /**
      * Moves each mobile entity to its next position.
      */

@@ -24,14 +24,27 @@ public class GameModelImpl implements GameModel {
     }
 
     @Override
-    public final Map<Ghosts, List<Pair<Integer, Integer>>> getGhostsPositions() {
+    public final Map<Integer, Pair<Integer, Integer>> getGhostsPositions() {
         this.checkGameMapPresence();
-        final Map<Ghosts, List<Pair<Integer, Integer>>> ghostsPositions = new HashMap<>();
-        ghostsPositions.put(Ghosts.BLINKY, this.getGhostPositions(Ghosts.BLINKY));
-        ghostsPositions.put(Ghosts.CLYDE, this.getGhostPositions(Ghosts.CLYDE));
-        ghostsPositions.put(Ghosts.INKY, this.getGhostPositions(Ghosts.INKY));
-        ghostsPositions.put(Ghosts.PINKY, this.getGhostPositions(Ghosts.PINKY));
+        final Map<Integer, Pair<Integer, Integer>> ghostsPositions = new HashMap<>();
+        this.ghosts.forEach(x -> ghostsPositions.put(x.getId(), x.getPosition()));
         return ghostsPositions;
+    }
+
+    @Override
+    public final Map<Integer, Ghosts> getGhostsTypes(){
+        this.checkGameMapPresence();
+        final Map<Integer, Ghosts> gostsTypes = new HashMap<>();
+        this.ghosts.forEach(x -> gostsTypes.put(x.getId(), x.getName()));
+        return gostsTypes;
+    }
+
+    @Override
+    public final Map<Integer, Directions> getGhostsDirections(){
+        this.checkGameMapPresence();
+        final Map<Integer, Directions> ghostsDirections = new HashMap<>();
+        this.ghosts.forEach(x -> ghostsDirections.put(x.getId(), x.getDirection()));
+        return ghostsDirections;
     }
 
     @Override
