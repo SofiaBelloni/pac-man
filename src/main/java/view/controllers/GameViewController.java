@@ -2,40 +2,29 @@ package view.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import controller.Controller;
 import javafx.animation.PathTransition;
 import javafx.fxml.FXML;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Directions;
-import model.Ghost;
 import model.Ghosts;
 import utils.Pair;
 import utils.PairImpl;
-import view.AnimatedSprite;
-import view.SpritesFactory;
 import view.View;
-import view.utils.EntityTextureIterator;
-import view.utils.PacManTextureIterator;
 
 public class GameViewController extends SceneController {
 
@@ -116,7 +105,6 @@ public class GameViewController extends SceneController {
         this.gamePane.getChildren().add(entityPane);
         this.ghostSpawn();
         this.pacmanSpawn();
-        this.pacmanRender();
 
         // Inizialize HUD
         this.highScore.setText(String.valueOf(controller.getHighScore()));
@@ -124,6 +112,8 @@ public class GameViewController extends SceneController {
         for (int i = 0; i < controller.getData().getLives(); i++) {
             this.livesContainer.getChildren().add(this.lifeIcon());
         }
+        //start the gameLoop
+        this.getController().startGame();
     }
 
     @Override
@@ -148,7 +138,6 @@ public class GameViewController extends SceneController {
         default:
             break;
         }
-        this.getController().startGame();
     }
 
     @Override
