@@ -39,7 +39,7 @@ public class ViewImpl implements View {
         this.controller = controller;
         this.stage.setResizable(false);
         this.stage.setTitle(TITLE);
-        this.setScene(GameScene.GAMEOVER);
+        this.setScene(GameScene.MAINMENU);
     }
 
     @Override

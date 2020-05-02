@@ -37,6 +37,11 @@ public interface GameModel {
      */
     Map<Integer, Directions> getGhostsDirections();
     /**
+     *
+     * @return true if the game is inverted, false otherwise
+     */
+    boolean isGameInverted();
+    /**
      * Moves each mobile entity to its next position.
      */
     void moveEntitiesNextPosition();

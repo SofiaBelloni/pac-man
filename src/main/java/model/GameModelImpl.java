@@ -48,6 +48,11 @@ public class GameModelImpl implements GameModel {
     }
 
     @Override
+    public boolean isGameInverted() {
+        return this.levelManager.isGameInverted();
+    }
+
+    @Override
     public final void moveEntitiesNextPosition() {
         this.checkGameMapPresence();
         this.pacMan.nextPosition();
