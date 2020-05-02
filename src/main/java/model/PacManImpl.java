@@ -131,10 +131,10 @@ public final class PacManImpl extends EntityAbstractImpl implements PacMan {
         int y = 0;
         switch (this.currentDirection) {
         case UP:
-            y = 1;
+            y = -1;
             break;
         case DOWN:
-            y = -1;
+            y = 1;
             break;
         case LEFT:
             x = -1;
