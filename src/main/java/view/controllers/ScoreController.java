@@ -8,15 +8,15 @@ import controller.FileManagerImpl;
 import controller.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import view.GameScene;
 import view.View;
-
+/**
+ * This class represents the controller for the leaderboard scene.
+ */
 public class ScoreController extends SceneController {
 
     @FXML
@@ -36,6 +36,7 @@ public class ScoreController extends SceneController {
 
     private FileManager fileManager = new FileManagerImpl();
 
+    @Override
     public void init(final Controller controller, final View view) {
         super.init(controller, view);
         this.name.setCellValueFactory(new PropertyValueFactory<>("name"));
