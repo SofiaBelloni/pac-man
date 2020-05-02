@@ -26,7 +26,7 @@ public class FileManagerImpl implements FileManager {
     private static final String DEFAULT_DIR = ".PacMan";
     private static final String DEFAULT_FILE = "PacManScore.json";
 
-    private static final int MAX_SAVED_PLAYERS = 1;
+    private static final int MAX_SAVED_PLAYERS = 20;
 
     private final File file;
     private final List<Player> scoreList;
@@ -80,9 +80,9 @@ public class FileManagerImpl implements FileManager {
     }
 
     private void read() throws IOException {
-        Gson gson = new Gson();
-        InputStream istream = new FileInputStream(this.file);
-        JsonReader reader = new JsonReader(new InputStreamReader(istream, "UTF-8"));
+        final Gson gson = new Gson();
+        final InputStream istream = new FileInputStream(this.file);
+        final JsonReader reader = new JsonReader(new InputStreamReader(istream, "UTF-8"));
         reader.beginArray();
         while (reader.hasNext()) {
             this.scoreList.add(gson.fromJson(reader, Player.class));
@@ -92,9 +92,9 @@ public class FileManagerImpl implements FileManager {
     }
 
     private void write() throws IOException {
-        Gson gson = new Gson();
-        OutputStream ostream = new FileOutputStream(this.file);
-        JsonWriter writer = new JsonWriter(new OutputStreamWriter(ostream, "UTF-8"));
+        final Gson gson = new Gson();
+        final OutputStream ostream = new FileOutputStream(this.file);
+        final JsonWriter writer = new JsonWriter(new OutputStreamWriter(ostream, "UTF-8"));
         writer.setIndent("  ");
         writer.beginArray();
         this.scoreList.forEach((p) -> gson.toJson(p, Player.class, writer));
