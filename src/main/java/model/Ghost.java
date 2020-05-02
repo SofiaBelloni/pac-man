@@ -43,4 +43,10 @@ public interface Ghost extends Entity {
      */
     int getId();
 
+    /**
+     * 
+     * @return the ghost direction
+     */
+    Directions getDirection();
+
 }

@@ -44,6 +44,11 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     }
 
     @Override
+    public final Directions getDirection() {
+        return this.myBehaviour.getCurrentDirection();
+    }
+
+    @Override
     public final boolean isEatable() {
         this.checkCreation();
         return this.eatable;
