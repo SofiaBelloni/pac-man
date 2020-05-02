@@ -50,7 +50,7 @@ public class ViewImpl implements View {
 
     @Override
     public void render() {
-        this.sceneController.render();
+        Platform.runLater(() -> this.sceneController.render());
 
     }
 

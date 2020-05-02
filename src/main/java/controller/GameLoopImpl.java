@@ -8,7 +8,7 @@ import view.View;
  */
 public class GameLoopImpl implements Runnable, GameLoop {
 
-    private static double FPS = 60.0;
+    private static final double FPS = 30.0;
     private static final double TIME_BETWEEN_UPDATES = 1000.0 / FPS;
 
     private Thread thread;
@@ -33,12 +33,12 @@ public class GameLoopImpl implements Runnable, GameLoop {
     @Override
     public final void start() {
         thread = new Thread(this);
-        thread.run();
+        thread.start();
     }
 
     @Override
     public final void run() {
-        this.levelTimer.startTimer();
+        //this.levelTimer.startTimer();
         this.running = true;
         long now = 0;
         long lastUpdateTime = System.currentTimeMillis();
@@ -98,7 +98,6 @@ public class GameLoopImpl implements Runnable, GameLoop {
 
     private void render(final double delta) {
       //delegate method
-      //TODO: Render game
       //all time-related values must be multiplied by delta
         this.data.render();
     }

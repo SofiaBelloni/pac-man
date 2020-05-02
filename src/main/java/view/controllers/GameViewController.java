@@ -288,11 +288,11 @@ public class GameViewController extends SceneController {
         this.score.setText(String.valueOf(this.getController().getData().getCurrentScore()));
         this.timer.setProgress(this.getController().getData().getLevelTimePercentage());
         this.level.setText(String.valueOf(this.getController().getData().getLevel()));
-        if (this.livesContainer.getChildren().size() != this.getController().getData().getLives()) {
-            for (int i = 0; i < this.getController().getData().getLives(); i++) {
-                this.livesContainer.getChildren().add(this.lifeIcon());
-            }
-        }
+//        if (this.livesContainer.getChildren().size() != this.getController().getData().getLives()) {
+//            for (int i = 0; i < this.getController().getData().getLives(); i++) {
+//                this.livesContainer.getChildren().add(this.lifeIcon());
+//            }
+//        }
     }
 
     private Node lifeIcon() {
