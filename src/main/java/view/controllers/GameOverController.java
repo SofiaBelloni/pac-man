@@ -28,8 +28,8 @@ public final class GameOverController extends SceneController {
 
     public void init(final Controller controller, final View view) {
         super.init(controller, view);
-        this.scoreLabel.setText("Level: " + String.valueOf(controller.getData().getLevel()));
-        this.scoreLabel.setText("Score: " + String.valueOf(controller.getHighScore()));
+        this.levelLabel.setText("Level: " + String.valueOf(controller.getData().getLevel()));
+        this.scoreLabel.setText("Score: " + String.valueOf(controller.getData().getCurrentScore()));
     }
 
     @FXML

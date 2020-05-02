@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.util.Optional;
 import model.Directions;
+import model.GameMapImpl;
 import model.GameModel;
 import view.View;
 
@@ -12,13 +13,13 @@ import view.View;
  *
  */
 public class ControllerImpl implements Controller {
+
+    private static final String DEFAULT_MAP_NAME = "game_map_1";
+
     private final GameModel model;
     private final View view;
     private final GameLoop gameLoop;
     private final FileManager fileManager;
-    private int highScore;
-    private final String defaultMapName;
-    private Optional<GameMapLoader> gameMapLoader;
 
     /**
      * Constructor.
@@ -29,18 +30,23 @@ public class ControllerImpl implements Controller {
      */
     public ControllerImpl(final GameModel model, final View view) {
         this.model = model;
+        this.setGameMap(DEFAULT_MAP_NAME);
         this.view = view;
         this.gameLoop = new GameLoopImpl(this.model, this.view);
         this.fileManager = new FileManagerImpl();
-        this.highScore = this.fileManager.getHighScore();
-        this.defaultMapName = "game_map_1";
-        this.gameMapLoader = Optional.empty();
     }
 
     @Override
     public void setGameMap(final String mapName) {
         try {
-            this.gameMapLoader = Optional.of(new GameMapLoaderImpl(mapName));
+            GameMapLoader mapLoader = new GameMapLoaderImpl(mapName);
+            this.model.setGameMap(new GameMapImpl.Builder()
+                    .ghostsHouse(mapLoader.getGhostsHouse())
+                    .mapSize(mapLoader.getxMapSize(), mapLoader.getyMapSize())
+                    .pacManStartPosition(mapLoader.getPacManStartPosition())
+                    .pills(mapLoader.getPills())
+                    .walls(mapLoader.getWalls())
+                    .build());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -48,31 +54,23 @@ public class ControllerImpl implements Controller {
 
     @Override
     public int getHighScore() {
-        return this.highScore;
+        return this.fileManager.getHighScore();
     }
 
     @Override
-    public final void startGame() {
-        if (this.gameMapLoader.isEmpty()) {
-            try {
-                this.gameMapLoader = Optional.of(new GameMapLoaderImpl(this.defaultMapName));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    public void startGame() {
         this.gameLoop.start();
 
     }
 
     @Override
-    public final void pauseGame() {
+    public void pauseGame() {
         this.gameLoop.pause();
     }
 
     @Override
-    public final void resumeGame() {
+    public void resumeGame() {
         this.gameLoop.resume();
-
     }
 
     @Override
