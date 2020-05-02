@@ -54,7 +54,7 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
     }
 
     /**
-     * This method is designed for extension.
+     * this method is designed for extension.
      */
     @Override
     public void setCurrentPosition(final Pair<Integer, Integer> newPosition) {
@@ -62,7 +62,7 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
     }
 
     /**
-     * Gets the adjacent position in the specified direction.
+     * Sets the adjacent position in the specified direction.
      * 
      * @param dir the direction of the adjacent position
      * @return the adjacent position

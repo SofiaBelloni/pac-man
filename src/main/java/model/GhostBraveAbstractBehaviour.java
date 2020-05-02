@@ -39,6 +39,7 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
         this.yMapSize = yMapSize;
         this.setWall = setWall;
         this.pacMan = pacMan;
+        this.relaxed = true;
         this.fBehaviour = new GhostFrightenedBehaviourImpl(setWall, ghostHouse, xMapSize, yMapSize, startPosition);
         this.setCurrentPosition(startPosition);
     }

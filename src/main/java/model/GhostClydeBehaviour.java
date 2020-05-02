@@ -23,10 +23,8 @@ public class GhostClydeBehaviour extends GhostBraveAbstractBehaviour {
     }
 
     private void targetPosition(final PacMan pacMan) {
-        if (this.getCurrentPosition().getX() > pacMan.getPosition().getX() - PACMANRADIUS 
-                && this.getCurrentPosition().getX() < pacMan.getPosition().getX() + PACMANRADIUS 
-                && this.getCurrentPosition().getY() > pacMan.getPosition().getY() - PACMANRADIUS 
-                && this.getCurrentPosition().getY() < pacMan.getPosition().getY() + PACMANRADIUS) {
+        if (this.getCurrentPosition().getX() > pacMan.getPosition().getX() - PACMANRADIUS && this.getCurrentPosition().getX() < pacMan.getPosition().getX() + PACMANRADIUS 
+            && this.getCurrentPosition().getY() > pacMan.getPosition().getY() - PACMANRADIUS && this.getCurrentPosition().getY() < pacMan.getPosition().getY() + PACMANRADIUS) {
             this.chaseTarget = this.getRelaxTarget();
         } else {
             this.chaseTarget = pacMan.getPosition();

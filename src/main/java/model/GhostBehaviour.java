@@ -49,4 +49,5 @@ public interface GhostBehaviour {
      * @param newPosition the new position
      */
     void returnHome(Pair<Integer, Integer> newPosition);
+
 }

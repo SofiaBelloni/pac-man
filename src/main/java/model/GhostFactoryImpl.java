@@ -126,7 +126,7 @@ public final class GhostFactoryImpl implements GhostFactory {
                 this.setName(Ghosts.BLINKY);
                 this.setStartPosition(new PairImpl<>(BLINKY_X_START_POSITION, GHOST_Y_START_POSITION));
                 this.setMyBehaviour(new GhostBlinkyBehaviour(walls, pacMan, ghostHouse,
-                        xMapSize, yMapSize, new PairImpl<>(xMapSize - 1, 0), this.getStartPosition()));
+                        xMapSize, yMapSize, new PairImpl<>(xMapSize - 2, 1), this.getStartPosition()));
             }
         };
     }
@@ -140,7 +140,7 @@ public final class GhostFactoryImpl implements GhostFactory {
                 this.setName(Ghosts.PINKY);
                 this.setStartPosition(new PairImpl<>(PINKY_X_START_POSITION, GHOST_Y_START_POSITION));
                 this.setMyBehaviour(new GhostPinkyBehaviour(walls, pacMan, ghostHouse,
-                        xMapSize, yMapSize, new PairImpl<>(0, 0), this.getStartPosition()));
+                        xMapSize, yMapSize, new PairImpl<>(1, 1), this.getStartPosition()));
             }
         };
     }
@@ -157,7 +157,7 @@ public final class GhostFactoryImpl implements GhostFactory {
                 this.setName(Ghosts.INKY);
                 this.setStartPosition(new PairImpl<>(INKY_X_START_POSITION, GHOST_Y_START_POSITION));
                 this.setMyBehaviour(new GhostInkyBehaviour(blinky, walls, pacMan, ghostHouse,
-                        xMapSize, yMapSize, new PairImpl<>(xMapSize - 1, yMapSize - 1), this.getStartPosition()));
+                        xMapSize, yMapSize, new PairImpl<>(xMapSize - 2, yMapSize - 2), this.getStartPosition()));
             }
         };
     }
@@ -171,7 +171,7 @@ public final class GhostFactoryImpl implements GhostFactory {
                 this.setName(Ghosts.CLYDE);
                 this.setStartPosition(new PairImpl<>(CLYDE_X_START_POSITION, GHOST_Y_START_POSITION));
                 this.setMyBehaviour(new GhostClydeBehaviour(walls, pacMan, ghostHouse,
-                        xMapSize, yMapSize, new PairImpl<>(0, yMapSize - 1), this.getStartPosition()));
+                        xMapSize, yMapSize, new PairImpl<>(1, yMapSize - 2), this.getStartPosition()));
             }
         };
     }

@@ -3,7 +3,6 @@ package model;
 
 import java.util.List;
 import java.util.Set;
-
 import utils.Pair;
 import utils.PairImpl;
 
@@ -53,30 +52,26 @@ public class GhostInkyBehaviour extends GhostBraveAbstractBehaviour {
             targetY = blinkyPosition.getY() - (Math.abs(appo.getY() - blinkyPosition.getY()) * 2);
         }
         this.chaseTarget = new PairImpl<>(targetX, targetY);
-        if (this.chaseTarget.getX() >= getxMapSize()) {
-            this.chaseTarget = new PairImpl<>(getxMapSize() - 1, this.chaseTarget.getY());
+        if (this.chaseTarget.getX() >= getxMapSize() - 1) {
+            this.chaseTarget = new PairImpl<>(getxMapSize() - 2, this.chaseTarget.getY());
         }
-        if (this.chaseTarget.getX() < 0) {
-            this.chaseTarget = new PairImpl<>(0, this.chaseTarget.getY());
+        if (this.chaseTarget.getX() < 1) {
+            this.chaseTarget = new PairImpl<>(1, this.chaseTarget.getY());
         }
-        if (this.chaseTarget.getY() >= getyMapSize()) {
-            this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), getyMapSize() - 1);
+        if (this.chaseTarget.getY() >= getyMapSize() - 1) {
+            this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), getyMapSize() - 2);
         }
         if (this.chaseTarget.getY() < 0) {
-            this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), 0);
+            this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), 1);
         }
         if (this.getCurrentPosition().equals(this.chaseTarget)) {
-            if (this.chaseTarget.getY() + 1 < this.getyMapSize() 
-                    && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() + 1))) {
+            if (this.chaseTarget.getY() + 1 < this.getyMapSize() && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() + 1))) {
                 this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() + 1);
-            } else if (this.chaseTarget.getX() + 1 < this.getxMapSize() 
-                    && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX() + 1, this.chaseTarget.getY()))) {
+            } else if (this.chaseTarget.getX() + 1 < this.getxMapSize() && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX() + 1, this.chaseTarget.getY()))) {
                 this.chaseTarget = new PairImpl<>(this.chaseTarget.getX() + 1, this.chaseTarget.getY());
-            } else if (this.chaseTarget.getX() - 1 >= 0 
-                    && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX() - 1, this.chaseTarget.getY()))) {
+            } else if (this.chaseTarget.getX() - 1 >= 0 && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX() - 1, this.chaseTarget.getY()))) {
                 this.chaseTarget = new PairImpl<>(this.chaseTarget.getX() - 1, this.chaseTarget.getY());
-            } else if (this.chaseTarget.getY() - 1 >= 0 
-                    && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() - 1))) {
+            } else if (this.chaseTarget.getY() - 1 >= 0 && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() - 1))) {
                 this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() - 1);
             }
         }

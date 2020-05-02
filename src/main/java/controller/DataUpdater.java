@@ -105,7 +105,7 @@ public class DataUpdater {
     /**
      * return a Set containing all the ghosts positions.
      */
-    public void getGhostsPositions() {
+    /*public void getGhostsPositions() {
         Map<Ghosts, List<Pair<Integer, Integer>>> ghostsPositions = this.model.getGhostsPositions();
         // TODO passare da Ghost a Entity
 

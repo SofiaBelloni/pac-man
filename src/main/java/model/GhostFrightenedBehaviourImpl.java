@@ -6,10 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-
 import utils.Pair;
 import utils.PairImpl;
-
 import static model.Directions.UP;
 import static model.Directions.DOWN;
 import static model.Directions.RIGHT;
@@ -33,7 +31,7 @@ public class GhostFrightenedBehaviourImpl extends GhostAbstractBehaviour {
     @Override
     public final void nextPosition(final boolean eatable, final boolean timeToTurn) {
         this.checkIfInside();
-        if (timeToTurn && !this.isInside && !this.ghostHouse.contains(new PairImpl<>(this.getCurrentPosition().getX(), this.getCurrentPosition().getY() + 1))) {
+        if (timeToTurn && !this.isInside && !this.ghostHouse.contains(new PairImpl<>(this.getCurrentPosition().getX(), this.getCurrentPosition().getY() - 1))) {
             this.turnAround();
         } else {
             this.runAway();
@@ -75,7 +73,7 @@ public class GhostFrightenedBehaviourImpl extends GhostAbstractBehaviour {
         map.put(DOWN, this.getAdj(DOWN));
         map.put(LEFT, this.getAdj(LEFT));
         while (this.getCurrentPosition().equals(oldPosition)) {
-            for (final Directions dir : map.keySet()) {
+            for (Directions dir : map.keySet()) {
                 if (this.getCurrentDirection().equals(dir)) {
                     map2 = new HashMap<>(map);
                     map2.remove(this.oppositeDirection(dir));
