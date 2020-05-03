@@ -117,7 +117,7 @@ public class GameViewController extends SceneController {
     }
 
     @Override
-    public void onKeyPressed(final KeyEvent event) {
+    public final void onKeyPressed(final KeyEvent event) {
         switch (event.getCode()) {
         case UP:
         case W:
@@ -145,7 +145,7 @@ public class GameViewController extends SceneController {
     }
 
     @Override
-    public void render() {
+    public final void render() {
         this.update();
         this.ghostRender();
         this.pacmanRender();
@@ -196,7 +196,7 @@ public class GameViewController extends SceneController {
             }
             PathTransition p = new PathTransition();
             p.setNode(ghostImage);
-            p.setDuration(Duration.seconds(0.5));
+            p.setDuration(Duration.seconds(0.3333));
             if (dir.equals(Directions.RIGHT)) {
                 p.setPath(new Line(ghostImage.getX() + this.squareSize / 2, ghostImage.getY() + this.squareSize / 2,
                         ghostImage.getX() + this.squareSize * 3 / 2, ghostImage.getY() + this.squareSize / 2));
@@ -242,26 +242,17 @@ public class GameViewController extends SceneController {
         Pair<Integer, Integer> newPosition = new PairImpl<>(this.getController().getData().getPacManXPosition(),
                 this.getController().getData().getPacManYPosition());
         if (!this.pacmanPosition.equals(newPosition)) {
-            PathTransition p = new PathTransition();
-            p.setNode(this.pacmanImage);
-            p.setDuration(Duration.seconds(0.5));
-            p.setPath(new Line((this.squareSize * this.pacmanPosition.getX()) + (this.squareSize / 2),
-                    (this.squareSize * this.pacmanPosition.getY()) + (this.squareSize / 2),
-                    (this.squareSize * newPosition.getX()) + (this.squareSize / 2),
-                    (this.squareSize * newPosition.getY()) + (this.squareSize / 2)));
-            this.pacmanImage.setY(this.squareSize * newPosition.getY());
-            p.setCycleCount(1);
-            p.play();
+            this.transition(this.pacmanImage, this.pacmanPosition, newPosition);
             this.pacmanPosition = newPosition;
         }
     }
 
-    private void gameMapRender(){
+    private void gameMapRender() {
         this.gameMap.keySet().forEach(x -> {
-            if (this.getController().getData().getPillsPositions().contains(x)){
+            if (this.getController().getData().getPillsPositions().contains(x)) {
                 this.gameMap.get(x).setImage(this.pill);
             } else {
-                if (!this.getController().getData().getWallsPositions().contains(x)){
+                if (!this.getController().getData().getWallsPositions().contains(x)) {
                     this.gameMap.get(x).setImage(null);
                 }
             }
@@ -290,6 +281,19 @@ public class GameViewController extends SceneController {
         imageView.setFitWidth(50);
         imageView.setFitHeight(50);
         return imageView;
+    }
+
+    private void transition(final ImageView image, final Pair<Integer, Integer> startPos, final Pair<Integer, Integer> destPos) {
+        PathTransition p = new PathTransition();
+        p.setNode(image);
+        p.setDuration(Duration.seconds(0.3333));
+        p.setPath(new Line((this.squareSize * startPos.getX()) + (this.squareSize / 2),
+                (this.squareSize * startPos.getY()) + (this.squareSize / 2),
+                (this.squareSize * destPos.getX()) + (this.squareSize / 2),
+                (this.squareSize * destPos.getY()) + (this.squareSize / 2)));
+        image.setY(this.squareSize * destPos.getY());
+        p.setCycleCount(1);
+        p.play();
     }
 
 }
