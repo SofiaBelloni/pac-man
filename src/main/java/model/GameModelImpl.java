@@ -155,7 +155,7 @@ public class GameModelImpl implements GameModel {
                 this.gameMap.get().getPillsPositions().size() * this.gameMap.get().getPillScore());
         this.ghosts = new HashSet<>();
         this.pacMan = new PacManImpl.Builder()
-                .currentDirection(Directions.LEFT)
+                .currentDirection(Directions.UP)
                 .mapSize(this.gameMap.get().getxMapSize(), this.gameMap.get().getyMapSize())
                 .lives(PAC_MAN_LIVES)
                 .noWalls(this.gameMap.get().getNoWallsPositions())
