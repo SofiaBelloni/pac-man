@@ -8,7 +8,7 @@ import view.View;
  */
 public class GameLoopImpl implements Runnable, GameLoop {
 
-    private static final double FPS = 1.0;
+    private static final double FPS = 3.333;
     private static final double TIME_BETWEEN_UPDATES = 1000.0 / FPS;
 
     private Thread thread;
