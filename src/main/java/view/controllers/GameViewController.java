@@ -71,6 +71,7 @@ public class GameViewController extends SceneController {
     private final Map<Pair<Integer, Integer>, ImageView> gameMap = new HashMap<>();
     private ImageView pacmanImage;
     private Pair<Integer, Integer> pacmanPosition;
+    private final Image pill = new Image("textures/pill/pill.png");
 
     public final void init(final Controller controller, final View view) {
         super.init(controller, view);
@@ -258,7 +259,7 @@ public class GameViewController extends SceneController {
     private void gameMapRender(){
         this.gameMap.keySet().forEach(x -> {
             if (this.getController().getData().getPillsPositions().contains(x)){
-                this.gameMap.get(x).setImage(new Image("textures/pill/pill.png"));
+                this.gameMap.get(x).setImage(this.pill);
             } else {
                 if (!this.getController().getData().getWallsPositions().contains(x)){
                     this.gameMap.get(x).setImage(null);
