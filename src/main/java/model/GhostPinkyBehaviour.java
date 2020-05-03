@@ -50,13 +50,13 @@ public class GhostPinkyBehaviour extends GhostBraveAbstractBehaviour implements 
 
     @Override
     public final void nextPosition(final boolean eatable, final boolean timeToTurn, final boolean oldLevel) {
-        if (eatable || oldLevel) {
+        if (eatable || (oldLevel && !this.isRelaxed())) {
             this.getMyFrightenedBehaviour().nextPosition(eatable, timeToTurn, oldLevel);
             this.setCurrentPosition(this.getMyFrightenedBehaviour().getCurrentPosition());
             this.setCurrentDirection(this.getMyFrightenedBehaviour().getCurrentDirection());
         } else {
             if (this.isRelaxed()) {
-                super.nextPosition(eatable, timeToTurn, oldLevel);
+                this.relax(oldLevel);
             } else {
                 if (!moveIfStuck()) {
                     this.targetPosition(this.getPacMan());

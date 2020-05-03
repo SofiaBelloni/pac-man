@@ -16,6 +16,8 @@ import static model.Directions.LEFT;
 public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour implements GhostBraveBehaviour {
 
     private static final int UPPERBOUND = 10_000;
+    private static final int X_OLDLEVELTARGET = 14;
+    private static final int Y_OLDLEVELTARGET = 11;
 
     private final Map<Pair<Integer, Integer>, Integer> mapDijkstra;
     private final Set<Pair<Integer, Integer>> setWall;
@@ -27,6 +29,7 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
     private boolean relaxed;
     private Pair<Integer, Integer> relaxTarget;
     private boolean isBlinkyDead;
+    private final Pair<Integer, Integer> oldLevelTarget;
 
     public GhostBraveAbstractBehaviour(final Set<Pair<Integer, Integer>> setWall, final PacMan pacMan,
             final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize,
@@ -40,16 +43,16 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
         this.setWall = setWall;
         this.pacMan = pacMan;
         this.relaxed = true;
+        this.oldLevelTarget = new PairImpl<>(X_OLDLEVELTARGET, Y_OLDLEVELTARGET);
         this.fBehaviour = new GhostFrightenedBehaviourImpl(setWall, ghostHouse, xMapSize, yMapSize, startPosition);
         this.setCurrentPosition(startPosition);
     }
 
-    /**
-     * This method is designed for extension.
-     */
-    @Override
-    public void nextPosition(final boolean eatable, final boolean timeToTurn, final boolean oldLevel) {
+    protected final void relax(final boolean oldLevel) {
         this.checkIfInside(this.setWall);
+        if (oldLevel) {
+            this.relaxTarget = this.oldLevelTarget;
+        }
         this.findPath(this.relaxTarget);
         this.move(this.relaxTarget);
         if (this.getCurrentPosition().equals(this.relaxTarget)) {
