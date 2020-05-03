@@ -51,7 +51,7 @@ public class LevelManagerImpl implements LevelManager {
     public final void incScores(final int value) {
         this.partialScores = this.partialScores + value;
         this.scores = this.scores + value;
-        if (this.partialScores == this.scoresToInvertGame) {
+        if (this.partialScores >= this.scoresToInvertGame) {
             this.setInvertedGame();
             this.partialScores = 0;
         }
