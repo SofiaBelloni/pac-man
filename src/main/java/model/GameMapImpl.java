@@ -170,9 +170,7 @@ public final class GameMapImpl implements GameMap {
     @Override
     public void restorePills() {
         this.gameMap.get(TileType.FREE).removeAll(this.initialPillsPostion);
-        System.out.println(this.gameMap.get(TileType.PILL).size());
         this.gameMap.get(TileType.PILL).addAll(this.initialPillsPostion);
-        System.out.println(this.gameMap.get(TileType.PILL).size());
     }
 
     enum TileType {
