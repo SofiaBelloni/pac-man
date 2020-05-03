@@ -181,21 +181,25 @@ public class GameViewController extends SceneController {
                     .getData().getGhostsPositions().get(id).getX(),
                     this.getController()
                     .getData().getGhostsPositions().get(id).getY());
-            switch (this.getController().getData().getGhostsDirections().get(id)) {
-            case UP:
-                this.ghostView.get(id).setImage(new Image("textures/" + name.toString() + "/UP.png"));
-                break;
-            case DOWN:
-                this.ghostView.get(id).setImage(new Image("textures/" + name.toString() + "/DOWN.png"));
-                break;
-            case LEFT:
-                this.ghostView.get(id).setImage(new Image("textures/" + name.toString() + "/LEFT.png"));
-                break;
-            case RIGHT:
-                this.ghostView.get(id).setImage(new Image("textures/" + name.toString() + "/RIGHT.png"));
-                break;
-            default:
-                break;
+            if (this.getController().getData().isGameInverted()) {
+                this.ghostView.get(id).setImage(new Image("textures/ghost/eatable.png"));
+            } else {
+                switch (this.getController().getData().getGhostsDirections().get(id)) {
+                case UP:
+                    this.ghostView.get(id).setImage(new Image("textures/" + name.toString() + "/UP.png"));
+                    break;
+                case DOWN:
+                    this.ghostView.get(id).setImage(new Image("textures/" + name.toString() + "/DOWN.png"));
+                    break;
+                case LEFT:
+                    this.ghostView.get(id).setImage(new Image("textures/" + name.toString() + "/LEFT.png"));
+                    break;
+                case RIGHT:
+                    this.ghostView.get(id).setImage(new Image("textures/" + name.toString() + "/RIGHT.png"));
+                    break;
+                default:
+                    break;
+                }
             }
             if (!this.ghostPositions.get(id).equals(newPosition)) {
                 this.transition(this.ghostView.get(id), this.ghostPositions.get(id), newPosition);
