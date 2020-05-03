@@ -69,14 +69,14 @@ public class GameModelImpl implements GameModel {
         this.checkGameMapPresence();
         this.checkGameEnded();
         this.pacMan.nextPosition();
-        this.ghosts.forEach(x -> x.nextPosition());
+        this.ghosts.forEach(Entity::nextPosition);
         if (this.checkPacmanGhostCollision()) {
             if (this.levelManager.isGameInverted()) {
                 this.ghosts.removeIf(x ->
                 x.getPosition().equals(this.pacMan.getPosition()));
             } else {
                 this.pacMan.kill();
-                this.ghosts.forEach(x -> x.returnToStartPosition());
+                this.ghosts.forEach(Entity::returnToStartPosition);
             }
         } else {
             if (this.checkPillCollision()) {
@@ -149,7 +149,6 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final void setGameMap(final GameMap gameMap) {
-        this.checkGameEnded();
         if (this.gameMap.isPresent()) {
             throw new IllegalStateException();
         }
@@ -205,10 +204,10 @@ public class GameModelImpl implements GameModel {
     }
 
     private void checkGameEnded(){
-        this.checkCondition(this.isGameEnded());
+        this.checkCondition(this.isGameEnded() && this.gameMap.isPresent());
     }
 
-    private void checkCondition(final boolean condition){
+    private void checkCondition(final Boolean condition){
         if (condition){
             throw new IllegalStateException();
         }
@@ -216,7 +215,7 @@ public class GameModelImpl implements GameModel {
 
     private void nextLevel() {
         this.levelManager.nextLevel();
-        this.ghosts.forEach(x -> x.returnToStartPosition());
+        this.ghosts.forEach(Entity::returnToStartPosition);
         this.ghosts.forEach(x -> x.setEatable(false));
         this.gameMap.get().restorePills();
         this.pacMan.returnToStartPosition();

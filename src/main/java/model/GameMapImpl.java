@@ -30,7 +30,7 @@ public final class GameMapImpl implements GameMap {
         this.pillScore = pillPoints;
         this.xMapSize = xMapSize;
         this.yMapSize = yMapSize;
-        this.initialPillsPostion = pills;
+        this.initialPillsPostion = Set.copyOf(pills);
         this.gameMap = new HashMap<>();
         this.gameMap.put(TileType.PACMAN_START, Set.of(pacManStartPosition));
         this.gameMap.put(TileType.WALL, walls);
@@ -169,7 +169,6 @@ public final class GameMapImpl implements GameMap {
 
     @Override
     public void restorePills() {
-        System.out.println(this.gameMap.get(TileType.PILL).size() + this.gameMap.get(TileType.FREE).size());
         this.gameMap.get(TileType.FREE).removeAll(this.initialPillsPostion);
         System.out.println(this.gameMap.get(TileType.PILL).size());
         this.gameMap.get(TileType.PILL).addAll(this.initialPillsPostion);
