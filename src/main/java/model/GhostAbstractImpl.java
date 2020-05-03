@@ -41,7 +41,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     @Override
     public final void returnToStartPosition() {
         this.checkCreation();
-        this.myBehaviour.returnHome(startPosition);
+        this.myBehaviour.returnHome(this.startPosition);
     }
 
     @Override

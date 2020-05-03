@@ -16,32 +16,20 @@ import static model.Directions.LEFT;
 public class GhostFrightenedBehaviourImpl extends GhostAbstractBehaviour {
 
     private final Set<Pair<Integer, Integer>> setWall;
-    private boolean isInside;
-    private final List<Pair<Integer, Integer>> ghostHouse;
 
     public GhostFrightenedBehaviourImpl(final Set<Pair<Integer, Integer>> setWall,
             final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize,
             final Pair<Integer, Integer> startPosition) {
-        super(xMapSize, yMapSize, startPosition);
-        this.isInside = true;
+        super(xMapSize, yMapSize, startPosition, ghostHouse);
         this.setWall = setWall;
-        this.ghostHouse = ghostHouse;
     }
 
     @Override
     public final void nextPosition(final boolean eatable, final boolean timeToTurn) {
-        this.checkIfInside();
-        if (timeToTurn && !this.isInside && !this.ghostHouse.contains(new PairImpl<>(this.getCurrentPosition().getX(), this.getCurrentPosition().getY() - 1))) {
+        if (timeToTurn && !this.checkIfInside(this.setWall) && !this.ghostHouse.contains(new PairImpl<>(this.getCurrentPosition().getX(), this.getCurrentPosition().getY() - 1))) {
             this.turnAround();
         } else {
             this.runAway();
-        }
-    }
-
-    private void checkIfInside() {
-        if (this.isInside && !this.ghostHouse.contains(this.getCurrentPosition())) {
-            this.setWall.addAll(this.ghostHouse);
-            this.isInside = false;
         }
     }
 
@@ -103,9 +91,6 @@ public class GhostFrightenedBehaviourImpl extends GhostAbstractBehaviour {
 
     @Override
     public final void returnHome(final Pair<Integer, Integer> newPosition) {
-        this.isInside = true;
-        this.setCurrentPosition(newPosition);
-        this.setCurrentDirection(UP);
-        this.setWall.removeAll(this.ghostHouse);
+        super.returnHome(newPosition, this.setWall);
     }
 }

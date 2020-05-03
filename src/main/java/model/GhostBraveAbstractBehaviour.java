@@ -31,7 +31,7 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
     public GhostBraveAbstractBehaviour(final Set<Pair<Integer, Integer>> setWall, final PacMan pacMan,
             final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize,
             final Pair<Integer, Integer> startPosition) {
-        super(xMapSize, yMapSize, startPosition);
+        super(xMapSize, yMapSize, startPosition, ghostHouse);
         this.mapDijkstra = new HashMap<>();
         this.isPathFound = false;
         this.isBlinkyDead = false;
@@ -49,6 +49,7 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
      */
     @Override
     public void nextPosition(final boolean eatable, final boolean timeToTurn) {
+        this.checkIfInside(this.setWall);
         this.findPath(this.relaxTarget);
         this.move(this.relaxTarget);
         if (this.getCurrentPosition().equals(this.relaxTarget)) {
@@ -179,9 +180,7 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
 
     @Override
     public final void returnHome(final Pair<Integer, Integer> startPosition) {
-        this.setCurrentPosition(startPosition);
-        this.relaxed = true;
-        this.setCurrentDirection(UP);
+        super.returnHome(startPosition, this.setWall);
         this.fBehaviour.returnHome(startPosition);
     }
 

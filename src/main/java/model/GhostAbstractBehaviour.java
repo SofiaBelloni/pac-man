@@ -1,7 +1,9 @@
 package model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import utils.Pair;
 import utils.PairImpl;
@@ -22,12 +24,17 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
     private Directions currentDirection;
     private Pair<Integer, Integer> currentPosition;
     private Map<Directions, Pair<Integer, Integer>> mapAdj;
+    private boolean isInside;
+    final List<Pair<Integer, Integer>> ghostHouse;
 
-    public GhostAbstractBehaviour(final int xMapSize, final int yMapSize, final Pair<Integer, Integer> startPosition) {
+    public GhostAbstractBehaviour(final int xMapSize, final int yMapSize, final Pair<Integer, Integer> startPosition,
+            final List<Pair<Integer, Integer>> ghostHouse) {
         this.xMapSize = xMapSize;
         this.yMapSize = yMapSize;
         this.currentDirection = UP;
         this.currentPosition = startPosition;
+        this.isInside = true;
+        this.ghostHouse = ghostHouse;
     }
 
     protected final int getxMapSize() {
@@ -82,5 +89,20 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         this.mapAdj.put(DOWN, new PairImpl<>(position.getX(), position.getY() + 1));
         this.mapAdj.put(RIGHT, new PairImpl<>(position.getX() + 1, position.getY()));
         this.mapAdj.put(LEFT, new PairImpl<>(position.getX() - 1, position.getY()));
+    }
+
+    protected final boolean checkIfInside(final Set<Pair<Integer, Integer>> setWall) {
+        if (this.isInside && !this.ghostHouse.contains(this.getCurrentPosition())) {
+            setWall.addAll(this.ghostHouse);
+            this.isInside = false;
+        }
+        return this.isInside;
+    }
+
+    protected final void returnHome(final Pair<Integer, Integer> newPosition, final Set<Pair<Integer, Integer>> setWall) {
+        this.isInside = true;
+        this.setCurrentPosition(newPosition);
+        this.setCurrentDirection(UP);
+        setWall.removeAll(this.ghostHouse);
     }
 }

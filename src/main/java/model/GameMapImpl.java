@@ -130,7 +130,7 @@ public final class GameMapImpl implements GameMap {
 
     @Override
     public Set<Pair<Integer, Integer>> getGhostHousePosition() {
-        return this.gameMap.get(TileType.PACMAN_START);
+        return this.gameMap.get(TileType.GHOSTS_HOUSE);
     }
 
     @Override
