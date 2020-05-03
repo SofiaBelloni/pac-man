@@ -147,13 +147,8 @@ public class GameViewController extends SceneController {
     }
 
     @Override
-<<<<<<< HEAD
     public final void render() {
-        this.update();
-=======
-    public void render() {
-        this.HudRender();
->>>>>>> branch 'develop' of https://19eddie@bitbucket.org/filippo_vissani/oop19-pac-man.git
+        this.hudRender();
         this.ghostRender();
         this.pacmanRender();
         this.gameMapRender();
@@ -268,7 +263,7 @@ public class GameViewController extends SceneController {
     /**
      * Method that update the HUD data value.
      */
-    private void HudRender() {
+    private void hudRender() {
         this.score.setText(String.valueOf(this.getController().getData().getCurrentScore()));
         this.timer.setProgress(this.getController().getData().getLevelTimePercentage());
         this.level.setText(String.valueOf(this.getController().getData().getLevel()));
