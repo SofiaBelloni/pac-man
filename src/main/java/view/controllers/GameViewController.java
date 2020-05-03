@@ -128,6 +128,14 @@ public class GameViewController extends SceneController {
             this.pacmanImage.setRotate(90);
             this.getController().newPacManDirection(Directions.RIGHT);
             break;
+        case P:
+           this.getController().pauseGame();
+           //TODO schermata pausa
+            break;
+        case R:
+            this.getController().resumeGame();
+            //TODO questo da fare nella schermata pausa
+             break;
         default:
             break;
         }
