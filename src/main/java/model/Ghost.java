@@ -49,4 +49,10 @@ public interface Ghost extends Entity {
      */
     Directions getDirection();
 
+    /**
+     *When a new level starts, the ghosts from the old levels change behaviour. 
+     *
+     */
+    void setOldLevelTrue();
+
 }

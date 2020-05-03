@@ -15,6 +15,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     private boolean timeToTurn;
     private Pair<Integer, Integer> startPosition;
     private final int id;
+    private boolean oldLevel;
 
     public GhostAbstractImpl(final int xMapSize, final int yMapSize, final int id) {
         super(xMapSize, yMapSize);
@@ -22,12 +23,13 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         this.eatable = false;
         this.timeToTurn = false;
         this.id = id;
+        this.oldLevel = false;
     }
 
     @Override
     public final void nextPosition() {
         this.checkCreation();
-        this.myBehaviour.nextPosition(this.eatable, this.timeToTurn);
+        this.myBehaviour.nextPosition(this.eatable, this.timeToTurn, this.oldLevel);
         this.timeToTurn = false;
         this.myBehaviour.setCurrentPosition(this.convertToToroidal(this.getPosition()));
     }
@@ -106,6 +108,10 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         return this.id;
     }
 
+    @Override
+    public final void setOldLevelTrue() {
+        this.oldLevel = true;
+    }
 
     private void checkCreation() {
         if (!this.created) {

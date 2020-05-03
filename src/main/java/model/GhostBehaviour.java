@@ -39,9 +39,10 @@ public interface GhostBehaviour {
      * Calculate the next position of the ghost.
      *
      * @param eatable the eatable
+     * @param oldLevel true if the ghost are from the old levels
      * @param timeToTurn the time to turn
      */
-    void nextPosition(boolean eatable, boolean timeToTurn);
+    void nextPosition(boolean eatable, boolean timeToTurn, boolean oldLevel);
 
     /**
      * Makes the ghosts return in ghostHouse.

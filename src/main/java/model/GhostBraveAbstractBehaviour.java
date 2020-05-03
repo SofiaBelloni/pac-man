@@ -48,7 +48,7 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
      * This method is designed for extension.
      */
     @Override
-    public void nextPosition(final boolean eatable, final boolean timeToTurn) {
+    public void nextPosition(final boolean eatable, final boolean timeToTurn, final boolean oldLevel) {
         this.checkIfInside(this.setWall);
         this.findPath(this.relaxTarget);
         this.move(this.relaxTarget);

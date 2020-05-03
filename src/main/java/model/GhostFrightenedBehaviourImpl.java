@@ -25,7 +25,7 @@ public class GhostFrightenedBehaviourImpl extends GhostAbstractBehaviour {
     }
 
     @Override
-    public final void nextPosition(final boolean eatable, final boolean timeToTurn) {
+    public final void nextPosition(final boolean eatable, final boolean timeToTurn, final boolean oldLevel) {
         if (timeToTurn && !this.checkIfInside(this.setWall) && !this.ghostHouse.contains(new PairImpl<>(this.getCurrentPosition().getX(), this.getCurrentPosition().getY() - 1))) {
             this.turnAround();
         } else {
