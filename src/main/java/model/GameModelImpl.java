@@ -26,6 +26,7 @@ public class GameModelImpl implements GameModel {
     @Override
     public final void setPacManDirection(final Directions direction) {
         this.checkGameMapPresence();
+        this.checkGameEnded();
         this.pacMan.setDirection(direction);
     }
 
@@ -66,6 +67,7 @@ public class GameModelImpl implements GameModel {
     @Override
     public final void moveEntitiesNextPosition() {
         this.checkGameMapPresence();
+        this.checkGameEnded();
         this.pacMan.nextPosition();
         this.ghosts.forEach(x -> x.nextPosition());
         if (this.checkPacmanGhostCollision()) {
@@ -91,6 +93,7 @@ public class GameModelImpl implements GameModel {
     @Override
     public final void decLevelTime() {
         this.checkGameMapPresence();
+        this.checkGameEnded();
         if (this.levelManager.getLevelTime() == 0) {
             this.nextLevel();
         } else {
@@ -146,6 +149,7 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final void setGameMap(final GameMap gameMap) {
+        this.checkGameEnded();
         if (this.gameMap.isPresent()) {
             throw new IllegalStateException();
         }
@@ -197,7 +201,15 @@ public class GameModelImpl implements GameModel {
     }
 
     private void checkGameMapPresence() {
-        if (this.gameMap.isEmpty()) {
+        this.checkCondition(this.gameMap.isEmpty());
+    }
+
+    private void checkGameEnded(){
+        this.checkCondition(this.isGameEnded());
+    }
+
+    private void checkCondition(final boolean condition){
+        if (condition){
             throw new IllegalStateException();
         }
     }
