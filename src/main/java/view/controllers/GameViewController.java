@@ -234,47 +234,24 @@ public class GameViewController extends SceneController {
         this.pacmanImage.setY(this.squareSize * this.pacmanPosition.getY());
         this.entityPane.getChildren().add(this.pacmanImage);
         this.pacmanImage.setImage(new Image("textures/pac_man/pac_man2.png"));
-        this.pacmanImage.setRotate(90);
+        this.pacmanImage.setRotate(270);
     }
 
     private void pacmanRender() {
         Pair<Integer, Integer> newPosition = new PairImpl<>(this.getController().getData().getPacManXPosition(),
                 this.getController().getData().getPacManYPosition());
         if (!this.pacmanPosition.equals(newPosition)) {
-            this.pacmanPosition = newPosition;
             PathTransition p = new PathTransition();
             p.setNode(this.pacmanImage);
             p.setDuration(Duration.seconds(0.5));
-            switch (this.getController().getData().getPacManDirection()) {
-            case UP:
-                this.pacmanImage.setRotate(0);
-                p.setPath(new Line(this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2,
-                        this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() - this.squareSize / 2));
-                this.pacmanImage.setY(this.pacmanImage.getY() - this.squareSize);
-                break;
-            case DOWN:
-                this.pacmanImage.setRotate(180);
-                p.setPath(new Line(this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2,
-                        this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() + this.squareSize * 3 / 2));
-                this.pacmanImage.setY(this.pacmanImage.getY() + this.squareSize);
-                break;
-            case LEFT:
-                this.pacmanImage.setRotate(270);
-                p.setPath(new Line(this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2,
-                        this.pacmanImage.getX() - this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2));
-                this.pacmanImage.setX(this.pacmanImage.getX() - this.squareSize);
-                break;
-            case RIGHT:
-                this.pacmanImage.setRotate(90);
-                p.setPath(new Line(this.pacmanImage.getX() + this.squareSize / 2, this.pacmanImage.getY() + this.squareSize / 2,
-                        this.pacmanImage.getX() + this.squareSize * 3 / 2, this.pacmanImage.getY() + this.squareSize / 2));
-                this.pacmanImage.setX(this.pacmanImage.getX() + this.squareSize);
-                break;
-            default:
-                break;
-            }
+            p.setPath(new Line((this.squareSize * this.pacmanPosition.getX()) + (this.squareSize / 2),
+                    (this.squareSize * this.pacmanPosition.getY()) + (this.squareSize / 2),
+                    (this.squareSize * newPosition.getX()) + (this.squareSize / 2),
+                    (this.squareSize * newPosition.getY()) + (this.squareSize / 2)));
+            this.pacmanImage.setY(this.squareSize * newPosition.getY());
             p.setCycleCount(1);
             p.play();
+            this.pacmanPosition = newPosition;
         }
     }
 
