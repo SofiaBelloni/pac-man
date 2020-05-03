@@ -67,9 +67,6 @@ public class GameViewController extends SceneController {
 
     public final void init(final Controller controller, final View view) {
         super.init(controller, view);
-        // Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-        // squareSize = (int) (screenBounds.getHeight() /
-        // controller.getData().getyMapSize());
         this.squareSize = (int) (this.rootBox.getHeight() / controller.getData().getyMapSize());
         int width = squareSize * controller.getData().getxMapSize();
         int height = squareSize * controller.getData().getyMapSize();
@@ -202,6 +199,9 @@ public class GameViewController extends SceneController {
         }
     }
 
+    /**
+     * Method that create the imageView of PacMan and draw it.
+     */
     private void pacmanSpawn() {
         this.pacmanPosition = new PairImpl<>(this.getController().getData().getPacManXPosition(),
                 this.getController().getData().getPacManYPosition());
@@ -215,6 +215,9 @@ public class GameViewController extends SceneController {
         this.pacmanImage.setRotate(270);
     }
 
+    /**
+     * Call this method to draw the current position of PacMan in the grid.
+     */
     private void pacmanRender() {
         Pair<Integer, Integer> newPosition = new PairImpl<>(this.getController().getData().getPacManXPosition(),
                 this.getController().getData().getPacManYPosition());
@@ -261,6 +264,12 @@ public class GameViewController extends SceneController {
         return imageView;
     }
 
+    /**
+     * Method to move an ImageView from a startPos to a destPos, using PathTransition.
+     * @param image the ImageView to move
+     * @param startPos the start Pair<Integer, Integer>
+     * @param destPos the destination Pair<Integer, Integer>
+     */
     private void transition(final ImageView image, final Pair<Integer, Integer> startPos, final Pair<Integer, Integer> destPos) {
         PathTransition p = new PathTransition();
         p.setNode(image);
