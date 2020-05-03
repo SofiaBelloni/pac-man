@@ -192,8 +192,13 @@ public class GameViewController extends SceneController {
             this.ghostSpawn();
         }
         for (int id : this.ghostView.keySet()) {
+            if (!this.getController().getData().getGhostsPositions().containsKey(id)) {
+                this.entityPane.getChildren().remove(this.ghostView.get(id));
+                this.ghostView.remove(id);
+            }
             final Ghosts name = this.getController().getData().getGhostsTypes().get(id);
-            Pair<Integer, Integer> newPosition = new PairImpl<>(this.getController()
+            Pair<Integer, Integer> newPosition = new PairImpl<>(
+                    this.getController()
                     .getData().getGhostsPositions().get(id).getX(),
                     this.getController()
                     .getData().getGhostsPositions().get(id).getY());
@@ -220,9 +225,6 @@ public class GameViewController extends SceneController {
             if (!this.ghostPositions.get(id).equals(newPosition)) {
                 this.transition(this.ghostView.get(id), this.ghostPositions.get(id), newPosition);
                 this.ghostPositions.put(id, newPosition);
-            }
-            if (!this.getController().getData().getGhostsPositions().containsKey(id)) {
-                this.entityPane.getChildren().remove(this.ghostView.get(id));
             }
         }
     }
