@@ -74,6 +74,11 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
+    public void stopGame() {
+        this.gameLoop.stop();
+    }
+
+    @Override
     public void savePlayer(final String name) {
         this.fileManager.savePlayer(name, this.model.getLevelNumber(), this.model.getScores());
     }

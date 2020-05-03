@@ -27,6 +27,10 @@ public interface Controller {
      **/
     void resumeGame();
     /**
+     * Stops the game session interrupting the game loop.
+     **/
+    void stopGame();
+    /**
      * Saves the player.
      * 
      * @param name the name of the player
