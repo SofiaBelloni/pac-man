@@ -63,15 +63,12 @@ public class GameViewController extends SceneController {
     private ProgressBar timer;
 
     @FXML
-    private Label lives;
-
-    @FXML
     private HBox livesContainer;
 
     private int squareSize;
 
     private final Map<Integer, ImageView> ghostView = new HashMap<>();
-
+    private final Map<Pair<Integer, Integer>, ImageView> gameMap = new HashMap<>();
     private ImageView pacmanImage;
     private Pair<Integer, Integer> pacmanPosition;
 
@@ -86,20 +83,22 @@ public class GameViewController extends SceneController {
         this.gamePane.setMinSize(width, height);
         this.gamePane.setMaxSize(width, height);
         HBox.setHgrow(this.labelBox, Priority.SOMETIMES);
-        GridPane gridPane = new GridPane();
-        this.gamePane.getChildren().add(gridPane);
+        GridPane mapGrid = new GridPane();
+        this.gamePane.getChildren().add(mapGrid);
         for (Pair<Integer, Integer> e : this.getController().getData().getWallsPositions()) {
             ImageView image = new ImageView("textures/wall/wall.png");
             image.setFitWidth(squareSize);
             image.setFitHeight(squareSize);
-            gridPane.add(image, e.getX(), e.getY());
+            mapGrid.add(image, e.getX(), e.getY());
+            this.gameMap.put(e, image);
         }
 
         for (Pair<Integer, Integer> e : this.getController().getData().getPillsPositions()) {
             ImageView image = new ImageView("textures/pill/pill.png");
             image.setFitWidth(squareSize);
             image.setFitHeight(squareSize);
-            gridPane.add(image, e.getX(), e.getY());
+            mapGrid.add(image, e.getX(), e.getY());
+            this.gameMap.put(e, image);
         }
         entityPane = new Pane();
         this.gamePane.getChildren().add(entityPane);
@@ -149,6 +148,7 @@ public class GameViewController extends SceneController {
         this.update();
         this.ghostRender();
         this.pacmanRender();
+        this.gameMapRender();
         // TODO
     }
 
@@ -278,6 +278,17 @@ public class GameViewController extends SceneController {
         }
     }
 
+    private void gameMapRender(){
+        this.gameMap.keySet().forEach(x -> {
+            if (this.getController().getData().getPillsPositions().contains(x)){
+                this.gameMap.get(x).setImage(new Image("textures/pill/pill.png"));
+            } else {
+                if (!this.getController().getData().getWallsPositions().contains(x)){
+                    this.gameMap.get(x).setImage(null);
+                }
+            }
+        });
+    }
     /**
      * Method that update the HUD data value.
      */
