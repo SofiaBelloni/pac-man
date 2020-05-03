@@ -180,6 +180,7 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
 
     @Override
     public final void returnHome(final Pair<Integer, Integer> startPosition) {
+        this.relaxed = true;
         super.returnHome(startPosition, this.setWall);
         this.fBehaviour.returnHome(startPosition);
     }
