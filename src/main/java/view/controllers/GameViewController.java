@@ -24,6 +24,7 @@ import model.Directions;
 import model.Ghosts;
 import utils.Pair;
 import utils.PairImpl;
+import view.GameScene;
 import view.View;
 
 public class GameViewController extends SceneController {
@@ -102,7 +103,7 @@ public class GameViewController extends SceneController {
             this.livesContainer.getChildren().add(this.lifeIcon());
         }
         //start the gameLoop
-        this.getController().startGame();
+        //this.getController().startGame();
     }
 
     @Override
@@ -130,11 +131,14 @@ public class GameViewController extends SceneController {
             break;
         case P:
            this.getController().pauseGame();
-           //TODO schermata pausa
+           //TODO andare alla schermata pausa
             break;
         case R:
             this.getController().resumeGame();
             //TODO questo da fare nella schermata pausa
+             break;
+        case SPACE:
+            this.getController().startGame();
              break;
         default:
             break;
@@ -143,11 +147,17 @@ public class GameViewController extends SceneController {
 
     @Override
     public final void render() {
+
         this.hudRender();
         this.ghostRender();
         this.pacmanRender();
         this.gameMapRender();
         // TODO
+
+        if (this.getController().getData().isGameEnded()) {
+            this.getController().stopGame();
+            this.getView().setScene(GameScene.GAMEOVER);
+        }
     }
 
     public final void ghostSpawn() {
