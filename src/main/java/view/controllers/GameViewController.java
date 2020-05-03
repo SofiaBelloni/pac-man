@@ -65,9 +65,11 @@ public class GameViewController extends SceneController {
     private ImageView pacmanImage;
     private Pair<Integer, Integer> pacmanPosition;
     private final Image pill = new Image("textures/pill/pill.png");
+    private int currentLevel;
 
     public final void init(final Controller controller, final View view) {
         super.init(controller, view);
+        this.currentLevel = 1;
         this.squareSize = (int) (this.rootBox.getHeight() / controller.getData().getyMapSize());
         int width = squareSize * controller.getData().getxMapSize();
         int height = squareSize * controller.getData().getyMapSize();
@@ -185,6 +187,10 @@ public class GameViewController extends SceneController {
     }
 
     public final void ghostRender() {
+        if (this.getController().getData().getLevel() > this.currentLevel) {
+            this.currentLevel = this.getController().getData().getLevel();
+            this.ghostSpawn();
+        }
         for (int id : this.ghostView.keySet()) {
             final Ghosts name = this.getController().getData().getGhostsTypes().get(id);
             Pair<Integer, Integer> newPosition = new PairImpl<>(this.getController()
