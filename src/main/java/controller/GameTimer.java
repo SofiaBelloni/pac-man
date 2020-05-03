@@ -21,12 +21,7 @@ public class GameTimer extends TimerTask {
 
     @Override
     public final void run() {
-        if (this.model.getLevelTime() > 0) {
             this.model.decLevelTime();
-        } else {
-            this.isRunning = false;
-            this.cancel();
-        }
     }
     /**
      * @return true if {@link GameTimer} is running, otherwise false.

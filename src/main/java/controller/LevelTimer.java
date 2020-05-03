@@ -4,7 +4,7 @@ import java.util.Timer;
 
 import model.GameModel;
 /**
- * This class is used to start and stop the GameTimer.
+ * This class is used to start and stop the {@link GameTimer}.
  */
 public class LevelTimer {
 
@@ -21,7 +21,7 @@ public class LevelTimer {
         this.gameTimer = new GameTimer(model);
     }
     /**
-     * Starts the GameTimer only if it has not already been started.
+     * Starts the {@link GameTimer} only if it has not already been started.
      **/
     public void startTimer() {
         if (!this.gameTimer.isRunning()) {
@@ -30,7 +30,7 @@ public class LevelTimer {
         }
     }
     /**
-     * Interrupts the GameTimer only if it is running.
+     * Interrupts the {@link GameTimer} only if it is running.
      **/
     public void stopTimer() {
         if (this.gameTimer.isRunning()) {

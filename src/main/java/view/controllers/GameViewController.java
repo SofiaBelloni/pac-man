@@ -37,6 +37,8 @@ public class GameViewController extends SceneController {
     private static final int CLYDE_X_START_POSITION = 15;
 
     private static final int GHOST_Y_START_POSITION = 14;
+    
+    private static final int LIFE_ICON_DIMENSION = 50;
 
     @FXML
     private HBox rootBox;
@@ -145,8 +147,13 @@ public class GameViewController extends SceneController {
     }
 
     @Override
+<<<<<<< HEAD
     public final void render() {
         this.update();
+=======
+    public void render() {
+        this.HudRender();
+>>>>>>> branch 'develop' of https://19eddie@bitbucket.org/filippo_vissani/oop19-pac-man.git
         this.ghostRender();
         this.pacmanRender();
         this.gameMapRender();
@@ -261,15 +268,16 @@ public class GameViewController extends SceneController {
     /**
      * Method that update the HUD data value.
      */
-    private void update() {
+    private void HudRender() {
         this.score.setText(String.valueOf(this.getController().getData().getCurrentScore()));
         this.timer.setProgress(this.getController().getData().getLevelTimePercentage());
         this.level.setText(String.valueOf(this.getController().getData().getLevel()));
-//        if (this.livesContainer.getChildren().size() != this.getController().getData().getLives()) {
-//            for (int i = 0; i < this.getController().getData().getLives(); i++) {
-//                this.livesContainer.getChildren().add(this.lifeIcon());
-//            }
-//        }
+        if (this.livesContainer.getChildren().size() != this.getController().getData().getLives()) {
+            this.livesContainer.getChildren().clear();
+            for (int i = 0; i < this.getController().getData().getLives(); i++) {
+                this.livesContainer.getChildren().add(this.lifeIcon());
+            }
+        }
     }
 
     private Node lifeIcon() {
@@ -278,8 +286,8 @@ public class GameViewController extends SceneController {
         final ImageView imageView = new ImageView();
         imageView.setImage(image);
         imageView.setRotate(90);
-        imageView.setFitWidth(50);
-        imageView.setFitHeight(50);
+        imageView.setFitWidth(LIFE_ICON_DIMENSION);
+        imageView.setFitHeight(LIFE_ICON_DIMENSION);
         return imageView;
     }
 

@@ -16,6 +16,7 @@ public class DataUpdater {
 
     private final GameModel model;
     private final View view;
+    private double levelDuration;
 
     /**
      * Constructor.
@@ -27,6 +28,7 @@ public class DataUpdater {
     public DataUpdater(final GameModel model, final View view) {
         this.model = model;
         this.view = view;
+        this.levelDuration = this.model.getLevelDuration();
     }
     /**
      * Updates model.
@@ -76,7 +78,7 @@ public class DataUpdater {
      * @return a value between 0 and 1 that indicates the level-timer progress. 
      */
     public double getLevelTimePercentage() {
-        return this.model.getLevelTime() / 60.0; //TODO 
+        return this.model.getLevelTime() / this.levelDuration;
     }
     /**
      * @return the scores of the current game
