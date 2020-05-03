@@ -25,6 +25,10 @@ public interface GameModel {
      */
     Set<Pair<Integer, Integer>> getPillsPositions();
     /**
+     * @return the level duration
+     */
+    int getLevelDuration();
+    /**
      * @return a Map containing KEY -> Id, VALUE -> position.
      */
     Map<Integer, Pair<Integer, Integer>> getGhostsPositions();

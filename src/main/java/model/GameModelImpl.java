@@ -30,6 +30,11 @@ public class GameModelImpl implements GameModel {
     }
 
     @Override
+    public final int getLevelDuration(){
+        return  this.levelManager.getLevelDuration();
+    }
+
+    @Override
     public final Map<Integer, Pair<Integer, Integer>> getGhostsPositions() {
         this.checkGameMapPresence();
         final Map<Integer, Pair<Integer, Integer>> ghostsPositions = new HashMap<>();
