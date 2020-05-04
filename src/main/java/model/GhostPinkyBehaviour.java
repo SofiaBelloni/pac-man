@@ -46,6 +46,18 @@ public class GhostPinkyBehaviour extends GhostBraveAbstractBehaviour implements 
                 }
             }
         }
+        
+        if (this.getCurrentPosition().equals(this.chaseTarget)) {
+            if (this.chaseTarget.getY() + 1 < this.getyMapSize() && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() + 1))) {
+                this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() + 1);
+            } else if (this.chaseTarget.getX() + 1 < this.getxMapSize() && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX() + 1, this.chaseTarget.getY()))) {
+                this.chaseTarget = new PairImpl<>(this.chaseTarget.getX() + 1, this.chaseTarget.getY());
+            } else if (this.chaseTarget.getX() - 1 >= 0 && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX() - 1, this.chaseTarget.getY()))) {
+                this.chaseTarget = new PairImpl<>(this.chaseTarget.getX() - 1, this.chaseTarget.getY());
+            } else if (this.chaseTarget.getY() - 1 >= 0 && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() - 1))) {
+                this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() - 1);
+            }
+        }
     }
 
     @Override
@@ -60,8 +72,8 @@ public class GhostPinkyBehaviour extends GhostBraveAbstractBehaviour implements 
             } else {
                 if (!moveIfStuck()) {
                     this.targetPosition(this.getPacMan());
-                    super.findPath(this.chaseTarget);
-                    super.move(this.chaseTarget);
+                    this.findPath(this.chaseTarget);
+                    this.move(this.chaseTarget);
                 }
             }
                 this.getMyFrightenedBehaviour().setCurrentDirection(this.getCurrentDirection());
