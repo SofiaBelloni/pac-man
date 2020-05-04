@@ -69,7 +69,7 @@ public class GameModelImpl implements GameModel {
         this.checkGameMapPresence();
         this.checkGameEnded();
         this.pacMan.nextPosition();
-        this.ghosts.forEach(Entity::nextPosition);
+        this.ghosts.forEach(x -> x.nextPosition());
         if (this.checkPacmanGhostCollision()) {
             if (this.levelManager.isGameInverted()) {
                 this.ghosts.removeIf(x ->
@@ -170,6 +170,7 @@ public class GameModelImpl implements GameModel {
                 .pacMan(pacMan)
                 .mapSize(this.gameMap.get().getxMapSize(), this.gameMap.get().getyMapSize())
                 .build();
+        this.createGhost(Ghosts.BLINKY);
         this.createGhost(Ghosts.CLYDE);
         //this.createGhost(Ghosts.INKY);
         this.createGhost(Ghosts.PINKY);
@@ -220,6 +221,7 @@ public class GameModelImpl implements GameModel {
         this.ghosts.forEach(x -> x.setOldLevelTrue());
         this.gameMap.get().restorePills();
         this.pacMan.returnToStartPosition();
+        this.createGhost(Ghosts.BLINKY);
         this.createGhost(Ghosts.CLYDE);
         //this.createGhost(Ghosts.INKY);
         this.createGhost(Ghosts.PINKY);

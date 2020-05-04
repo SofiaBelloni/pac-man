@@ -57,8 +57,8 @@ public class GhostClydeBehaviour extends GhostBraveAbstractBehaviour {
             } else {
                 if (!moveIfStuck()) {
                     this.targetPosition(this.getPacMan());
-                    super.findPath(this.chaseTarget);
-                    super.move(this.chaseTarget);
+                    this.findPath(this.chaseTarget);
+                    this.move(this.chaseTarget);
                 }
             }
             this.getMyFrightenedBehaviour().setCurrentDirection(this.getCurrentDirection());
