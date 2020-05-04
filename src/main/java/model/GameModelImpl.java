@@ -25,7 +25,6 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final void setPacManDirection(final Directions direction) {
-        this.checkGameMapPresence();
         this.checkGameEnded();
         this.pacMan.setDirection(direction);
     }
@@ -37,7 +36,6 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final Map<Integer, Pair<Integer, Integer>> getGhostsPositions() {
-        this.checkGameMapPresence();
         final Map<Integer, Pair<Integer, Integer>> ghostsPositions = new HashMap<>();
         this.ghosts.forEach(x -> ghostsPositions.put(x.getId(), x.getPosition()));
         return ghostsPositions;
@@ -45,7 +43,6 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final Map<Integer, Ghosts> getGhostsTypes() {
-        this.checkGameMapPresence();
         final Map<Integer, Ghosts> gostsTypes = new HashMap<>();
         this.ghosts.forEach(x -> gostsTypes.put(x.getId(), x.getName()));
         return gostsTypes;
@@ -53,7 +50,6 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final Map<Integer, Directions> getGhostsDirections() {
-        this.checkGameMapPresence();
         final Map<Integer, Directions> ghostsDirections = new HashMap<>();
         this.ghosts.forEach(x -> ghostsDirections.put(x.getId(), x.getDirection()));
         return ghostsDirections;
@@ -66,7 +62,6 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final void moveEntitiesNextPosition() {
-        this.checkGameMapPresence();
         this.checkGameEnded();
         this.pacMan.nextPosition();
         this.ghosts.forEach(Entity::nextPosition);
@@ -116,7 +111,6 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final void decLevelTime() {
-        this.checkGameMapPresence();
         this.checkGameEnded();
         if (this.levelManager.getLevelTime() == 0) {
             this.nextLevel();
@@ -131,82 +125,67 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final int getScores() {
-        this.checkGameMapPresence();
         return this.levelManager.getScores();
     }
 
     @Override
     public final int getPacManLives() {
-        this.checkGameMapPresence();
         return this.pacMan.getLives();
     }
 
     @Override
     public final Pair<Integer, Integer> getPacManPosition() {
-        this.checkGameMapPresence();
         return this.pacMan.getPosition();
     }
 
     @Override
     public final Set<Pair<Integer, Integer>> getWallsPositions() {
-        this.checkGameMapPresence();
         return this.gameMap.get().getWallsPositions();
     }
 
     @Override
     public final Set<Pair<Integer, Integer>> getPillsPositions() {
-        this.checkGameMapPresence();
         return this.gameMap.get().getPillsPositions();
     }
 
     @Override
     public final int getLevelNumber() {
-        this.checkGameMapPresence();
         return this.levelManager.getLevelNumber();
     }
 
     @Override
     public final int getLevelTime() {
-        this.checkGameMapPresence();
         return this.levelManager.getLevelTime();
     }
 
     @Override
     public final void setGameMap(final GameMap gameMap) {
-        if (this.gameMap.isPresent()) {
-            throw new IllegalStateException();
-        }
         this.gameMap = Optional.of(gameMap);
-        this.resetGame();
     }
 
     @Override
     public final Boolean isGameEnded() {
-        this.checkGameMapPresence();
         return this.pacMan.getLives() == 0;
     }
 
     @Override
     public final int getxMapSize() {
-        this.checkGameMapPresence();
         return this.gameMap.get().getxMapSize();
     }
 
     @Override
     public final int getyMapSize() {
-        this.checkGameMapPresence();
         return this.gameMap.get().getyMapSize();
     }
 
     @Override
     public final Directions getPacManDirection() {
-        this.checkGameMapPresence();
         return this.pacMan.getDirection();
     }
 
-    private void checkGameMapPresence() {
+/*    private void checkGameMapPresence() {
         this.checkCondition(this.gameMap.isEmpty());
-    }
+    }*/
 
     private void checkGameEnded(){
         this.checkCondition(this.isGameEnded() && this.gameMap.isPresent());
@@ -247,7 +226,7 @@ public class GameModelImpl implements GameModel {
                 || (dir1.equals(Directions.RIGHT) && dir2.equals(Directions.LEFT));
     }
 
-    private boolean arePositionsNear(Pair<Integer, Integer> position1, Pair<Integer, Integer> position2) {
+    private boolean arePositionsNear(final Pair<Integer, Integer> position1, final Pair<Integer, Integer> position2) {
         return Math.abs(position1.getX() - position2.getX()) <= 1
                 && Math.abs(position1.getY() - position2.getY()) <= 1;
     }
