@@ -12,8 +12,8 @@ public class GameLoopImpl implements Runnable, GameLoop {
     private static final double TIME_BETWEEN_UPDATES = 1000.0 / FPS;
 
     private Thread thread;
-    private boolean running;
-    private boolean paused;
+    private volatile boolean running;
+    private volatile boolean paused;
     private final LevelTimer levelTimer;
     private final DataUpdater data;
     /**
@@ -69,13 +69,13 @@ public class GameLoopImpl implements Runnable, GameLoop {
             }
             lastUpdateTime = now;
         }
+        this.thread.interrupt();
     }
 
     @Override
     public final synchronized void stop() {
         this.running = false;
         this.levelTimer.stopTimer();
-        this.thread.interrupt();
     }
 
     @Override
