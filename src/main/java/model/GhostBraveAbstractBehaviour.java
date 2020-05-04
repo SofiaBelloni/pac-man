@@ -4,10 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import utils.Pair;
 import utils.PairImpl;
-
 import static model.Directions.UP;
 import static model.Directions.DOWN;
 import static model.Directions.RIGHT;
@@ -49,7 +47,9 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
     }
 
     protected final void relax(final boolean oldLevel) {
+        System.out.println(this.setWall.size());
         this.checkIfInside(this.setWall);
+        System.out.println(this.setWall.size());
         if (oldLevel) {
             this.relaxTarget = this.oldLevelTarget;
         }
