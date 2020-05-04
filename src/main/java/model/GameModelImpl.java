@@ -103,7 +103,7 @@ public class GameModelImpl implements GameModel {
                 .mapSize(this.gameMap.get().getxMapSize(), this.gameMap.get().getyMapSize())
                 .build();
         this.createGhost(Ghosts.CLYDE);
-        //this.createGhost(Ghosts.BLINKY);
+        //this.createGhost(Ghosts.INKY);
         this.createGhost(Ghosts.PINKY);
     }
 
@@ -203,7 +203,7 @@ public class GameModelImpl implements GameModel {
         this.gameMap.get().restorePills();
         this.pacMan.returnToStartPosition();
         this.createGhost(Ghosts.CLYDE);
-        //this.createGhost(Ghosts.BLINKY);
+        //this.createGhost(Ghosts.INKY);
         this.createGhost(Ghosts.PINKY);
     }
 
