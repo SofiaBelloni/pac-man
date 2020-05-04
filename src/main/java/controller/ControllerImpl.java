@@ -60,7 +60,6 @@ public class ControllerImpl implements Controller {
 
     @Override
     public void startGame() {
-        this.model.initializeNewGame();
         this.gameLoop.start();
 
     }
