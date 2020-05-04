@@ -59,6 +59,7 @@ public class ControllerImpl implements Controller {
 
     @Override
     public void startGame() {
+        this.model.resetGame();
         this.gameLoop.start();
 
     }
