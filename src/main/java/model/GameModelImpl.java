@@ -63,6 +63,14 @@ public class GameModelImpl implements GameModel {
     @Override
     public final void moveEntitiesNextPosition() {
         this.checkGameEnded();
+        if (this.checkPillCollision()) {
+            this.gameMap.get().removePill(this.pacMan.getPosition());
+            final boolean oldIsGameInverted = this.levelManager.isGameInverted();
+            this.levelManager.incScores(this.gameMap.get().getPillScore());
+            if (!oldIsGameInverted && this.levelManager.isGameInverted()) {
+                this.ghosts.forEach(x -> x.setEatable(true));
+            }
+        }
         if (this.checkPacmanGhostCollision()) {
             if (this.levelManager.isGameInverted()) {
                 this.ghosts.removeIf(x ->
@@ -70,15 +78,6 @@ public class GameModelImpl implements GameModel {
             } else {
                 this.pacMan.kill();
                 this.ghosts.forEach(Entity::returnToStartPosition);
-            }
-        } else {
-            if (this.checkPillCollision()) {
-                this.gameMap.get().removePill(this.pacMan.getPosition());
-                final boolean oldIsGameInverted = this.levelManager.isGameInverted();
-                this.levelManager.incScores(this.gameMap.get().getPillScore());
-                if (!oldIsGameInverted && this.levelManager.isGameInverted()) {
-                    this.ghosts.forEach(x -> x.setEatable(true));
-                }
             }
         }
         this.pacMan.nextPosition();
