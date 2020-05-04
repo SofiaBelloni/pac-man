@@ -9,6 +9,7 @@ import utils.Pair;
 /**
  * This interface represents the main class of the model.
  * Its purpose is to manage all the logic of the game, such as the position of the entities, the scores, etc.
+ * Once the object has been created, set the game map by calling setGameMap(GameMap gameMap) and then initializeNewGame()
  */
 public interface GameModel {
     /**
@@ -49,6 +50,11 @@ public interface GameModel {
      * Moves each mobile entity to its next position.
      */
     void moveEntitiesNextPosition();
+    /**
+     * reset the game
+     */
+    void initializeNewGame();
+
     /**
      * Increments the level time.
      */
@@ -92,6 +98,7 @@ public interface GameModel {
     /**
      *
      * @param gameMap
+     * sets the game map
      */
-    void setGameMap(final GameMap gameMap);
+    void setGameMap(GameMap gameMap);
 }

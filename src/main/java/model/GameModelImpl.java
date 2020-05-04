@@ -25,7 +25,6 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final void setPacManDirection(final Directions direction) {
-        this.checkGameMapPresence();
         this.checkGameEnded();
         this.pacMan.setDirection(direction);
     }
@@ -37,7 +36,6 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final Map<Integer, Pair<Integer, Integer>> getGhostsPositions() {
-        this.checkGameMapPresence();
         final Map<Integer, Pair<Integer, Integer>> ghostsPositions = new HashMap<>();
         this.ghosts.forEach(x -> ghostsPositions.put(x.getId(), x.getPosition()));
         return ghostsPositions;
@@ -45,7 +43,6 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final Map<Integer, Ghosts> getGhostsTypes() {
-        this.checkGameMapPresence();
         final Map<Integer, Ghosts> gostsTypes = new HashMap<>();
         this.ghosts.forEach(x -> gostsTypes.put(x.getId(), x.getName()));
         return gostsTypes;
@@ -53,7 +50,6 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final Map<Integer, Directions> getGhostsDirections() {
-        this.checkGameMapPresence();
         final Map<Integer, Directions> ghostsDirections = new HashMap<>();
         this.ghosts.forEach(x -> ghostsDirections.put(x.getId(), x.getDirection()));
         return ghostsDirections;
@@ -66,10 +62,9 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final void moveEntitiesNextPosition() {
-        this.checkGameMapPresence();
         this.checkGameEnded();
         this.pacMan.nextPosition();
-        this.ghosts.forEach(x -> x.nextPosition());
+        this.ghosts.forEach(Entity::nextPosition);
         if (this.checkPacmanGhostCollision()) {
             if (this.levelManager.isGameInverted()) {
                 this.ghosts.removeIf(x ->
@@ -88,11 +83,37 @@ public class GameModelImpl implements GameModel {
                 }
             }
         }
+        this.pacMan.nextPosition();
+        this.ghosts.forEach(Entity::nextPosition);
+
+    }
+
+    @Override
+    public void initializeNewGame(){
+        this.levelManager = new LevelManagerImpl(LEVEL_DURATION,
+                INVERTED_GAME_DURATION,
+                (this.gameMap.get().getPillsPositions().size() * this.gameMap.get().getPillScore())/4);
+        this.ghosts = new HashSet<>();
+        this.pacMan = new PacManImpl.Builder()
+                .currentDirection(Directions.UP)
+                .mapSize(this.gameMap.get().getxMapSize(), this.gameMap.get().getyMapSize())
+                .lives(PAC_MAN_LIVES)
+                .noWalls(this.gameMap.get().getNoWallsPositions())
+                .startPosition(this.gameMap.get().getPacManStartPosition())
+                .build();
+        this.ghostFactory = new GhostFactoryImpl.Builder()
+                .walls(this.gameMap.get().getWallsPositions())
+                .ghostHouse(this.gameMap.get().getGhostHousePosition())
+                .pacMan(pacMan)
+                .mapSize(this.gameMap.get().getxMapSize(), this.gameMap.get().getyMapSize())
+                .build();
+        this.createGhost(Ghosts.CLYDE);
+        //this.createGhost(Ghosts.INKY);
+        this.createGhost(Ghosts.PINKY);
     }
 
     @Override
     public final void decLevelTime() {
-        this.checkGameMapPresence();
         this.checkGameEnded();
         if (this.levelManager.getLevelTime() == 0) {
             this.nextLevel();
@@ -107,51 +128,41 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final int getScores() {
-        this.checkGameMapPresence();
         return this.levelManager.getScores();
     }
 
     @Override
     public final int getPacManLives() {
-        this.checkGameMapPresence();
         return this.pacMan.getLives();
     }
 
     @Override
     public final Pair<Integer, Integer> getPacManPosition() {
-        this.checkGameMapPresence();
         return this.pacMan.getPosition();
     }
 
     @Override
     public final Set<Pair<Integer, Integer>> getWallsPositions() {
-        this.checkGameMapPresence();
         return this.gameMap.get().getWallsPositions();
     }
 
     @Override
     public final Set<Pair<Integer, Integer>> getPillsPositions() {
-        this.checkGameMapPresence();
         return this.gameMap.get().getPillsPositions();
     }
 
     @Override
     public final int getLevelNumber() {
-        this.checkGameMapPresence();
         return this.levelManager.getLevelNumber();
     }
 
     @Override
     public final int getLevelTime() {
-        this.checkGameMapPresence();
         return this.levelManager.getLevelTime();
     }
 
     @Override
     public final void setGameMap(final GameMap gameMap) {
-        if (this.gameMap.isPresent()) {
-            throw new IllegalStateException();
-        }
         this.gameMap = Optional.of(gameMap);
         this.levelManager = new LevelManagerImpl(LEVEL_DURATION,
                 INVERTED_GAME_DURATION,
@@ -178,31 +189,27 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final Boolean isGameEnded() {
-        this.checkGameMapPresence();
         return this.pacMan.getLives() == 0;
     }
 
     @Override
     public final int getxMapSize() {
-        this.checkGameMapPresence();
         return this.gameMap.get().getxMapSize();
     }
 
     @Override
     public final int getyMapSize() {
-        this.checkGameMapPresence();
         return this.gameMap.get().getyMapSize();
     }
 
     @Override
     public final Directions getPacManDirection() {
-        this.checkGameMapPresence();
         return this.pacMan.getDirection();
     }
 
-    private void checkGameMapPresence() {
+/*    private void checkGameMapPresence() {
         this.checkCondition(this.gameMap.isEmpty());
-    }
+    }*/
 
     private void checkGameEnded(){
         this.checkCondition(this.isGameEnded() && this.gameMap.isPresent());
@@ -232,15 +239,29 @@ public class GameModelImpl implements GameModel {
     }
 
     private boolean checkPacmanGhostCollision() {
-        return this.ghosts.stream().anyMatch(x -> x.getPosition().equals(this.pacMan.getPosition()));
+        return this.ghosts.stream().anyMatch(x -> x.getPosition().equals(this.pacMan.getPosition())
+        || (this.areDirectionsOpposite(this.pacMan.getDirection(), x.getDirection())
+                && this.arePositionsNear(this.pacMan.getPosition(), x.getPosition())));
     }
 
-    private List<Pair<Integer, Integer>> getGhostPositions(final Ghosts ghost) {
+    private boolean areDirectionsOpposite(final Directions dir1, final Directions dir2){
+        return (dir1.equals(Directions.UP) && dir2.equals(Directions.DOWN))
+                || (dir1.equals(Directions.DOWN) && dir2.equals(Directions.UP))
+                ||(dir1.equals(Directions.LEFT) && dir2.equals(Directions.RIGHT))
+                || (dir1.equals(Directions.RIGHT) && dir2.equals(Directions.LEFT));
+    }
+
+    private boolean arePositionsNear(final Pair<Integer, Integer> position1, final Pair<Integer, Integer> position2) {
+        return Math.abs(position1.getX() - position2.getX()) <= 1
+                && Math.abs(position1.getY() - position2.getY()) <= 1;
+    }
+
+/*    private List<Pair<Integer, Integer>> getGhostPositions(final Ghosts ghost) {
         final List<Pair<Integer, Integer>> positions = new ArrayList<>();
         this.ghosts.stream().filter(x -> x.getName().equals(ghost))
                 .forEach(x -> positions.add(x.getPosition()));
         return positions;
-    }
+    }*/
 
     private void createGhost(final Ghosts ghostName) {
         Ghost ghost;

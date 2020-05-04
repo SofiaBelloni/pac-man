@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.Optional;
+
 import model.GameModel;
 import view.View;
 
@@ -12,8 +14,8 @@ public class GameLoopImpl implements Runnable, GameLoop {
     private static final double TIME_BETWEEN_UPDATES = 1000.0 / FPS;
 
     private Thread thread;
-    private boolean running;
-    private boolean paused;
+    private volatile boolean running;
+    private volatile boolean paused;
     private final LevelTimer levelTimer;
     private final DataUpdater data;
     /**
@@ -32,13 +34,14 @@ public class GameLoopImpl implements Runnable, GameLoop {
 
     @Override
     public final void start() {
-        thread = new Thread(this);
-        thread.start();
+        this.thread = new Thread(this);
+        this.thread.setDaemon(true);
+        this.thread.start();
     }
 
     @Override
     public final void run() {
-        this.levelTimer.startTimer();
+       // this.levelTimer.startTimer();
         this.running = true;
         long now = 0;
         long lastUpdateTime = System.currentTimeMillis();
@@ -74,20 +77,19 @@ public class GameLoopImpl implements Runnable, GameLoop {
     @Override
     public final synchronized void stop() {
         this.running = false;
-        this.levelTimer.stopTimer();
-        this.thread.interrupt();
+        //this.levelTimer.stopTimer();
     }
 
     @Override
     public final synchronized void pause() {
         this.paused = true;
-        this.levelTimer.stopTimer();
+        //this.levelTimer.stopTimer();
     }
 
     @Override
     public final synchronized void resume() {
         this.paused = false;
-        this.levelTimer.startTimer();
+        //this.levelTimer.startTimer();
         this.thread.notifyAll();
     }
 
