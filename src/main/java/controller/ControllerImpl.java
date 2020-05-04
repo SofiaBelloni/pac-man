@@ -1,7 +1,7 @@
 package controller;
 
 import java.io.IOException;
-import java.util.Optional;
+
 import model.Directions;
 import model.GameMapImpl;
 import model.GameModel;
@@ -59,7 +59,7 @@ public class ControllerImpl implements Controller {
 
     @Override
     public void startGame() {
-        this.model.resetGame();
+        this.model.initializeNewGame();
         this.gameLoop.start();
 
     }
