@@ -38,7 +38,7 @@ public class GameLoopImpl implements Runnable, GameLoop {
 
     @Override
     public final void run() {
-       // this.levelTimer.startTimer();
+        this.levelTimer.startTimer();
         this.running = true;
         long now = 0;
         long lastUpdateTime = System.currentTimeMillis();
@@ -53,7 +53,7 @@ public class GameLoopImpl implements Runnable, GameLoop {
                             e.printStackTrace();
                         }
                     }
-                }
+                } 
                 lastUpdateTime = System.currentTimeMillis();
             }
             now = System.currentTimeMillis();
@@ -74,13 +74,13 @@ public class GameLoopImpl implements Runnable, GameLoop {
     @Override
     public final synchronized void stop() {
         this.running = false;
-        //this.levelTimer.stopTimer();
+        this.levelTimer.stopTimer();
     }
 
     @Override
     public final synchronized void pause() {
+        this.levelTimer.startTimer();
         this.paused = true;
-       // this.levelTimer.stopTimer();
     }
 
     @Override
@@ -88,8 +88,8 @@ public class GameLoopImpl implements Runnable, GameLoop {
         synchronized (this.thread) {
             this.paused = false;
             this.thread.notifyAll();
+            this.levelTimer.stopTimer();
         }
-        //this.levelTimer.startTimer();
     }
 
     @Override
@@ -105,6 +105,6 @@ public class GameLoopImpl implements Runnable, GameLoop {
 
     private void update() {
       //delegate method
-        this.data.updateModel();
+      this.data.updateModel();
     }
 }
