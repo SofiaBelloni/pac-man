@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.Optional;
+
 import model.GameModel;
 import view.View;
 
@@ -32,13 +34,14 @@ public class GameLoopImpl implements Runnable, GameLoop {
 
     @Override
     public final void start() {
-        thread = new Thread(this);
-        thread.start();
+        this.thread = new Thread(this);
+        this.thread.setDaemon(true);
+        this.thread.start();
     }
 
     @Override
     public final void run() {
-        this.levelTimer.startTimer();
+       // this.levelTimer.startTimer();
         this.running = true;
         long now = 0;
         long lastUpdateTime = System.currentTimeMillis();
@@ -69,25 +72,24 @@ public class GameLoopImpl implements Runnable, GameLoop {
             }
             lastUpdateTime = now;
         }
-        this.thread.interrupt();
     }
 
     @Override
     public final synchronized void stop() {
         this.running = false;
-        this.levelTimer.stopTimer();
+        //this.levelTimer.stopTimer();
     }
 
     @Override
     public final synchronized void pause() {
         this.paused = true;
-        this.levelTimer.stopTimer();
+        //this.levelTimer.stopTimer();
     }
 
     @Override
     public final synchronized void resume() {
         this.paused = false;
-        this.levelTimer.startTimer();
+        //this.levelTimer.startTimer();
         this.thread.notifyAll();
     }
 
