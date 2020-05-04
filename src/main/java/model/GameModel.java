@@ -50,6 +50,11 @@ public interface GameModel {
      */
     void moveEntitiesNextPosition();
     /**
+     * reset the game
+     */
+    void resetGame();
+
+    /**
      * Increments the level time.
      */
     void decLevelTime();
@@ -92,6 +97,7 @@ public interface GameModel {
     /**
      *
      * @param gameMap
+     * sets the game map and calls the resetGame() method
      */
     void setGameMap(final GameMap gameMap);
 }

@@ -91,6 +91,30 @@ public class GameModelImpl implements GameModel {
     }
 
     @Override
+    public void resetGame(){
+        this.levelManager = new LevelManagerImpl(LEVEL_DURATION,
+                INVERTED_GAME_DURATION,
+                (this.gameMap.get().getPillsPositions().size() * this.gameMap.get().getPillScore())/4);
+        this.ghosts = new HashSet<>();
+        this.pacMan = new PacManImpl.Builder()
+                .currentDirection(Directions.UP)
+                .mapSize(this.gameMap.get().getxMapSize(), this.gameMap.get().getyMapSize())
+                .lives(PAC_MAN_LIVES)
+                .noWalls(this.gameMap.get().getNoWallsPositions())
+                .startPosition(this.gameMap.get().getPacManStartPosition())
+                .build();
+        this.ghostFactory = new GhostFactoryImpl.Builder()
+                .walls(this.gameMap.get().getWallsPositions())
+                .ghostHouse(this.gameMap.get().getGhostHousePosition())
+                .pacMan(pacMan)
+                .mapSize(this.gameMap.get().getxMapSize(), this.gameMap.get().getyMapSize())
+                .build();
+        this.createGhost(Ghosts.CLYDE);
+        //this.createGhost(Ghosts.INKY);
+        this.createGhost(Ghosts.PINKY);
+    }
+
+    @Override
     public final void decLevelTime() {
         this.checkGameMapPresence();
         this.checkGameEnded();
@@ -153,26 +177,7 @@ public class GameModelImpl implements GameModel {
             throw new IllegalStateException();
         }
         this.gameMap = Optional.of(gameMap);
-        this.levelManager = new LevelManagerImpl(LEVEL_DURATION,
-                INVERTED_GAME_DURATION,
-                (this.gameMap.get().getPillsPositions().size() * this.gameMap.get().getPillScore())/4);
-        this.ghosts = new HashSet<>();
-        this.pacMan = new PacManImpl.Builder()
-                .currentDirection(Directions.UP)
-                .mapSize(this.gameMap.get().getxMapSize(), this.gameMap.get().getyMapSize())
-                .lives(PAC_MAN_LIVES)
-                .noWalls(this.gameMap.get().getNoWallsPositions())
-                .startPosition(this.gameMap.get().getPacManStartPosition())
-                .build();
-        this.ghostFactory = new GhostFactoryImpl.Builder()
-                .walls(this.gameMap.get().getWallsPositions())
-                .ghostHouse(this.gameMap.get().getGhostHousePosition())
-                .pacMan(pacMan)
-                .mapSize(this.gameMap.get().getxMapSize(), this.gameMap.get().getyMapSize())
-                .build();
-        this.createGhost(Ghosts.CLYDE);
-        //this.createGhost(Ghosts.INKY);
-        this.createGhost(Ghosts.PINKY);
+        this.resetGame();
     }
 
     @Override
