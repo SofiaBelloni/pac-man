@@ -63,8 +63,6 @@ public class GameModelImpl implements GameModel {
     @Override
     public final void moveEntitiesNextPosition() {
         this.checkGameEnded();
-        this.pacMan.nextPosition();
-        this.ghosts.forEach(Entity::nextPosition);
         if (this.checkPacmanGhostCollision()) {
             if (this.levelManager.isGameInverted()) {
                 this.ghosts.removeIf(x ->
@@ -83,6 +81,9 @@ public class GameModelImpl implements GameModel {
                 }
             }
         }
+        this.pacMan.nextPosition();
+        this.ghosts.forEach(Entity::nextPosition);
+
     }
 
     @Override
