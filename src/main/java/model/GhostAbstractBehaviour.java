@@ -4,10 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import utils.Pair;
 import utils.PairImpl;
-
 import static model.Directions.UP;
 import static model.Directions.DOWN;
 import static model.Directions.RIGHT;
@@ -25,7 +23,7 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
     private Pair<Integer, Integer> currentPosition;
     private Map<Directions, Pair<Integer, Integer>> mapAdj;
     private boolean isInside;
-    final List<Pair<Integer, Integer>> ghostHouse;
+    private final List<Pair<Integer, Integer>> ghostHouse;
 
     public GhostAbstractBehaviour(final int xMapSize, final int yMapSize, final Pair<Integer, Integer> startPosition,
             final List<Pair<Integer, Integer>> ghostHouse) {

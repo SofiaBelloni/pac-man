@@ -1,13 +1,10 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-
 import utils.Pair;
 
 public class GameModelImpl implements GameModel {
@@ -105,7 +102,7 @@ public class GameModelImpl implements GameModel {
                 .mapSize(this.gameMap.get().getxMapSize(), this.gameMap.get().getyMapSize())
                 .build();
         this.createGhost(Ghosts.CLYDE);
-        //this.createGhost(Ghosts.INKY);
+        //this.createGhost(Ghosts.BLINKY);
         this.createGhost(Ghosts.PINKY);
     }
 
@@ -205,7 +202,7 @@ public class GameModelImpl implements GameModel {
         this.gameMap.get().restorePills();
         this.pacMan.returnToStartPosition();
         this.createGhost(Ghosts.CLYDE);
-        //this.createGhost(Ghosts.INKY);
+        //this.createGhost(Ghosts.BLINKY);
         this.createGhost(Ghosts.PINKY);
     }
 

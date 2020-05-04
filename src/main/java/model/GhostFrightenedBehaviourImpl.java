@@ -16,12 +16,14 @@ import static model.Directions.LEFT;
 public class GhostFrightenedBehaviourImpl extends GhostAbstractBehaviour {
 
     private final Set<Pair<Integer, Integer>> setWall;
+    private final List<Pair<Integer, Integer>> ghostHouse;
 
     public GhostFrightenedBehaviourImpl(final Set<Pair<Integer, Integer>> setWall,
             final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize,
             final Pair<Integer, Integer> startPosition) {
         super(xMapSize, yMapSize, startPosition, ghostHouse);
         this.setWall = setWall;
+        this.ghostHouse = ghostHouse;
     }
 
     @Override
