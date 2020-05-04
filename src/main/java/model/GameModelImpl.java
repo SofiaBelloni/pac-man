@@ -235,15 +235,29 @@ public class GameModelImpl implements GameModel {
     }
 
     private boolean checkPacmanGhostCollision() {
-        return this.ghosts.stream().anyMatch(x -> x.getPosition().equals(this.pacMan.getPosition()));
+        return this.ghosts.stream().anyMatch(x -> x.getPosition().equals(this.pacMan.getPosition())
+        || (this.areDirectionsOpposite(this.pacMan.getDirection(), x.getDirection())
+                && this.arePositionsNear(this.pacMan.getPosition(), x.getPosition())));
     }
 
-    private List<Pair<Integer, Integer>> getGhostPositions(final Ghosts ghost) {
+    private boolean areDirectionsOpposite(final Directions dir1, final Directions dir2){
+        return (dir1.equals(Directions.UP) && dir2.equals(Directions.DOWN))
+                || (dir1.equals(Directions.DOWN) && dir2.equals(Directions.UP))
+                ||(dir1.equals(Directions.LEFT) && dir2.equals(Directions.RIGHT))
+                || (dir1.equals(Directions.RIGHT) && dir2.equals(Directions.LEFT));
+    }
+
+    private boolean arePositionsNear(Pair<Integer, Integer> position1, Pair<Integer, Integer> position2) {
+        return Math.abs(position1.getX() - position2.getX()) <= 1
+                && Math.abs(position1.getY() - position2.getY()) <= 1;
+    }
+
+/*    private List<Pair<Integer, Integer>> getGhostPositions(final Ghosts ghost) {
         final List<Pair<Integer, Integer>> positions = new ArrayList<>();
         this.ghosts.stream().filter(x -> x.getName().equals(ghost))
                 .forEach(x -> positions.add(x.getPosition()));
         return positions;
-    }
+    }*/
 
     private void createGhost(final Ghosts ghostName) {
         Ghost ghost;
