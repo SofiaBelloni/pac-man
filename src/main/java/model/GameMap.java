@@ -50,7 +50,7 @@ public interface GameMap {
      * @return the initial position of PacMan
      */
     Pair<Integer, Integer> getPacManStartPosition();
-    /*
+    /**
      * restores the pills in the map
      */
     void restorePills();

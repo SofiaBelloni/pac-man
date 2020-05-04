@@ -84,6 +84,7 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public void initializeNewGame(){
+        this.gameMap.get().restorePills();
         this.levelManager = new LevelManagerImpl(LEVEL_DURATION,
                 INVERTED_GAME_DURATION,
                 (this.gameMap.get().getPillsPositions().size() * this.gameMap.get().getPillScore())/4);

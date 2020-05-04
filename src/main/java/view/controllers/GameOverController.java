@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import view.GameScene;
 import view.View;
 
@@ -34,6 +35,21 @@ public final class GameOverController extends SceneController {
 
     @FXML
     void saveAndGoNextScene(final ActionEvent event) throws IOException {
+        this.nextScene();
+    }
+
+    @Override
+    public void onKeyPressed(final KeyEvent event) {
+        switch (event.getCode()) {
+        case ENTER:
+            this.nextScene();
+            break;
+        default:
+            break;
+        }
+    }
+
+    private void nextScene() {
         this.getController().savePlayer(Optional.of(playerNameText.getText()).filter(t -> !t.isBlank()).orElse("Guest"));
         this.getView().setScene(GameScene.MAINMENU);
     }
