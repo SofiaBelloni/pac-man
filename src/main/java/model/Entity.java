@@ -7,13 +7,15 @@ import utils.Pair;
  */
 public interface Entity {
     /**
+     * Calculates Entity next position.
+     */
+    void nextPosition();
+    /**
+     * Gets the position.
+     *
      * @return the position of the entity
      */
     Pair<Integer, Integer> getPosition();
-    /**
-     * Move the entity to the next position.
-     */
-    void nextPosition();
     /**
      * PacMan return to the startPosition.
      */
