@@ -76,7 +76,7 @@ public class GameLoopImpl implements Runnable, GameLoop {
 
     @Override
     public final synchronized void pause() {
-        this.levelTimer.startTimer();
+        this.levelTimer.stopTimer();
         this.paused = true;
     }
 
@@ -85,7 +85,7 @@ public class GameLoopImpl implements Runnable, GameLoop {
         synchronized (this.thread) {
             this.paused = false;
             this.thread.notifyAll();
-            this.levelTimer.stopTimer();
+            this.levelTimer.startTimer();
         }
     }
 
