@@ -1,9 +1,15 @@
 package view.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
+import com.google.common.collect.Iterables;
+
 import controller.Controller;
+import javafx.animation.AnimationTimer;
 import javafx.animation.PathTransition;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -66,6 +72,11 @@ public class GameViewController extends SceneController {
     private Pair<Integer, Integer> pacmanPosition;
     private final Image pill = new Image("textures/pill/pill.png");
     private int currentLevel;
+    private AnimationTimer entitiesAnimationTimer;
+    private final List<Image> pacmanImagesList = new ArrayList<>();
+    private long startNanoTime = System.nanoTime();
+    private Iterator<Image> pacmanImagesIterator;
+
 
     public final void init(final Controller controller, final View view) {
         super.init(controller, view);
@@ -104,8 +115,26 @@ public class GameViewController extends SceneController {
         for (int i = 0; i < controller.getData().getLives(); i++) {
             this.livesContainer.getChildren().add(this.lifeIcon());
         }
-        //start the gameLoop
-        //this.getController().startGame();
+
+        //Animate the entities
+        this.pacmanImagesList.add(new Image("textures/pac_man/pac_man0.png"));
+        this.pacmanImagesList.add(new Image("textures/pac_man/pac_man1.png"));
+        this.pacmanImagesList.add(new Image("textures/pac_man/pac_man2.png"));
+        this.pacmanImagesList.add(new Image("textures/pac_man/pac_man3.png"));
+
+        //This iterator is cyclic. example: with list[1,2,3] calling next() returns 1 2 3 1 2 3 1 2 3...
+        this.pacmanImagesIterator = Iterables.cycle(this.pacmanImagesList).iterator();
+
+        this.entitiesAnimationTimer = new AnimationTimer() {
+            @Override
+            public void handle(final long currentNanoTime) {
+                //Change image every 0.1 seconds
+                if (currentNanoTime - startNanoTime >= 1.0e8) {
+                    pacmanImage.setImage(pacmanImagesIterator.next());
+                    startNanoTime = System.nanoTime();
+                }
+            }
+        };
     }
 
     @Override
@@ -133,14 +162,17 @@ public class GameViewController extends SceneController {
             break;
         case P:
            this.getController().pauseGame();
+           this.entitiesAnimationTimer.stop();
            //TODO andare alla schermata pausa
             break;
         case R:
             this.getController().resumeGame();
+            this.entitiesAnimationTimer.start();
             //TODO questo da fare nella schermata pausa
              break;
         case SPACE:
             this.getController().startGame();
+            this.entitiesAnimationTimer.start();
              break;
         default:
             break;
@@ -158,6 +190,7 @@ public class GameViewController extends SceneController {
 
         if (this.getController().getData().isGameEnded()) {
             this.getController().stopGame();
+            this.entitiesAnimationTimer.stop();
             this.getView().setScene(GameScene.GAMEOVER);
         }
     }
