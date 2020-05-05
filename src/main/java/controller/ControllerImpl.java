@@ -31,7 +31,6 @@ public class ControllerImpl implements Controller {
     public ControllerImpl(final GameModel model, final View view) {
         this.model = model;
         this.setGameMap(DEFAULT_MAP_NAME);
-        this.model.initializeNewGame();
         this.view = view;
         this.gameLoop = new GameLoopImpl(this.model, this.view);
         this.fileManager = new FileManagerImpl();
@@ -48,6 +47,7 @@ public class ControllerImpl implements Controller {
                     .pills(mapLoader.getPills())
                     .walls(mapLoader.getWalls())
                     .build());
+            this.model.initializeNewGame();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,9 +60,7 @@ public class ControllerImpl implements Controller {
 
     @Override
     public void startGame() {
-        this.model.initializeNewGame();
         this.gameLoop.start();
-
     }
 
     @Override
@@ -78,6 +76,7 @@ public class ControllerImpl implements Controller {
     @Override
     public void stopGame() {
         this.gameLoop.stop();
+        this.model.initializeNewGame();
     }
 
     @Override
