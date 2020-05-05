@@ -79,7 +79,6 @@ public class GameViewController extends SceneController {
     private long startNanoTime = System.nanoTime();
     private Iterator<Image> pacmanImagesIterator;
 
-
     public final void init(final Controller controller, final View view) {
         super.init(controller, view);
         this.currentLevel = 1;
@@ -118,25 +117,8 @@ public class GameViewController extends SceneController {
             this.livesContainer.getChildren().add(this.lifeIcon());
         }
 
-        //Animate the entities
-        this.pacmanImagesList.add(new Image("textures/pac_man/pac_man0.png"));
-        this.pacmanImagesList.add(new Image("textures/pac_man/pac_man1.png"));
-        this.pacmanImagesList.add(new Image("textures/pac_man/pac_man2.png"));
-        this.pacmanImagesList.add(new Image("textures/pac_man/pac_man3.png"));
+        this.initializeAnimations();
 
-        //This iterator is cyclic. example: with list[1,2,3] calling next() returns 1 2 3 1 2 3 1 2 3...
-        this.pacmanImagesIterator = Iterables.cycle(this.pacmanImagesList).iterator();
-
-        this.entitiesAnimationTimer = new AnimationTimer() {
-            @Override
-            public void handle(final long currentNanoTime) {
-                //Change image every 0.1 seconds
-                if (currentNanoTime - startNanoTime >= 1.0e8) {
-                    pacmanImage.setImage(pacmanImagesIterator.next());
-                    startNanoTime = System.nanoTime();
-                }
-            }
-        };
     }
 
     @Override
@@ -163,18 +145,16 @@ public class GameViewController extends SceneController {
             this.getController().newPacManDirection(Directions.RIGHT);
             break;
         case P:
-           this.getController().pauseGame();
-           this.entitiesAnimationTimer.stop();
-           //TODO andare alla schermata pausa
+           this.pauseGame();
             break;
         case R:
-            this.getController().resumeGame();
-            this.entitiesAnimationTimer.start();
-            //TODO questo da fare nella schermata pausa
+           this.resumeGame();
              break;
         case SPACE:
-            this.getController().startGame();
-            this.entitiesAnimationTimer.start();
+            this.startGame();
+             break;
+        case ESCAPE:
+            this.endGame();
              break;
         default:
             break;
@@ -188,12 +168,8 @@ public class GameViewController extends SceneController {
         this.ghostRender();
         this.pacmanRender();
         this.gameMapRender();
-        // TODO
-
         if (this.getController().getData().isGameEnded()) {
-            this.getController().stopGame();
-            this.entitiesAnimationTimer.stop();
-            this.getView().setScene(GameScene.GAMEOVER);
+            this.endGame();
         }
     }
 
@@ -285,7 +261,7 @@ public class GameViewController extends SceneController {
     }
 
     /**
-     * Call this method to draw the current position of PacMan in the grid.
+     * Call this method to draw the current position of PacMan.
      */
     private void pacmanRender() {
         Pair<Integer, Integer> newPosition = new PairImpl<>(this.getController().getData().getPacManXPosition(),
@@ -352,4 +328,46 @@ public class GameViewController extends SceneController {
         p.play();
     }
 
+    private void startGame() {
+        getController().startGame();
+        entitiesAnimationTimer.start();
+    }
+    private void pauseGame() {
+        this.getController().pauseGame();
+        this.entitiesAnimationTimer.stop();
+        //this.getView().setScene(GameScene.PAUSE);
+    }
+    private void resumeGame() {
+        this.getController().resumeGame();
+        this.entitiesAnimationTimer.start();
+    }
+    private void endGame() {
+        this.getController().stopGame();
+        this.entitiesAnimationTimer.stop();
+        this.getView().setScene(GameScene.GAMEOVER);
+    }
+
+    /**
+     * Call this method to initialize the timer that changes the entity images to make it animate.
+     */
+    private void initializeAnimations() {
+        this.pacmanImagesList.add(new Image("textures/pac_man/pac_man0.png"));
+        this.pacmanImagesList.add(new Image("textures/pac_man/pac_man1.png"));
+        this.pacmanImagesList.add(new Image("textures/pac_man/pac_man2.png"));
+        this.pacmanImagesList.add(new Image("textures/pac_man/pac_man3.png"));
+
+        //This iterator is cyclic. example: with list[1,2,3] calling next() returns 1 2 3 1 2 3 1 2 3...
+        this.pacmanImagesIterator = Iterables.cycle(this.pacmanImagesList).iterator();
+
+        this.entitiesAnimationTimer = new AnimationTimer() {
+            @Override
+            public void handle(final long currentNanoTime) {
+                //Change image every 0.1 seconds
+                if (currentNanoTime - startNanoTime >= 1.0e8) {
+                    pacmanImage.setImage(pacmanImagesIterator.next());
+                    startNanoTime = System.nanoTime();
+                }
+            }
+        };
+    }
 }
