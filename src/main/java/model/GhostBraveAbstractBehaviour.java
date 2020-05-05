@@ -14,8 +14,6 @@ import static model.Directions.LEFT;
 public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour implements GhostBraveBehaviour {
 
     private static final int UPPERBOUND = 10_000;
-    private static final int X_OLDLEVELTARGET = 14;
-    private static final int Y_OLDLEVELTARGET = 11;
 
     private final Map<Pair<Integer, Integer>, Integer> mapDijkstra;
     private final Set<Pair<Integer, Integer>> setWall;
@@ -41,15 +39,13 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
         this.setWall = setWall;
         this.pacMan = pacMan;
         this.relaxed = true;
-        this.oldLevelTarget = new PairImpl<>(X_OLDLEVELTARGET, Y_OLDLEVELTARGET);
         this.fBehaviour = new GhostFrightenedBehaviourImpl(setWall, ghostHouse, xMapSize, yMapSize, startPosition);
         this.setCurrentPosition(startPosition);
+        this.oldLevelTarget = new PairImpl<>(startPosition.getX(), startPosition.getY() - 3);
     }
 
     protected final void relax(final boolean oldLevel) {
-        System.out.println(this.setWall.size());
         this.checkIfInside(this.setWall);
-        System.out.println(this.setWall.size());
         if (oldLevel) {
             this.relaxTarget = this.oldLevelTarget;
         }
