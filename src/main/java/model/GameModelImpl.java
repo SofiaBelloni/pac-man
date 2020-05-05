@@ -70,7 +70,10 @@ public class GameModelImpl implements GameModel {
         }
         if (this.checkPacmanGhostCollision()) {
             if (this.levelManager.isGameInverted()) {
-                this.ghosts.removeIf(x -> x.getPosition().equals(this.pacMan.getPosition()));
+                this.ghosts.removeIf(x ->
+                        x.getPosition().equals(this.pacMan.getPosition())
+                || (this.arePositionsNear(this.pacMan.getPosition(), x.getPosition())
+                                && this.areDirectionsOpposite(this.pacMan.getDirection(), x.getDirection())));
             } else {
                 this.pacMan.kill();
                 this.ghosts.forEach(Entity::returnToStartPosition);
