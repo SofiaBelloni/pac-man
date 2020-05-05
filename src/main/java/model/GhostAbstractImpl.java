@@ -28,7 +28,6 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
 
     @Override
     public final void nextPosition() {
-        System.out.println(this.name);
         this.checkCreation();
         this.myBehaviour.nextPosition(this.eatable, this.timeToTurn, this.oldLevel);
         this.timeToTurn = false;
