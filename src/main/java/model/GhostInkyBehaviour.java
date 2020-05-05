@@ -73,6 +73,8 @@ public class GhostInkyBehaviour extends GhostBraveAbstractBehaviour {
                 this.chaseTarget = new PairImpl<>(this.chaseTarget.getX() - 1, this.chaseTarget.getY());
             } else if (this.chaseTarget.getY() - 1 >= 0 && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() - 1))) {
                 this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() - 1);
+            } else {
+                this.chaseTarget = pacManPosition;
             }
         }
     }

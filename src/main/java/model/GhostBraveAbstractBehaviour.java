@@ -46,13 +46,18 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
 
     protected final void relax(final boolean oldLevel) {
         this.checkIfInside(this.setWall);
-        if (oldLevel) {
-            this.relaxTarget = this.oldLevelTarget;
-        }
-        this.findPath(this.relaxTarget);
-        this.move(this.relaxTarget);
-        if (this.getCurrentPosition().equals(this.relaxTarget)) {
-            this.relaxed = false;
+        if (oldLevel || this.checkIfInside(this.setWall)) {
+            this.findPath(this.oldLevelTarget);
+            this.move(this.oldLevelTarget);
+            if (this.getCurrentPosition().equals(this.oldLevelTarget) && oldLevel) {
+                this.relaxed = false;
+            }
+        } else {
+            this.findPath(this.relaxTarget);
+            this.move(this.relaxTarget);
+            if (this.getCurrentPosition().equals(this.relaxTarget)) {
+                this.relaxed = false;
+            }
         }
     }
 
