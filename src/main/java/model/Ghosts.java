@@ -16,5 +16,9 @@ public enum Ghosts {
     /**
      * Ghost Clyde.
      */
-    CLYDE
+    CLYDE, 
+    /**
+     * Ghost from old levels.
+     */
+    OLDLEVEL
 }

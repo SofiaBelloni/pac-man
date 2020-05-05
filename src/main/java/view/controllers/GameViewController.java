@@ -67,6 +67,8 @@ public class GameViewController extends SceneController {
     private int squareSize;
     private final Map<Integer, ImageView> ghostView = new HashMap<>();
     private final Map<Integer, Pair<Integer, Integer>> ghostPositions = new HashMap<>();
+    private final Map<Integer, Integer> ghostLevels = new HashMap<>();
+    private final Map<Integer, Ghosts> ghostTypes = new HashMap<>();
     private final Map<Pair<Integer, Integer>, ImageView> gameMap = new HashMap<>();
     private ImageView pacmanImage;
     private Pair<Integer, Integer> pacmanPosition;
@@ -197,8 +199,9 @@ public class GameViewController extends SceneController {
 
     public final void ghostSpawn() {
         for (int id : this.getController().getData().getGhostsPositions().keySet()) {
-            final Ghosts name = this.getController().getData().getGhostsTypes().get(id);
             if (!this.ghostView.containsKey(id)) {
+                this.ghostLevels.put(id, this.currentLevel);
+                this.ghostTypes.put(id, this.getController().getData().getGhostsTypes().get(id));
                 this.ghostPositions.put(id, new PairImpl<>(this.getController()
                         .getData().getGhostsPositions().get(id).getX(),
                         this.getController()
@@ -213,7 +216,7 @@ public class GameViewController extends SceneController {
                 if (this.getController().getData().isGameInverted()) {
                     ghostImage.setImage(new Image("textures/ghost/eatable.png"));
                 } else {
-                    ghostImage.setImage(new Image("textures/" + name.toString() + "/RIGHT.png"));
+                    ghostImage.setImage(new Image("textures/" + this.ghostTypes.get(id).toString() + "/RIGHT.png"));
                 }
             }
         }
@@ -225,7 +228,6 @@ public class GameViewController extends SceneController {
             this.ghostSpawn();
         }
         for (int id : this.ghostPositions.keySet()) {
-            final Ghosts name = this.getController().getData().getGhostsTypes().get(id);
             if (!this.getController().getData().getGhostsPositions().containsKey(id)) {
                 this.entityPane.getChildren().remove(this.ghostView.get(id));
                 this.ghostView.remove(id);
@@ -238,18 +240,21 @@ public class GameViewController extends SceneController {
                 if (this.getController().getData().isGameInverted()) {
                     this.ghostView.get(id).setImage(new Image("textures/ghost/eatable.png"));
                 } else {
+                    if (this.ghostLevels.get(id) < this.currentLevel) {
+                        this.ghostTypes.put(id, Ghosts.OLDLEVEL);
+                    }
                     switch (this.getController().getData().getGhostsDirections().get(id)) {
                     case UP:
-                        this.ghostView.get(id).setImage(new Image("textures/" + name.toString() + "/UP.png"));
+                        this.ghostView.get(id).setImage(new Image("textures/" + this.ghostTypes.get(id).toString() + "/UP.png"));
                         break;
                     case DOWN:
-                        this.ghostView.get(id).setImage(new Image("textures/" + name.toString() + "/DOWN.png"));
+                        this.ghostView.get(id).setImage(new Image("textures/" + this.ghostTypes.get(id).toString() + "/DOWN.png"));
                         break;
                     case LEFT:
-                        this.ghostView.get(id).setImage(new Image("textures/" + name.toString() + "/LEFT.png"));
+                        this.ghostView.get(id).setImage(new Image("textures/" + this.ghostTypes.get(id).toString() + "/LEFT.png"));
                         break;
                     case RIGHT:
-                        this.ghostView.get(id).setImage(new Image("textures/" + name.toString() + "/RIGHT.png"));
+                        this.ghostView.get(id).setImage(new Image("textures/" + this.ghostTypes.get(id).toString() + "/RIGHT.png"));
                         break;
                     default:
                         break;
