@@ -65,10 +65,9 @@ public class GameModelImpl implements GameModel {
                 this.ghosts.forEach(x -> x.setEatable(true));
             }
         }
-        if (this.checkPacmanGhostCollision()) {
+        if (this.checkPacManGhostCollision()) {
             if (this.levelManager.isGameInverted()) {
-                this.ghosts.removeIf(x ->
-                        x.getPosition().equals(this.pacMan.getPosition())
+                this.ghosts.removeIf(x -> x.getPosition().equals(this.pacMan.getPosition())
                 || (this.arePositionsNear(this.pacMan.getPosition(), x.getPosition())
                                 && this.areDirectionsOpposite(this.pacMan.getDirection(), x.getDirection())));
             } else {
@@ -209,7 +208,7 @@ public class GameModelImpl implements GameModel {
         return this.gameMap.get().isPill(this.getPacManPosition());
     }
 
-    private boolean checkPacmanGhostCollision() {
+    private boolean checkPacManGhostCollision() {
         return this.ghosts.stream().anyMatch(x -> x.getPosition().equals(this.pacMan.getPosition())
         || (this.areDirectionsOpposite(this.pacMan.getDirection(), x.getDirection())
                 && this.arePositionsNear(this.pacMan.getPosition(), x.getPosition())));
