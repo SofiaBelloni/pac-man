@@ -1,10 +1,7 @@
 package model;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+
 import utils.Pair;
 
 public class GameModelImpl implements GameModel {
@@ -35,21 +32,21 @@ public class GameModelImpl implements GameModel {
     public final Map<Integer, Pair<Integer, Integer>> getGhostsPositions() {
         final Map<Integer, Pair<Integer, Integer>> ghostsPositions = new HashMap<>();
         this.ghosts.forEach(x -> ghostsPositions.put(x.getId(), x.getPosition()));
-        return ghostsPositions;
+        return Collections.unmodifiableMap(ghostsPositions);
     }
 
     @Override
     public final Map<Integer, Ghosts> getGhostsTypes() {
         final Map<Integer, Ghosts> gostsTypes = new HashMap<>();
         this.ghosts.forEach(x -> gostsTypes.put(x.getId(), x.getName()));
-        return gostsTypes;
+        return Collections.unmodifiableMap(gostsTypes);
     }
 
     @Override
     public final Map<Integer, Directions> getGhostsDirections() {
         final Map<Integer, Directions> ghostsDirections = new HashMap<>();
         this.ghosts.forEach(x -> ghostsDirections.put(x.getId(), x.getDirection()));
-        return ghostsDirections;
+        return Collections.unmodifiableMap(ghostsDirections);
     }
 
     @Override
@@ -139,12 +136,12 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final Set<Pair<Integer, Integer>> getWallsPositions() {
-        return this.gameMap.get().getWallsPositions();
+        return Set.copyOf(this.gameMap.get().getWallsPositions());
     }
 
     @Override
     public final Set<Pair<Integer, Integer>> getPillsPositions() {
-        return this.gameMap.get().getPillsPositions();
+        return Set.copyOf(this.gameMap.get().getPillsPositions());
     }
 
     @Override

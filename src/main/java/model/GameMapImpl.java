@@ -1,10 +1,6 @@
 package model;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import utils.Pair;
 
@@ -120,17 +116,17 @@ public final class GameMapImpl implements GameMap {
 
     @Override
     public Set<Pair<Integer, Integer>> getWallsPositions() {
-        return this.gameMap.get(TileType.WALL);
+        return Set.copyOf(this.gameMap.get(TileType.WALL));
     }
 
     @Override
     public Set<Pair<Integer, Integer>> getPillsPositions() {
-        return this.gameMap.get(TileType.PILL);
+        return Set.copyOf(this.gameMap.get(TileType.PILL));
     }
 
     @Override
     public Set<Pair<Integer, Integer>> getGhostHousePosition() {
-        return this.gameMap.get(TileType.GHOSTS_HOUSE);
+        return Set.copyOf(this.gameMap.get(TileType.GHOSTS_HOUSE));
     }
 
     @Override
@@ -139,7 +135,7 @@ public final class GameMapImpl implements GameMap {
         noWalls.addAll(this.getPillsPositions());
         noWalls.addAll(this.gameMap.get(TileType.FREE));
         noWalls.add(this.getPacManStartPosition());
-        return noWalls;
+        return Set.copyOf(noWalls);
     }
 
     @Override
