@@ -35,6 +35,7 @@ import utils.Pair;
 import utils.PairImpl;
 import view.GameScene;
 import view.View;
+import view.utils.GameState;
 
 public class GameViewController extends SceneController {
 
@@ -86,6 +87,7 @@ public class GameViewController extends SceneController {
     private long startNanoTime = System.nanoTime();
     private Iterator<Image> pacmanImagesIterator;
     private final Timer countdownTimer = new Timer();
+    private final GameState gameState = new GameState();
 
     public final void init(final Controller controller, final View view) {
         super.init(controller, view);
@@ -154,31 +156,12 @@ public class GameViewController extends SceneController {
             this.pacmanImage.setRotate(90);
             this.getController().newPacManDirection(Directions.RIGHT);
             break;
-        case P:
-           this.pauseGame();
-            break;
-        case R:
-           this.resumeGame();
-             break;
         case SPACE:
-                this.countdownTimer.scheduleAtFixedRate(new TimerTask() {
-                private int value = COUNTDOWN + 1;
-                @Override
-                public void run() {
-                    if (value > 1) {
-                        Platform.runLater(() -> countDown.setText(String.valueOf(this.value)));
-                        this.value--;
-                    } else {
-                        Platform.runLater(() -> countDown.setText(""));
-                        startGame();
-                        this.cancel();
-                    } 
-                }
-            }, 0, 1000);
-             break;
+            this.changeGameState();
+            break;
         case ESCAPE:
             this.endGame();
-             break;
+            break;
         default:
             break;
         }
@@ -356,34 +339,66 @@ public class GameViewController extends SceneController {
      * @param destPos the destination Pair<Integer, Integer>
      */
     private void transition(final ImageView image, final Pair<Integer, Integer> startPos, final Pair<Integer, Integer> destPos) {
-        PathTransition p = new PathTransition();
+        final PathTransition p = new PathTransition();
         p.setNode(image);
         p.setDuration(Duration.seconds(0.3333));
-        p.setPath(new Line((this.squareSize * startPos.getX()) + (this.squareSize / 2),
-                (this.squareSize * startPos.getY()) + (this.squareSize / 2),
-                (this.squareSize * destPos.getX()) + (this.squareSize / 2),
-                (this.squareSize * destPos.getY()) + (this.squareSize / 2)));
+        p.setPath(new Line(this.squareSize * startPos.getX() + this.squareSize / 2,
+                this.squareSize * startPos.getY() + this.squareSize / 2,
+                this.squareSize * destPos.getX() + this.squareSize / 2,
+                this.squareSize * destPos.getY() + this.squareSize / 2));
         image.setY(this.squareSize * destPos.getY());
         p.setCycleCount(1);
         p.play();
     }
 
+    private void changeGameState() {
+        switch (this.gameState.getState()) {
+        case FINISHED:
+            this.countdownTimer.scheduleAtFixedRate(new TimerTask() {
+                private int value = COUNTDOWN + 1;
+                @Override
+                public void run() {
+                    if (value > 1) {
+                        Platform.runLater(() -> countDown.setText(String.valueOf(this.value)));
+                        this.value--;
+                    } else {
+                        Platform.runLater(() -> countDown.setText(""));
+                        startGame();
+                        this.cancel();
+                    } 
+                }
+            }, 0, 1000);
+            break;
+        case RUNNING:
+            this.pauseGame();
+            break;
+        case PAUSE:
+            this.resumeGame();
+            break;
+        default:
+            break;
+        }
+    }
+
     private void startGame() {
-        getController().startGame();
-        entitiesAnimationTimer.start();
+        this.getController().startGame();
+        this.entitiesAnimationTimer.start();
+        gameState.setState(GameState.State.RUNNING);
     }
     private void pauseGame() {
         this.getController().pauseGame();
         this.entitiesAnimationTimer.stop();
-        //this.getView().setScene(GameScene.PAUSE);
+        this.gameState.setState(GameState.State.PAUSE);
     }
     private void resumeGame() {
         this.getController().resumeGame();
         this.entitiesAnimationTimer.start();
+        this.gameState.setState(GameState.State.RUNNING);
     }
     private void endGame() {
         this.getController().stopGame();
         this.entitiesAnimationTimer.stop();
+        this.gameState.setState(GameState.State.FINISHED);
         this.getView().setScene(GameScene.GAMEOVER);
     }
 
