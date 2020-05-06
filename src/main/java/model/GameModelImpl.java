@@ -18,44 +18,44 @@ public class GameModelImpl implements GameModel {
     public GameModelImpl() { }
 
     @Override
-    public final void setPacManDirection(final Directions direction) {
+    public final synchronized void setPacManDirection(final Directions direction) {
         this.checkGameEnded();
         this.pacMan.setDirection(direction);
     }
 
     @Override
-    public final int getLevelDuration(){
+    public final synchronized int getLevelDuration(){
         return  this.levelManager.getLevelDuration();
     }
 
     @Override
-    public final Map<Integer, Pair<Integer, Integer>> getGhostsPositions() {
+    public final synchronized Map<Integer, Pair<Integer, Integer>> getGhostsPositions() {
         final Map<Integer, Pair<Integer, Integer>> ghostsPositions = new HashMap<>();
         this.ghosts.forEach(x -> ghostsPositions.put(x.getId(), x.getPosition()));
         return Collections.unmodifiableMap(ghostsPositions);
     }
 
     @Override
-    public final Map<Integer, Ghosts> getGhostsTypes() {
+    public final synchronized Map<Integer, Ghosts> getGhostsTypes() {
         final Map<Integer, Ghosts> gostsTypes = new HashMap<>();
         this.ghosts.forEach(x -> gostsTypes.put(x.getId(), x.getName()));
         return Collections.unmodifiableMap(gostsTypes);
     }
 
     @Override
-    public final Map<Integer, Directions> getGhostsDirections() {
+    public final synchronized Map<Integer, Directions> getGhostsDirections() {
         final Map<Integer, Directions> ghostsDirections = new HashMap<>();
         this.ghosts.forEach(x -> ghostsDirections.put(x.getId(), x.getDirection()));
         return Collections.unmodifiableMap(ghostsDirections);
     }
 
     @Override
-    public boolean isGameInverted() {
+    public final synchronized boolean isGameInverted() {
         return this.levelManager.isGameInverted();
     }
 
     @Override
-    public final void moveEntitiesNextPosition() {
+    public final synchronized void moveEntitiesNextPosition() {
         this.checkGameEnded();
         if (this.checkPillCollision()) {
             this.gameMap.get().removePill(this.pacMan.getPosition());
@@ -80,7 +80,7 @@ public class GameModelImpl implements GameModel {
     }
 
     @Override
-    public void initializeNewGame(){
+    public synchronized void initializeNewGame(){
         this.gameMap.get().restorePills();
         this.levelManager = new LevelManagerImpl(LEVEL_DURATION,
                 INVERTED_GAME_DURATION,
@@ -105,7 +105,7 @@ public class GameModelImpl implements GameModel {
     }
 
     @Override
-    public final void decLevelTime() {
+    public final synchronized void decLevelTime() {
         this.checkGameEnded();
         if (this.levelManager.getLevelTime() == 0) {
             this.nextLevel();
@@ -119,17 +119,17 @@ public class GameModelImpl implements GameModel {
     }
 
     @Override
-    public final int getScores() {
+    public final synchronized int getScores() {
         return this.levelManager.getScores();
     }
 
     @Override
-    public final int getPacManLives() {
+    public final synchronized int getPacManLives() {
         return this.pacMan.getLives();
     }
 
     @Override
-    public final Pair<Integer, Integer> getPacManPosition() {
+    public final synchronized Pair<Integer, Integer> getPacManPosition() {
         return this.pacMan.getPosition();
     }
 
@@ -139,42 +139,42 @@ public class GameModelImpl implements GameModel {
     }
 
     @Override
-    public final Set<Pair<Integer, Integer>> getPillsPositions() {
+    public final synchronized Set<Pair<Integer, Integer>> getPillsPositions() {
         return Set.copyOf(this.gameMap.get().getPillsPositions());
     }
 
     @Override
-    public final int getLevelNumber() {
+    public final synchronized int getLevelNumber() {
         return this.levelManager.getLevelNumber();
     }
 
     @Override
-    public final int getLevelTime() {
+    public final synchronized int getLevelTime() {
         return this.levelManager.getLevelTime();
     }
 
     @Override
-    public final void setGameMap(final GameMap gameMap) {
+    public final synchronized void setGameMap(final GameMap gameMap) {
         this.gameMap = Optional.of(gameMap);
     }
 
     @Override
-    public final Boolean isGameEnded() {
+    public final synchronized Boolean isGameEnded() {
         return this.pacMan.getLives() == 0;
     }
 
     @Override
-    public final int getxMapSize() {
+    public final synchronized int getxMapSize() {
         return this.gameMap.get().getxMapSize();
     }
 
     @Override
-    public final int getyMapSize() {
+    public final synchronized int getyMapSize() {
         return this.gameMap.get().getyMapSize();
     }
 
     @Override
-    public final Directions getPacManDirection() {
+    public final synchronized Directions getPacManDirection() {
         return this.pacMan.getDirection();
     }
 
