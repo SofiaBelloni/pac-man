@@ -308,6 +308,7 @@ public class GameViewController extends SceneController {
         if (this.currentLevel != this.getController().getData().getLevel()) {
             this.level.setText(String.valueOf(this.getController().getData().getLevel()));
             this.pauseGame();
+            this.gameState.setStarting(true);
             this.countdownTimer.scheduleAtFixedRate(new TimerTask() {
                 private int value = COUNTDOWN + 1;
                 @Override
@@ -318,6 +319,7 @@ public class GameViewController extends SceneController {
                     } else {
                         Platform.runLater(() -> countDown.setText(""));
                         resumeGame();
+                        gameState.setStarting(false);
                         this.cancel();
                     } 
                 }
@@ -365,12 +367,13 @@ public class GameViewController extends SceneController {
      * This method call startGame, pauseGame or resumeGame basing on current game state.
      */
     private void changeGameState() {
-        switch (this.gameState.getState()) {
-        case FINISHED:
-            if (!this.gameState.isStarting()) {
-                gameState.setStarting(true);
+        if (!this.gameState.isStarting()) {
+            switch (this.gameState.getState()) {
+            case FINISHED:
+                this.gameState.setStarting(true);
                 this.countdownTimer.scheduleAtFixedRate(new TimerTask() {
                     private int value = COUNTDOWN + 1;
+
                     @Override
                     public void run() {
                         if (value > 1) {
@@ -381,19 +384,19 @@ public class GameViewController extends SceneController {
                             startGame();
                             gameState.setStarting(false);
                             this.cancel();
-                        } 
+                        }
                     }
                 }, 0, 1000);
+                break;
+            case RUNNING:
+                this.pauseGame();
+                break;
+            case PAUSE:
+                this.resumeGame();
+                break;
+            default:
+                break;
             }
-            break;
-        case RUNNING:
-            this.pauseGame();
-            break;
-        case PAUSE:
-            this.resumeGame();
-            break;
-        default:
-            break;
         }
     }
 
@@ -438,7 +441,7 @@ public class GameViewController extends SceneController {
     }
 
     /**
-     * Call this method to initialize the timer that changes the entity images to make it animate.
+     * Call this method to initialize the timer that changes the entity images to make them animate.
      */
     private void initializeAnimations() {
         this.pacmanImagesList.add(new Image("textures/pac_man/pac_man0.png"));
