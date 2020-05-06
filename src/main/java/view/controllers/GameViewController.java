@@ -311,8 +311,25 @@ public class GameViewController extends SceneController {
      */
     private void hudRender() {
         this.score.setText(String.valueOf(this.getController().getData().getCurrentScore()));
-        this.timer.setProgress(this.getController().getData().getLevelTimePercentage());
-        this.level.setText(String.valueOf(this.getController().getData().getLevel()));
+        this.timer.setProgress(this.getController().getData().getLevelTimePercentage()); 
+        if (this.currentLevel != this.getController().getData().getLevel()) {
+            this.level.setText(String.valueOf(this.getController().getData().getLevel()));
+            this.pauseGame();
+            this.countdownTimer.scheduleAtFixedRate(new TimerTask() {
+                private int value = COUNTDOWN + 1;
+                @Override
+                public void run() {
+                    if (value > 1) {
+                        Platform.runLater(() -> countDown.setText(String.valueOf(this.value)));
+                        this.value--;
+                    } else {
+                        Platform.runLater(() -> countDown.setText(""));
+                        resumeGame();
+                        this.cancel();
+                    } 
+                }
+            }, 0, 1000);
+        }
         if (this.livesContainer.getChildren().size() != this.getController().getData().getLives()) {
             this.livesContainer.getChildren().clear();
             for (int i = 0; i < this.getController().getData().getLives(); i++) {
