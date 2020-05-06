@@ -24,6 +24,7 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
     private boolean isPathFound;
     private Pair<Integer, Integer> relaxTarget;
     private boolean isBlinkyDead;
+    private final Pair<Integer, Integer> oldLevelTarget;
 
     public GhostBraveAbstractBehaviour(final Set<Pair<Integer, Integer>> walls, final PacMan pacMan,
             final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize,
@@ -36,12 +37,16 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
         this.yMapSize = yMapSize;
         this.walls = this.getWalls();
         this.pacMan = pacMan;
+        this.oldLevelTarget = new PairImpl<>(startPosition.getX(), startPosition.getY() - 3);
         this.fBehaviour = new GhostFrightenedBehaviourImpl(walls, ghostHouse, xMapSize, yMapSize, startPosition);
         this.setCurrentPosition(startPosition);
     }
 
-    protected final void relax() {
+    protected final void relax(final boolean oldLevel) {
         this.checkIfInside();
+        if (oldLevel) {
+            this.relaxTarget = this.oldLevelTarget;
+        }
         this.findPath(this.relaxTarget);
         this.move(this.relaxTarget);
         if (this.getCurrentPosition().equals(this.relaxTarget)) {

@@ -96,7 +96,7 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
 
     protected final boolean checkIfInside() {
         if (this.isInside && !this.ghostHouse.contains(this.getCurrentPosition())) {
-            walls.addAll(this.ghostHouse);
+            this.walls.addAll(this.ghostHouse);
             this.isInside = false;
         }
         return this.isInside;
@@ -108,7 +108,7 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         this.isInside = true;
         this.setCurrentPosition(newPosition);
         this.setCurrentDirection(UP);
-        walls.removeAll(this.ghostHouse);
+        this.walls.removeAll(this.ghostHouse);
     }
 
     protected final Set<Pair<Integer, Integer>> getWalls() {
