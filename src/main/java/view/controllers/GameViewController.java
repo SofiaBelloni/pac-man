@@ -179,7 +179,7 @@ public class GameViewController extends SceneController {
         }
     }
 
-    public final void ghostSpawn() {
+    private void ghostSpawn() {
         for (int id : this.getController().getData().getGhostsPositions().keySet()) {
             if (!this.ghostView.containsKey(id)) {
                 this.ghostLevels.put(id, this.currentLevel);
@@ -204,7 +204,7 @@ public class GameViewController extends SceneController {
         }
     }
 
-    public final void ghostRender() {
+    private void ghostRender() {
         if (this.getController().getData().getLevel() > this.currentLevel) {
             this.currentLevel = this.getController().getData().getLevel();
             this.ghostSpawn();
