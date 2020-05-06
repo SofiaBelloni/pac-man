@@ -5,12 +5,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.google.common.collect.Iterables;
 
 import controller.Controller;
 import javafx.animation.AnimationTimer;
 import javafx.animation.PathTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -36,6 +39,7 @@ import view.View;
 public class GameViewController extends SceneController {
 
     private static final int LIFE_ICON_DIMENSION = 50;
+    private static final int COUNTDOWN = 3;
 
     @FXML
     private HBox rootBox;
@@ -57,6 +61,9 @@ public class GameViewController extends SceneController {
 
     @FXML
     private Label level;
+    
+    @FXML
+    private Label countDown;
 
     @FXML
     private ProgressBar timer;
@@ -78,6 +85,7 @@ public class GameViewController extends SceneController {
     private final List<Image> pacmanImagesList = new ArrayList<>();
     private long startNanoTime = System.nanoTime();
     private Iterator<Image> pacmanImagesIterator;
+    private final Timer countdownTimer = new Timer();
 
     public final void init(final Controller controller, final View view) {
         super.init(controller, view);
@@ -117,6 +125,8 @@ public class GameViewController extends SceneController {
             this.livesContainer.getChildren().add(this.lifeIcon());
         }
 
+        this.countDown.toFront();
+
         this.initializeAnimations();
 
     }
@@ -151,7 +161,20 @@ public class GameViewController extends SceneController {
            this.resumeGame();
              break;
         case SPACE:
-            this.startGame();
+                this.countdownTimer.scheduleAtFixedRate(new TimerTask() {
+                private int value = COUNTDOWN + 1;
+                @Override
+                public void run() {
+                    if (value > 1) {
+                        Platform.runLater(() -> countDown.setText(String.valueOf(this.value)));
+                        this.value--;
+                    } else {
+                        Platform.runLater(() -> countDown.setText(""));
+                        startGame();
+                        this.cancel();
+                    } 
+                }
+            }, 0, 1000);
              break;
         case ESCAPE:
             this.endGame();
