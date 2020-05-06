@@ -1,11 +1,7 @@
 package view.controllers;
 
 import java.io.IOException;
-import java.util.List;
-
 import controller.Controller;
-import controller.FileManager;
-import controller.FileManagerImpl;
 import controller.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
