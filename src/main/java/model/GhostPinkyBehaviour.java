@@ -9,7 +9,7 @@ import utils.PairImpl;
  * this class implements the Pinky behaviour.
  *
  */
-public class GhostPinkyBehaviour extends GhostBraveAbstractBehaviour implements GhostBehaviour {
+public class GhostPinkyBehaviour extends GhostSmartAbstractBehaviour implements GhostBehaviour {
 
     private Pair<Integer, Integer> chaseTarget;
 
@@ -59,13 +59,13 @@ public class GhostPinkyBehaviour extends GhostBraveAbstractBehaviour implements 
 
     @Override
     public final void nextPosition(final boolean eatable, final boolean timeToTurn, final boolean oldLevel) {
-        if (eatable || (oldLevel && !this.isRelaxed())) {
-            this.getMyFrightenedBehaviour().nextPosition(eatable, timeToTurn, oldLevel);
-            this.setCurrentPosition(this.getMyFrightenedBehaviour().getCurrentPosition());
-            this.setCurrentDirection(this.getMyFrightenedBehaviour().getCurrentDirection());
+        if ((eatable || oldLevel) && !this.isRelaxed()) {
+            this.getRandomBehaviour().nextPosition(eatable, timeToTurn, oldLevel);
+            this.setCurrentPosition(this.getRandomBehaviour().getCurrentPosition());
+            this.setCurrentDirection(this.getRandomBehaviour().getCurrentDirection());
         } else {
             if (this.isRelaxed()) {
-                this.relax(oldLevel);
+                this.relax(oldLevel, eatable);
             } else {
                 if (!moveIfStuck()) {
                     this.targetPosition(this.getPacMan());
@@ -73,7 +73,7 @@ public class GhostPinkyBehaviour extends GhostBraveAbstractBehaviour implements 
                     this.move(this.chaseTarget);
                 }
             }
-                this.getMyFrightenedBehaviour().setCurrentDirection(this.getCurrentDirection());
+                this.getRandomBehaviour().setCurrentDirection(this.getCurrentDirection());
         }
     }
 }

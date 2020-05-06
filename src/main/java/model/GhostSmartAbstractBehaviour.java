@@ -11,7 +11,7 @@ import static model.Directions.DOWN;
 import static model.Directions.RIGHT;
 import static model.Directions.LEFT;
 
-public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour implements GhostBraveBehaviour {
+public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour implements GhostSmartBehaviour {
 
     private static final int UPPERBOUND = 10_000;
 
@@ -20,13 +20,13 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
     private final int xMapSize;
     private final int yMapSize;
     private final PacMan pacMan;
-    private final GhostBehaviour fBehaviour;
+    private final GhostBehaviour rBehaviour;
     private boolean isPathFound;
     private Pair<Integer, Integer> relaxTarget;
     private boolean isBlinkyDead;
-    private final Pair<Integer, Integer> oldLevelTarget;
+    private final Pair<Integer, Integer> randomTarget;
 
-    public GhostBraveAbstractBehaviour(final Set<Pair<Integer, Integer>> walls, final PacMan pacMan,
+    public GhostSmartAbstractBehaviour(final Set<Pair<Integer, Integer>> walls, final PacMan pacMan,
             final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize,
             final Pair<Integer, Integer> startPosition) {
         super(xMapSize, yMapSize, startPosition, ghostHouse, walls);
@@ -37,15 +37,15 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
         this.yMapSize = yMapSize;
         this.walls = this.getWalls();
         this.pacMan = pacMan;
-        this.oldLevelTarget = new PairImpl<>(startPosition.getX(), startPosition.getY() - 3);
-        this.fBehaviour = new GhostFrightenedBehaviourImpl(walls, ghostHouse, xMapSize, yMapSize, startPosition);
+        this.randomTarget = new PairImpl<>(startPosition.getX(), startPosition.getY() - 3);
+        this.rBehaviour = new GhostRandomBehaviourImpl(walls, ghostHouse, xMapSize, yMapSize, startPosition);
         this.setCurrentPosition(startPosition);
     }
 
-    protected final void relax(final boolean oldLevel) {
+    protected final void relax(final boolean oldLevel, final boolean eatable) {
         this.checkIfInside();
-        if (oldLevel) {
-            this.relaxTarget = this.oldLevelTarget;
+        if (oldLevel || eatable) {
+            this.relaxTarget = this.randomTarget;
         }
         this.findPath(this.relaxTarget);
         this.move(this.relaxTarget);
@@ -177,7 +177,7 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
     @Override
     public final void setCurrentPosition(final Pair<Integer, Integer> newPosition) {
         super.setCurrentPosition(newPosition);
-        this.fBehaviour.setCurrentPosition(newPosition);
+        this.rBehaviour.setCurrentPosition(newPosition);
     }
 
     @Override
@@ -198,8 +198,8 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
         return this.pacMan;
     }
 
-    protected final GhostBehaviour getMyFrightenedBehaviour() {
-        return this.fBehaviour;
+    protected final GhostBehaviour getRandomBehaviour() {
+        return this.rBehaviour;
     }
 
     protected final boolean isBlinkyDead() {

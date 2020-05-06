@@ -9,7 +9,7 @@ import utils.PairImpl;
 * this class implements the Inky behaviour.
 *
 */
-public class GhostInkyBehaviour extends GhostBraveAbstractBehaviour {
+public class GhostInkyBehaviour extends GhostSmartAbstractBehaviour {
 
     private Pair<Integer, Integer> chaseTarget;
     private final Ghost blinky;
@@ -79,13 +79,13 @@ public class GhostInkyBehaviour extends GhostBraveAbstractBehaviour {
 
     @Override
     public final void nextPosition(final boolean eatable, final boolean timeToTurn, final boolean oldLevel) {
-        if (eatable || (oldLevel && !this.isRelaxed())) {
-            this.getMyFrightenedBehaviour().nextPosition(eatable, timeToTurn, oldLevel);
-            this.setCurrentPosition(this.getMyFrightenedBehaviour().getCurrentPosition());
-            this.setCurrentDirection(this.getMyFrightenedBehaviour().getCurrentDirection());
+        if ((eatable || oldLevel) && !this.isRelaxed()) {
+            this.getRandomBehaviour().nextPosition(eatable, timeToTurn, oldLevel);
+            this.setCurrentPosition(this.getRandomBehaviour().getCurrentPosition());
+            this.setCurrentDirection(this.getRandomBehaviour().getCurrentDirection());
         } else {
             if (this.isRelaxed()) {
-                this.relax(oldLevel);
+                this.relax(oldLevel, eatable);
             } else {
                 if (!this.moveIfStuck()) {
                     if (this.isBlinkyDead()) {
@@ -96,7 +96,7 @@ public class GhostInkyBehaviour extends GhostBraveAbstractBehaviour {
                     this.findPath(this.chaseTarget);
                     this.move(this.chaseTarget);
                 }
-                this.getMyFrightenedBehaviour().setCurrentDirection(this.getCurrentDirection());
+                this.getRandomBehaviour().setCurrentDirection(this.getCurrentDirection());
             }
         }
     }

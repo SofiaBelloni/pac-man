@@ -11,7 +11,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     private boolean eatable;
     private boolean created;
     private Ghosts name;
-    private GhostBraveBehaviour myBehaviour;
+    private GhostSmartBehaviour myBehaviour;
     private boolean timeToTurn;
     private Pair<Integer, Integer> startPosition;
     private final int id;
@@ -85,7 +85,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         this.name = name;
     }
 
-    protected final void setMyBehaviour(final GhostBraveBehaviour myBehaviour) {
+    protected final void setMyBehaviour(final GhostSmartBehaviour myBehaviour) {
         this.myBehaviour = myBehaviour;
     }
 
