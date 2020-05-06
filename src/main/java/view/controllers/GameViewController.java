@@ -354,20 +354,24 @@ public class GameViewController extends SceneController {
     private void changeGameState() {
         switch (this.gameState.getState()) {
         case FINISHED:
-            this.countdownTimer.scheduleAtFixedRate(new TimerTask() {
-                private int value = COUNTDOWN + 1;
-                @Override
-                public void run() {
-                    if (value > 1) {
-                        Platform.runLater(() -> countDown.setText(String.valueOf(this.value)));
-                        this.value--;
-                    } else {
-                        Platform.runLater(() -> countDown.setText(""));
-                        startGame();
-                        this.cancel();
-                    } 
-                }
-            }, 0, 1000);
+            if (!this.gameState.isStarting()) {
+                gameState.setStarting(true);
+                this.countdownTimer.scheduleAtFixedRate(new TimerTask() {
+                    private int value = COUNTDOWN + 1;
+                    @Override
+                    public void run() {
+                        if (value > 1) {
+                            Platform.runLater(() -> countDown.setText(String.valueOf(this.value)));
+                            this.value--;
+                        } else {
+                            Platform.runLater(() -> countDown.setText(""));
+                            startGame();
+                            gameState.setStarting(false);
+                            this.cancel();
+                        } 
+                    }
+                }, 0, 1000);
+            }
             break;
         case RUNNING:
             this.pauseGame();

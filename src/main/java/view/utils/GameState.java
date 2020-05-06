@@ -20,6 +20,7 @@ public class GameState {
     }
 
     private State state = State.FINISHED;
+    private boolean isStarting;
 
     /**
      * @return the state
@@ -34,4 +35,21 @@ public class GameState {
     public void setState(final State state) {
         this.state = state;
     }
+
+    /**
+     * @return true if the game is in the 3,2,1 start countdown.
+     */
+    public boolean isStarting() {
+        return isStarting;
+    }
+
+    /**
+     * Set true when you start the TimerTask.
+     * Set false when the game start.
+     * @param isStarting 
+     */
+    public void setStarting(final boolean isStarting) {
+        this.isStarting = isStarting;
+    }
+
 }
