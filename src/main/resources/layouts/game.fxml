@@ -104,18 +104,13 @@
                   </Label>
                   <VBox prefHeight="65.0" prefWidth="184.0">
                      <children>
-                        <Label prefHeight="35.0" prefWidth="175.0" text="start game" textFill="#b2a6a6">
+                        <Label fx:id="gameStateLabel" prefHeight="35.0" prefWidth="175.0" text="Start Game" textFill="#b2a6a6">
                            <font>
                               <Font size="20.0" />
                            </font>
                            <VBox.margin>
                               <Insets top="40.0" />
                            </VBox.margin>
-                        </Label>
-                        <Label prefHeight="45.0" prefWidth="157.0" text="pause - resume" textFill="#b2a6a6">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
                         </Label>
                      </children>
                      <HBox.margin>
@@ -134,7 +129,7 @@
                         <Insets left="170.0" top="-20.0" />
                      </HBox.margin>
                   </Label>
-                  <Label text="end game" textFill="#b2a6a6">
+                  <Label text="End Game" textFill="#b2a6a6">
                      <font>
                         <Font size="20.0" />
                      </font>

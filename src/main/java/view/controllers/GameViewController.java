@@ -44,33 +44,26 @@ public class GameViewController extends SceneController {
 
     @FXML
     private HBox rootBox;
-
     @FXML
     private VBox labelBox;
-
     @FXML
     private StackPane gamePane;
-
     @FXML
     private Pane entityPane;
-
     @FXML
     private Label highScore;
-
     @FXML
     private Label score;
-
     @FXML
     private Label level;
-    
     @FXML
     private Label countDown;
-
     @FXML
     private ProgressBar timer;
-
     @FXML
     private HBox livesContainer;
+    @FXML
+    private Label gameStateLabel;
 
     private int squareSize;
     private final Map<Integer, ImageView> ghostView = new HashMap<>();
@@ -138,23 +131,31 @@ public class GameViewController extends SceneController {
         switch (event.getCode()) {
         case UP:
         case W:
-            this.pacmanImage.setRotate(0);
-            this.getController().newPacManDirection(Directions.UP);
+            if (this.gameState.getState().equals(GameState.State.RUNNING)) {
+                this.pacmanImage.setRotate(0);
+                this.getController().newPacManDirection(Directions.UP);
+            }
             break;
         case DOWN:
         case S:
-            this.pacmanImage.setRotate(180);
-            this.getController().newPacManDirection(Directions.DOWN);
+            if (this.gameState.getState().equals(GameState.State.RUNNING)) {
+                this.pacmanImage.setRotate(180);
+                this.getController().newPacManDirection(Directions.DOWN);
+            }
             break;
         case LEFT:
         case A:
-            this.pacmanImage.setRotate(270);
-            this.getController().newPacManDirection(Directions.LEFT);
+            if (this.gameState.getState().equals(GameState.State.RUNNING)) {
+                this.pacmanImage.setRotate(270);
+                this.getController().newPacManDirection(Directions.LEFT);
+            }
             break;
         case RIGHT:
         case D:
-            this.pacmanImage.setRotate(90);
-            this.getController().newPacManDirection(Directions.RIGHT);
+            if (this.gameState.getState().equals(GameState.State.RUNNING)) {
+                this.pacmanImage.setRotate(90);
+                this.getController().newPacManDirection(Directions.RIGHT);
+            }
             break;
         case SPACE:
             this.changeGameState();
@@ -388,22 +389,26 @@ public class GameViewController extends SceneController {
         this.getController().startGame();
         this.entitiesAnimationTimer.start();
         gameState.setState(GameState.State.RUNNING);
+        Platform.runLater(() -> this.gameStateLabel.setText("Pause Game"));
     }
     private void pauseGame() {
         this.getController().pauseGame();
         this.entitiesAnimationTimer.stop();
         this.gameState.setState(GameState.State.PAUSE);
+        Platform.runLater(() -> this.gameStateLabel.setText("Resume Game"));
     }
     private void resumeGame() {
         this.getController().resumeGame();
         this.entitiesAnimationTimer.start();
         this.gameState.setState(GameState.State.RUNNING);
+        Platform.runLater(() -> this.gameStateLabel.setText("Pause Game"));
     }
     private void endGame() {
         this.getController().stopGame();
         this.entitiesAnimationTimer.stop();
         this.gameState.setState(GameState.State.FINISHED);
         this.getView().setScene(GameScene.GAMEOVER);
+        Platform.runLater(() -> this.gameStateLabel.setText("Start Game"));
     }
 
     /**
