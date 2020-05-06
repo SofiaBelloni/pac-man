@@ -41,6 +41,8 @@ public class GameViewController extends SceneController {
 
     private static final int LIFE_ICON_DIMENSION = 50;
     private static final int COUNTDOWN = 3;
+    private static final double TRANSITION_SECONDS = 0.333;
+    private static final long ANIMATION_IMAGE_CHANGE = (long) 1.0e8;
 
     @FXML
     private HBox rootBox;
@@ -82,27 +84,31 @@ public class GameViewController extends SceneController {
     private final Timer countdownTimer = new Timer();
     private final GameState gameState = new GameState();
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public final void init(final Controller controller, final View view) {
         super.init(controller, view);
         this.currentLevel = 1;
         this.squareSize = (int) (this.rootBox.getHeight() / controller.getData().getyMapSize());
-        int width = squareSize * controller.getData().getxMapSize();
-        int height = squareSize * controller.getData().getyMapSize();
+        final int width = squareSize * controller.getData().getxMapSize();
+        final int height = squareSize * controller.getData().getyMapSize();
         this.gamePane.setMinSize(width, height);
         this.gamePane.setMaxSize(width, height);
         HBox.setHgrow(this.labelBox, Priority.SOMETIMES);
-        GridPane mapGrid = new GridPane();
+        final GridPane mapGrid = new GridPane();
         this.gamePane.getChildren().add(mapGrid);
-        for (Pair<Integer, Integer> e : this.getController().getData().getWallsPositions()) {
-            ImageView image = new ImageView("textures/wall/wall.png");
+        for (final Pair<Integer, Integer> e : this.getController().getData().getWallsPositions()) {
+            final ImageView image = new ImageView("textures/wall/wall.png");
             image.setFitWidth(squareSize);
             image.setFitHeight(squareSize);
             mapGrid.add(image, e.getX(), e.getY());
             this.gameMap.put(e, image);
         }
 
-        for (Pair<Integer, Integer> e : this.getController().getData().getPillsPositions()) {
-            ImageView image = new ImageView("textures/pill/pill.png");
+        for (final Pair<Integer, Integer> e : this.getController().getData().getPillsPositions()) {
+            final ImageView image = new ImageView("textures/pill/pill.png");
             image.setFitWidth(squareSize);
             image.setFitHeight(squareSize);
             mapGrid.add(image, e.getX(), e.getY());
@@ -126,6 +132,9 @@ public class GameViewController extends SceneController {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final void onKeyPressed(final KeyEvent event) {
         switch (event.getCode()) {
@@ -181,7 +190,7 @@ public class GameViewController extends SceneController {
     }
 
     private void ghostSpawn() {
-        for (int id : this.getController().getData().getGhostsPositions().keySet()) {
+        for (final int id : this.getController().getData().getGhostsPositions().keySet()) {
             if (!this.ghostView.containsKey(id)) {
                 this.ghostLevels.put(id, this.currentLevel);
                 this.ghostTypes.put(id, this.getController().getData().getGhostsTypes().get(id));
@@ -210,12 +219,12 @@ public class GameViewController extends SceneController {
             this.currentLevel = this.getController().getData().getLevel();
             this.ghostSpawn();
         }
-        for (int id : this.ghostPositions.keySet()) {
+        for (final int id : this.ghostPositions.keySet()) {
             if (!this.getController().getData().getGhostsPositions().containsKey(id)) {
                 this.entityPane.getChildren().remove(this.ghostView.get(id));
                 this.ghostView.remove(id);
             } else {
-                Pair<Integer, Integer> newPosition = new PairImpl<>(
+                final Pair<Integer, Integer> newPosition = new PairImpl<>(
                         this.getController()
                         .getData().getGhostsPositions().get(id).getX(),
                         this.getController()
@@ -271,7 +280,7 @@ public class GameViewController extends SceneController {
      * Call this method to draw the current position of PacMan.
      */
     private void pacmanRender() {
-        Pair<Integer, Integer> newPosition = new PairImpl<>(this.getController().getData().getPacManXPosition(),
+        final Pair<Integer, Integer> newPosition = new PairImpl<>(this.getController().getData().getPacManXPosition(),
                 this.getController().getData().getPacManYPosition());
         if (!this.pacmanPosition.equals(newPosition)) {
             this.transition(this.pacmanImage, this.pacmanPosition, newPosition);
@@ -324,7 +333,7 @@ public class GameViewController extends SceneController {
 
     private Node lifeIcon() {
         // TODO forse meglio se si crea una factory
-        Image image = new Image("textures/pac_man/pac_man2.png");
+        final Image image = new Image("textures/pac_man/pac_man2.png");
         final ImageView imageView = new ImageView();
         imageView.setImage(image);
         imageView.setRotate(90);
@@ -342,7 +351,7 @@ public class GameViewController extends SceneController {
     private void transition(final ImageView image, final Pair<Integer, Integer> startPos, final Pair<Integer, Integer> destPos) {
         final PathTransition p = new PathTransition();
         p.setNode(image);
-        p.setDuration(Duration.seconds(0.3333));
+        p.setDuration(Duration.seconds(TRANSITION_SECONDS));
         p.setPath(new Line(this.squareSize * startPos.getX() + this.squareSize / 2,
                 this.squareSize * startPos.getY() + this.squareSize / 2,
                 this.squareSize * destPos.getX() + this.squareSize / 2,
@@ -352,6 +361,9 @@ public class GameViewController extends SceneController {
         p.play();
     }
 
+    /**
+     * This method call startGame, pauseGame or resumeGame basing on current game state.
+     */
     private void changeGameState() {
         switch (this.gameState.getState()) {
         case FINISHED:
@@ -385,24 +397,38 @@ public class GameViewController extends SceneController {
         }
     }
 
+    /**
+     * Start the game.
+     */
     private void startGame() {
         this.getController().startGame();
         this.entitiesAnimationTimer.start();
         gameState.setState(GameState.State.RUNNING);
         Platform.runLater(() -> this.gameStateLabel.setText("Pause Game"));
     }
+    /**
+     * Pause the current game.
+     * Call when game is running.
+     */
     private void pauseGame() {
         this.getController().pauseGame();
         this.entitiesAnimationTimer.stop();
         this.gameState.setState(GameState.State.PAUSE);
         Platform.runLater(() -> this.gameStateLabel.setText("Resume Game"));
     }
+    /**
+     * Resume the paused game.
+     * Call when game is in pause.
+     */
     private void resumeGame() {
         this.getController().resumeGame();
         this.entitiesAnimationTimer.start();
         this.gameState.setState(GameState.State.RUNNING);
         Platform.runLater(() -> this.gameStateLabel.setText("Pause Game"));
     }
+    /**
+     * Terminate the current game and go to GAMEOVER scene.
+     */
     private void endGame() {
         this.getController().stopGame();
         this.entitiesAnimationTimer.stop();
@@ -427,7 +453,7 @@ public class GameViewController extends SceneController {
             @Override
             public void handle(final long currentNanoTime) {
                 //Change image every 0.1 seconds
-                if (currentNanoTime - startNanoTime >= 1.0e8) {
+                if (currentNanoTime - startNanoTime >= ANIMATION_IMAGE_CHANGE) {
                     pacmanImage.setImage(pacmanImagesIterator.next());
                     startNanoTime = System.nanoTime();
                 }
