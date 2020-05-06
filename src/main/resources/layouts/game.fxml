@@ -24,7 +24,7 @@
                <children>
                   <Label contentDisplay="CENTER" text="HIGH SCORE:" textFill="#b2a6a6">
                      <font>
-                        <Font size="28.0" />
+                        <Font size="26.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="170.0" />
@@ -34,7 +34,7 @@
                         <Insets left="50.0" />
                      </HBox.margin>
                      <font>
-                        <Font size="28.0" />
+                        <Font size="26.0" />
                      </font></Label>
                </children>
             </HBox>
@@ -42,14 +42,14 @@
                <children>
                   <Label text="SCORE:" textFill="#b2a6a6">
                      <font>
-                        <Font size="28.0" />
+                        <Font size="26.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="170.0" />
                      </HBox.margin></Label>
                   <Label fx:id="score" text="0" textFill="#b2a6a6">
                      <font>
-                        <Font size="28.0" />
+                        <Font size="26.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="50.0" />
@@ -60,7 +60,7 @@
                <children>
                   <Label text="LEVEL:" textFill="#b2a6a6">
                      <font>
-                        <Font size="28.0" />
+                        <Font size="26.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="170.0" />
@@ -70,7 +70,7 @@
                         <Insets left="60.0" />
                      </HBox.margin>
                      <font>
-                        <Font size="28.0" />
+                        <Font size="26.0" />
                      </font></Label>
                </children>
             </HBox>
@@ -90,6 +90,58 @@
                         <Insets left="172.0" />
                      </HBox.margin>
                   </HBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="520.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="37.0" prefWidth="186.0" style="-fx-border-color: rgb(178,166,166);" text="SPACEBAR" textFill="#b2a6a6">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="170.0" top="40.0" />
+                     </HBox.margin>
+                  </Label>
+                  <VBox prefHeight="65.0" prefWidth="184.0">
+                     <children>
+                        <Label prefHeight="35.0" prefWidth="175.0" text="start game" textFill="#b2a6a6">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="40.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label prefHeight="45.0" prefWidth="157.0" text="pause - resume" textFill="#b2a6a6">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="35.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="520.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="37.0" prefWidth="76.0" style="-fx-border-color: rgb(178,166,166);" text="ESC" textFill="#b2a6a6">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="170.0" top="-20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label text="end game" textFill="#b2a6a6">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="35.0" top="-20.0" />
+                     </HBox.margin>
+                  </Label>
                </children>
             </HBox>
          </children>
