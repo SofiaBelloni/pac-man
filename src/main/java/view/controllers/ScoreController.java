@@ -1,6 +1,7 @@
 package view.controllers;
 
 import java.io.IOException;
+import java.util.List;
 
 import controller.Controller;
 import controller.FileManager;
@@ -34,15 +35,13 @@ public class ScoreController extends SceneController {
     @FXML
     private TableColumn<Player, String> level;
 
-    private FileManager fileManager = new FileManagerImpl();
-
     @Override
     public void init(final Controller controller, final View view) {
         super.init(controller, view);
         this.name.setCellValueFactory(new PropertyValueFactory<>("name"));
         this.score.setCellValueFactory(new PropertyValueFactory<>("score"));
         this.level.setCellValueFactory(new PropertyValueFactory<>("level"));
-        this.table.getItems().addAll(this.fileManager.getAllPlayers());
+        this.table.getItems().addAll(controller.getAllPlayers());
     }
 
     @FXML
