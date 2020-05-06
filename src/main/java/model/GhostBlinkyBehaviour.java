@@ -10,7 +10,7 @@ import utils.Pair;
 * this class implements the Blinky behaviour.
 *
 */
-public class GhostBlinkyBehaviour extends GhostBraveAbstractBehaviour implements GhostBehaviour {
+public class GhostBlinkyBehaviour extends GhostSmartAbstractBehaviour implements GhostBehaviour {
 
     public GhostBlinkyBehaviour(final Set<Pair<Integer, Integer>> setWall, final PacMan pacMan,
             final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize,
@@ -21,20 +21,20 @@ public class GhostBlinkyBehaviour extends GhostBraveAbstractBehaviour implements
 
     @Override
     public final void nextPosition(final boolean eatable, final boolean timeToTurn, final boolean oldLevel) {
-        if (eatable || (oldLevel && !this.isRelaxed())) {
-            this.getMyFrightenedBehaviour().nextPosition(eatable, timeToTurn, oldLevel);
-            this.setCurrentPosition(this.getMyFrightenedBehaviour().getCurrentPosition());
-            this.setCurrentDirection(this.getMyFrightenedBehaviour().getCurrentDirection());
+        if ((eatable || oldLevel) && !this.isRelaxed()) {
+            this.getRandomBehaviour().nextPosition(eatable, timeToTurn, oldLevel);
+            this.setCurrentPosition(this.getRandomBehaviour().getCurrentPosition());
+            this.setCurrentDirection(this.getRandomBehaviour().getCurrentDirection());
         } else {
             if (this.isRelaxed()) {
-                this.relax(oldLevel);
+                this.relax(oldLevel, eatable);
             } else {
                 if (!moveIfStuck()) {
                     this.findPath(this.getPacMan().getPosition());
                     this.move(this.getPacMan().getPosition());
                 }
             }
-            this.getMyFrightenedBehaviour().setCurrentDirection(this.getCurrentDirection());
+            this.getRandomBehaviour().setCurrentDirection(this.getCurrentDirection());
         }
     }
 

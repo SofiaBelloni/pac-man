@@ -2,7 +2,7 @@ package model;
 
 import utils.Pair;
 
-public interface GhostBraveBehaviour extends GhostBehaviour {
+public interface GhostSmartBehaviour extends GhostBehaviour {
 
     /**
      * @return the target of the Ghost in relax mode
