@@ -1,6 +1,7 @@
 package model;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -24,15 +25,19 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
     private Map<Directions, Pair<Integer, Integer>> mapAdj;
     private boolean isInside;
     private final List<Pair<Integer, Integer>> ghostHouse;
+    private final Set<Pair<Integer, Integer>> walls;
+    private boolean relaxed;
 
     public GhostAbstractBehaviour(final int xMapSize, final int yMapSize, final Pair<Integer, Integer> startPosition,
-            final List<Pair<Integer, Integer>> ghostHouse) {
+            final List<Pair<Integer, Integer>> ghostHouse, final Set<Pair<Integer, Integer>> walls) {
         this.xMapSize = xMapSize;
         this.yMapSize = yMapSize;
         this.currentDirection = UP;
         this.currentPosition = startPosition;
         this.isInside = true;
         this.ghostHouse = ghostHouse;
+        this.walls = new HashSet<>(walls);
+        this.relaxed = true;
     }
 
     protected final int getxMapSize() {
@@ -89,18 +94,32 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         this.mapAdj.put(LEFT, new PairImpl<>(position.getX() - 1, position.getY()));
     }
 
-    protected final boolean checkIfInside(final Set<Pair<Integer, Integer>> setWall) {
+    protected final boolean checkIfInside() {
         if (this.isInside && !this.ghostHouse.contains(this.getCurrentPosition())) {
-            setWall.addAll(this.ghostHouse);
+            walls.addAll(this.ghostHouse);
             this.isInside = false;
         }
         return this.isInside;
     }
 
-    protected final void returnHome(final Pair<Integer, Integer> newPosition, final Set<Pair<Integer, Integer>> setWall) {
+    @Override
+    public final void returnHome(final Pair<Integer, Integer> newPosition) {
+        this.relaxed = true;
         this.isInside = true;
         this.setCurrentPosition(newPosition);
         this.setCurrentDirection(UP);
-        setWall.removeAll(this.ghostHouse);
+        walls.removeAll(this.ghostHouse);
+    }
+
+    protected final Set<Pair<Integer, Integer>> getWalls() {
+        return this.walls;
+    }
+
+    protected final boolean isRelaxed() {
+        return this.relaxed;
+    }
+
+    protected final void setRelaxedFalse() {
+        this.relaxed = false;
     }
 }

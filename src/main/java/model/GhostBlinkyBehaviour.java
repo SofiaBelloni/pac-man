@@ -21,13 +21,13 @@ public class GhostBlinkyBehaviour extends GhostBraveAbstractBehaviour implements
 
     @Override
     public final void nextPosition(final boolean eatable, final boolean timeToTurn, final boolean oldLevel) {
-        if (eatable || (oldLevel && !this.isRelaxed())) {
+        if (eatable || oldLevel) {
             this.getMyFrightenedBehaviour().nextPosition(eatable, timeToTurn, oldLevel);
             this.setCurrentPosition(this.getMyFrightenedBehaviour().getCurrentPosition());
             this.setCurrentDirection(this.getMyFrightenedBehaviour().getCurrentDirection());
         } else {
             if (this.isRelaxed()) {
-                this.relax(oldLevel);
+                this.relax();
             } else {
                 if (!moveIfStuck()) {
                     this.findPath(this.getPacMan().getPosition());

@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -15,20 +16,18 @@ import static model.Directions.LEFT;
 
 public class GhostFrightenedBehaviourImpl extends GhostAbstractBehaviour {
 
-    private final Set<Pair<Integer, Integer>> setWall;
     private final List<Pair<Integer, Integer>> ghostHouse;
 
-    public GhostFrightenedBehaviourImpl(final Set<Pair<Integer, Integer>> setWall,
+    public GhostFrightenedBehaviourImpl(final Set<Pair<Integer, Integer>> walls,
             final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize,
             final Pair<Integer, Integer> startPosition) {
-        super(xMapSize, yMapSize, startPosition, ghostHouse);
-        this.setWall = setWall;
+        super(xMapSize, yMapSize, startPosition, ghostHouse, walls);
         this.ghostHouse = ghostHouse;
     }
 
     @Override
     public final void nextPosition(final boolean eatable, final boolean timeToTurn, final boolean oldLevel) {
-        if (timeToTurn && !this.checkIfInside(this.setWall) 
+        if (timeToTurn && !this.checkIfInside() 
                 && !this.ghostHouse.contains(new PairImpl<>(this.getCurrentPosition().getX(), this.getCurrentPosition().getY() - 1))) {
             this.turnAround();
         } else {
@@ -70,7 +69,7 @@ public class GhostFrightenedBehaviourImpl extends GhostAbstractBehaviour {
                     map2.remove(this.oppositeDirection(dir));
                     final List<Directions> list = new ArrayList<>(map2.keySet());
                     final Directions randomDir = list.get(r.nextInt(3));
-                    if (!this.setWall.contains(map2.get(randomDir))) {
+                    if (!this.getWalls().contains(map2.get(randomDir))) {
                         this.setCurrentPosition(map2.get(randomDir));
                        this.setCurrentDirection(randomDir);
                        return;
@@ -91,9 +90,4 @@ public class GhostFrightenedBehaviourImpl extends GhostAbstractBehaviour {
                 return LEFT;
             }
     } 
-
-    @Override
-    public final void returnHome(final Pair<Integer, Integer> newPosition) {
-        super.returnHome(newPosition, this.setWall);
-    }
 }

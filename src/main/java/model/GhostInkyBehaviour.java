@@ -1,6 +1,5 @@
 package model;
 
-
 import java.util.List;
 import java.util.Set;
 import utils.Pair;
@@ -12,7 +11,6 @@ import utils.PairImpl;
 */
 public class GhostInkyBehaviour extends GhostBraveAbstractBehaviour {
 
-    private final Set<Pair<Integer, Integer>> setWall;
     private Pair<Integer, Integer> chaseTarget;
     private final Ghost blinky;
 
@@ -22,11 +20,11 @@ public class GhostInkyBehaviour extends GhostBraveAbstractBehaviour {
             final Pair<Integer, Integer> startPosition) {
         super(setWall, pacMan, ghostHouse, xMapSize, yMapSize, startPosition);
         this.blinky = blinky;
-        this.setWall = setWall;
         this.setRelaxTarget(relaxTarget);
     }
 
     private void targetPosition(final PacMan pacMan, final Pair<Integer, Integer> blinkyPosition) {
+        final Set<Pair<Integer, Integer>> walls = this.getWalls();
         final Pair<Integer, Integer> pacManPosition = pacMan.getPosition();
         Pair<Integer, Integer> appo;
         int targetX;
@@ -64,14 +62,14 @@ public class GhostInkyBehaviour extends GhostBraveAbstractBehaviour {
         if (this.chaseTarget.getY() < 0) {
             this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), 1);
         }
-        if (this.getCurrentPosition().equals(this.chaseTarget) || this.setWall.contains(this.chaseTarget)) {
-            if (this.chaseTarget.getY() + 1 < this.getyMapSize() && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() + 1))) {
+        if (this.getCurrentPosition().equals(this.chaseTarget) || walls.contains(this.chaseTarget)) {
+            if (this.chaseTarget.getY() + 1 < this.getyMapSize() && !walls.contains(new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() + 1))) {
                 this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() + 1);
-            } else if (this.chaseTarget.getX() + 1 < this.getxMapSize() && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX() + 1, this.chaseTarget.getY()))) {
+            } else if (this.chaseTarget.getX() + 1 < this.getxMapSize() && !walls.contains(new PairImpl<>(this.chaseTarget.getX() + 1, this.chaseTarget.getY()))) {
                 this.chaseTarget = new PairImpl<>(this.chaseTarget.getX() + 1, this.chaseTarget.getY());
-            } else if (this.chaseTarget.getX() - 1 >= 0 && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX() - 1, this.chaseTarget.getY()))) {
+            } else if (this.chaseTarget.getX() - 1 >= 0 && !walls.contains(new PairImpl<>(this.chaseTarget.getX() - 1, this.chaseTarget.getY()))) {
                 this.chaseTarget = new PairImpl<>(this.chaseTarget.getX() - 1, this.chaseTarget.getY());
-            } else if (this.chaseTarget.getY() - 1 >= 0 && !this.setWall.contains(new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() - 1))) {
+            } else if (this.chaseTarget.getY() - 1 >= 0 && !walls.contains(new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() - 1))) {
                 this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() - 1);
             } else {
                 this.chaseTarget = pacManPosition;
@@ -81,13 +79,13 @@ public class GhostInkyBehaviour extends GhostBraveAbstractBehaviour {
 
     @Override
     public final void nextPosition(final boolean eatable, final boolean timeToTurn, final boolean oldLevel) {
-        if (eatable || (oldLevel && !this.isRelaxed())) {
+        if (eatable || oldLevel) {
             this.getMyFrightenedBehaviour().nextPosition(eatable, timeToTurn, oldLevel);
             this.setCurrentPosition(this.getMyFrightenedBehaviour().getCurrentPosition());
             this.setCurrentDirection(this.getMyFrightenedBehaviour().getCurrentDirection());
         } else {
             if (this.isRelaxed()) {
-                this.relax(oldLevel);
+                this.relax();
             } else {
                 if (!this.moveIfStuck()) {
                     if (this.isBlinkyDead()) {

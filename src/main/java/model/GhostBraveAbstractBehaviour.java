@@ -16,47 +16,36 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
     private static final int UPPERBOUND = 10_000;
 
     private final Map<Pair<Integer, Integer>, Integer> mapDijkstra;
-    private final Set<Pair<Integer, Integer>> setWall;
+    private final Set<Pair<Integer, Integer>> walls;
     private final int xMapSize;
     private final int yMapSize;
     private final PacMan pacMan;
     private final GhostBehaviour fBehaviour;
     private boolean isPathFound;
-    private boolean relaxed;
     private Pair<Integer, Integer> relaxTarget;
     private boolean isBlinkyDead;
-    private final Pair<Integer, Integer> oldLevelTarget;
 
-    public GhostBraveAbstractBehaviour(final Set<Pair<Integer, Integer>> setWall, final PacMan pacMan,
+    public GhostBraveAbstractBehaviour(final Set<Pair<Integer, Integer>> walls, final PacMan pacMan,
             final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize,
             final Pair<Integer, Integer> startPosition) {
-        super(xMapSize, yMapSize, startPosition, ghostHouse);
+        super(xMapSize, yMapSize, startPosition, ghostHouse, walls);
         this.mapDijkstra = new HashMap<>();
         this.isPathFound = false;
         this.isBlinkyDead = false;
         this.xMapSize = xMapSize;
         this.yMapSize = yMapSize;
-        this.setWall = setWall;
+        this.walls = this.getWalls();
         this.pacMan = pacMan;
-        this.relaxed = true;
-        this.fBehaviour = new GhostFrightenedBehaviourImpl(setWall, ghostHouse, xMapSize, yMapSize, startPosition);
+        this.fBehaviour = new GhostFrightenedBehaviourImpl(walls, ghostHouse, xMapSize, yMapSize, startPosition);
         this.setCurrentPosition(startPosition);
-        this.oldLevelTarget = new PairImpl<>(startPosition.getX(), startPosition.getY() - 3);
     }
 
-    protected final void relax(final boolean oldLevel) {
-        if (this.checkIfInside(this.setWall)) {
-            this.findPath(this.oldLevelTarget);
-            this.move(this.oldLevelTarget);
-            if (this.getCurrentPosition().equals(this.oldLevelTarget) && oldLevel) {
-                this.relaxed = false;
-            }
-        } else {
-            this.findPath(this.relaxTarget);
-            this.move(this.relaxTarget);
-            if (this.getCurrentPosition().equals(this.relaxTarget)) {
-                this.relaxed = false;
-            }
+    protected final void relax() {
+        this.checkIfInside();
+        this.findPath(this.relaxTarget);
+        this.move(this.relaxTarget);
+        if (this.getCurrentPosition().equals(this.relaxTarget)) {
+            this.setRelaxedFalse();
         }
     }
 
@@ -76,16 +65,16 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
         }
         this.mapDijkstra.put(this.getCurrentPosition(), distance++);
         this.setAdj(this.getCurrentPosition());
-        if (this.getAdj(UP).getY() >= 0 && !this.setWall.contains(this.getAdj(UP)) && !this.getCurrentDirection().equals(DOWN)) {
+        if (this.getAdj(UP).getY() >= 0 && !this.walls.contains(this.getAdj(UP)) && !this.getCurrentDirection().equals(DOWN)) {
             this.mapDijkstra.put(this.getAdj(UP), distance);
         }
-        if (this.getAdj(DOWN).getY() < yMapSize && !this.setWall.contains(this.getAdj(DOWN)) && !this.getCurrentDirection().equals(UP)) {
+        if (this.getAdj(DOWN).getY() < yMapSize && !this.walls.contains(this.getAdj(DOWN)) && !this.getCurrentDirection().equals(UP)) {
             this.mapDijkstra.put(this.getAdj(DOWN), distance);
         }
-        if (this.getAdj(RIGHT).getX() < xMapSize && !this.setWall.contains(this.getAdj(RIGHT)) && !this.getCurrentDirection().equals(LEFT)) {
+        if (this.getAdj(RIGHT).getX() < xMapSize && !this.walls.contains(this.getAdj(RIGHT)) && !this.getCurrentDirection().equals(LEFT)) {
             this.mapDijkstra.put(this.getAdj(RIGHT), distance);
         }
-        if (this.getAdj(LEFT).getX() >= 0 && !this.setWall.contains(this.getAdj(LEFT)) && !this.getCurrentDirection().equals(RIGHT)) {
+        if (this.getAdj(LEFT).getX() >= 0 && !this.walls.contains(this.getAdj(LEFT)) && !this.getCurrentDirection().equals(RIGHT)) {
             this.mapDijkstra.put(this.getAdj(LEFT), distance);
         }
         if (this.mapDijkstra.get(pair) < UPPERBOUND) {
@@ -95,16 +84,16 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
             for (final Pair<Integer, Integer> p : this.mapDijkstra.keySet()) {
                 if (this.mapDijkstra.get(p).equals(distance)) {
                     this.setAdj(p);
-                    if (this.getAdj(UP).getY() >= 0 && !this.setWall.contains(this.getAdj(UP)) && distance < this.mapDijkstra.get(this.getAdj(UP))) {
+                    if (this.getAdj(UP).getY() >= 0 && !this.walls.contains(this.getAdj(UP)) && distance < this.mapDijkstra.get(this.getAdj(UP))) {
                         this.mapDijkstra.put(this.getAdj(UP), distance + 1);
                     }
-                    if (this.getAdj(RIGHT).getX() < xMapSize && !this.setWall.contains(this.getAdj(RIGHT)) && distance < this.mapDijkstra.get(this.getAdj(RIGHT))) {
+                    if (this.getAdj(RIGHT).getX() < xMapSize && !this.walls.contains(this.getAdj(RIGHT)) && distance < this.mapDijkstra.get(this.getAdj(RIGHT))) {
                         this.mapDijkstra.put(this.getAdj(RIGHT), distance + 1);
                     } 
-                    if (this.getAdj(LEFT).getX() >= 0 && !this.setWall.contains(this.getAdj(LEFT)) && distance < this.mapDijkstra.get(this.getAdj(LEFT))) {
+                    if (this.getAdj(LEFT).getX() >= 0 && !this.walls.contains(this.getAdj(LEFT)) && distance < this.mapDijkstra.get(this.getAdj(LEFT))) {
                         this.mapDijkstra.put(this.getAdj(LEFT), distance + 1);
                     } 
-                    if (this.getAdj(DOWN).getY() < yMapSize && !this.setWall.contains(this.getAdj(DOWN)) && distance < this.mapDijkstra.get(this.getAdj(DOWN))) {
+                    if (this.getAdj(DOWN).getY() < yMapSize && !this.walls.contains(this.getAdj(DOWN)) && distance < this.mapDijkstra.get(this.getAdj(DOWN))) {
                         this.mapDijkstra.put(this.getAdj(DOWN), distance + 1);
                     }
                     if (this.mapDijkstra.get(pair) < UPPERBOUND) {
@@ -127,13 +116,13 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
         int i = this.mapDijkstra.get(this.getCurrentPosition());
         while (i > 1) {
             setAdj(this.getCurrentPosition());
-            if (this.getAdj(UP).getY() >= 0 && !this.setWall.contains(this.getAdj(UP)) && this.mapDijkstra.get(this.getAdj(UP)).equals(i - 1)) {
+            if (this.getAdj(UP).getY() >= 0 && !this.walls.contains(this.getAdj(UP)) && this.mapDijkstra.get(this.getAdj(UP)).equals(i - 1)) {
                 this.setCurrentPosition(this.getAdj(UP));
-            } else if (this.getAdj(RIGHT).getX() < xMapSize && !this.setWall.contains(this.getAdj(RIGHT)) && this.mapDijkstra.get(this.getAdj(RIGHT)).equals(i - 1)) {
+            } else if (this.getAdj(RIGHT).getX() < xMapSize && !this.walls.contains(this.getAdj(RIGHT)) && this.mapDijkstra.get(this.getAdj(RIGHT)).equals(i - 1)) {
                 this.setCurrentPosition(this.getAdj(RIGHT));
-            } else if (this.getAdj(DOWN).getY() < yMapSize && !this.setWall.contains(this.getAdj(DOWN)) && this.mapDijkstra.get(this.getAdj(DOWN)).equals(i - 1)) {
+            } else if (this.getAdj(DOWN).getY() < yMapSize && !this.walls.contains(this.getAdj(DOWN)) && this.mapDijkstra.get(this.getAdj(DOWN)).equals(i - 1)) {
                 this.setCurrentPosition(this.getAdj(DOWN));
-            } else if (this.getAdj(LEFT).getX() >= 0 && !this.setWall.contains(this.getAdj(LEFT)) && this.mapDijkstra.get(this.getAdj(LEFT)).equals(i - 1)) {
+            } else if (this.getAdj(LEFT).getX() >= 0 && !this.walls.contains(this.getAdj(LEFT)) && this.mapDijkstra.get(this.getAdj(LEFT)).equals(i - 1)) {
                 this.setCurrentPosition(this.getAdj(LEFT));
             } 
             i = this.mapDijkstra.get(this.getCurrentPosition());
@@ -158,34 +147,26 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
     protected final boolean moveIfStuck() {
         setAdj(this.getCurrentPosition());
         if (this.getCurrentDirection().equals(UP) 
-                && this.setWall.contains(this.getAdj(LEFT)) && this.setWall.contains(this.getAdj(RIGHT))) {
+                && this.walls.contains(this.getAdj(LEFT)) && this.walls.contains(this.getAdj(RIGHT))) {
             this.setCurrentPosition(this.getAdj(UP));
             return true;
         }
         if (this.getCurrentDirection().equals(DOWN) 
-                && this.setWall.contains(this.getAdj(LEFT)) && this.setWall.contains(this.getAdj(RIGHT))) {
+                && this.walls.contains(this.getAdj(LEFT)) && this.walls.contains(this.getAdj(RIGHT))) {
             this.setCurrentPosition(this.getAdj(DOWN));
             return true;
         }
         if (this.getCurrentDirection().equals(LEFT) 
-                && this.setWall.contains(this.getAdj(UP)) && this.setWall.contains(this.getAdj(DOWN))) {
+                && this.walls.contains(this.getAdj(UP)) && this.walls.contains(this.getAdj(DOWN))) {
             this.setCurrentPosition(this.getAdj(LEFT));
             return true;
         }
         if (this.getCurrentDirection().equals(RIGHT) 
-                && this.setWall.contains(this.getAdj(UP)) && this.setWall.contains(this.getAdj(DOWN))) {
+                && this.walls.contains(this.getAdj(UP)) && this.walls.contains(this.getAdj(DOWN))) {
             this.setCurrentPosition(this.getAdj(RIGHT));
             return true;
         }
         return false;
-    }
-
-
-    @Override
-    public final void returnHome(final Pair<Integer, Integer> startPosition) {
-        this.relaxed = true;
-        super.returnHome(startPosition, this.setWall);
-        this.fBehaviour.returnHome(startPosition);
     }
 
     @Override
@@ -206,10 +187,6 @@ public abstract class GhostBraveAbstractBehaviour extends GhostAbstractBehaviour
      */
     protected final void setRelaxTarget(final Pair<Integer, Integer> relaxTarget) {
         this.relaxTarget = relaxTarget;
-    }
-
-    protected final boolean isRelaxed() {
-        return this.relaxed;
     }
 
     protected final PacMan getPacMan() {
