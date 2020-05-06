@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.List;
+
 import model.Directions;
 /**
  * This interface represents the controller of the application.
@@ -14,6 +16,10 @@ public interface Controller {
      * @return the current high-score.
      **/
     int getHighScore();
+    /**
+     * @return list with all the Players saved. 
+     */
+    List<Player> getAllPlayers();
     /**
      * Starts a new game session.
      **/
@@ -31,7 +37,7 @@ public interface Controller {
      **/
     void stopGame();
     /**
-     * Saves the player.
+     * Saves a new player.
      * 
      * @param name the name of the player
      **/

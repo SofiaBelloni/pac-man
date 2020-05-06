@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import model.Directions;
 import model.GameMapImpl;
@@ -56,6 +57,11 @@ public class ControllerImpl implements Controller {
     @Override
     public int getHighScore() {
         return this.fileManager.getHighScore();
+    }
+
+    @Override
+    public List<Player> getAllPlayers() {
+        return this.fileManager.getAllPlayers();
     }
 
     @Override
