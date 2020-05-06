@@ -15,8 +15,6 @@ public class GameModelImpl implements GameModel {
     private Optional<GameMap> gameMap = Optional.empty();
     private LevelManager levelManager;
 
-    public GameModelImpl() { }
-
     @Override
     public final synchronized void setPacManDirection(final Directions direction) {
         this.checkGameEnded();
