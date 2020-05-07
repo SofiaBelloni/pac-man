@@ -79,15 +79,16 @@ public class GhostInkyBehaviour extends GhostSmartAbstractBehaviour {
 
     @Override
     public final void nextPosition(final boolean eatable, final boolean timeToTurn, final boolean oldLevel) {
-        if ((eatable || oldLevel) && !this.isRelaxed()) {
-            this.getRandomBehaviour().nextPosition(eatable, timeToTurn, oldLevel);
-            this.setCurrentPosition(this.getRandomBehaviour().getCurrentPosition());
-            this.setCurrentDirection(this.getRandomBehaviour().getCurrentDirection());
-        } else {
+        this.checkIfInside(eatable);
+        if (!moveIfStuck()) {
+            if ((eatable || oldLevel) && !this.isRelaxed()) {
+                this.getRandomBehaviour().nextPosition(eatable, timeToTurn, oldLevel);
+                this.setCurrentPosition(this.getRandomBehaviour().getCurrentPosition());
+                this.setCurrentDirection(this.getRandomBehaviour().getCurrentDirection());
+            } else {
             if (this.isRelaxed()) {
                 this.relax(oldLevel, eatable);
             } else {
-                if (!this.moveIfStuck()) {
                     if (this.isBlinkyDead()) {
                         this.chaseTarget = this.getPacMan().getPosition();
                     } else {
@@ -96,7 +97,6 @@ public class GhostInkyBehaviour extends GhostSmartAbstractBehaviour {
                     this.findPath(this.chaseTarget);
                     this.move(this.chaseTarget);
                 }
-                this.getRandomBehaviour().setCurrentDirection(this.getCurrentDirection());
             }
         }
     }
