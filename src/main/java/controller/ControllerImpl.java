@@ -21,6 +21,7 @@ public class ControllerImpl implements Controller {
     private final GameModel model;
     private final View view;
     private final GameLoop gameLoop;
+    private final LevelTimer levelTimer;
     private final FileManager fileManager;
 
     /**
@@ -35,6 +36,7 @@ public class ControllerImpl implements Controller {
         this.setGameMap(DEFAULT_MAP_NAME);
         this.view = view;
         this.gameLoop = new GameLoopImpl(this.model, this.view);
+        this.levelTimer = new LevelTimer(this.model);
         this.fileManager = new FileManagerImpl();
     }
 
@@ -68,20 +70,24 @@ public class ControllerImpl implements Controller {
     @Override
     public void startGame() {
         this.gameLoop.start();
+        this.levelTimer.startTimer();
     }
 
     @Override
     public void pauseGame() {
+        this.levelTimer.stopTimer();
         this.gameLoop.pause();
     }
 
     @Override
     public void resumeGame() {
+        this.levelTimer.startTimer();
         this.gameLoop.resume();
     }
 
     @Override
     public void stopGame() {
+        this.levelTimer.stopTimer();
         this.gameLoop.stop();
         this.model.initializeNewGame();
     }

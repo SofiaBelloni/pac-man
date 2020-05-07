@@ -14,7 +14,6 @@ public class GameLoopImpl implements Runnable, GameLoop {
     private Thread thread;
     private volatile boolean running;
     private volatile boolean paused;
-    private final LevelTimer levelTimer;
     private final DataUpdater data;
     /**
      * Constructor.
@@ -27,7 +26,6 @@ public class GameLoopImpl implements Runnable, GameLoop {
         this.data = new DataUpdater(model, view);
         this.running = false;
         this.paused = false;
-        this.levelTimer = new LevelTimer(model);
     }
 
     @Override
@@ -38,7 +36,6 @@ public class GameLoopImpl implements Runnable, GameLoop {
 
     @Override
     public final void run() {
-        this.levelTimer.startTimer();
         this.running = true;
         long lastUpdateTime = 0;
         long unprocessedTime = 0;
@@ -71,12 +68,10 @@ public class GameLoopImpl implements Runnable, GameLoop {
     @Override
     public final synchronized void stop() {
         this.running = false;
-        this.levelTimer.stopTimer();
     }
 
     @Override
     public final synchronized void pause() {
-        this.levelTimer.stopTimer();
         this.paused = true;
     }
 
@@ -85,7 +80,6 @@ public class GameLoopImpl implements Runnable, GameLoop {
         synchronized (this.thread) {
             this.paused = false;
             this.thread.notifyAll();
-            this.levelTimer.startTimer();
         }
     }
 
