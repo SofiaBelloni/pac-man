@@ -8,10 +8,9 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="700.0" styleClass="mainPane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.MainMenuController">
+<VBox alignment="TOP_CENTER" prefHeight="781.0" prefWidth="1255.0" styleClass="mainPane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.MainMenuController">
    <children>
-      <ImageView fitHeight="131.0" fitWidth="423.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
          <image>
             <Image url="@../textures/images/logo.png" />
          </image>
@@ -19,24 +18,45 @@
             <Insets bottom="20.0" top="20.0" />
          </VBox.margin>
       </ImageView>
-      <HBox alignment="CENTER" prefHeight="190.0" prefWidth="700.0">
+      <HBox alignment="CENTER" prefHeight="190.0" prefWidth="700.0" VBox.vgrow="ALWAYS">
          <children>
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Button fx:id="newGameButton" maxWidth="400.0" minWidth="270.0" mnemonicParsing="false" onAction="#onNewGameClick" prefHeight="80.0" prefWidth="270.0" stylesheets="@style.css" text="New Game" HBox.hgrow="ALWAYS" />
+            <Button fx:id="newGameButton" mnemonicParsing="false" onAction="#onNewGameClick" stylesheets="@style.css" HBox.hgrow="ALWAYS">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../textures/images/new_game.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="190.0" prefWidth="700.0">
+      <HBox alignment="CENTER" prefHeight="190.0" prefWidth="700.0" VBox.vgrow="ALWAYS">
          <children>
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Button fx:id="scoreButton" maxWidth="400.0" minWidth="270.0" mnemonicParsing="false" onAction="#onScoreClick" prefHeight="80.0" prefWidth="270.0" stylesheets="@style.css" text="Score" HBox.hgrow="ALWAYS" />
+            <Button fx:id="scoreButton" mnemonicParsing="false" onAction="#onScoreClick" stylesheets="@style.css" HBox.hgrow="ALWAYS">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../textures/images/ranking.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="190.0" prefWidth="700.0">
+      <HBox alignment="CENTER" prefHeight="190.0" prefWidth="700.0" VBox.vgrow="ALWAYS">
          <children>
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Button fx:id="settingsButton" maxWidth="400.0" minWidth="270.0" mnemonicParsing="false" onAction="#onSettingsClick" prefHeight="80.0" prefWidth="270.0" stylesheets="@style.css" text="Settings" HBox.hgrow="ALWAYS" />
+            <Button fx:id="settingsButton" mnemonicParsing="false" onAction="#onSettingsClick" stylesheets="@style.css" HBox.hgrow="ALWAYS">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../textures/images/settings.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>

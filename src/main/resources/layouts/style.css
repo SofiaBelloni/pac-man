@@ -18,7 +18,7 @@
 .button {
     -fx-padding: 5 22 5 22;   
     -fx-background-radius: 0;
-    -fx-background-color: #f8ba1c;
+    -fx-background-color: transparent;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 30pt;
     -fx-text-fill: white;
