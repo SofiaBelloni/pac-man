@@ -17,7 +17,9 @@ public class DataUpdater {
     private final GameModel model;
     private final View view;
     private double levelDuration;
-
+    private int finalLevel;
+    private int finalScore;
+    private boolean isGameEnded;
     /**
      * Constructor.
      * @param model
@@ -29,6 +31,9 @@ public class DataUpdater {
         this.model = model;
         this.view = view;
         this.levelDuration = this.model.getLevelDuration();
+        this.finalLevel = 0;
+        this.finalScore = 0;
+        this.isGameEnded = false;
     }
     /**
      * Updates model.
@@ -47,7 +52,14 @@ public class DataUpdater {
      * @return true if the game is ended, false otherwise
      */
     public boolean isGameEnded() {
-        return this.model.isGameEnded();
+        if (this.model.isGameEnded()) {
+            this.finalLevel = this.model.getLevelNumber();
+            this.finalScore = this.model.getScores();
+            this.isGameEnded = true;
+            return this.isGameEnded;
+        }
+        this.isGameEnded = false;
+        return this.isGameEnded;
     }
     /**
     *
@@ -84,12 +96,18 @@ public class DataUpdater {
      * @return the scores of the current game
      */
     public int getCurrentScore() {
+        if (this.isGameEnded) {
+            return this.finalScore;
+        }
         return this.model.getScores();
     }
     /**
      * @return the level number
      */
     public int getLevel() {
+        if (this.isGameEnded) {
+            return this.finalLevel;
+        }
         return this.model.getLevelNumber();
     }
     /**
