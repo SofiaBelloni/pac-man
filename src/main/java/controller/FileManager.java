@@ -23,5 +23,8 @@ public interface FileManager {
      * @return list with all the Players saved. 
      */
     List<Player> getAllPlayers();
-
+    /**
+     * Deletes all the players saved. 
+     */
+    void reset();
 }

@@ -2,12 +2,14 @@ package controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -81,6 +83,23 @@ public class FileManagerImpl implements FileManager {
         return this.scoreList;
     }
 
+    @Override
+    public void reset() {
+        this.scoreList.clear();
+        try {
+            final OutputStream ostream = new FileOutputStream(this.file);
+            final JsonWriter writer = new JsonWriter(new OutputStreamWriter(ostream, "UTF-8"));
+            writer.jsonValue("");
+            writer.close();
+        } catch (UnsupportedEncodingException e) { 
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void read() throws IOException {
         final Gson gson = new Gson();
         final InputStream istream = new FileInputStream(this.file);
@@ -91,6 +110,7 @@ public class FileManagerImpl implements FileManager {
         }
         reader.endArray();
         reader.close();
+        istream.close();
     }
 
     private void write() throws IOException {
@@ -102,6 +122,7 @@ public class FileManagerImpl implements FileManager {
         this.scoreList.forEach((p) -> gson.toJson(p, Player.class, writer));
         writer.endArray();
         writer.close();
+        ostream.close();
     }
 
 }
