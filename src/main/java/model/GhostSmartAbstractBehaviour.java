@@ -25,7 +25,7 @@ public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour
     private Pair<Integer, Integer> relaxTarget;
     private boolean isBlinkyDead;
     private boolean relaxed;
-    private final Pair<Integer, Integer> randomTarget;
+    private final Pair<Integer, Integer> outsideTarget;
 
     public GhostSmartAbstractBehaviour(final Set<Pair<Integer, Integer>> walls, final PacMan pacMan,
             final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize,
@@ -39,14 +39,14 @@ public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour
         this.yMapSize = yMapSize;
         this.walls = this.getWalls();
         this.pacMan = pacMan;
-        this.randomTarget = new PairImpl<>(startPosition.getX(), startPosition.getY() - 3);
+        this.outsideTarget = new PairImpl<>(startPosition.getX(), startPosition.getY() - 3);
         this.rBehaviour = new GhostRandomBehaviourImpl(walls, ghostHouse, xMapSize, yMapSize, startPosition);
         this.setCurrentPosition(startPosition);
     }
 
     protected final void relax(final boolean oldLevel, final boolean eatable) {
         if (this.isInside() && (oldLevel || eatable)) {
-            this.relaxTarget = this.randomTarget;
+            this.relaxTarget = this.outsideTarget;
         }
         this.findPath(this.relaxTarget);
         this.move(this.relaxTarget);
@@ -151,25 +151,27 @@ public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour
      * @return true if the ghost is stuck and can go in only one direction
      */
     protected final boolean moveIfStuck() {
-        setAdj(this.getCurrentPosition());
-        if (this.getCurrentDirection().equals(UP) 
-                && this.walls.contains(this.getAdj(LEFT)) && this.walls.contains(this.getAdj(RIGHT))) {
-            this.setCurrentPosition(this.getAdj(UP));
-            return true;
+        this.setAdj(this.getCurrentPosition());
+        final Map<Directions, Pair<Integer, Integer>> mapAdj = new HashMap<>();
+        mapAdj.put(UP, this.getAdj(UP));
+        mapAdj.put(RIGHT, this.getAdj(RIGHT));
+        mapAdj.put(DOWN, this.getAdj(DOWN));
+        mapAdj.put(LEFT, this.getAdj(LEFT));
+        mapAdj.remove(this.oppositeDirection(this.getCurrentDirection()));
+        final Map<Directions, Pair<Integer, Integer>> mapAdjCopy = new HashMap<>(mapAdj);
+        for (final Directions dir : mapAdj.keySet()) {
+            if (this.walls.contains(this.getAdj(dir))) {
+                mapAdjCopy.remove(dir);
+            }
         }
-        if (this.getCurrentDirection().equals(DOWN) 
-                && this.walls.contains(this.getAdj(LEFT)) && this.walls.contains(this.getAdj(RIGHT))) {
-            this.setCurrentPosition(this.getAdj(DOWN));
-            return true;
-        }
-        if (this.getCurrentDirection().equals(LEFT) 
-                && this.walls.contains(this.getAdj(UP)) && this.walls.contains(this.getAdj(DOWN))) {
-            this.setCurrentPosition(this.getAdj(LEFT));
-            return true;
-        }
-        if (this.getCurrentDirection().equals(RIGHT) 
-                && this.walls.contains(this.getAdj(UP)) && this.walls.contains(this.getAdj(DOWN))) {
-            this.setCurrentPosition(this.getAdj(RIGHT));
+        if (mapAdjCopy.size() == 1) {
+            for (final Directions dir : mapAdjCopy.keySet()) {
+                this.setCurrentPosition(this.getAdj(dir));
+                this.setCurrentDirection(dir);
+            }
+            if (this.getCurrentPosition().equals(this.relaxTarget)) {
+                this.relaxed = false;
+            }
             return true;
         }
         return false;
@@ -226,9 +228,9 @@ public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour
     }
 
     @Override
-    public final void checkIfInside(final boolean eatable) {
-        super.checkIfInside(eatable);
-        this.rBehaviour.checkIfInside(eatable);
+    public final void checkIfInside() {
+        super.checkIfInside();
+        this.rBehaviour.checkIfInside();
     }
 
 

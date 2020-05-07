@@ -53,10 +53,8 @@ public interface GhostBehaviour {
 
     /**
      * Checks if the ghost is inside the house.
-     * 
-     *@param eatable the eatable
      *
      */
-    void checkIfInside(boolean eatable);
+    void checkIfInside();
 
 }

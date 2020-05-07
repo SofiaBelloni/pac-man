@@ -99,7 +99,7 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
      * this method is designed for extension.
      */
     @Override
-    public void checkIfInside(final boolean eatable) {
+    public void checkIfInside() {
         if (this.inside && !this.ghostHouse.contains(this.getCurrentPosition())) {
             this.walls.addAll(this.ghostHouse);
             this.inside = false;
@@ -125,5 +125,16 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         return this.inside;
     }
 
+    protected final Directions oppositeDirection(final Directions dir) {
+            if (dir.equals(UP)) {
+                return DOWN;
+            } else if (dir.equals(LEFT)) {
+               return RIGHT;
+            } else if (dir.equals(DOWN)) {
+                return UP;
+            } else {
+                return LEFT;
+            }
+    }
 
 }

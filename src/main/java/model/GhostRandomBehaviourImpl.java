@@ -76,25 +76,13 @@ public class GhostRandomBehaviourImpl extends GhostAbstractBehaviour {
         }
     }
 
-    private Directions oppositeDirection(final Directions dir) {
-            if (dir.equals(UP)) {
-                return DOWN;
-            } else if (dir.equals(LEFT)) {
-               return RIGHT;
-            } else if (dir.equals(DOWN)) {
-                return UP;
-            } else {
-                return LEFT;
-            }
-    }
-
     @Override
-    public final void checkIfInside(final boolean eatable) {
-        super.checkIfInside(eatable);
+    public final void checkIfInside() {
+        super.checkIfInside();
     }
 
     @Override
     public final void returnHome(final Pair<Integer, Integer> newPosition) {
-        this.getWalls().removeAll(this.ghostHouse);
+        super.returnHome(newPosition);
     }
 }
