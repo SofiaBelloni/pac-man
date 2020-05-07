@@ -430,9 +430,10 @@ public class GameViewController extends SceneController {
         Platform.runLater(() -> this.gameStateLabel.setText("Pause Game"));
     }
     /**
-     * Terminate the current game and go to GAMEOVER scene.
+     * Terminate the current game and go to selected scene.
+     * @param nextScene the scene you want to go.
      */
-    private void endGame(GameScene nextScene) {
+    private void endGame(final GameScene nextScene) {
         if (!this.gameState.isStarting()) {
             this.getController().stopGame();
             this.entitiesAnimationTimer.stop();
