@@ -10,12 +10,11 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox alignment="TOP_CENTER" styleClass="mainPane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.ScoreController">
+<VBox alignment="TOP_CENTER" prefHeight="623.0" prefWidth="965.0" styleClass="mainPane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.ScoreController">
    <children>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <HBox alignment="CENTER" VBox.vgrow="SOMETIMES">
          <children>
-            <Button fx:id="backButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goBack" stylesheets="@style.css" HBox.hgrow="SOMETIMES">
+            <Button fx:id="backButton" alignment="TOP_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goBack" stylesheets="@style.css" HBox.hgrow="SOMETIMES">
                <graphic>
                   <ImageView pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -24,12 +23,13 @@
                   </ImageView>
                </graphic>
             </Button>
-            <ImageView pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+            <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="SOMETIMES" />
+            <ImageView pickOnBounds="true" preserveRatio="true" HBox.hgrow="SOMETIMES">
                <image>
                   <Image url="@../textures/images/TitleRanking.png" />
                </image>
             </ImageView>
-            <Region style="-fx-background-color: white;" HBox.hgrow="SOMETIMES" />
+            <Region HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
       <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0" stylesheets="@style.css" VBox.vgrow="ALWAYS">
