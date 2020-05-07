@@ -433,11 +433,13 @@ public class GameViewController extends SceneController {
      * Terminate the current game and go to GAMEOVER scene.
      */
     private void endGame() {
-        this.getController().stopGame();
-        this.entitiesAnimationTimer.stop();
-        this.gameState.setState(GameState.State.FINISHED);
-        this.getView().setScene(GameScene.GAMEOVER);
-        Platform.runLater(() -> this.gameStateLabel.setText("Start Game"));
+        if (!this.gameState.isStarting()) {
+            this.getController().stopGame();
+            this.entitiesAnimationTimer.stop();
+            this.gameState.setState(GameState.State.FINISHED);
+            this.getView().setScene(GameScene.GAMEOVER);
+            Platform.runLater(() -> this.gameStateLabel.setText("Start Game"));
+        }
     }
 
     /**
