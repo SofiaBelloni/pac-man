@@ -88,7 +88,7 @@ public class ControllerImpl implements Controller {
 
     @Override
     public void savePlayer(final String name) {
-        this.fileManager.savePlayer(name, this.model.getLevelNumber(), this.model.getScores());
+        this.fileManager.savePlayer(name, this.getData().getLevel(), this.getData().getCurrentScore());
     }
 
     @Override
