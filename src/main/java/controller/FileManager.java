@@ -2,6 +2,8 @@ package controller;
 
 import java.util.List;
 
+import utils.Player;
+
 /**
  * Interface for saving the players' ranking on file and for its recovery from file.
  */

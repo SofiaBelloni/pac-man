@@ -16,6 +16,8 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
+import utils.Player;
+
 /**
  * Class for saving the players' ranking on file and for its recovery from file.
  */

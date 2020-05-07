@@ -2,13 +2,13 @@ package view.controllers;
 
 import java.io.IOException;
 import controller.Controller;
-import controller.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import utils.Player;
 import view.GameScene;
 import view.View;
 /**
