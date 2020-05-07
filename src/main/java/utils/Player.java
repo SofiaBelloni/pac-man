@@ -1,4 +1,4 @@
-package controller;
+package utils;
 /**
  * Class that is used to store the information of a player at the end of a game.
  */

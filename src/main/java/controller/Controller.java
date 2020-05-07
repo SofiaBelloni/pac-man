@@ -3,6 +3,7 @@ package controller;
 import java.util.List;
 
 import model.Directions;
+import utils.Player;
 /**
  * This interface represents the controller of the application.
  **/

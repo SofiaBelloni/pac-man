@@ -6,6 +6,7 @@ import java.util.List;
 import model.Directions;
 import model.GameMapImpl;
 import model.GameModel;
+import utils.Player;
 import view.View;
 
 /**
