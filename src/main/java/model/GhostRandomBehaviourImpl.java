@@ -14,13 +14,10 @@ import static model.Directions.LEFT;
 
 public class GhostRandomBehaviourImpl extends GhostAbstractBehaviour {
 
-    private final List<Pair<Integer, Integer>> ghostHouse;
-
     public GhostRandomBehaviourImpl(final Set<Pair<Integer, Integer>> walls,
             final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize,
             final Pair<Integer, Integer> startPosition) {
         super(xMapSize, yMapSize, startPosition, ghostHouse, walls);
-        this.ghostHouse = ghostHouse;
     }
 
     @Override
@@ -74,6 +71,16 @@ public class GhostRandomBehaviourImpl extends GhostAbstractBehaviour {
                 }
             }
         }
+    }
+
+    @Override
+    public final void setCurrentPosition(final Pair<Integer, Integer> newPosition) {
+        super.setCurrentPosition(newPosition);
+    }
+
+    @Override 
+    public final void setCurrentDirection(final Directions newDirection) {
+        super.setCurrentDirection(newDirection);
     }
 
     @Override
