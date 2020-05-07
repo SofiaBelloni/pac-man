@@ -14,22 +14,33 @@
    <children>
       <HBox alignment="CENTER" VBox.vgrow="SOMETIMES">
          <children>
-            <Button fx:id="backButton" alignment="TOP_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goBack" stylesheets="@style.css" HBox.hgrow="SOMETIMES">
-               <graphic>
+            <VBox prefHeight="200.0" prefWidth="358.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Button fx:id="backButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goBack" stylesheets="@style.css">
+                     <graphic>
+                        <ImageView fitHeight="84.0" fitWidth="182.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../textures/images/back.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
                   <ImageView pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../textures/images/back.png" />
+                        <Image url="@../textures/images/TitleRanking.png" />
                      </image>
                   </ImageView>
-               </graphic>
-            </Button>
-            <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="SOMETIMES" />
-            <ImageView pickOnBounds="true" preserveRatio="true" HBox.hgrow="SOMETIMES">
-               <image>
-                  <Image url="@../textures/images/TitleRanking.png" />
-               </image>
-            </ImageView>
-            <Region HBox.hgrow="ALWAYS" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="343.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Region minWidth="182.0" />
+               </children>
+            </VBox>
          </children>
       </HBox>
       <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0" stylesheets="@style.css" VBox.vgrow="ALWAYS">
