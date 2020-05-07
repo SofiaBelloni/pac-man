@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import utils.Pair;
-import utils.PairImpl;
 import static model.Directions.UP;
 import static model.Directions.DOWN;
 import static model.Directions.RIGHT;
@@ -26,8 +25,7 @@ public class GhostRandomBehaviourImpl extends GhostAbstractBehaviour {
 
     @Override
     public final void nextPosition(final boolean eatable, final boolean timeToTurn, final boolean oldLevel) {
-        if (timeToTurn && !this.checkIfInside() 
-                && !this.ghostHouse.contains(new PairImpl<>(this.getCurrentPosition().getX(), this.getCurrentPosition().getY() - 1))) {
+        if (timeToTurn) {
             this.turnAround();
         } else {
             this.runAway();
@@ -88,5 +86,15 @@ public class GhostRandomBehaviourImpl extends GhostAbstractBehaviour {
             } else {
                 return LEFT;
             }
-    } 
+    }
+
+    @Override
+    public final void checkIfInside(final boolean eatable) {
+        super.checkIfInside(eatable);
+    }
+
+    @Override
+    public final void returnHome(final Pair<Integer, Integer> newPosition) {
+        this.getWalls().removeAll(this.ghostHouse);
+    }
 }

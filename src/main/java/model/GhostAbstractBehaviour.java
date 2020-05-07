@@ -23,10 +23,9 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
     private Directions currentDirection;
     private Pair<Integer, Integer> currentPosition;
     private Map<Directions, Pair<Integer, Integer>> mapAdj;
-    private boolean isInside;
+    private boolean inside;
     private final List<Pair<Integer, Integer>> ghostHouse;
     private final Set<Pair<Integer, Integer>> walls;
-    private boolean relaxed;
 
     public GhostAbstractBehaviour(final int xMapSize, final int yMapSize, final Pair<Integer, Integer> startPosition,
             final List<Pair<Integer, Integer>> ghostHouse, final Set<Pair<Integer, Integer>> walls) {
@@ -34,10 +33,9 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         this.yMapSize = yMapSize;
         this.currentDirection = UP;
         this.currentPosition = startPosition;
-        this.isInside = true;
+        this.inside = true;
         this.ghostHouse = ghostHouse;
         this.walls = new HashSet<>(walls);
-        this.relaxed = true;
     }
 
     protected final int getxMapSize() {
@@ -53,8 +51,11 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         return this.currentDirection;
     }
 
+    /**
+     * this method is designed for extension.
+     */
     @Override 
-    public final void setCurrentDirection(final Directions newDirection) {
+    public void setCurrentDirection(final Directions newDirection) {
         this.currentDirection = newDirection;
     }
 
@@ -94,18 +95,23 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         this.mapAdj.put(LEFT, new PairImpl<>(position.getX() - 1, position.getY()));
     }
 
-    protected final boolean checkIfInside() {
-        if (this.isInside && !this.ghostHouse.contains(this.getCurrentPosition())) {
+    /**
+     * this method is designed for extension.
+     */
+    @Override
+    public void checkIfInside(final boolean eatable) {
+        if (this.inside && !this.ghostHouse.contains(this.getCurrentPosition())) {
             this.walls.addAll(this.ghostHouse);
-            this.isInside = false;
+            this.inside = false;
         }
-        return this.isInside;
     }
 
+    /**
+     * this method is designed for extension.
+     */
     @Override
-    public final void returnHome(final Pair<Integer, Integer> newPosition) {
-        this.relaxed = true;
-        this.isInside = true;
+    public void returnHome(final Pair<Integer, Integer> newPosition) {
+        this.inside = true;
         this.setCurrentPosition(newPosition);
         this.setCurrentDirection(UP);
         this.walls.removeAll(this.ghostHouse);
@@ -115,11 +121,9 @@ public abstract class GhostAbstractBehaviour implements GhostBehaviour {
         return this.walls;
     }
 
-    protected final boolean isRelaxed() {
-        return this.relaxed;
+    protected final boolean isInside() {
+        return this.inside;
     }
 
-    protected final void setRelaxedFalse() {
-        this.relaxed = false;
-    }
+
 }
