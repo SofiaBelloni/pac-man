@@ -170,7 +170,7 @@ public class GameViewController extends SceneController {
             this.changeGameState();
             break;
         case ESCAPE:
-            this.endGame();
+            this.endGame(GameScene.MAINMENU);
             break;
         default:
             break;
@@ -185,7 +185,7 @@ public class GameViewController extends SceneController {
         this.pacmanRender();
         this.gameMapRender();
         if (this.getController().getData().isGameEnded()) {
-            this.endGame();
+            this.endGame(GameScene.GAMEOVER);
         }
     }
 
@@ -432,13 +432,13 @@ public class GameViewController extends SceneController {
     /**
      * Terminate the current game and go to GAMEOVER scene.
      */
-    private void endGame() {
+    private void endGame(GameScene nextScene) {
         if (!this.gameState.isStarting()) {
             this.getController().stopGame();
             this.entitiesAnimationTimer.stop();
             this.gameState.setState(GameState.State.FINISHED);
-            this.getView().setScene(GameScene.GAMEOVER);
             Platform.runLater(() -> this.gameStateLabel.setText("Start Game"));
+            this.getView().setScene(nextScene);
         }
     }
 
