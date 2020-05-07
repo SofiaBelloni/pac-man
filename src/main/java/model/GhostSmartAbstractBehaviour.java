@@ -24,6 +24,7 @@ public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour
     private boolean isPathFound;
     private Pair<Integer, Integer> relaxTarget;
     private boolean isBlinkyDead;
+    private boolean relaxed;
     private final Pair<Integer, Integer> randomTarget;
 
     public GhostSmartAbstractBehaviour(final Set<Pair<Integer, Integer>> walls, final PacMan pacMan,
@@ -33,6 +34,7 @@ public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour
         this.mapDijkstra = new HashMap<>();
         this.isPathFound = false;
         this.isBlinkyDead = false;
+        this.relaxed = true;
         this.xMapSize = xMapSize;
         this.yMapSize = yMapSize;
         this.walls = this.getWalls();
@@ -43,14 +45,13 @@ public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour
     }
 
     protected final void relax(final boolean oldLevel, final boolean eatable) {
-        this.checkIfInside();
-        if (oldLevel || eatable) {
+        if (this.isInside() && (oldLevel || eatable)) {
             this.relaxTarget = this.randomTarget;
         }
         this.findPath(this.relaxTarget);
         this.move(this.relaxTarget);
         if (this.getCurrentPosition().equals(this.relaxTarget)) {
-            this.setRelaxedFalse();
+            this.relaxed = false;
         }
     }
 
@@ -180,6 +181,12 @@ public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour
         this.rBehaviour.setCurrentPosition(newPosition);
     }
 
+    @Override 
+    public final void setCurrentDirection(final Directions newDirection) {
+        super.setCurrentDirection(newDirection);
+        this.rBehaviour.setCurrentDirection(newDirection);
+    }
+
     @Override
     public final Pair<Integer, Integer> getRelaxTarget() {
         return relaxTarget;
@@ -210,4 +217,23 @@ public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour
     public final void setBlinkyDead() {
         this.isBlinkyDead = true;
     }
+
+    @Override
+    public final void returnHome(final Pair<Integer, Integer> newPosition) {
+        super.returnHome(newPosition);
+        this.rBehaviour.returnHome(newPosition);
+        this.relaxed = true;
+    }
+
+    @Override
+    public final void checkIfInside(final boolean eatable) {
+        super.checkIfInside(eatable);
+        this.rBehaviour.checkIfInside(eatable);
+    }
+
+
+    protected final boolean isRelaxed() {
+        return this.relaxed;
+    }
+
 }

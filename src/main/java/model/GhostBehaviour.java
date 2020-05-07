@@ -51,4 +51,12 @@ public interface GhostBehaviour {
      */
     void returnHome(Pair<Integer, Integer> newPosition);
 
+    /**
+     * Checks if the ghost is inside the house.
+     * 
+     *@param eatable the eatable
+     *
+     */
+    void checkIfInside(boolean eatable);
+
 }
