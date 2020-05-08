@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import model.Directions;
+import model.GameMapCreator;
 import model.GameMapImpl;
 import model.GameModel;
 import utils.Player;
@@ -43,7 +44,7 @@ public class ControllerImpl implements Controller {
     @Override
     public void setGameMap(final String mapName) {
         try {
-            GameMapLoader mapLoader = new GameMapLoaderImpl(mapName);
+            GameMapCreator mapLoader = new GameMapLoader(mapName);
             this.model.setGameMap(new GameMapImpl.Builder()
                     .ghostsHouse(mapLoader.getGhostsHouse())
                     .mapSize(mapLoader.getxMapSize(), mapLoader.getyMapSize())
