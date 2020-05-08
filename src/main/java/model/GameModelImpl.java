@@ -12,7 +12,6 @@ public class GameModelImpl implements GameModel {
     private static final int LEVEL_DURATION = 60;
     private static final int INVERTED_GAME_DURATION = 10;
     private Set<Ghost> ghosts;
-    private Map<Integer, GhostUtils> ghostUtils;
     private GhostFactory ghostFactory;
     private PacMan pacMan;
     private Optional<GameMap> gameMap = Optional.empty();
@@ -31,7 +30,9 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public final synchronized Map<Integer, GhostUtils> getGhosts() {
-    return this.ghostUtils;
+        final Map<Integer, GhostUtils> ghostUtils = new HashMap<>();
+        this.ghosts.forEach(x -> ghostUtils.put(x.getId(), x.getMyUtils()));
+        return ghostUtils;
     }
 
     @Override
@@ -93,7 +94,6 @@ public class GameModelImpl implements GameModel {
                 INVERTED_GAME_DURATION,
                 (this.gameMap.get().getPillsPositions().size() * this.gameMap.get().getPillScore())/4);
         this.ghosts = new HashSet<>();
-        this.ghostUtils = new HashMap<Integer, GhostUtils>();
         this.pacMan = new PacManImpl.Builder()
                 .currentDirection(Directions.UP)
                 .mapSize(this.gameMap.get().getxMapSize(), this.gameMap.get().getyMapSize())
@@ -274,12 +274,10 @@ public class GameModelImpl implements GameModel {
             blinky.create();
             ghost = this.ghostFactory.inky(blinky);
             this.ghosts.add(blinky);
-            this.ghostUtils.put(blinky.getId(), blinky.getMyUtils());
         } else {
             ghost = this.ghostFactory.clyde();
         }
         ghost.create();
         this.ghosts.add(ghost);
-        this.ghostUtils.put(ghost.getId(), ghost.getMyUtils());
     }
 }
