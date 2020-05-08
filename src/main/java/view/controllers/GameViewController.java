@@ -212,14 +212,16 @@ public class GameViewController extends SceneController {
     private void ghostRender() {
         final Map<Integer, GhostUtils> ghosts = this.getController().getData().getGhosts();
         final Map<Integer, ImageView> ghostImagesCopy = new HashMap<>(this.ghostImages);
+        for (final int id : ghosts.keySet()) {
+            if (!this.ghostImages.containsKey(id)) {
+                this.ghostSpawn();
+            }
+        }
         for (final int id : ghostImagesCopy.keySet()) {
             if (!ghosts.containsKey(id)) {
                 this.entityPane.getChildren().remove(this.ghostImages.get(id));
                 this.ghostImages.remove(id);
             } else {
-                if (!ghosts.get(id).getGhostName().equals(Ghosts.OLDLEVEL)) {
-                    this.ghostSpawn();
-                }
                 if (this.getController().getData().isGameInverted()) {
                     this.ghostImages.get(id).setImage(new Image("textures/ghost/eatable.png"));
                 } else {
