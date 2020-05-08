@@ -1,7 +1,5 @@
 package model;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import utils.GhostUtils;
 import utils.Pair;
 
@@ -127,9 +125,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     }
 
     protected final void setMyUtils() {
-        this.myUtils = new GhostUtils(
-                new ImageView(new Image("textures/" + this.name.toString() + "/RIGHT.png")),
-                this.startPosition, this.name, this.getDirection());
+        this.myUtils = new GhostUtils(this.startPosition, this.name, this.getDirection());
     }
 }
 
