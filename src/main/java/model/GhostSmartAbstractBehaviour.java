@@ -44,8 +44,8 @@ public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour
         this.setCurrentPosition(startPosition);
     }
 
-    protected final void relax(final boolean oldLevel, final boolean eatable) {
-        if (this.isInside() && (oldLevel || eatable)) {
+    protected final void relax(final Ghosts name, final boolean eatable) {
+        if (this.isInside() && (name.equals(Ghosts.OLDLEVEL) || eatable)) {
             this.relaxTarget = this.outsideTarget;
         }
         this.findPath(this.relaxTarget);

@@ -2,6 +2,7 @@ package model;
 
 import java.util.*;
 
+import utils.GhostUtils;
 import utils.Pair;
 
 public class GameModelImpl implements GameModel {
@@ -10,6 +11,7 @@ public class GameModelImpl implements GameModel {
     private static final int LEVEL_DURATION = 60;
     private static final int INVERTED_GAME_DURATION = 10;
     private Set<Ghost> ghosts;
+    private Map<Integer, GhostUtils> ghostUtils;
     private GhostFactory ghostFactory;
     private PacMan pacMan;
     private Optional<GameMap> gameMap = Optional.empty();
@@ -24,6 +26,11 @@ public class GameModelImpl implements GameModel {
     @Override
     public final synchronized int getLevelDuration(){
         return  this.levelManager.getLevelDuration();
+    }
+
+    @Override
+    public final synchronized Map<Integer, GhostUtils> getGhosts() {
+    return this.ghostUtils;
     }
 
     @Override
@@ -84,6 +91,7 @@ public class GameModelImpl implements GameModel {
                 INVERTED_GAME_DURATION,
                 (this.gameMap.get().getPillsPositions().size() * this.gameMap.get().getPillScore())/4);
         this.ghosts = new HashSet<>();
+        this.ghostUtils = new HashMap<Integer, GhostUtils>();
         this.pacMan = new PacManImpl.Builder()
                 .currentDirection(Directions.UP)
                 .mapSize(this.gameMap.get().getxMapSize(), this.gameMap.get().getyMapSize())
@@ -194,7 +202,7 @@ public class GameModelImpl implements GameModel {
         this.levelManager.nextLevel();
         this.ghosts.forEach(Entity::returnToStartPosition);
         this.ghosts.forEach(x -> x.setEatable(false));
-        this.ghosts.forEach(x -> x.setOldLevelTrue());
+        this.ghosts.forEach(x -> x.setName(Ghosts.OLDLEVEL));
         this.gameMap.get().restorePills();
         this.pacMan.returnToStartPosition();
         this.createGhost(Ghosts.CLYDE);
@@ -247,5 +255,6 @@ public class GameModelImpl implements GameModel {
         }
         ghost.create();
         this.ghosts.add(ghost);
+        this.ghostUtils.put(ghost.getId(), ghost.getMyUtils());
     }
 }

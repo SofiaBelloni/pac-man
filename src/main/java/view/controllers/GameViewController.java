@@ -2,9 +2,11 @@ package view.controllers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -31,6 +33,7 @@ import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import model.Directions;
 import model.Ghosts;
+import utils.GhostUtils;
 import utils.Pair;
 import utils.PairImpl;
 import view.GameScene;
@@ -68,21 +71,18 @@ public class GameViewController extends SceneController {
     private Label gameStateLabel;
 
     private int squareSize;
-    private final Map<Integer, ImageView> ghostView = new HashMap<>();
-    private final Map<Integer, Pair<Integer, Integer>> ghostPositions = new HashMap<>();
-    private final Map<Integer, Integer> ghostLevels = new HashMap<>();
-    private final Map<Integer, Ghosts> ghostTypes = new HashMap<>();
+    private final Set<Integer> ghostIDs = new HashSet<>();
     private final Map<Pair<Integer, Integer>, ImageView> gameMap = new HashMap<>();
     private ImageView pacmanImage;
     private Pair<Integer, Integer> pacmanPosition;
     private final Image pill = new Image("textures/pill/pill.png");
-    private int currentLevel;
     private AnimationTimer entitiesAnimationTimer;
     private final List<Image> pacmanImagesList = new ArrayList<>();
     private long startNanoTime = System.nanoTime();
     private Iterator<Image> pacmanImagesIterator;
     private final Timer countdownTimer = new Timer();
     private final GameState gameState = new GameState();
+    private int currentLevel;
 
     /**
      * {@inheritDoc}
@@ -190,73 +190,58 @@ public class GameViewController extends SceneController {
     }
 
     private void ghostSpawn() {
-        for (final int id : this.getController().getData().getGhostsPositions().keySet()) {
-            if (!this.ghostView.containsKey(id)) {
-                this.ghostLevels.put(id, this.currentLevel);
-                this.ghostTypes.put(id, this.getController().getData().getGhostsTypes().get(id));
-                this.ghostPositions.put(id, new PairImpl<>(this.getController()
-                        .getData().getGhostsPositions().get(id).getX(),
-                        this.getController()
-                        .getData().getGhostsPositions().get(id).getY()));
+        final Map<Integer, GhostUtils> ghosts = this.getController().getData().getGhosts();
+        for (final int id : ghosts.keySet()) {
+            if (!this.ghostIDs.contains(id)) {
+                this.ghostIDs.add(id);
                 final ImageView ghostImage = new ImageView();
                 ghostImage.setFitWidth(this.squareSize);
                 ghostImage.setFitHeight(this.squareSize);
-                ghostImage.setX(this.squareSize * this.ghostPositions.get(id).getX());
-                ghostImage.setY(this.squareSize * this.ghostPositions.get(id).getY());
-                this.ghostView.put(id, ghostImage);
+                ghostImage.setX(this.squareSize * ghosts.get(id).getGhostPosition().getX());
+                ghostImage.setY(this.squareSize * ghosts.get(id).getGhostPosition().getY());
+                ghosts.get(id).setGhostImageView(ghostImage);
                 this.entityPane.getChildren().add(ghostImage);
                 if (this.getController().getData().isGameInverted()) {
                     ghostImage.setImage(new Image("textures/ghost/eatable.png"));
                 } else {
-                    ghostImage.setImage(new Image("textures/" + this.ghostTypes.get(id).toString() + "/RIGHT.png"));
+                    ghostImage.setImage(new Image("textures/" + ghosts.get(id).getGhostName().toString() + "/RIGHT.png"));
                 }
             }
         }
     }
 
     private void ghostRender() {
-        if (this.getController().getData().getLevel() > this.currentLevel) {
-            this.currentLevel = this.getController().getData().getLevel();
-            this.ghostSpawn();
-        }
-        for (final int id : this.ghostPositions.keySet()) {
-            if (!this.getController().getData().getGhostsPositions().containsKey(id)) {
-                this.entityPane.getChildren().remove(this.ghostView.get(id));
-                this.ghostView.remove(id);
+        final Map<Integer, GhostUtils> ghosts = this.getController().getData().getGhosts();
+        final Set<Integer> ghostIDsCopy = new HashSet<>(this.ghostIDs);
+        for (final int id : ghostIDsCopy) {
+            if (!ghosts.containsKey(id)) {
+                this.entityPane.getChildren().remove(ghosts.get(id).getGhostImageView());
+                this.ghostIDs.remove(id);
+            }
+            if (!ghosts.get(id).getGhostName().equals(Ghosts.OLDLEVEL)) {
+                this.ghostSpawn();
+            }
+            if (this.getController().getData().isGameInverted()) {
+                ghosts.get(id).getGhostImageView().setImage(new Image("textures/ghost/eatable.png"));
             } else {
-                final Pair<Integer, Integer> newPosition = new PairImpl<>(
-                        this.getController()
-                        .getData().getGhostsPositions().get(id).getX(),
-                        this.getController()
-                        .getData().getGhostsPositions().get(id).getY());
-                if (this.getController().getData().isGameInverted()) {
-                    this.ghostView.get(id).setImage(new Image("textures/ghost/eatable.png"));
-                } else {
-                    if (this.ghostLevels.get(id) < this.currentLevel) {
-                        this.ghostTypes.put(id, Ghosts.OLDLEVEL);
-                    }
-                    switch (this.getController().getData().getGhostsDirections().get(id)) {
-                    case UP:
-                        this.ghostView.get(id).setImage(new Image("textures/" + this.ghostTypes.get(id).toString() + "/UP.png"));
-                        break;
-                    case DOWN:
-                        this.ghostView.get(id).setImage(new Image("textures/" + this.ghostTypes.get(id).toString() + "/DOWN.png"));
-                        break;
-                    case LEFT:
-                        this.ghostView.get(id).setImage(new Image("textures/" + this.ghostTypes.get(id).toString() + "/LEFT.png"));
-                        break;
-                    case RIGHT:
-                        this.ghostView.get(id).setImage(new Image("textures/" + this.ghostTypes.get(id).toString() + "/RIGHT.png"));
-                        break;
-                    default:
-                        break;
-                    }
-                }
-                if (!this.ghostPositions.get(id).equals(newPosition)) {
-                    this.transition(this.ghostView.get(id), this.ghostPositions.get(id), newPosition);
-                    this.ghostPositions.put(id, newPosition);
+                switch (ghosts.get(id).getGhostDirection()) {
+                case UP:
+                    ghosts.get(id).getGhostImageView().setImage(new Image("textures/" + ghosts.get(id).getGhostName().toString() + "/UP.png"));
+                    break;
+                case DOWN:
+                    ghosts.get(id).getGhostImageView().setImage(new Image("textures/" + ghosts.get(id).getGhostName().toString() + "/DOWN.png"));
+                    break;
+                case LEFT:
+                    ghosts.get(id).getGhostImageView().setImage(new Image("textures/" + ghosts.get(id).getGhostName().toString() + "/LEFT.png"));
+                    break;
+                case RIGHT:
+                    ghosts.get(id).getGhostImageView().setImage(new Image("textures/" + ghosts.get(id).getGhostName().toString() + "/RIGHT.png"));
+                    break;
+                default:
+                    break;
                 }
             }
+            this.transition(ghosts.get(id).getGhostImageView(), ghosts.get(id).getGhostOldPosition(), ghosts.get(id).getGhostPosition());
         }
     }
 

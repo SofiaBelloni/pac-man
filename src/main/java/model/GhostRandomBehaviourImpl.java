@@ -21,7 +21,7 @@ public class GhostRandomBehaviourImpl extends GhostAbstractBehaviour {
     }
 
     @Override
-    public final void nextPosition(final boolean eatable, final boolean timeToTurn, final boolean oldLevel) {
+    public final void nextPosition(final boolean eatable, final boolean timeToTurn, final Ghosts name) {
         if (timeToTurn) {
             this.turnAround();
         } else {

@@ -58,18 +58,18 @@ public class GhostPinkyBehaviour extends GhostSmartAbstractBehaviour implements 
     }
 
     @Override
-    public final void nextPosition(final boolean eatable, final boolean timeToTurn, final boolean oldLevel) {
+    public final void nextPosition(final boolean eatable, final boolean timeToTurn, final Ghosts name) {
         this.checkIfInside();
-        if ((eatable || oldLevel) && !this.isRelaxed()) {
+        if ((eatable || name.equals(Ghosts.OLDLEVEL)) && !this.isRelaxed() && !this.isInside()) {
             if (timeToTurn || !moveIfStuck()) {
-                this.getRandomBehaviour().nextPosition(eatable, timeToTurn, oldLevel);
+                this.getRandomBehaviour().nextPosition(eatable, timeToTurn, name);
                 this.setCurrentPosition(this.getRandomBehaviour().getCurrentPosition());
                 this.setCurrentDirection(this.getRandomBehaviour().getCurrentDirection());
             }
         } else {
             if (this.isInside() || !moveIfStuck()) {
                 if (this.isRelaxed()) {
-                    this.relax(oldLevel, eatable);
+                    this.relax(name, eatable);
                 } else {
                     this.targetPosition(this.getPacMan());
                     super.findPath(this.chaseTarget);

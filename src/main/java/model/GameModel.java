@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import utils.GhostUtils;
 import utils.Pair;
 
 /**
@@ -101,4 +102,5 @@ public interface GameModel {
      * sets the game map
      */
     void setGameMap(GameMap gameMap);
+    Map<Integer, GhostUtils> getGhosts();
 }

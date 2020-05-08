@@ -1,5 +1,8 @@
 package model;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import utils.GhostUtils;
 import utils.Pair;
 
 /**
@@ -15,7 +18,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     private boolean timeToTurn;
     private Pair<Integer, Integer> startPosition;
     private final int id;
-    private boolean oldLevel;
+    private GhostUtils myUtils;
 
     public GhostAbstractImpl(final int xMapSize, final int yMapSize, final int id) {
         super(xMapSize, yMapSize);
@@ -23,15 +26,16 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         this.eatable = false;
         this.timeToTurn = false;
         this.id = id;
-        this.oldLevel = false;
     }
 
     @Override
     public final void nextPosition() {
         this.checkCreation();
-        this.myBehaviour.nextPosition(this.eatable, this.timeToTurn, this.oldLevel);
+        this.myBehaviour.nextPosition(this.eatable, this.timeToTurn, this.name);
         this.timeToTurn = false;
         this.myBehaviour.setCurrentPosition(this.convertToToroidal(this.getPosition()));
+        this.myUtils.setGhostPosition(this.myBehaviour.getCurrentPosition());
+        this.myUtils.setGhostDirection(this.myBehaviour.getCurrentDirection());
     }
 
     @Override
@@ -81,8 +85,11 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         return this.name;
     }
 
-    protected final void setName(final Ghosts name) {
+    public final void setName(final Ghosts name) {
         this.name = name;
+        if (name.equals(Ghosts.OLDLEVEL)) {
+            this.myUtils.setOldLevel();
+        }
     }
 
     protected final void setMyBehaviour(final GhostSmartBehaviour myBehaviour) {
@@ -100,6 +107,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
 
     protected final void setStartPosition(final Pair<Integer, Integer> startPosition) {
         this.startPosition = startPosition;
+        this.myUtils.setGhostPosition(startPosition);
     }
 
     @Override
@@ -108,15 +116,21 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         return this.id;
     }
 
-    @Override
-    public final void setOldLevelTrue() {
-        this.oldLevel = true;
-    }
-
     private void checkCreation() {
         if (!this.created) {
             throw new IllegalStateException("Error, ghost not created");
         }
+    }
+
+    @Override
+    public final GhostUtils getMyUtils() {
+        return this.myUtils;
+    }
+
+    protected final void setMyUtils() {
+        this.myUtils = new GhostUtils(
+                new ImageView(new Image("textures/" + this.name.toString() + "/RIGHT.png")),
+                this.startPosition, this.name, this.getDirection());
     }
 }
 

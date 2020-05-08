@@ -5,7 +5,7 @@ import java.util.Set;
 
 import model.Directions;
 import model.GameModel;
-import model.Ghosts;
+import utils.GhostUtils;
 import utils.Pair;
 import view.View;
 /**
@@ -129,22 +129,10 @@ public class DataUpdater {
         return this.model.getWallsPositions();
     }
     /**
-     * @return a Map containing KEY -> Id, VALUE -> type.
+     * @return a Map containing KEY -> Id, VALUE -> GhostUtils.
      */
-    public Map<Integer, Ghosts> getGhostsTypes() {
-        return this.model.getGhostsTypes();
-    }
-    /**
-     * @return a Map containing KEY -> Id, VALUE -> position.
-     */
-    public Map<Integer, Pair<Integer, Integer>> getGhostsPositions() {
-        return this.model.getGhostsPositions();
-    }
-    /**
-     * @return a Map containing KEY -> Id, VALUE -> direction.
-     */
-    public Map<Integer, Directions> getGhostsDirections() {
-        return this.model.getGhostsDirections();
+    public Map<Integer, GhostUtils> getGhosts() {
+        return this.model.getGhosts();
     }
     /**
      * @return the size of the map on the x-axis
