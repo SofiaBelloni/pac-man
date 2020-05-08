@@ -292,6 +292,7 @@ public class GameViewController extends SceneController {
         this.timer.setProgress(this.getController().getData().getLevelTimePercentage()); 
         if (this.currentLevel != this.getController().getData().getLevel()) {
             this.level.setText(String.valueOf(this.getController().getData().getLevel()));
+            this.currentLevel = this.getController().getData().getLevel();
             this.pauseGame();
             this.gameState.setStarting(true);
             this.countdownTimer.scheduleAtFixedRate(new TimerTask() {
