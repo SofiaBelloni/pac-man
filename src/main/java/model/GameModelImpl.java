@@ -4,6 +4,7 @@ import java.util.*;
 
 import utils.GhostUtils;
 import utils.Pair;
+import utils.PairImpl;
 
 public class GameModelImpl implements GameModel {
 
@@ -70,14 +71,12 @@ public class GameModelImpl implements GameModel {
                 this.ghosts.forEach(x -> x.setEatable(true));
             }
         }
-        if (this.checkPacManGhostCollision()) {
+        Set<Ghost> collisions = this.checkPacManGhostCollision();
+        if (!collisions.isEmpty()) {
             if (this.levelManager.isGameInverted()) {
-                this.ghosts.removeIf(x -> x.getPosition().equals(this.pacMan.getPosition())
-                || (this.arePositionsNear(this.pacMan.getPosition(), x.getPosition())
-                                && this.areDirectionsOpposite(this.pacMan.getDirection(), x.getDirection())));
-                this.ghostUtils.keySet().removeIf(x -> this.ghostUtils.get(x).getGhostPosition().equals(this.pacMan.getPosition())
-                        || (this.arePositionsNear(this.pacMan.getPosition(), this.ghostUtils.get(x).getGhostPosition())
-                                        && this.areDirectionsOpposite(this.pacMan.getDirection(), this.ghostUtils.get(x).getGhostDirection())));
+                collisions.forEach(x -> {
+                    this.ghosts.removeIf(y -> y.getId() == x.getId());
+                });
             } else {
                 this.pacMan.kill();
                 this.ghosts.forEach(Entity::returnToStartPosition);
@@ -217,23 +216,45 @@ public class GameModelImpl implements GameModel {
         return this.gameMap.get().isPill(this.getPacManPosition());
     }
 
-    private boolean checkPacManGhostCollision() {
-        return this.ghosts.stream().anyMatch(x -> x.getPosition().equals(this.pacMan.getPosition())
-        || (this.areDirectionsOpposite(this.pacMan.getDirection(), x.getDirection())
-                && this.arePositionsNear(this.pacMan.getPosition(), x.getPosition())));
+    private Set<Ghost> checkPacManGhostCollision() {
+        Set<Ghost> tmp = new HashSet<>();
+        this.ghosts.forEach(x -> {
+            if (x.getPosition().equals(this.pacMan.getPosition())){
+                tmp.add(x);
+            }
+            if (this.calculateNextPosition(this.pacMan.getDirection(), this.pacMan.getPosition()).equals(x.getPosition())
+            && this.calculateNextPosition(x.getDirection(), x.getPosition()).equals(this.pacMan.getPosition())) {
+                tmp.add(x);
+            }
+        });
+        return tmp;
     }
 
-    private boolean areDirectionsOpposite(final Directions dir1, final Directions dir2){
-        return (dir1.equals(Directions.UP) && dir2.equals(Directions.DOWN))
-                || (dir1.equals(Directions.DOWN) && dir2.equals(Directions.UP))
-                ||(dir1.equals(Directions.LEFT) && dir2.equals(Directions.RIGHT))
-                || (dir1.equals(Directions.RIGHT) && dir2.equals(Directions.LEFT));
+//    private boolean areDirectionsOpposite(final Directions dir1, final Directions dir2){
+//        return (dir1.equals(Directions.UP) && dir2.equals(Directions.DOWN))
+//                || (dir1.equals(Directions.DOWN) && dir2.equals(Directions.UP))
+//                ||(dir1.equals(Directions.LEFT) && dir2.equals(Directions.RIGHT))
+//                || (dir1.equals(Directions.RIGHT) && dir2.equals(Directions.LEFT));
+//    }
+
+    private Pair<Integer, Integer> calculateNextPosition(final Directions direction, final Pair<Integer, Integer> position){
+        switch (direction){
+            case UP:
+                return new PairImpl<>(position.getX(), position.getY() - 1);
+            case DOWN:
+                return new PairImpl<>(position.getX(), position.getY() + 1);
+            case LEFT:
+                return new PairImpl<>(position.getX() - 1, position.getY());
+            case RIGHT:
+                return new PairImpl<>(position.getX() + 1, position.getY());
+        }
+        return null;
     }
 
-    private boolean arePositionsNear(final Pair<Integer, Integer> position1, final Pair<Integer, Integer> position2) {
-        return Math.abs(position1.getX() - position2.getX()) <= 1
-                && Math.abs(position1.getY() - position2.getY()) <= 1;
-    }
+//    private boolean arePositionsNear(final Pair<Integer, Integer> position1, final Pair<Integer, Integer> position2) {
+//        return Math.abs(position1.getX() - position2.getX()) <= 1
+//                && Math.abs(position1.getY() - position2.getY()) <= 1;
+//    }
 
 /*    private List<Pair<Integer, Integer>> getGhostPositions(final Ghosts ghost) {
         final List<Pair<Integer, Integer>> positions = new ArrayList<>();
