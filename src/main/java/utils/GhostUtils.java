@@ -6,15 +6,13 @@ import model.Ghosts;
 
 public class GhostUtils {
 
-    private ImageView ghostImage;
     private Pair<Integer, Integer> oldGhostPosition;
     private Pair<Integer, Integer> ghostPosition;
     private Ghosts ghostName;
     private Directions direction;
 
-    public GhostUtils(final ImageView ghostImage, final Pair<Integer, Integer> ghostPosition,
+    public GhostUtils(final Pair<Integer, Integer> ghostPosition,
              final Ghosts ghostName, final Directions direction) {
-        this.ghostImage = ghostImage;
         this.ghostPosition = ghostPosition;
         this.ghostName = ghostName;
         this.direction = direction;
@@ -28,13 +26,6 @@ public class GhostUtils {
         this.direction = direction;
     }
 
-    public final ImageView getGhostImageView() {
-        return this.ghostImage;
-    }
-
-    public final void setGhostImageView(final ImageView ghostImage) {
-        this.ghostImage = ghostImage;
-    }
     public final Pair<Integer, Integer> getGhostOldPosition() {
         return this.oldGhostPosition;
     }
