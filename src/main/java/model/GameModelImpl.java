@@ -75,6 +75,9 @@ public class GameModelImpl implements GameModel {
                 this.ghosts.removeIf(x -> x.getPosition().equals(this.pacMan.getPosition())
                 || (this.arePositionsNear(this.pacMan.getPosition(), x.getPosition())
                                 && this.areDirectionsOpposite(this.pacMan.getDirection(), x.getDirection())));
+                this.ghostUtils.keySet().removeIf(x -> this.ghostUtils.get(x).getGhostPosition().equals(this.pacMan.getPosition())
+                        || (this.arePositionsNear(this.pacMan.getPosition(), this.ghostUtils.get(x).getGhostPosition())
+                                        && this.areDirectionsOpposite(this.pacMan.getDirection(), this.ghostUtils.get(x).getGhostDirection())));
             } else {
                 this.pacMan.kill();
                 this.ghosts.forEach(Entity::returnToStartPosition);
@@ -250,6 +253,7 @@ public class GameModelImpl implements GameModel {
             blinky.create();
             ghost = this.ghostFactory.inky(blinky);
             this.ghosts.add(blinky);
+            this.ghostUtils.put(blinky.getId(), blinky.getMyUtils());
         } else {
             ghost = this.ghostFactory.clyde();
         }

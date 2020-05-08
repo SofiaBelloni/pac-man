@@ -107,7 +107,6 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
 
     protected final void setStartPosition(final Pair<Integer, Integer> startPosition) {
         this.startPosition = startPosition;
-        this.myUtils.setGhostPosition(startPosition);
     }
 
     @Override
