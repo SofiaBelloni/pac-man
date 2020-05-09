@@ -3,6 +3,7 @@ package view.utils;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import javax.sound.sampled.AudioInputStream;
@@ -12,13 +13,19 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 /**
  * This class represents the Sound Manager of the game.
+ * This is a SINGLETON: to get the SounManager instance call SoundManager.getSoundManager().
  */
 public class SoundManager {
 
     private static final String FOLDER = "sounds/";
+    private static final String EXTENSION = ".wav";
 
     private boolean soundEnabled;
     private Map<Sound, Clip> clipMap;
+
+    private static class CreateSingleton {
+        private static final SoundManager SOUNDMANAGER_INSTANCE = new SoundManager();
+    }
 
     /**
      * This enumeration represents all the sounds of the game.
@@ -27,31 +34,35 @@ public class SoundManager {
         /**
          * The sound for when the application starts.
          */
-        START(FOLDER + ""),
+        START(FOLDER + "pacman_beginning" + EXTENSION),
         /**
          * The sound for when a button is pressed.
          */
-        BUTTON(FOLDER + ""),
+        BUTTON(FOLDER + "button_back" + EXTENSION),
+        /**
+         * The sound for when a button is pressed to return to main menu.
+         */
+        BACK(FOLDER + "button_back" + EXTENSION),
         /**
          * The sound for when a new game is started.
          */
-        NEW_GAME(FOLDER + ""),
+        NEW_GAME(FOLDER + "" + EXTENSION),
         /**
          * The sound for when the game is inverted.
          */
-        GAME_INVERTED(FOLDER + ""),
+        GAME_INVERTED(FOLDER + "" + EXTENSION),
         /**
          * The sound for when Pac-Man eats a ghost.
          */
-        GHOST_EATEN(FOLDER + ""),
+        GHOST_EATEN(FOLDER + "" + EXTENSION),
         /**
          * The sound for when Pac-Man is killed.
          */
-        DEATH(FOLDER + ""),
+        DEATH(FOLDER + "" + EXTENSION),
         /**
          * The sound for when you lost a game.
          */
-        GAME_OVER(FOLDER + "");
+        GAME_OVER(FOLDER + "" + EXTENSION);
 
         private final String path;
 
@@ -60,18 +71,23 @@ public class SoundManager {
         }
     }
 
-    /**
-     * Constructor.
-     */
-    public SoundManager() {
+    //private constructor
+    private SoundManager() {
         this.clipMap = new HashMap<>();
         this.soundEnabled = true;
     }
 
     /**
+     * @return The SoundManager
+     */
+    public static SoundManager getSoundManager() {
+        return CreateSingleton.SOUNDMANAGER_INSTANCE;
+    }
+
+    /**
      * Enables sound if disabled, and vice versa.
      */
-    public final void setSoundEnabled() {
+    public void setSoundEnabled() {
         this.soundEnabled = !this.soundEnabled;
     }
 
@@ -80,10 +96,10 @@ public class SoundManager {
      * 
      * @param sound The {@link Sound} to reproduced.
      */
-    public final void play(final Sound sound) {
+    public void play(final Sound sound) {
         if (this.soundEnabled) {
             try {
-                this.clipMap.putIfAbsent(sound, this.createClip(sound));
+                this.clipMap.put(sound, this.createClip(sound.path));
                 this.clipMap.get(sound).start();
             } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
                 e.printStackTrace();
@@ -99,8 +115,9 @@ public class SoundManager {
     public void playWithLoop(final Sound sound) {
         if (this.soundEnabled) {
             try {
-                this.clipMap.putIfAbsent(sound, this.createClip(sound));
+                this.clipMap.put(sound, this.createClip(sound.path));
                 this.clipMap.get(sound).loop(Clip.LOOP_CONTINUOUSLY);
+                this.clipMap.get(sound).close();
             } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
                 e.printStackTrace();
             }
@@ -118,9 +135,21 @@ public class SoundManager {
         }
     }
 
-    private Clip createClip(final Sound sound) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+    /**
+     * Stops all the sounds.
+     */
+    public void stopAll() {
+        for (final Map.Entry<Sound, Clip> entry : this.clipMap.entrySet()) {
+            if (entry.getValue().isRunning()) {
+                entry.getValue().stop();
+                this.clipMap.clear();
+            }
+        }
+    }
+
+    private Clip createClip(final String path) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         InputStream istream = this.getClass().getClassLoader()
-                    .getResourceAsStream(sound.path);
+                    .getResourceAsStream(path);
         AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(istream));
         Clip clip = AudioSystem.getClip();
         clip.open(audioInputStream);
