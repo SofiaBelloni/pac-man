@@ -42,23 +42,27 @@ public class SoundManager {
         /**
          * The sound for when a new game is started.
          */
-        NEW_GAME(FOLDER + "" + EXTENSION),
+        NEW_GAME(FOLDER + "pacman_intermission" + EXTENSION),
+        /**
+         * The base sound of the game.
+         */
+        GAME(FOLDER + "base_sound" + EXTENSION),
+        /**
+         * The sound for the initial timer.
+         */
+        TIMER(FOLDER + "" + EXTENSION),
         /**
          * The sound for when the game is inverted.
          */
         GAME_INVERTED(FOLDER + "" + EXTENSION),
         /**
-         * The sound for when Pac-Man eats a ghost.
+         * The sound for when Pac-Man eats a ghost or vice versa.
          */
-        GHOST_EATEN(FOLDER + "" + EXTENSION),
-        /**
-         * The sound for when Pac-Man is killed.
-         */
-        DEATH(FOLDER + "" + EXTENSION),
+        EATEN(FOLDER + "eaten" + EXTENSION),
         /**
          * The sound for when you lost a game.
          */
-        GAME_OVER(FOLDER + "" + EXTENSION);
+        GAME_OVER(FOLDER + "game_over" + EXTENSION);
 
         private final String path;
 
@@ -113,7 +117,6 @@ public class SoundManager {
             try {
                 this.clipMap.put(sound, this.createClip(sound.path));
                 this.clipMap.get(sound).loop(Clip.LOOP_CONTINUOUSLY);
-                this.clipMap.get(sound).close();
             } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
                 e.printStackTrace();
             }
@@ -138,9 +141,9 @@ public class SoundManager {
         for (final Map.Entry<Sound, Clip> entry : this.clipMap.entrySet()) {
             if (entry.getValue().isRunning()) {
                 entry.getValue().stop();
-                this.clipMap.clear();
             }
         }
+        this.clipMap.clear();
     }
 
     private Clip createClip(final String path) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
