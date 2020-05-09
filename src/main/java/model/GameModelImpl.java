@@ -186,10 +186,6 @@ public class GameModelImpl implements GameModel {
         return this.pacMan.getDirection();
     }
 
-/*    private void checkGameMapPresence() {
-        this.checkCondition(this.gameMap.isEmpty());
-    }*/
-
     private void checkGameEnded(){
         this.checkCondition(this.isGameEnded() && this.gameMap.isPresent());
     }
@@ -231,13 +227,6 @@ public class GameModelImpl implements GameModel {
         return tmp;
     }
 
-//    private boolean areDirectionsOpposite(final Directions dir1, final Directions dir2){
-//        return (dir1.equals(Directions.UP) && dir2.equals(Directions.DOWN))
-//                || (dir1.equals(Directions.DOWN) && dir2.equals(Directions.UP))
-//                ||(dir1.equals(Directions.LEFT) && dir2.equals(Directions.RIGHT))
-//                || (dir1.equals(Directions.RIGHT) && dir2.equals(Directions.LEFT));
-//    }
-
     private Pair<Integer, Integer> calculateNextPosition(final Directions direction, final Pair<Integer, Integer> position){
         switch (direction){
             case UP:
@@ -251,18 +240,6 @@ public class GameModelImpl implements GameModel {
         }
         return null;
     }
-
-//    private boolean arePositionsNear(final Pair<Integer, Integer> position1, final Pair<Integer, Integer> position2) {
-//        return Math.abs(position1.getX() - position2.getX()) <= 1
-//                && Math.abs(position1.getY() - position2.getY()) <= 1;
-//    }
-
-/*    private List<Pair<Integer, Integer>> getGhostPositions(final Ghosts ghost) {
-        final List<Pair<Integer, Integer>> positions = new ArrayList<>();
-        this.ghosts.stream().filter(x -> x.getName().equals(ghost))
-                .forEach(x -> positions.add(x.getPosition()));
-        return positions;
-    }*/
 
     private void createGhost(final Ghosts ghostName) {
         Ghost ghost;
