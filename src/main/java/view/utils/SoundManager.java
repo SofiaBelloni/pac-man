@@ -34,15 +34,11 @@ public class SoundManager {
         /**
          * The sound for when the application starts.
          */
-        START(FOLDER + "pacman_beginning" + EXTENSION),
+        INTRO(FOLDER + "pacman_beginning" + EXTENSION),
         /**
          * The sound for when a button is pressed.
          */
-        BUTTON(FOLDER + "button_back" + EXTENSION),
-        /**
-         * The sound for when a button is pressed to return to main menu.
-         */
-        BACK(FOLDER + "button_back" + EXTENSION),
+        BUTTON(FOLDER + "button" + EXTENSION),
         /**
          * The sound for when a new game is started.
          */

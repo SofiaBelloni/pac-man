@@ -42,7 +42,7 @@ public class ViewImpl implements View {
         this.stage.setResizable(false);
         this.stage.setTitle(TITLE);
         this.setScene(GameScene.MAINMENU);
-        SoundManager.getSoundManager().play(Sound.START);
+        SoundManager.getSoundManager().play(Sound.INTRO);
     }
 
     @Override

@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import view.GameScene;
 import view.View;
+import view.utils.SoundManager;
+import view.utils.SoundManager.Sound;
 
 import java.io.IOException;
 
@@ -22,16 +24,22 @@ public class MainMenuController extends SceneController {
 
     @FXML
     private void onNewGameClick(final ActionEvent event) throws IOException {
+        SoundManager.getSoundManager().stopAll();
+        SoundManager.getSoundManager().play(Sound.BUTTON);
         this.getView().setScene(GameScene.GAME);
     }
 
     @FXML
     private void onScoreClick(final ActionEvent event) throws IOException {
+        SoundManager.getSoundManager().stopAll();
+        SoundManager.getSoundManager().play(Sound.BUTTON);
         this.getView().setScene(GameScene.SCORE);
     }
 
     @FXML
     private void onSettingsClick(final ActionEvent event) throws IOException {
+        SoundManager.getSoundManager().stopAll();
+        SoundManager.getSoundManager().play(Sound.BUTTON);
         this.getView().setScene(GameScene.SETTINGS);
     }
 }

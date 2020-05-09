@@ -11,6 +11,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import utils.Player;
 import view.GameScene;
 import view.View;
+import view.utils.SoundManager;
+import view.utils.SoundManager.Sound;
 /**
  * This class represents the controller for the leaderboard scene.
  */
@@ -42,6 +44,7 @@ public class ScoreController extends SceneController {
 
     @FXML
     void goBack(final ActionEvent event) throws IOException {
+        SoundManager.getSoundManager().play(Sound.BUTTON);
         this.getView().setScene(GameScene.MAINMENU);
     }
 
