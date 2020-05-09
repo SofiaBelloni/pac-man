@@ -3,10 +3,7 @@ package model;
 import utils.Pair;
 import utils.PairImpl;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 public class RandomGameMapGenerator extends GameMapCreatorImpl{
     private static final int X_SIZE = 28;
@@ -19,7 +16,7 @@ public class RandomGameMapGenerator extends GameMapCreatorImpl{
         super.setPacManStartPosition(PAC_MAN_START_POSITION);
         super.setGhostsHouse(this.generateGhostHouse());
         super.setPills(this.generateFixedPills());
-        Set<Pair<Integer, Integer>> tmp = this.generateRandomPills();
+        super.getPills().addAll(this.generateRandomPills());
         super.setWalls(this.generateWalls());
     }
 
@@ -85,10 +82,9 @@ public class RandomGameMapGenerator extends GameMapCreatorImpl{
         final Set<Pair<Integer, Integer>> tmp = new HashSet<>();
         final List<Pair<Integer, Integer>> fixedPills = List.copyOf(this.generateInternalFixedPills());
         final Random r = new Random();
-        final int numLines = ((r.nextInt()+1) % 6) + 5;
+        final int numLines = ((r.nextInt() + 1) % fixedPills.size() / 2) + (fixedPills.size() / 2);
         for (int i = 0; i < numLines; i++){
-            int index = r.nextInt(fixedPills.size());
-            tmp.addAll(this.generateRandomPillsLine(fixedPills.get(index)));
+            tmp.addAll(this.generateRandomPillsLine(fixedPills.get(r.nextInt(fixedPills.size()))));
         }
         return tmp;
     }
@@ -109,22 +105,36 @@ public class RandomGameMapGenerator extends GameMapCreatorImpl{
     }
 
     private Pair<Integer, Integer> generateNextPosition(final Pair<Integer, Integer> position){
-//        final Random r = new Random();
-//        final Pair<Integer, Integer> tmp;
-//        if (r.nextBoolean()){
-//            if (r.nextBoolean()){
-//                tmp = new PairImpl<>(position.getX() + 1, position.getY());
-//            }else {
-//                tmp = new PairImpl<>(position.getX() - 1, position.getY());
-//            }
-//        } else {
-//            if (r.nextBoolean()){
-//                tmp = new PairImpl<>(position.getX(), position.getY() + 1);
-//            }else {
-//                tmp = new PairImpl<>(position.getX(), position.getY() - 1);
-//            }
-//        }
-//        return tmp;
-        return new PairImpl<>(position.getX()+1, position.getY());
+        final Random r = new Random();
+        List<Directions> directions = this.positionToDirection(position);
+        int index = r.nextInt(directions.size());
+        if (directions.get(index).equals(Directions.UP)){
+            return new PairImpl<>(position.getX(), position.getY() - 1);
+        }
+        if (directions.get(index).equals(Directions.DOWN)){
+            return new PairImpl<>(position.getX(), position.getY() + 1);
+        }
+        if (directions.get(index).equals(Directions.LEFT)){
+            return new PairImpl<>(position.getX() - 1, position.getY());
+        }
+        if (directions.get(index).equals(Directions.RIGHT)){
+            return new PairImpl<>(position.getX() + 1, position.getY());
+        }
+        return null;
+    }
+
+    private List<Directions> positionToDirection(final Pair<Integer, Integer> position){
+        List<Directions> tmp = new ArrayList<>();
+        if (position.getX() >= X_SIZE / 2){
+            tmp.add(Directions.RIGHT);
+        } else {
+            tmp.add(Directions.LEFT);
+        }
+        if (position.getY() >= Y_SIZE / 2){
+            tmp.add(Directions.DOWN);
+        } else {
+            tmp.add(Directions.UP);
+        }
+        return tmp;
     }
 }
