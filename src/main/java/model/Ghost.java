@@ -40,19 +40,30 @@ public interface Ghost extends Entity {
     void blinkyIsDead();
 
     /**
-     * 
+     * Gets the id.
+     *
      * @return the ghost id
      */
     int getId();
 
     /**
-     * 
+     * Gets the direction.
+     *
      * @return the ghost direction
      */
     Directions getDirection();
 
+    /**
+     *
+     * @return the ghostUtils
+     */
     GhostUtils getMyUtils();
 
+    /**
+     * Sets the ghost name.
+     *
+     * @param name the new name
+     */
     void setName(Ghosts name);
 
 }

@@ -12,7 +12,7 @@ import static model.Directions.DOWN;
 import static model.Directions.RIGHT;
 import static model.Directions.LEFT;
 
-public class GhostRandomBehaviourImpl extends GhostAbstractBehaviour {
+public class GhostRandomBehaviourImpl extends GhostAbstractBehaviour implements GhostRandomBehaviour {
 
     public GhostRandomBehaviourImpl(final Set<Pair<Integer, Integer>> walls,
             final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize,
@@ -21,7 +21,7 @@ public class GhostRandomBehaviourImpl extends GhostAbstractBehaviour {
     }
 
     @Override
-    public final void nextPosition(final boolean eatable, final boolean timeToTurn, final Ghosts name) {
+    public final void move(final boolean timeToTurn) {
         if (timeToTurn) {
             this.turnAround();
         } else {

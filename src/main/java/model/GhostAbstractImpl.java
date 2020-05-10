@@ -12,7 +12,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     private boolean eatable;
     private boolean created;
     private Ghosts name;
-    private GhostSmartBehaviour myBehaviour;
+    private GhostFinalBehaviour myBehaviour;
     private boolean timeToTurn;
     private Pair<Integer, Integer> startPosition;
     private final int id;
@@ -83,6 +83,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         return this.name;
     }
 
+    @Override
     public final void setName(final Ghosts name) {
         this.name = name;
         if (name.equals(Ghosts.OLDLEVEL)) {
@@ -90,7 +91,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
         }
     }
 
-    protected final void setMyBehaviour(final GhostSmartBehaviour myBehaviour) {
+    protected final void setMyBehaviour(final GhostFinalBehaviour myBehaviour) {
         this.myBehaviour = myBehaviour;
     }
 

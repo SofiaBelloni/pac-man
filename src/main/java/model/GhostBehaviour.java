@@ -36,15 +36,6 @@ public interface GhostBehaviour {
     void setCurrentPosition(Pair<Integer, Integer> newPosition);
 
     /**
-     * Calculate the next position of the ghost.
-     *
-     * @param eatable the eatable
-     * @param name the ghost name
-     * @param timeToTurn the time to turn
-     */
-    void nextPosition(boolean eatable, boolean timeToTurn, Ghosts name);
-
-    /**
      * Makes the ghosts return in ghostHouse.
      *
      * @param newPosition the new position

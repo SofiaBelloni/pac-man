@@ -20,7 +20,6 @@ public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour
     private final int xMapSize;
     private final int yMapSize;
     private final PacMan pacMan;
-    private final GhostBehaviour rBehaviour;
     private boolean isPathFound;
     private Pair<Integer, Integer> relaxTarget;
     private boolean isBlinkyDead;
@@ -40,8 +39,6 @@ public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour
         this.walls = this.getWalls();
         this.pacMan = pacMan;
         this.outsideTarget = new PairImpl<>(startPosition.getX(), startPosition.getY() - 3);
-        this.rBehaviour = new GhostRandomBehaviourImpl(walls, ghostHouse, xMapSize, yMapSize, startPosition);
-        this.setCurrentPosition(startPosition);
     }
 
     protected final void relax(final Ghosts name, final boolean eatable) {
@@ -178,18 +175,6 @@ public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour
     }
 
     @Override
-    public final void setCurrentPosition(final Pair<Integer, Integer> newPosition) {
-        super.setCurrentPosition(newPosition);
-        this.rBehaviour.setCurrentPosition(newPosition);
-    }
-
-    @Override 
-    public final void setCurrentDirection(final Directions newDirection) {
-        super.setCurrentDirection(newDirection);
-        this.rBehaviour.setCurrentDirection(newDirection);
-    }
-
-    @Override
     public final Pair<Integer, Integer> getRelaxTarget() {
         return relaxTarget;
     }
@@ -207,10 +192,6 @@ public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour
         return this.pacMan;
     }
 
-    protected final GhostBehaviour getRandomBehaviour() {
-        return this.rBehaviour;
-    }
-
     protected final boolean isBlinkyDead() {
         return this.isBlinkyDead;
     }
@@ -220,22 +201,12 @@ public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour
         this.isBlinkyDead = true;
     }
 
-    @Override
-    public final void returnHome(final Pair<Integer, Integer> newPosition) {
-        super.returnHome(newPosition);
-        this.rBehaviour.returnHome(newPosition);
-        this.relaxed = true;
-    }
-
-    @Override
-    public final void checkIfInside() {
-        super.checkIfInside();
-        this.rBehaviour.checkIfInside();
-    }
-
-
     protected final boolean isRelaxed() {
         return this.relaxed;
+    }
+
+    protected final void setRelaxed(final boolean relaxed) {
+        this.relaxed = relaxed;
     }
 
 }
