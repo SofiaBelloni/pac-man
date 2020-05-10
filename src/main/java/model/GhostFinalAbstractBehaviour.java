@@ -5,6 +5,10 @@ import java.util.Set;
 
 import utils.Pair;
 
+/**
+ *This class implements a generic ghost final behaviour.
+ *
+ */
 public abstract class GhostFinalAbstractBehaviour extends GhostSmartAbstractBehaviour implements GhostFinalBehaviour {
 
     private final GhostRandomBehaviour rBehaviour;

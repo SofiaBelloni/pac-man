@@ -12,6 +12,10 @@ import static model.Directions.DOWN;
 import static model.Directions.RIGHT;
 import static model.Directions.LEFT;
 
+/**
+ *This class implements a generic ghost random behaviour.
+ *
+ */
 public class GhostRandomBehaviourImpl extends GhostAbstractBehaviour implements GhostRandomBehaviour {
 
     public GhostRandomBehaviourImpl(final Set<Pair<Integer, Integer>> walls,

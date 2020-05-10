@@ -36,7 +36,7 @@ public interface GhostBehaviour {
     void setCurrentPosition(Pair<Integer, Integer> newPosition);
 
     /**
-     * Makes the ghosts return in ghostHouse.
+     * Makes the ghost return in ghostHouse.
      *
      * @param newPosition the new position
      */

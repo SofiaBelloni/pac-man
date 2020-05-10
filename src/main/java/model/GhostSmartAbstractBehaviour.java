@@ -11,6 +11,10 @@ import static model.Directions.DOWN;
 import static model.Directions.RIGHT;
 import static model.Directions.LEFT;
 
+/**
+ *This class implements a generic ghost smart behaviour.
+ *
+ */
 public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour implements GhostSmartBehaviour {
 
     private static final int UPPERBOUND = 10_000;
