@@ -16,7 +16,7 @@ public class DataUpdater {
 
     private final GameModel model;
     private final View view;
-    private double levelDuration;
+    private final double levelDuration;
     private int finalLevel;
     private int finalScore;
     private boolean isGameEnded;
@@ -96,19 +96,13 @@ public class DataUpdater {
      * @return the scores of the current game
      */
     public int getCurrentScore() {
-        if (this.isGameEnded) {
-            return this.finalScore;
-        }
-        return this.model.getScores();
+        return this.isGameEnded ? this.finalScore : this.model.getScores();
     }
     /**
      * @return the level number
      */
     public int getLevel() {
-        if (this.isGameEnded) {
-            return this.finalLevel;
-        }
-        return this.model.getLevelNumber();
+        return this.isGameEnded ? this.finalLevel : this.model.getLevelNumber();
     }
     /**
      * @return the remaining lives of Pac-Man
