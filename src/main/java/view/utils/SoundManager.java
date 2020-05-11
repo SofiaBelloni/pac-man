@@ -87,10 +87,18 @@ public class SoundManager {
     /**
      * Enables or disable sound.
      * 
-     * @param sound     true to enable sound, for to disable sound.
+     * @param sound     true to enable sound, false to disable sound.
      */
-    public void setSound(final boolean sound) {
+    public void setSoundEnable(final boolean sound) {
         this.soundEnabled = sound;
+    }
+
+    /**.
+     * 
+     * @return the state of the sound: true if enabled, false if disabled.
+     */
+    public boolean getSoundEnable() {
+        return this.soundEnabled;
     }
 
     /**
