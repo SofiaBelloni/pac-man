@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import utils.Pair;
 import view.controllers.SceneController;
+import view.utils.SoundManager;
+import view.utils.SoundManager.Sound;
 /**
  * This class represents the implementation of the view interface.
  */
@@ -40,6 +42,7 @@ public class ViewImpl implements View {
         this.stage.setResizable(false);
         this.stage.setTitle(TITLE);
         this.setScene(GameScene.MAINMENU);
+        SoundManager.getSoundManager().play(Sound.INTRO);
     }
 
     @Override

@@ -37,6 +37,8 @@ import utils.PairImpl;
 import view.GameScene;
 import view.View;
 import view.utils.GameState;
+import view.utils.SoundManager;
+import view.utils.SoundManager.Sound;
 
 public class GameViewController extends SceneController {
 
@@ -128,6 +130,8 @@ public class GameViewController extends SceneController {
 
         this.initializeAnimations();
 
+        SoundManager.getSoundManager().play(Sound.NEW_GAME);
+
     }
 
     /**
@@ -169,6 +173,7 @@ public class GameViewController extends SceneController {
             break;
         case ESCAPE:
             this.endGame(GameScene.MAINMENU);
+            SoundManager.getSoundManager().play(Sound.BUTTON);
             break;
         default:
             break;
@@ -310,6 +315,7 @@ public class GameViewController extends SceneController {
             }, 0, 1000);
         }
         if (this.livesContainer.getChildren().size() != this.getController().getData().getLives()) {
+            SoundManager.getSoundManager().play(Sound.EATEN);
             this.livesContainer.getChildren().clear();
             for (int i = 0; i < this.getController().getData().getLives(); i++) {
                 this.livesContainer.getChildren().add(this.lifeIcon());
@@ -354,6 +360,7 @@ public class GameViewController extends SceneController {
         if (!this.gameState.isStarting()) {
             switch (this.gameState.getState()) {
             case FINISHED:
+                SoundManager.getSoundManager().stopAll();
                 this.gameState.setStarting(true);
                 this.countdownTimer.scheduleAtFixedRate(new TimerTask() {
                     private int value = COUNTDOWN + 1;
@@ -388,6 +395,7 @@ public class GameViewController extends SceneController {
      * Start the game.
      */
     private void startGame() {
+        SoundManager.getSoundManager().playWithLoop(Sound.GAME);
         this.getController().startGame();
         this.entitiesAnimationTimer.start();
         gameState.setState(GameState.State.RUNNING);
@@ -398,6 +406,7 @@ public class GameViewController extends SceneController {
      * Call when game is running.
      */
     private void pauseGame() {
+        SoundManager.getSoundManager().stopSound(Sound.GAME);
         this.getController().pauseGame();
         this.entitiesAnimationTimer.stop();
         this.gameState.setState(GameState.State.PAUSE);
@@ -408,6 +417,7 @@ public class GameViewController extends SceneController {
      * Call when game is in pause.
      */
     private void resumeGame() {
+        SoundManager.getSoundManager().playWithLoop(Sound.GAME);
         this.getController().resumeGame();
         this.entitiesAnimationTimer.start();
         this.gameState.setState(GameState.State.RUNNING);
@@ -418,6 +428,7 @@ public class GameViewController extends SceneController {
      * @param nextScene the scene you want to go.
      */
     private void endGame(final GameScene nextScene) {
+        SoundManager.getSoundManager().stopAll();;
         if (!this.gameState.isStarting()) {
             this.getController().stopGame();
             this.entitiesAnimationTimer.stop();
