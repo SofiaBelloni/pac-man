@@ -23,7 +23,7 @@ public abstract class SceneLoader {
         width = width * RESOLUTION_MULTIPLIER;
         height = width * HEIGHT / WIDTH;
 
-        FXMLLoader loader = new FXMLLoader();
+        final FXMLLoader loader = new FXMLLoader();
         loader.setLocation(ClassLoader.getSystemResource(SCENE_PATH
                 + sceneName.toString().toLowerCase(Locale.ROOT)
                 + FILE_EXTENSION));

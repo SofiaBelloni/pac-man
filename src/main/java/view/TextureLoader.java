@@ -22,7 +22,7 @@ abstract class TextureLoader {
         }
         return frames;
     }
-    
+
     public static Image loadTexture(final String textureName) {
         return new Image(TEXTURE_PATH 
                 + SEPARATOR 
