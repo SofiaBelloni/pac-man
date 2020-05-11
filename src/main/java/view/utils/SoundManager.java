@@ -139,8 +139,10 @@ public class SoundManager {
      * @param sound The {@link Sound} to stop.
      */
     public void stopSound(final Sound sound) {
-        if (this.clipMap.get(sound).isRunning()) {
-            this.clipMap.get(sound).stop();
+        if (this.soundEnabled) {
+            if (this.clipMap.containsKey(sound) && this.clipMap.get(sound).isRunning()) {
+                this.clipMap.get(sound).stop();
+            }
         }
     }
 
@@ -148,12 +150,14 @@ public class SoundManager {
      * Stops all the sounds.
      */
     public void stopAll() {
-        for (final Map.Entry<Sound, Clip> entry : this.clipMap.entrySet()) {
-            if (entry.getValue().isRunning()) {
-                entry.getValue().stop();
+        if (this.soundEnabled) {
+            for (final Map.Entry<Sound, Clip> entry : this.clipMap.entrySet()) {
+                if (entry.getValue().isRunning()) {
+                    entry.getValue().stop();
+                }
             }
+            this.clipMap.clear();
         }
-        this.clipMap.clear();
     }
 
     private Clip createClip(final String path) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
