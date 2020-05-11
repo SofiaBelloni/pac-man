@@ -222,6 +222,7 @@ public class GameViewController extends SceneController {
             if (!ghosts.containsKey(id)) {
                 this.entityPane.getChildren().remove(this.ghostImages.get(id));
                 this.ghostImages.remove(id);
+                SoundManager.getSoundManager().play(Sound.EATEN);
             } else {
                 if (this.getController().getData().isGameInverted()) {
                     this.ghostImages.get(id).setImage(new Image("textures/ghost/eatable.png"));
