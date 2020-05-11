@@ -48,9 +48,9 @@ public class SoundManager {
          */
         GAME(FOLDER + "base_sound" + EXTENSION),
         /**
-         * The sound for the initial timer.
+         * The sound for the initial countdown.
          */
-        TIMER(FOLDER + "" + EXTENSION),
+        COUNTDOWN(FOLDER + "countdown" + EXTENSION),
         /**
          * The sound for when the game is inverted.
          */

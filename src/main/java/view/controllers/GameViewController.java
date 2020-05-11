@@ -288,6 +288,7 @@ public class GameViewController extends SceneController {
             this.currentLevel = this.getController().getData().getLevel();
             this.pauseGame();
             this.gameState.setStarting(true);
+            SoundManager.getSoundManager().play(Sound.COUNTDOWN);
             this.countdownTimer.scheduleAtFixedRate(new TimerTask() {
                 private int value = COUNTDOWN + 1;
                 @Override
@@ -352,6 +353,7 @@ public class GameViewController extends SceneController {
             case FINISHED:
                 SoundManager.getSoundManager().stopAll();
                 this.gameState.setStarting(true);
+                SoundManager.getSoundManager().play(Sound.COUNTDOWN);
                 this.countdownTimer.scheduleAtFixedRate(new TimerTask() {
                     private int value = COUNTDOWN + 1;
 
