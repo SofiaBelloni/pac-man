@@ -81,16 +81,6 @@ public class GhostRandomBehaviourImpl extends GhostAbstractBehaviour implements 
     }
 
     @Override
-    public final void setCurrentPosition(final Pair<Integer, Integer> newPosition) {
-        super.setCurrentPosition(newPosition);
-    }
-
-    @Override 
-    public final void setCurrentDirection(final Directions newDirection) {
-        super.setCurrentDirection(newDirection);
-    }
-
-    @Override
     public final void checkIfInside() {
         super.checkIfInside();
     }

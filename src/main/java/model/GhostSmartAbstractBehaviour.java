@@ -53,7 +53,6 @@ public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour
             this.relaxTarget = this.outsideTarget;
         }
         this.findPath(this.relaxTarget);
-        this.move(this.relaxTarget);
         if (this.getCurrentPosition().equals(this.relaxTarget)) {
             this.relaxed = false;
         }
@@ -63,9 +62,9 @@ public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour
      * This method implements a version of Dijkstra algorithm which is used to find the shortest path 
      * from 2 nodes(in this case the nodes are the positions).
      * 
-     * @param pair
+     * @param targetPosition
      */
-    protected final void findPath(final Pair<Integer, Integer> pair) {
+    protected final void findPath(final Pair<Integer, Integer> targetPosition) {
         int distance = 0;
         this.isPathFound = false;
         for (int x = 0; x < this.xMapSize; x++) {
@@ -87,7 +86,7 @@ public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour
         if (this.getAdj(LEFT).getX() >= 0 && !this.walls.contains(this.getAdj(LEFT)) && !this.getCurrentDirection().equals(RIGHT)) {
             this.mapDijkstra.put(this.getAdj(LEFT), distance);
         }
-        if (this.mapDijkstra.get(pair) < UPPERBOUND) {
+        if (this.mapDijkstra.get(targetPosition) < UPPERBOUND) {
             this.isPathFound = true;
         }
         while (!this.isPathFound) {
@@ -106,13 +105,14 @@ public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour
                     if (this.getAdj(DOWN).getY() < yMapSize && !this.walls.contains(this.getAdj(DOWN)) && distance < this.mapDijkstra.get(this.getAdj(DOWN))) {
                         this.mapDijkstra.put(this.getAdj(DOWN), distance + 1);
                     }
-                    if (this.mapDijkstra.get(pair) < UPPERBOUND) {
+                    if (this.mapDijkstra.get(targetPosition) < UPPERBOUND) {
                         this.isPathFound = true;
                     }
                 }
             }
             distance++;
         }
+        this.move(targetPosition);
     }
 
     /**

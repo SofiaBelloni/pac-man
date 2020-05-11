@@ -21,10 +21,11 @@ public class GhostClydeBehaviour extends GhostFinalAbstractBehaviour {
         this.setRelaxTarget(relaxTarget);
     }
 
-    private void targetPosition(final PacMan pacMan) {
+    @Override
+    protected final Pair<Integer, Integer> getChaseTarget() {
         final Set<Pair<Integer, Integer>> walls = this.getWalls();
-        if (this.getCurrentPosition().getX() > pacMan.getPosition().getX() - PACMANRADIUS && this.getCurrentPosition().getX() < pacMan.getPosition().getX() + PACMANRADIUS 
-            && this.getCurrentPosition().getY() > pacMan.getPosition().getY() - PACMANRADIUS && this.getCurrentPosition().getY() < pacMan.getPosition().getY() + PACMANRADIUS) {
+        if (this.getCurrentPosition().getX() > this.getPacMan().getPosition().getX() - PACMANRADIUS && this.getCurrentPosition().getX() < this.getPacMan().getPosition().getX() + PACMANRADIUS 
+            && this.getCurrentPosition().getY() > this.getPacMan().getPosition().getY() - PACMANRADIUS && this.getCurrentPosition().getY() < this.getPacMan().getPosition().getY() + PACMANRADIUS) {
             this.chaseTarget = this.getRelaxTarget();
             if (this.getCurrentPosition().equals(this.chaseTarget)) {
                 if (this.chaseTarget.getY() + 1 < this.getyMapSize() && !walls.contains(new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() + 1))) {
@@ -37,30 +38,9 @@ public class GhostClydeBehaviour extends GhostFinalAbstractBehaviour {
                     this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() - 1);
                 }
             }
+            return this.chaseTarget;
         } else {
-            this.chaseTarget = pacMan.getPosition();
-        }
-    }
-
-    @Override
-    public final void nextPosition(final boolean eatable, final boolean timeToTurn, final Ghosts name) {
-        this.checkIfInside();
-        if ((eatable || name.equals(Ghosts.OLDLEVEL)) && !this.isRelaxed()) {
-            if (timeToTurn || !moveIfStuck()) {
-                this.getRandomBehaviour().move(timeToTurn);
-                this.setCurrentPosition(this.getRandomBehaviour().getCurrentPosition());
-                this.setCurrentDirection(this.getRandomBehaviour().getCurrentDirection());
-            }
-        } else {
-            if (this.isInside() || !moveIfStuck()) {
-                if (this.isRelaxed()) {
-                    this.relax(name, eatable);
-                } else {
-                    this.targetPosition(this.getPacMan());
-                    super.findPath(this.chaseTarget);
-                    super.move(this.chaseTarget);
-                }
-            }
+            return this.getPacMan().getPosition();
         }
     }
 }

@@ -3,7 +3,7 @@ package model;
 /**
  * The Interface GhostFinalBehaviour.
  */
-public interface GhostFinalBehaviour extends GhostSmartBehaviour, GhostRandomBehaviour {
+public interface GhostFinalBehaviour extends GhostSmartBehaviour {
 
     /**
      * Calculate the next position of the ghost.
