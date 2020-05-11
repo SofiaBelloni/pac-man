@@ -5,6 +5,9 @@ import controller.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import view.GameScene;
 import view.View;
@@ -14,40 +17,42 @@ import view.utils.SoundManager.Sound;
 public class SettingsController extends SceneController {
 
     @FXML
-    private Button volume;
+    private RadioButton volumeOn;
 
     @FXML
-    private ImageView mapNumber;
+    private RadioButton volumeOff;
 
-    private int mapCounter;
+    @FXML
+    private ChoiceBox<String> gameMap;
 
     public final void init(final Controller controller, final View view) {
         super.init(controller, view);
-        this.mapCounter = 1;
-    }
-
-    @FXML
-    private void onVolumeClick(final ActionEvent event) throws IOException {
-        if (this.volume.getText().equals("Volume On")) {
-            this.volume.setText("Volume Off");
-        } else {
-            this.volume.setText("Volume On");
+        if (SoundManager.getSoundManager().getSoundEnabled()){
+            this.volumeOn.setSelected(true);
+        }else {
+            this.volumeOff.setSelected(true);
         }
     }
 
     @FXML
-    private void onChangeMapClick(final ActionEvent event) throws IOException {
-        this.mapNumber.setImage(null);
-    }
-
-    @FXML
     private void onResetRankingClick(final ActionEvent event) throws IOException {
-        //this.getController().
+        SoundManager.getSoundManager().play(Sound.BUTTON);
+        this.getController().resetRanking();
     }
 
     @FXML
-    private void onMainMenuClick(final ActionEvent event) throws IOException {
+    void onBackClick(final ActionEvent event) {
         SoundManager.getSoundManager().play(Sound.BUTTON);
         this.getView().setScene(GameScene.MAINMENU);
+    }
+
+    @FXML
+    void volumeOffSelected(final ActionEvent event) {
+        SoundManager.getSoundManager().setSoundEnabled(false);
+    }
+
+    @FXML
+    void volumeOnSelected(final ActionEvent event) {
+        SoundManager.getSoundManager().setSoundEnabled(true);
     }
 }

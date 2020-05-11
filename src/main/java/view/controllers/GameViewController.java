@@ -318,7 +318,6 @@ public class GameViewController extends SceneController {
     }
 
     private Node lifeIcon() {
-        // TODO forse meglio se si crea una factory
         final Image image = new Image("textures/pac_man/pac_man2.png");
         final ImageView imageView = new ImageView();
         imageView.setImage(image);

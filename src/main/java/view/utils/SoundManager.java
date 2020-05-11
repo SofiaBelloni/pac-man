@@ -85,10 +85,20 @@ public class SoundManager {
     }
 
     /**
-     * Enables sound if disabled, and vice versa.
+     * Enables or disable sound.
+     * 
+     * @param sound     true to enable sound, false to disable sound.
      */
-    public void setSoundEnabled() {
-        this.soundEnabled = !this.soundEnabled;
+    public void setSoundEnabled(final boolean sound) {
+        this.soundEnabled = sound;
+    }
+
+    /**.
+     * 
+     * @return the state of the sound: true if enabled, false if disabled.
+     */
+    public boolean getSoundEnabled() {
+        return this.soundEnabled;
     }
 
     /**
@@ -147,11 +157,12 @@ public class SoundManager {
     }
 
     private Clip createClip(final String path) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        InputStream istream = this.getClass().getClassLoader()
-                    .getResourceAsStream(path);
-        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(istream));
-        Clip clip = AudioSystem.getClip();
+        final InputStream istream = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
+        final AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(istream));
+        final Clip clip = AudioSystem.getClip();
         clip.open(audioInputStream);
+        audioInputStream.close();
+        istream.close();
         return clip;
     }
 
