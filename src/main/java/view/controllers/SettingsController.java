@@ -8,6 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import view.GameScene;
 import view.View;
+import view.utils.SoundManager;
+import view.utils.SoundManager.Sound;
 
 public class SettingsController extends SceneController {
 
@@ -45,6 +47,7 @@ public class SettingsController extends SceneController {
 
     @FXML
     private void onMainMenuClick(final ActionEvent event) throws IOException {
+        SoundManager.getSoundManager().play(Sound.BUTTON);
         this.getView().setScene(GameScene.MAINMENU);
     }
 }

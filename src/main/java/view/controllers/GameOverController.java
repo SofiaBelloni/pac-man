@@ -12,6 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import view.GameScene;
 import view.View;
+import view.utils.SoundManager;
+import view.utils.SoundManager.Sound;
 
 public final class GameOverController extends SceneController {
 
@@ -31,6 +33,7 @@ public final class GameOverController extends SceneController {
         super.init(controller, view);
         this.levelLabel.setText("Level: " + String.valueOf(controller.getData().getLevel()));
         this.scoreLabel.setText("Score: " + String.valueOf(controller.getData().getCurrentScore()));
+        SoundManager.getSoundManager().play(Sound.GAME_OVER);
     }
 
     @FXML
@@ -51,6 +54,8 @@ public final class GameOverController extends SceneController {
 
     private void nextScene() {
         this.getController().savePlayer(Optional.of(playerNameText.getText()).filter(t -> !t.isBlank()).orElse("Guest"));
+        SoundManager.getSoundManager().stopAll();
+        SoundManager.getSoundManager().play(Sound.BUTTON);
         this.getView().setScene(GameScene.MAINMENU);
     }
 
