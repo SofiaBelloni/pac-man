@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
@@ -40,7 +40,7 @@
                   <Image url="@../textures/images/game_map.png" />
                </image>
             </ImageView>
-            <ChoiceBox fx:id="GameMap" prefHeight="84.0" prefWidth="258.0" />
+            <ComboBox fx:id="gameMaps" onAction="#setGameMap" prefHeight="72.0" prefWidth="241.0" promptText="Select map" />
          </children>
       </HBox>
       <HBox alignment="CENTER">

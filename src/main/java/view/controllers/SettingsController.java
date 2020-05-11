@@ -2,12 +2,12 @@ package view.controllers;
 
 import java.io.IOException;
 import controller.Controller;
+import controller.GameMaps;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import view.GameScene;
 import view.View;
@@ -17,20 +17,23 @@ import view.utils.SoundManager.Sound;
 public class SettingsController extends SceneController {
 
     @FXML
+    private ComboBox<String> gameMaps;
+
+    @FXML
     private RadioButton volumeOn;
 
     @FXML
     private RadioButton volumeOff;
 
-    @FXML
-    private ChoiceBox<String> gameMap;
-
     public final void init(final Controller controller, final View view) {
         super.init(controller, view);
-        if (SoundManager.getSoundManager().getSoundEnabled()){
+        if (SoundManager.getSoundManager().getSoundEnabled()) {
             this.volumeOn.setSelected(true);
-        }else {
+        } else {
             this.volumeOff.setSelected(true);
+        }
+        for (GameMaps e : GameMaps.values()) {
+            this.gameMaps.getItems().add(e.getName());
         }
     }
 
@@ -38,6 +41,11 @@ public class SettingsController extends SceneController {
     private void onResetRankingClick(final ActionEvent event) throws IOException {
         SoundManager.getSoundManager().play(Sound.BUTTON);
         this.getController().resetRanking();
+    }
+
+    @FXML
+    void setGameMap(ActionEvent event) {
+        this.getController().setGameMap(this.gameMaps.getSelectionModel().getSelectedItem());
     }
 
     @FXML
