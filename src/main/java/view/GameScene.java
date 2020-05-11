@@ -17,10 +17,6 @@ public enum GameScene {
      */
     GAMEOVER,
     /**
-     * The pause scene.
-     */
-    PAUSE,
-    /**
      * The scene with the leader board.
      */
     SCORE,
