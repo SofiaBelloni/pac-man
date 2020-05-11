@@ -226,21 +226,10 @@ public class GameViewController extends SceneController {
                 if (this.getController().getData().isGameInverted()) {
                     this.ghostImages.get(id).setImage(new Image("textures/ghost/eatable.png"));
                 } else {
-                    switch (ghosts.get(id).getGhostDirection()) {
-                    case UP:
-                        this.ghostImages.get(id).setImage(new Image("textures/" + ghosts.get(id).getGhostName().toString() + "/UP.png"));
-                        break;
-                    case DOWN:
-                        this.ghostImages.get(id).setImage(new Image("textures/" + ghosts.get(id).getGhostName().toString() + "/DOWN.png"));
-                        break;
-                    case LEFT:
-                        this.ghostImages.get(id).setImage(new Image("textures/" + ghosts.get(id).getGhostName().toString() + "/LEFT.png"));
-                        break;
-                    case RIGHT:
-                        this.ghostImages.get(id).setImage(new Image("textures/" + ghosts.get(id).getGhostName().toString() + "/RIGHT.png"));
-                        break;
-                    default:
-                        break;
+                    for (final Directions dir : Directions.values()) {
+                        if (ghosts.get(id).getGhostDirection().equals(dir)) {
+                            this.ghostImages.get(id).setImage(new Image("textures/" + ghosts.get(id).getGhostName().toString() + "/" + dir + ".png"));
+                        }
                     }
                 }
                 this.transition(this.ghostImages.get(id), ghosts.get(id).getGhostOldPosition(), ghosts.get(id).getGhostPosition());
