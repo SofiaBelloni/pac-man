@@ -8,6 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <VBox alignment="TOP_CENTER" prefHeight="692.0" prefWidth="1064.0" styleClass="mainPane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.SettingsController">
    <children>
@@ -16,7 +17,7 @@
             <Image url="@../textures/images/TitleSettings.png" />
          </image>
       </ImageView>
-      <Button mnemonicParsing="false" onAction="#onMainMenuClick" prefHeight="82.0" prefWidth="298.0" stylesheets="@style.css" VBox.vgrow="ALWAYS">
+      <Button mnemonicParsing="false" onAction="#onBackClick" prefHeight="82.0" prefWidth="298.0" stylesheets="@style.css" VBox.vgrow="ALWAYS">
          <graphic>
             <ImageView pickOnBounds="true" preserveRatio="true">
                <image>
@@ -39,7 +40,7 @@
                   <Image url="@../textures/images/game_map.png" />
                </image>
             </ImageView>
-            <ChoiceBox prefHeight="84.0" prefWidth="258.0" />
+            <ChoiceBox fx:id="GameMap" prefHeight="84.0" prefWidth="258.0" />
          </children>
       </HBox>
       <HBox alignment="CENTER">
@@ -49,12 +50,18 @@
                   <Image url="@../textures/images/volume.png" />
                </image>
             </ImageView>
-            <RadioButton mnemonicParsing="false" selected="true" text="ON">
+            <RadioButton fx:id="volumeOn" mnemonicParsing="false" onAction="#volumeOnSelected" text="ON" textFill="WHITE">
                <toggleGroup>
                   <ToggleGroup fx:id="volume" />
                </toggleGroup>
+               <font>
+                  <Font size="36.0" />
+               </font>
             </RadioButton>
-            <RadioButton mnemonicParsing="false" text="OFF" toggleGroup="$volume" />
+            <RadioButton fx:id="volumeOff" mnemonicParsing="false" onAction="#volumeOffSelected" text="OFF" textFill="WHITE" toggleGroup="$volume">
+               <font>
+                  <Font size="35.0" />
+               </font></RadioButton>
          </children>
       </HBox>
    </children>
