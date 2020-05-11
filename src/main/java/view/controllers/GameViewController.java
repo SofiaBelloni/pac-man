@@ -438,6 +438,8 @@ public class GameViewController extends SceneController {
         this.pacmanImagesList.add(new Image("textures/pac_man/pac_man1.png"));
         this.pacmanImagesList.add(new Image("textures/pac_man/pac_man2.png"));
         this.pacmanImagesList.add(new Image("textures/pac_man/pac_man3.png"));
+        this.pacmanImagesList.add(new Image("textures/pac_man/pac_man2.png"));
+        this.pacmanImagesList.add(new Image("textures/pac_man/pac_man1.png"));
 
         //This iterator is cyclic. example: with list[1,2,3] calling next() returns 1 2 3 1 2 3 1 2 3...
         this.pacmanImagesIterator = Iterables.cycle(this.pacmanImagesList).iterator();
