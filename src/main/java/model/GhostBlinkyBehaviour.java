@@ -19,24 +19,9 @@ public class GhostBlinkyBehaviour extends GhostFinalAbstractBehaviour {
     }
 
     @Override
-    public final void nextPosition(final boolean eatable, final boolean timeToTurn, final Ghosts name) {
-        this.checkIfInside();
-        if ((eatable || name.equals(Ghosts.OLDLEVEL)) && !this.isRelaxed()) {
-            if (timeToTurn || !moveIfStuck()) {
-                this.getRandomBehaviour().move(timeToTurn);
-                this.setCurrentPosition(this.getRandomBehaviour().getCurrentPosition());
-                this.setCurrentDirection(this.getRandomBehaviour().getCurrentDirection());
-            }
-        } else {
-            if (this.isInside() || !moveIfStuck()) {
-                if (this.isRelaxed()) {
-                    this.relax(name, eatable);
-                } else {
-                    this.findPath(this.getPacMan().getPosition());
-                    this.move(this.getPacMan().getPosition());
-                }
-            }
-        }
+    protected final Pair<Integer, Integer> getChaseTarget() {
+        return this.getPacMan().getPosition();
     }
+
 
 }

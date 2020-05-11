@@ -3,7 +3,6 @@ package model;
 import java.util.List;
 import java.util.Set;
 
-import utils.Directions;
 import utils.Pair;
 
 /**
@@ -23,21 +22,28 @@ public abstract class GhostFinalAbstractBehaviour extends GhostSmartAbstractBeha
     }
 
     @Override
-    public final void move(final boolean timeToTurn) {
-        this.rBehaviour.move(timeToTurn);
+    public final void nextPosition(final boolean eatable, final boolean timeToTurn, final Ghosts name) {
+        this.checkIfInside();
+        if ((eatable || name.equals(Ghosts.OLDLEVEL)) && !this.isRelaxed()) {
+            if (timeToTurn || !moveIfStuck()) {
+                this.rBehaviour.move(timeToTurn);
+                this.setCurrentPosition(this.rBehaviour.getCurrentPosition());
+                this.setCurrentDirection(this.rBehaviour.getCurrentDirection());
+            }
+        } else {
+            if (this.isInside() || !moveIfStuck()) {
+                if (this.isRelaxed()) {
+                    this.relax(name, eatable);
+                } else {
+                    this.findPath(this.getChaseTarget());
+                }
+            }
+        }
+        this.rBehaviour.setCurrentPosition(this.getCurrentPosition());
+        this.rBehaviour.setCurrentDirection(this.getCurrentDirection());
     }
 
-    @Override
-    public final void setCurrentPosition(final Pair<Integer, Integer> newPosition) {
-        super.setCurrentPosition(newPosition);
-        this.rBehaviour.setCurrentPosition(newPosition);
-    }
-
-    @Override 
-    public final void setCurrentDirection(final Directions newDirection) {
-        super.setCurrentDirection(newDirection);
-        this.rBehaviour.setCurrentDirection(newDirection);
-    }
+    protected abstract Pair<Integer, Integer> getChaseTarget();
 
     @Override
     public final void returnHome(final Pair<Integer, Integer> newPosition) {

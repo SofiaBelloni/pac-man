@@ -22,10 +22,11 @@ public class GhostPinkyBehaviour extends GhostFinalAbstractBehaviour {
         this.setRelaxTarget(relaxTarget);
     }
 
-    private void targetPosition(final PacMan pacMan) {
+    @Override
+    protected final Pair<Integer, Integer> getChaseTarget() {
         final Set<Pair<Integer, Integer>> walls = this.getWalls();
-        final Pair<Integer, Integer> pacManPosition = pacMan.getPosition();
-        final Directions pacManDirection = pacMan.getDirection();
+        final Pair<Integer, Integer> pacManPosition = this.getPacMan().getPosition();
+        final Directions pacManDirection = this.getPacMan().getDirection();
         for (int i = 0; i <= 4; i++) {
             if (pacManDirection.equals(Directions.UP)) {
                 if (!walls.contains(new PairImpl<>(pacManPosition.getX(), pacManPosition.getY() - i)) && pacManPosition.getY() - i >= 0) {
@@ -57,27 +58,6 @@ public class GhostPinkyBehaviour extends GhostFinalAbstractBehaviour {
                 this.chaseTarget = new PairImpl<>(this.chaseTarget.getX(), this.chaseTarget.getY() - 1);
             }
         }
-    }
-
-    @Override
-    public final void nextPosition(final boolean eatable, final boolean timeToTurn, final Ghosts name) {
-        this.checkIfInside();
-        if ((eatable || name.equals(Ghosts.OLDLEVEL)) && !this.isRelaxed() && !this.isInside()) {
-            if (timeToTurn || !moveIfStuck()) {
-                this.getRandomBehaviour().move(timeToTurn);
-                this.setCurrentPosition(this.getRandomBehaviour().getCurrentPosition());
-                this.setCurrentDirection(this.getRandomBehaviour().getCurrentDirection());
-            }
-        } else {
-            if (this.isInside() || !moveIfStuck()) {
-                if (this.isRelaxed()) {
-                    this.relax(name, eatable);
-                } else {
-                    this.targetPosition(this.getPacMan());
-                    super.findPath(this.chaseTarget);
-                    super.move(this.chaseTarget);
-                }
-            }
-        }
+        return this.chaseTarget;
     }
 }
