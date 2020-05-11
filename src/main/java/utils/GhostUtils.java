@@ -1,7 +1,5 @@
 package utils;
 
-import javafx.scene.image.ImageView;
-import model.Directions;
 import model.Ghosts;
 
 public class GhostUtils {

@@ -1,18 +1,25 @@
 package model;
 
+import static utils.Directions.DOWN;
+import static utils.Directions.LEFT;
+import static utils.Directions.RIGHT;
+import static utils.Directions.UP;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-import utils.Pair;
-import static model.Directions.UP;
-import static model.Directions.DOWN;
-import static model.Directions.RIGHT;
-import static model.Directions.LEFT;
 
-public class GhostRandomBehaviourImpl extends GhostAbstractBehaviour {
+import utils.Directions;
+import utils.Pair;
+
+/**
+ *This class implements a generic ghost random behaviour.
+ *
+ */
+public class GhostRandomBehaviourImpl extends GhostAbstractBehaviour implements GhostRandomBehaviour {
 
     public GhostRandomBehaviourImpl(final Set<Pair<Integer, Integer>> walls,
             final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize,
@@ -21,7 +28,7 @@ public class GhostRandomBehaviourImpl extends GhostAbstractBehaviour {
     }
 
     @Override
-    public final void nextPosition(final boolean eatable, final boolean timeToTurn, final Ghosts name) {
+    public final void move(final boolean timeToTurn) {
         if (timeToTurn) {
             this.turnAround();
         } else {

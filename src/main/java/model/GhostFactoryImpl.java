@@ -8,7 +8,7 @@ import utils.Pair;
 import utils.PairImpl;
 
 /**
- * this class implements factory for creating Ghost objects.
+ * this class implements  a factory of Ghost objects.
  *
  */
 public final class GhostFactoryImpl implements GhostFactory {

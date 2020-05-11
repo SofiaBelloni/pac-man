@@ -2,6 +2,8 @@ package model;
 
 import java.util.List;
 import java.util.Set;
+
+import utils.Directions;
 import utils.Pair;
 import utils.PairImpl;
 
@@ -9,7 +11,7 @@ import utils.PairImpl;
 * this class implements the Inky behaviour.
 *
 */
-public class GhostInkyBehaviour extends GhostSmartAbstractBehaviour {
+public class GhostInkyBehaviour extends GhostFinalAbstractBehaviour {
 
     private Pair<Integer, Integer> chaseTarget;
     private final Ghost blinky;
@@ -82,7 +84,7 @@ public class GhostInkyBehaviour extends GhostSmartAbstractBehaviour {
         this.checkIfInside();
         if ((eatable || name.equals(Ghosts.OLDLEVEL)) && !this.isRelaxed()) {
             if (timeToTurn || !moveIfStuck()) {
-                this.getRandomBehaviour().nextPosition(eatable, timeToTurn, name);
+                this.getRandomBehaviour().move(timeToTurn);
                 this.setCurrentPosition(this.getRandomBehaviour().getCurrentPosition());
                 this.setCurrentDirection(this.getRandomBehaviour().getCurrentDirection());
             }

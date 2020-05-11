@@ -2,6 +2,8 @@ package model;
 
 import java.util.List;
 import java.util.Set;
+
+import utils.Directions;
 import utils.Pair;
 import utils.PairImpl;
 
@@ -9,7 +11,7 @@ import utils.PairImpl;
  * this class implements the Pinky behaviour.
  *
  */
-public class GhostPinkyBehaviour extends GhostSmartAbstractBehaviour implements GhostBehaviour {
+public class GhostPinkyBehaviour extends GhostFinalAbstractBehaviour {
 
     private Pair<Integer, Integer> chaseTarget;
 
@@ -62,7 +64,7 @@ public class GhostPinkyBehaviour extends GhostSmartAbstractBehaviour implements 
         this.checkIfInside();
         if ((eatable || name.equals(Ghosts.OLDLEVEL)) && !this.isRelaxed() && !this.isInside()) {
             if (timeToTurn || !moveIfStuck()) {
-                this.getRandomBehaviour().nextPosition(eatable, timeToTurn, name);
+                this.getRandomBehaviour().move(timeToTurn);
                 this.setCurrentPosition(this.getRandomBehaviour().getCurrentPosition());
                 this.setCurrentDirection(this.getRandomBehaviour().getCurrentDirection());
             }

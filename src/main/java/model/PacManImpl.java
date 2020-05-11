@@ -3,6 +3,7 @@ package model;
 import java.util.Optional;
 import java.util.Set;
 
+import utils.Directions;
 import utils.Pair;
 import utils.PairImpl;
 

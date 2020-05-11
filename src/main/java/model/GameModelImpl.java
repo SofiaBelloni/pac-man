@@ -1,7 +1,14 @@
 package model;
 
-import java.util.*;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+
+import utils.Directions;
 import utils.GhostUtils;
 import utils.Pair;
 import utils.PairImpl;
@@ -24,7 +31,7 @@ public class GameModelImpl implements GameModel {
     }
 
     @Override
-    public final synchronized int getLevelDuration(){
+    public final synchronized int getLevelDuration() {
         return  this.levelManager.getLevelDuration();
     }
 
@@ -72,7 +79,7 @@ public class GameModelImpl implements GameModel {
                 this.ghosts.forEach(x -> x.setEatable(true));
             }
         }
-        Set<Ghost> collisions = this.checkPacManGhostCollision();
+        final Set<Ghost> collisions = this.checkPacManGhostCollision();
         if (!collisions.isEmpty()) {
             if (this.levelManager.isGameInverted()) {
                 collisions.forEach(x -> {
@@ -88,7 +95,7 @@ public class GameModelImpl implements GameModel {
     }
 
     @Override
-    public synchronized void initializeNewGame(){
+    public final synchronized void initializeNewGame() {
         this.gameMap.get().restorePills();
         this.levelManager = new LevelManagerImpl(LEVEL_DURATION,
                 INVERTED_GAME_DURATION,
@@ -186,12 +193,12 @@ public class GameModelImpl implements GameModel {
         return this.pacMan.getDirection();
     }
 
-    private void checkGameEnded(){
+    private void checkGameEnded() {
         this.checkCondition(this.isGameEnded() && this.gameMap.isPresent());
     }
 
-    private void checkCondition(final Boolean condition){
-        if (condition){
+    private void checkCondition(final Boolean condition) {
+        if (condition) {
             throw new IllegalStateException();
         }
     }
@@ -214,9 +221,9 @@ public class GameModelImpl implements GameModel {
     }
 
     private Set<Ghost> checkPacManGhostCollision() {
-        Set<Ghost> tmp = new HashSet<>();
+        final Set<Ghost> tmp = new HashSet<>();
         this.ghosts.forEach(x -> {
-            if (x.getPosition().equals(this.pacMan.getPosition())){
+            if (x.getPosition().equals(this.pacMan.getPosition())) {
                 tmp.add(x);
             }
             if (this.calculateNextPosition(this.pacMan.getDirection(), this.pacMan.getPosition()).equals(x.getPosition())
@@ -227,16 +234,18 @@ public class GameModelImpl implements GameModel {
         return tmp;
     }
 
-    private Pair<Integer, Integer> calculateNextPosition(final Directions direction, final Pair<Integer, Integer> position){
-        switch (direction){
-            case UP:
-                return new PairImpl<>(position.getX(), position.getY() - 1);
-            case DOWN:
-                return new PairImpl<>(position.getX(), position.getY() + 1);
-            case LEFT:
-                return new PairImpl<>(position.getX() - 1, position.getY());
-            case RIGHT:
-                return new PairImpl<>(position.getX() + 1, position.getY());
+    private Pair<Integer, Integer> calculateNextPosition(final Directions direction, final Pair<Integer, Integer> position) {
+        switch (direction) {
+        case UP:
+            return new PairImpl<>(position.getX(), position.getY() - 1);
+        case DOWN:
+            return new PairImpl<>(position.getX(), position.getY() + 1);
+        case LEFT:
+            return new PairImpl<>(position.getX() - 1, position.getY());
+        case RIGHT:
+            return new PairImpl<>(position.getX() + 1, position.getY());
+        default:
+            break;
         }
         return null;
     }

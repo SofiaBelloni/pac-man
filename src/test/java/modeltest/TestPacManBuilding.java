@@ -8,9 +8,9 @@ import java.util.HashSet;
 
 import org.junit.jupiter.api.Test;
 
-import model.Directions;
 import model.PacMan;
 import model.PacManImpl;
+import utils.Directions;
 import utils.Pair;
 import utils.PairImpl;
 

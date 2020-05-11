@@ -2,11 +2,9 @@ package view.controllers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -31,8 +29,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
-import model.Directions;
 import model.Ghosts;
+import utils.Directions;
 import utils.GhostUtils;
 import utils.Pair;
 import utils.PairImpl;
@@ -212,10 +210,8 @@ public class GameViewController extends SceneController {
     private void ghostRender() {
         final Map<Integer, GhostUtils> ghosts = this.getController().getData().getGhosts();
         final Map<Integer, ImageView> ghostImagesCopy = new HashMap<>(this.ghostImages);
-        for (final int id : ghosts.keySet()) {
-            if (!this.ghostImages.containsKey(id)) {
-                this.ghostSpawn();
-            }
+        if (ghosts.size() > this.ghostImages.size()) {
+            this.ghostSpawn();
         }
         for (final int id : ghostImagesCopy.keySet()) {
             if (!ghosts.containsKey(id)) {

@@ -1,9 +1,9 @@
 package model;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import utils.Directions;
 import utils.GhostUtils;
 import utils.Pair;
 
@@ -52,7 +52,7 @@ public interface GameModel {
      */
     void moveEntitiesNextPosition();
     /**
-     * reset the game
+     * reset the game.
      */
     void initializeNewGame();
 

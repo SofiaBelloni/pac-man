@@ -1,16 +1,19 @@
 package model;
 
+import static utils.Directions.DOWN;
+import static utils.Directions.LEFT;
+import static utils.Directions.RIGHT;
+import static utils.Directions.UP;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import utils.Directions;
 import utils.Pair;
 import utils.PairImpl;
-import static model.Directions.UP;
-import static model.Directions.DOWN;
-import static model.Directions.RIGHT;
-import static model.Directions.LEFT;
 
 /**
  * this class implements a generic Ghost behaviour.

@@ -3,8 +3,8 @@ package controller;
 import java.util.Map;
 import java.util.Set;
 
-import model.Directions;
 import model.GameModel;
+import utils.Directions;
 import utils.GhostUtils;
 import utils.Pair;
 import view.View;

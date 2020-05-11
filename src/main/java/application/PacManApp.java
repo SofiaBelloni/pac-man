@@ -29,5 +29,4 @@ public final class PacManApp extends Application {
     public static void main(final String[] args) {
         launch();
     }
-
 }
