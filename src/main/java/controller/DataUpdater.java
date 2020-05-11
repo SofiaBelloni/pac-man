@@ -69,6 +69,13 @@ public class DataUpdater {
         return this.model.isGameInverted();
     }
     /**
+    *
+    * @return the time of the inverted game
+    */
+    public int getInvertedGameTime() {
+        return this.model.getInvertedGameTime();
+    }
+    /**
      * @return the X position of Pac-Man
      */
     public int getPacManXPosition() {

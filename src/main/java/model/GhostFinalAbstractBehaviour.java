@@ -24,7 +24,10 @@ public abstract class GhostFinalAbstractBehaviour extends GhostSmartAbstractBeha
     @Override
     public final void nextPosition(final boolean eatable, final boolean timeToTurn, final Ghosts name) {
         this.checkIfInside();
-        if ((eatable || name.equals(Ghosts.OLDLEVEL)) && !this.isRelaxed()) {
+        if (timeToTurn) {
+            this.setRelaxed(false);
+        }
+        if (eatable || (name.equals(Ghosts.OLDLEVEL) && !this.isRelaxed())) {
             if (timeToTurn || !moveIfStuck()) {
                 this.rBehaviour.move(timeToTurn);
                 this.setCurrentPosition(this.rBehaviour.getCurrentPosition());

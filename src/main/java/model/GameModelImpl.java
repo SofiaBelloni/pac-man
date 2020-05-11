@@ -36,6 +36,11 @@ public class GameModelImpl implements GameModel {
     }
 
     @Override
+    public final synchronized int getInvertedGameTime() {
+        return  this.levelManager.getInvertedGameTime();
+    }
+
+    @Override
     public final synchronized Map<Integer, GhostUtils> getGhosts() {
         final Map<Integer, GhostUtils> ghostUtils = new HashMap<>();
         this.ghosts.forEach(x -> ghostUtils.put(x.getId(), x.getMyUtils()));

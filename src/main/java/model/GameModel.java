@@ -103,4 +103,5 @@ public interface GameModel {
      */
     void setGameMap(GameMap gameMap);
     Map<Integer, GhostUtils> getGhosts();
+    int getInvertedGameTime();
 }

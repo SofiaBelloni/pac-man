@@ -29,7 +29,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
-import model.Ghosts;
 import utils.Directions;
 import utils.GhostUtils;
 import utils.Pair;
@@ -225,7 +224,11 @@ public class GameViewController extends SceneController {
                 SoundManager.getSoundManager().play(Sound.EATEN);
             } else {
                 if (this.getController().getData().isGameInverted()) {
-                    this.ghostImages.get(id).setImage(new Image("textures/ghost/eatable.png"));
+                    if (this.getController().getData().getInvertedGameTime() > 3) {
+                        this.ghostImages.get(id).setImage(new Image("textures/ghost/eatable.png"));
+                    } else {
+                        this.ghostImages.get(id).setImage(new Image("textures/ghost/changingStatus.png"));
+                    }
                 } else {
                     for (final Directions dir : Directions.values()) {
                         if (ghosts.get(id).getGhostDirection().equals(dir)) {
@@ -420,7 +423,7 @@ public class GameViewController extends SceneController {
      * @param nextScene the scene you want to go.
      */
     private void endGame(final GameScene nextScene) {
-        SoundManager.getSoundManager().stopAll();;
+        SoundManager.getSoundManager().stopAll();
         if (!this.gameState.isStarting()) {
             this.getController().stopGame();
             this.entitiesAnimationTimer.stop();
