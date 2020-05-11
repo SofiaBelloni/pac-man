@@ -31,8 +31,8 @@ public final class GameOverController extends SceneController {
 
     public void init(final Controller controller, final View view) {
         super.init(controller, view);
-        this.levelLabel.setText("Level: " + String.valueOf(controller.getData().getLevel()));
-        this.scoreLabel.setText("Score: " + String.valueOf(controller.getData().getCurrentScore()));
+        this.levelLabel.setText("Level: " + controller.getData().getLevel());
+        this.scoreLabel.setText("Score: " + controller.getData().getCurrentScore());
         SoundManager.getSoundManager().play(Sound.GAME_OVER);
     }
 

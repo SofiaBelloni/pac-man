@@ -17,14 +17,14 @@ public class TestGameMapLoader {
     public void mapLoadingWrongPath() throws IOException {
         Assertions.assertThrows(NullPointerException.class, () -> {
             @SuppressWarnings("unused")
-            GameMapLoader mapLoader = new GameMapLoaderImpl("/game_maps/pacman_map_1.txt");
+            final GameMapLoader mapLoader = new GameMapLoaderImpl("/game_maps/pacman_map_1.txt");
         });
     }
 
     @Test
     public void mapLoadingCorrectPath() throws IOException {
-        GameMapLoader mapLoader = new GameMapLoaderImpl("game_map_1");
-        GameMap gameMap = new GameMapImpl.Builder()
+        final GameMapLoader mapLoader = new GameMapLoaderImpl("game_map_1");
+        final GameMap gameMap = new GameMapImpl.Builder()
                 .ghostsHouse(mapLoader.getGhostsHouse())
                 .mapSize(mapLoader.getxMapSize(), mapLoader.getyMapSize())
                 .pacManStartPosition(mapLoader.getPacManStartPosition())

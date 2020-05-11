@@ -11,10 +11,6 @@ public interface View {
      */
     void setController(Controller controller);
     /**
-     * Sets the view to visible.
-     */
-    void setVisible();
-    /**
      * Updates the view.
      */
     void render();

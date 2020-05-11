@@ -28,9 +28,9 @@ public class TestGameMapBuilding {
 
     @Test
     public void builderNotEmpty() {
-        Set<Pair<Integer, Integer>> walls = new HashSet<>();
-        Set<Pair<Integer, Integer>> pills = new HashSet<>();
-        Set<Pair<Integer, Integer>> ghostsHouse = new HashSet<>();
+        final Set<Pair<Integer, Integer>> walls = new HashSet<>();
+        final Set<Pair<Integer, Integer>> pills = new HashSet<>();
+        final Set<Pair<Integer, Integer>> ghostsHouse = new HashSet<>();
         for (int i = 0; i < 40; i++) {
             for (int j = 0; j < 20; j++) {
                 walls.add(new PairImpl<Integer, Integer>(i, j));
@@ -43,7 +43,7 @@ public class TestGameMapBuilding {
                 pills.add(new PairImpl<Integer, Integer>(i, j));
             }
         }
-        GameMap gameMap = new GameMapImpl.Builder()
+        final GameMap gameMap = new GameMapImpl.Builder()
                 .mapSize(XMAPSIZE, YMAPSIZE)
                 .pacManStartPosition(new PairImpl<Integer, Integer>(2, 20))
                 .walls(walls)

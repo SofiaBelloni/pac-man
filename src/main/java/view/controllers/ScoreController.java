@@ -1,5 +1,6 @@
 package view.controllers;
 
+
 import java.io.IOException;
 import controller.Controller;
 import javafx.event.ActionEvent;
@@ -34,7 +35,7 @@ public class ScoreController extends SceneController {
     private TableColumn<Player, String> level;
 
     @Override
-    public void init(final Controller controller, final View view) {
+    public final void init(final Controller controller, final View view) {
         super.init(controller, view);
         this.name.setCellValueFactory(new PropertyValueFactory<>("name"));
         this.score.setCellValueFactory(new PropertyValueFactory<>("score"));

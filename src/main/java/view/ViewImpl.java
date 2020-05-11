@@ -37,7 +37,7 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public void setController(final Controller controller) {
+    public final void setController(final Controller controller) {
         this.controller = controller;
         this.stage.setResizable(false);
         this.stage.setTitle(TITLE);
@@ -46,21 +46,15 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public void setVisible() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void render() {
+    public final void render() {
         Platform.runLater(() -> this.sceneController.render());
 
     }
 
     @Override
-    public void setScene(final GameScene scene) {
+    public final void setScene(final GameScene scene) {
         try {
-            Pair<Scene, SceneController> gameScene = SceneLoader.loadScene(scene);
+            final Pair<Scene, SceneController> gameScene = SceneLoader.loadScene(scene);
             gameScene.getX().getRoot().requestFocus();
             gameScene.getX().getRoot().setOnKeyPressed(gameScene.getY()::onKeyPressed);
             stage.setScene(gameScene.getX());

@@ -3,12 +3,10 @@ package view.controllers;
 import java.io.IOException;
 import controller.Controller;
 import controller.GameMaps;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.RadioButton;
 import view.GameScene;
 import view.View;
 import view.utils.SoundManager;
@@ -44,7 +42,7 @@ public class SettingsController extends SceneController {
     }
 
     @FXML
-    void setGameMap(ActionEvent event) {
+    void setGameMap(final ActionEvent event) {
         this.getController().setGameMap(this.gameMaps.getSelectionModel().getSelectedItem());
     }
 
