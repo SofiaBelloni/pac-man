@@ -66,6 +66,11 @@ public class ControllerImpl implements Controller {
     public List<Player> getAllPlayers() {
         return this.fileManager.getAllPlayers();
     }
+    
+    @Override
+    public void resetRanking() {
+        this.fileManager.reset();
+    }
 
     @Override
     public void startGame() {

@@ -22,6 +22,10 @@ public interface Controller {
      */
     List<Player> getAllPlayers();
     /**
+     * Deletes all the players saved. 
+     */
+    void resetRanking();
+    /**
      * Starts a new game session.
      **/
     void startGame();
