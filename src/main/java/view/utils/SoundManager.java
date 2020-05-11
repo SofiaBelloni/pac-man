@@ -147,11 +147,12 @@ public class SoundManager {
     }
 
     private Clip createClip(final String path) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        InputStream istream = this.getClass().getClassLoader()
-                    .getResourceAsStream(path);
-        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(istream));
-        Clip clip = AudioSystem.getClip();
+        final InputStream istream = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
+        final AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(istream));
+        final Clip clip = AudioSystem.getClip();
         clip.open(audioInputStream);
+        audioInputStream.close();
+        istream.close();
         return clip;
     }
 
