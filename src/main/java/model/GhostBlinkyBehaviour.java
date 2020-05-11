@@ -9,7 +9,7 @@ import utils.Pair;
 * this class implements the Blinky behaviour.
 *
 */
-public class GhostBlinkyBehaviour extends GhostSmartAbstractBehaviour implements GhostBehaviour {
+public class GhostBlinkyBehaviour extends GhostFinalAbstractBehaviour {
 
     public GhostBlinkyBehaviour(final Set<Pair<Integer, Integer>> setWall, final PacMan pacMan,
             final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize,
@@ -23,7 +23,7 @@ public class GhostBlinkyBehaviour extends GhostSmartAbstractBehaviour implements
         this.checkIfInside();
         if ((eatable || name.equals(Ghosts.OLDLEVEL)) && !this.isRelaxed()) {
             if (timeToTurn || !moveIfStuck()) {
-                this.getRandomBehaviour().nextPosition(eatable, timeToTurn, name);
+                this.getRandomBehaviour().move(timeToTurn);
                 this.setCurrentPosition(this.getRandomBehaviour().getCurrentPosition());
                 this.setCurrentDirection(this.getRandomBehaviour().getCurrentDirection());
             }

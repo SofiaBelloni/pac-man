@@ -15,7 +15,11 @@ import java.util.Set;
 import utils.Directions;
 import utils.Pair;
 
-public class GhostRandomBehaviourImpl extends GhostAbstractBehaviour {
+/**
+ *This class implements a generic ghost random behaviour.
+ *
+ */
+public class GhostRandomBehaviourImpl extends GhostAbstractBehaviour implements GhostRandomBehaviour {
 
     public GhostRandomBehaviourImpl(final Set<Pair<Integer, Integer>> walls,
             final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize,
@@ -24,7 +28,7 @@ public class GhostRandomBehaviourImpl extends GhostAbstractBehaviour {
     }
 
     @Override
-    public final void nextPosition(final boolean eatable, final boolean timeToTurn, final Ghosts name) {
+    public final void move(final boolean timeToTurn) {
         if (timeToTurn) {
             this.turnAround();
         } else {

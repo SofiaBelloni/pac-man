@@ -9,7 +9,7 @@ import utils.PairImpl;
 * this class implements the Clyde behaviour.
 *
 */
-public class GhostClydeBehaviour extends GhostSmartAbstractBehaviour {
+public class GhostClydeBehaviour extends GhostFinalAbstractBehaviour {
 
     private Pair<Integer, Integer> chaseTarget;
     private static final int PACMANRADIUS = 7;
@@ -47,7 +47,7 @@ public class GhostClydeBehaviour extends GhostSmartAbstractBehaviour {
         this.checkIfInside();
         if ((eatable || name.equals(Ghosts.OLDLEVEL)) && !this.isRelaxed()) {
             if (timeToTurn || !moveIfStuck()) {
-                this.getRandomBehaviour().nextPosition(eatable, timeToTurn, name);
+                this.getRandomBehaviour().move(timeToTurn);
                 this.setCurrentPosition(this.getRandomBehaviour().getCurrentPosition());
                 this.setCurrentDirection(this.getRandomBehaviour().getCurrentDirection());
             }
