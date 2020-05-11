@@ -14,6 +14,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
@@ -91,10 +94,6 @@ public class FileManagerImpl implements FileManager {
             final JsonWriter writer = new JsonWriter(new OutputStreamWriter(ostream, "UTF-8"));
             writer.jsonValue("");
             writer.close();
-        } catch (UnsupportedEncodingException e) { 
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

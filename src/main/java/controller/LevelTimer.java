@@ -32,6 +32,7 @@ public class LevelTimer {
         if (!this.isRunning) { 
             this.isRunning = true;
             task = new TimerTask() {
+                @Override
                 public void run() {
                     model.decLevelTime();
                 }
