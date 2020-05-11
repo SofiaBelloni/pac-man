@@ -1,5 +1,6 @@
 package model;
 
+import utils.Directions;
 import utils.Pair;
 
 /**

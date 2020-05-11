@@ -17,7 +17,7 @@ public interface Entity {
      */
     Pair<Integer, Integer> getPosition();
     /**
-     * PacMan return to the startPosition.
+     * Return to the startPosition.
      */
     void returnToStartPosition();
 }

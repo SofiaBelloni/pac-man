@@ -3,9 +3,9 @@ package controller;
 import java.io.IOException;
 import java.util.List;
 
-import model.Directions;
 import model.GameMapImpl;
 import model.GameModel;
+import utils.Directions;
 import utils.Player;
 import view.View;
 

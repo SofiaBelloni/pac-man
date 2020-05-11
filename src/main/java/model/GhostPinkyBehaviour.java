@@ -2,6 +2,8 @@ package model;
 
 import java.util.List;
 import java.util.Set;
+
+import utils.Directions;
 import utils.Pair;
 import utils.PairImpl;
 

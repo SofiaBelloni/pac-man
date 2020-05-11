@@ -1,4 +1,4 @@
-package model;
+package utils;
 
 /**
  * this enumeration represents the directions in which a mobile entity can move.

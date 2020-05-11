@@ -1,5 +1,7 @@
 package model;
 
+import utils.Directions;
+
 public interface PacMan extends Entity {
   /**
    * Set the PacMan direction.

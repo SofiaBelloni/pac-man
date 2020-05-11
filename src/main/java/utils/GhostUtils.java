@@ -1,6 +1,5 @@
 package utils;
 
-import model.Directions;
 import model.Ghosts;
 
 public class GhostUtils {
