@@ -11,7 +11,6 @@ import java.util.Set;
 import utils.Directions;
 import utils.GhostUtils;
 import utils.Pair;
-import utils.PairImpl;
 
 public class GameModelImpl implements GameModel {
 
@@ -23,7 +22,7 @@ public class GameModelImpl implements GameModel {
     private PacMan pacMan;
     private Optional<GameMap> gameMap = Optional.empty();
     private LevelManager levelManager;
-    private CollisionImpl collisions;
+    private Collision collisions;
 
     @Override
     public final synchronized void setPacManDirection(final Directions direction) {
@@ -125,7 +124,7 @@ public class GameModelImpl implements GameModel {
         this.createGhost(Ghosts.CLYDE);
         this.createGhost(Ghosts.INKY);
         this.createGhost(Ghosts.PINKY);
-        this.collisions = new CollisionImpl();
+        this.collisions = new Collision();
         this.collisions.setPacManPosition(this.getPacManPosition());
         this.collisions.setGhostsPositions(this.getGhostsPositions());
     }

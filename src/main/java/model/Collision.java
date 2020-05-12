@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public class CollisionImpl {
+public class Collision {
     private Optional<Map<Integer, Pair<Integer, Integer>>> ghostsPositions = Optional.empty();
     private Optional<Map<Integer, Pair<Integer, Integer>>> oldGhostsPositions = Optional.empty();
     private Optional<Pair<Integer, Integer>> pacManPosition = Optional.empty();
@@ -18,7 +18,9 @@ public class CollisionImpl {
      * Sets the actual ghosts positions
      */
     public final void setGhostsPositions(final Map<Integer, Pair<Integer, Integer>> ghostsPositions) {
-        this.oldGhostsPositions = this.ghostsPositions;
+        if (this.ghostsPositions.isPresent()) {
+            this.oldGhostsPositions = Optional.of(this.ghostsPositions.get());
+        }
         this.ghostsPositions = Optional.of(ghostsPositions);
     }
     /**
@@ -27,7 +29,9 @@ public class CollisionImpl {
      * Sets the actual Pac Man position
      */
     public final void setPacManPosition(final Pair<Integer, Integer> pacManPosition) {
-        this.oldPacManPosition = this.pacManPosition;
+        if (this.pacManPosition.isPresent()) {
+            this.oldPacManPosition = Optional.of(this.pacManPosition.get());
+        }
         this.pacManPosition = Optional.of(pacManPosition);
     }
     /**
@@ -64,7 +68,7 @@ public class CollisionImpl {
      * @return true il pillPositions contains Pac Man position, false otherwise
      */
     public final boolean checkPacManPillCollision(final Set<Pair<Integer, Integer>> pillsPositions) {
-        return pillsPositions.contains(this.pacManPosition);
+        return pillsPositions.contains(this.pacManPosition.get());
     }
     /**
      *
@@ -73,12 +77,12 @@ public class CollisionImpl {
     public final Set<Integer> checkPacManGhostsCollision() {
         Set<Integer> ghosts = new HashSet<>();
         this.ghostsPositions.get().keySet().forEach(x -> {
-            if (this.ghostsPositions.get().get(x).equals(this.pacManPosition)) {
+            if (this.ghostsPositions.get().get(x).equals(this.pacManPosition.get())) {
                 ghosts.add(x);
             }
             this.oldGhostsPositions.get().keySet().forEach(y -> {
-                if (x.equals(y) && this.oldPacManPosition.equals(this.ghostsPositions.get().get(x)) &&
-                        this.pacManPosition.equals(this.oldGhostsPositions.get().get(y))) {
+                if (x.equals(y) && this.ghostsPositions.get().get(x).equals(this.oldPacManPosition.get()) &&
+                        this.oldGhostsPositions.get().get(y).equals(this.pacManPosition.get())) {
                     ghosts.add(x);
                 }
             });
