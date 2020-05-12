@@ -23,6 +23,7 @@ public class GameModelImpl implements GameModel {
     private PacMan pacMan;
     private Optional<GameMap> gameMap = Optional.empty();
     private LevelManager levelManager;
+    private CollisionImpl collisions;
 
     @Override
     public final synchronized void setPacManDirection(final Directions direction) {
@@ -76,7 +77,9 @@ public class GameModelImpl implements GameModel {
     @Override
     public final synchronized void moveEntitiesNextPosition() {
         this.checkGameEnded();
-        if (this.checkPillCollision()) {
+        this.collisions.setGhostsPositions(this.getGhostsPositions());
+        this.collisions.setPacManPosition(this.getPacManPosition());
+        if (this.collisions.checkPacManPillCollision(this.getPillsPositions())) {
             this.gameMap.get().removePill(this.pacMan.getPosition());
             final boolean oldIsGameInverted = this.levelManager.isGameInverted();
             this.levelManager.incScores(this.gameMap.get().getPillScore());
@@ -84,11 +87,11 @@ public class GameModelImpl implements GameModel {
                 this.ghosts.forEach(x -> x.setEatable(true));
             }
         }
-        final Set<Ghost> collisions = this.checkPacManGhostCollision();
-        if (!collisions.isEmpty()) {
+        final Set<Integer> ghostsCollisions = this.collisions.checkPacManGhostsCollision();
+        if (!ghostsCollisions.isEmpty()) {
             if (this.levelManager.isGameInverted()) {
-                collisions.forEach(x -> {
-                    this.ghosts.removeIf(y -> y.getId() == x.getId());
+                ghostsCollisions.forEach(x -> {
+                    this.ghosts.removeIf(y -> x.equals(y.getId()));
                 });
             } else {
                 this.pacMan.kill();
@@ -122,6 +125,9 @@ public class GameModelImpl implements GameModel {
         this.createGhost(Ghosts.CLYDE);
         this.createGhost(Ghosts.INKY);
         this.createGhost(Ghosts.PINKY);
+        this.collisions = new CollisionImpl();
+        this.collisions.setPacManPosition(this.getPacManPosition());
+        this.collisions.setGhostsPositions(this.getGhostsPositions());
     }
 
     @Override
@@ -219,40 +225,6 @@ public class GameModelImpl implements GameModel {
         this.createGhost(Ghosts.CLYDE);
         this.createGhost(Ghosts.INKY);
         this.createGhost(Ghosts.PINKY);
-    }
-
-    private boolean checkPillCollision() {
-        return this.gameMap.get().isPill(this.getPacManPosition());
-    }
-
-    private Set<Ghost> checkPacManGhostCollision() {
-        final Set<Ghost> tmp = new HashSet<>();
-        this.ghosts.forEach(x -> {
-            if (x.getPosition().equals(this.pacMan.getPosition())) {
-                tmp.add(x);
-            }
-            if (this.calculateNextPosition(this.pacMan.getDirection(), this.pacMan.getPosition()).equals(x.getPosition())
-            && this.calculateNextPosition(x.getDirection(), x.getPosition()).equals(this.pacMan.getPosition())) {
-                tmp.add(x);
-            }
-        });
-        return tmp;
-    }
-
-    private Pair<Integer, Integer> calculateNextPosition(final Directions direction, final Pair<Integer, Integer> position) {
-        switch (direction) {
-        case UP:
-            return new PairImpl<>(position.getX(), position.getY() - 1);
-        case DOWN:
-            return new PairImpl<>(position.getX(), position.getY() + 1);
-        case LEFT:
-            return new PairImpl<>(position.getX() - 1, position.getY());
-        case RIGHT:
-            return new PairImpl<>(position.getX() + 1, position.getY());
-        default:
-            break;
-        }
-        return null;
     }
 
     private void createGhost(final Ghosts ghostName) {
