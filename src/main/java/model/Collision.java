@@ -2,10 +2,7 @@ package model;
 
 import utils.Pair;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public class Collision {
     private Optional<Map<Integer, Pair<Integer, Integer>>> ghostsPositions = Optional.empty();
@@ -39,14 +36,14 @@ public class Collision {
      * @return Actual ghosts positions
      */
     public final Map<Integer, Pair<Integer, Integer>> getGhostsPositions() {
-        return this.ghostsPositions.get();
+        return Collections.unmodifiableMap(this.ghostsPositions.get());
     }
     /**
      *
      * @return Old ghosts positions
      */
     public final Map<Integer, Pair<Integer, Integer>> getOldGhostsPositions() {
-        return this.oldGhostsPositions.get();
+        return Collections.unmodifiableMap(this.oldGhostsPositions.get());
     }
     /**
      *
