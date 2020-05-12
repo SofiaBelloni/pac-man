@@ -9,12 +9,12 @@ import utils.PairImpl;
 * this class implements the Clyde behaviour.
 *
 */
-public class GhostClydeBehaviour extends GhostFinalAbstractBehaviour {
+public class GhostClydeBehaviourImpl extends GhostFinalAbstractBehaviour {
 
     private Pair<Integer, Integer> chaseTarget;
     private static final int PACMANRADIUS = 7;
 
-    public GhostClydeBehaviour(final Set<Pair<Integer, Integer>> setWall, final PacMan pacMan,
+    public GhostClydeBehaviourImpl(final Set<Pair<Integer, Integer>> setWall, final PacMan pacMan,
             final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize,
             final Pair<Integer, Integer> relaxTarget, final Pair<Integer, Integer> startPosition) {
         super(setWall, pacMan, ghostHouse, xMapSize, yMapSize, startPosition);

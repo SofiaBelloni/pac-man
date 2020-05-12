@@ -51,6 +51,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
 
     @Override
     public final Directions getDirection() {
+        this.checkCreation();
         return this.myBehaviour.getCurrentDirection();
     }
 
@@ -86,6 +87,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
 
     @Override
     public final void setName(final Ghosts name) {
+        this.checkCreation();
         this.name = name;
         if (name.equals(Ghosts.OLDLEVEL)) {
             this.myUtils.setOldLevel();
@@ -123,6 +125,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
 
     @Override
     public final GhostUtils getMyUtils() {
+        this.checkCreation();
         return this.myUtils;
     }
 

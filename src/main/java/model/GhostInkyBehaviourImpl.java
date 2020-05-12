@@ -11,12 +11,12 @@ import utils.PairImpl;
 * this class implements the Inky behaviour.
 *
 */
-public class GhostInkyBehaviour extends GhostFinalAbstractBehaviour {
+public class GhostInkyBehaviourImpl extends GhostFinalAbstractBehaviour {
 
     private Pair<Integer, Integer> chaseTarget;
     private final Ghost blinky;
 
-    public GhostInkyBehaviour(final Ghost blinky, final Set<Pair<Integer, Integer>> setWall,
+    public GhostInkyBehaviourImpl(final Ghost blinky, final Set<Pair<Integer, Integer>> setWall,
             final PacMan pacMan, final List<Pair<Integer, Integer>> ghostHouse,
             final int xMapSize, final int yMapSize, final Pair<Integer, Integer> relaxTarget,
             final Pair<Integer, Integer> startPosition) {

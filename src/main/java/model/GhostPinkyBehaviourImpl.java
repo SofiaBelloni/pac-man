@@ -11,11 +11,11 @@ import utils.PairImpl;
  * this class implements the Pinky behaviour.
  *
  */
-public class GhostPinkyBehaviour extends GhostFinalAbstractBehaviour {
+public class GhostPinkyBehaviourImpl extends GhostFinalAbstractBehaviour {
 
     private Pair<Integer, Integer> chaseTarget;
 
-    public GhostPinkyBehaviour(final Set<Pair<Integer, Integer>> setWall, final PacMan pacMan,
+    public GhostPinkyBehaviourImpl(final Set<Pair<Integer, Integer>> setWall, final PacMan pacMan,
             final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize,
             final Pair<Integer, Integer> relaxTarget, final Pair<Integer, Integer> startPosition) {
         super(setWall, pacMan, ghostHouse, xMapSize, yMapSize, startPosition);

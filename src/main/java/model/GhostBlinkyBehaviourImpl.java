@@ -9,9 +9,9 @@ import utils.Pair;
 * this class implements the Blinky behaviour.
 *
 */
-public class GhostBlinkyBehaviour extends GhostFinalAbstractBehaviour {
+public class GhostBlinkyBehaviourImpl extends GhostFinalAbstractBehaviour {
 
-    public GhostBlinkyBehaviour(final Set<Pair<Integer, Integer>> setWall, final PacMan pacMan,
+    public GhostBlinkyBehaviourImpl(final Set<Pair<Integer, Integer>> setWall, final PacMan pacMan,
             final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize,
             final Pair<Integer, Integer> relaxTarget, final Pair<Integer, Integer> startPosition) {
         super(setWall, pacMan, ghostHouse, xMapSize, yMapSize, startPosition);
