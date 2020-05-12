@@ -49,7 +49,7 @@ public class FileManagerImpl implements FileManager {
         }
         this.file = new File(HOME + SEPARATOR + DEFAULT_DIR + SEPARATOR + DEFAULT_FILE);
         try {
-            if (!this.file.createNewFile()) {
+            if (!this.file.createNewFile() && this.file.length() != 0) {
                 this.read();
                 this.scoreList.sort((a, b) -> a.compareByScore(b));
             }
