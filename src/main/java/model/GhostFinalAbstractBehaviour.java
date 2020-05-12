@@ -16,7 +16,7 @@ public abstract class GhostFinalAbstractBehaviour extends GhostSmartAbstractBeha
     public GhostFinalAbstractBehaviour(final Set<Pair<Integer, Integer>> walls, final PacMan pacMan,
             final List<Pair<Integer, Integer>> ghostHouse, final int xMapSize, final int yMapSize,
             final Pair<Integer, Integer> startPosition) {
-        super(walls, pacMan, ghostHouse, yMapSize, yMapSize, startPosition);
+        super(walls, pacMan, ghostHouse, xMapSize, yMapSize, startPosition);
         this.rBehaviour = new GhostRandomBehaviourImpl(walls, ghostHouse, xMapSize, yMapSize, startPosition);
         this.setCurrentPosition(startPosition);
     }
@@ -27,7 +27,7 @@ public abstract class GhostFinalAbstractBehaviour extends GhostSmartAbstractBeha
         if (timeToTurn) {
             this.setRelaxed(false);
         }
-        if (eatable || (name.equals(Ghosts.OLDLEVEL) && !this.isRelaxed())) {
+        if (eatable || name.equals(Ghosts.OLDLEVEL) && !this.isRelaxed()) {
             if (timeToTurn || !moveIfStuck()) {
                 this.rBehaviour.move(timeToTurn);
                 this.setCurrentPosition(this.rBehaviour.getCurrentPosition());
