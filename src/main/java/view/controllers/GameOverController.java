@@ -29,6 +29,7 @@ public final class GameOverController extends SceneController {
     @FXML
     private Button saveButton;
 
+    @Override
     public void init(final Controller controller, final View view) {
         super.init(controller, view);
         this.levelLabel.setText("Level: " + controller.getData().getLevel());
