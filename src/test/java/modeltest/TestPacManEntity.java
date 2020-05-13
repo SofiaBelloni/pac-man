@@ -24,6 +24,9 @@ public class TestPacManEntity {
     private static final int XMAPSIZE = 28;
     private static final int YMAPSIZE = 31;
 
+    /**
+     * Throw IllegalStateException because the build is wrong.
+     */
     @Test
     public void testPacManBuilderNoTypeSpecified() {
         assertThrows(IllegalStateException.class, () -> {
@@ -32,6 +35,9 @@ public class TestPacManEntity {
         });
     }
 
+    /**
+     * Test for the correct creation of pacman entity.
+     */
     @Test
     public void testPacManTypes() {
         final PacMan pacMan = new PacManImpl.Builder()
@@ -45,13 +51,16 @@ public class TestPacManEntity {
         assertEquals(pacMan.getPosition(), new PairImpl<Integer, Integer>(0, 0));
     }
 
+    /**
+     * Throw IllegalStateException because lives are <= 0.
+     */
     @Test
     public void testPacManLives() {
         assertThrows(IllegalStateException.class, () -> {
             @SuppressWarnings("unused")
             final PacMan pacMan = new PacManImpl.Builder()
                     .currentDirection(Directions.LEFT)
-                    .lives(-1)
+                    .lives(0)
                     .mapSize(XMAPSIZE, YMAPSIZE)
                     .noWalls(new HashSet<Pair<Integer, Integer>>())
                     .startPosition(new PairImpl<Integer, Integer>(0, 0))
@@ -59,6 +68,9 @@ public class TestPacManEntity {
         });
     }
 
+    /**
+     * Test for the correct movement of pacman.
+     */
     @Test
     public void testPacManNextPosition() {
         final Set<Pair<Integer, Integer>> noWalls = new HashSet<>();
