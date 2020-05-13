@@ -45,96 +45,204 @@
          </children>
       </HBox>
       <Separator prefHeight="0.0" prefWidth="1064.0" style="-fx-border-color: rgb(255,183,0);" />
-      <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="262.0" prefHeight="85.0" prefWidth="1064.0">
+      <HBox prefHeight="400.0" prefWidth="500.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="220.0" text="COMMANDS:" textFill="#ffb700">
-               <font>
-                  <Font size="35.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="100.0" />
-               </HBox.margin>
-            </Label>
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="642.0" prefHeight="70.0" prefWidth="1064.0">
-         <children>
-            <Label alignment="CENTER" prefHeight="37.0" prefWidth="76.0" style="-fx-border-color: rgb(178,166,166);" text="W / ↑" textFill="#b2a6a6">
-               <font>
-                  <Font size="20.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="120.0" />
-               </HBox.margin>
-            </Label>
-            <Label text="Move Pac-Man up" textFill="#b2a6a6">
-               <font>
-                  <Font size="20.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="35.0" />
-               </HBox.margin>
-            </Label>
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="582.0" prefHeight="70.0" prefWidth="520.0">
-         <children>
-            <Label alignment="CENTER" prefHeight="37.0" prefWidth="76.0" style="-fx-border-color: rgb(178,166,166);" text="A / ←" textFill="#b2a6a6">
-               <font>
-                  <Font size="20.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="120.0" />
-               </HBox.margin>
-            </Label>
-            <Label text="Move Pac-man left" textFill="#b2a6a6">
-               <font>
-                  <Font size="20.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="35.0" />
-               </HBox.margin>
-            </Label>
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="522.0" prefHeight="70.0" prefWidth="520.0">
-         <children>
-            <Label alignment="CENTER" prefHeight="37.0" prefWidth="76.0" style="-fx-border-color: rgb(178,166,166);" text="D / →" textFill="#b2a6a6">
-               <font>
-                  <Font size="20.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="120.0" />
-               </HBox.margin>
-            </Label>
-            <Label text="Move Pac-Man right" textFill="#b2a6a6">
-               <font>
-                  <Font size="20.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="35.0" />
-               </HBox.margin>
-            </Label>
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="411.0" prefHeight="70.0" prefWidth="520.0">
-         <children>
-            <Label alignment="CENTER" prefHeight="37.0" prefWidth="76.0" style="-fx-border-color: rgb(178,166,166);" text="S / ↓" textFill="#b2a6a6">
-               <font>
-                  <Font size="20.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="120.0" />
-               </HBox.margin>
-            </Label>
-            <Label text="Move Pac-Man down" textFill="#b2a6a6">
-               <font>
-                  <Font size="20.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="35.0" />
-               </HBox.margin>
-            </Label>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="500.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="85.0" prefWidth="1064.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="312.0" text="COMMANDS:" textFill="#ffb700">
+                           <font>
+                              <Font size="35.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="105.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="1064.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="37.0" prefWidth="76.0" style="-fx-border-color: rgb(178,166,166);" text="W / ↑" textFill="#b2a6a6">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="120.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label text="Move Pac-Man up" textFill="#b2a6a6">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="35.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="520.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="37.0" prefWidth="76.0" style="-fx-border-color: rgb(178,166,166);" text="A / ←" textFill="#b2a6a6">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="120.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label text="Move Pac-man left" textFill="#b2a6a6">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="35.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="520.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="37.0" prefWidth="76.0" style="-fx-border-color: rgb(178,166,166);" text="D / →" textFill="#b2a6a6">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="120.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label text="Move Pac-Man right" textFill="#b2a6a6">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="35.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="520.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="37.0" prefWidth="76.0" style="-fx-border-color: rgb(178,166,166);" text="S / ↓" textFill="#b2a6a6">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="120.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label text="Move Pac-Man down" textFill="#b2a6a6">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="35.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="500.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="85.0" prefWidth="1064.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="51.0" prefWidth="450.0" text="GOAL OF THE GAME:" textFill="#ffb700">
+                           <font>
+                              <Font size="35.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="50.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="500.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="450.0" text="Move Pac-man inside the maze" textFill="#b2a6a6">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="35.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="500.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="8.0" prefWidth="334501.0" text="Try to collect as many pills as you can" textFill="#b2a6a6">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="35.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="500.0">
+                     <children>
+                        <Label alignment="CENTER" prefWidth="450.0" text="And when the ghosts turn blue... Gotta eat 'em all!" textFill="#b2a6a6">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="35.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="500.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="45.0" prefWidth="450.0" text="But be careful:" textFill="#b2a6a6">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="35.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="331.0" prefHeight="45.0" prefWidth="500.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="457.0" text="When they turn grey the classic mode is about to return." textFill="#b2a6a6">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="35.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="272.0" prefHeight="45.0" prefWidth="500.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="450.0" text="The ghosts increase at every level!" textFill="#b2a6a6">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="35.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="298.0" prefHeight="45.0" prefWidth="500.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="45.0" prefWidth="450.0" text="SURVIVE AS LONG AS YOU CAN" textFill="#b2a6a6">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="35.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
          </children>
       </HBox>
    </children>
