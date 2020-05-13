@@ -3,7 +3,7 @@ package utils;
 import model.Ghosts;
 
 /**
- * The Class GhostUtils used to pass ghost information from model to view.
+ * The Class GhostUtils used to pass ghost informations from model to view.
  */
 public class GhostUtils {
 
