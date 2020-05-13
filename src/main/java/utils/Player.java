@@ -89,7 +89,7 @@ public class Player {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        Player other = (Player) obj;
+        final Player other = (Player) obj;
         if (level != other.level) {
             return false;
         }
