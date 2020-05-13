@@ -26,7 +26,7 @@ import utils.Player;
 /**
  * Class for saving the players' ranking on file and for its recovery from file.
  */
-public class FileManagerImpl implements FileManager {
+public class RankingManagerFileImpl implements RankingManager {
 
     private static final String HOME = System.getProperty("user.home");
     private static final String SEPARATOR = System.getProperty("file.separator");
@@ -41,7 +41,7 @@ public class FileManagerImpl implements FileManager {
     /**
      * Constructor.
      */
-    public FileManagerImpl() {
+    public RankingManagerFileImpl() {
         this.scoreList = new LinkedList<>(Collections.emptyList());
         final File directory = new File(HOME + SEPARATOR + DEFAULT_DIR);
         if (!directory.exists()) {

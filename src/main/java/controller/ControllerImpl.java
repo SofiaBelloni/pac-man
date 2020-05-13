@@ -22,7 +22,7 @@ public class ControllerImpl implements Controller {
     private final View view;
     private final GameLoop gameLoop;
     private final LevelTimer levelTimer;
-    private final FileManager fileManager;
+    private final RankingManager rankingManager;
 
     /**
      * Constructor.
@@ -37,13 +37,13 @@ public class ControllerImpl implements Controller {
         this.view = view;
         this.gameLoop = new GameLoopImpl(this.model, this.view);
         this.levelTimer = new LevelTimer(this.model);
-        this.fileManager = new FileManagerImpl();
+        this.rankingManager = new RankingManagerFileImpl();
     }
 
     @Override
-    public void setGameMap(final String mapName) {
+    public final void setGameMap(final String mapName) {
         try {
-            GameMapLoader mapLoader = new GameMapLoaderImpl(mapName);
+            final GameMapLoader mapLoader = new GameMapLoaderImpl(mapName);
             this.model.setGameMap(new GameMapImpl.Builder()
                     .ghostsHouse(mapLoader.getGhostsHouse())
                     .mapSize(mapLoader.getxMapSize(), mapLoader.getyMapSize())
@@ -59,17 +59,17 @@ public class ControllerImpl implements Controller {
 
     @Override
     public int getHighScore() {
-        return this.fileManager.getHighScore();
+        return this.rankingManager.getHighScore();
     }
 
     @Override
     public List<Player> getAllPlayers() {
-        return this.fileManager.getAllPlayers();
+        return this.rankingManager.getAllPlayers();
     }
-    
+
     @Override
     public void resetRanking() {
-        this.fileManager.reset();
+        this.rankingManager.reset();
     }
 
     @Override
@@ -99,7 +99,7 @@ public class ControllerImpl implements Controller {
 
     @Override
     public void savePlayer(final String name) {
-        this.fileManager.savePlayer(name, this.getData().getLevel(), this.getData().getCurrentScore());
+        this.rankingManager.savePlayer(name, this.getData().getLevel(), this.getData().getCurrentScore());
     }
 
     @Override

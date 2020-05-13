@@ -5,9 +5,9 @@ import java.util.List;
 import utils.Player;
 
 /**
- * Interface for saving the players' ranking on file and for its recovery from file.
+ * Interface for managing the ranking.
  */
-public interface FileManager {
+public interface RankingManager {
     /**
      * @return the current high-score
      */
