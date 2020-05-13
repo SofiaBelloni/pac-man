@@ -12,7 +12,7 @@
 
 <VBox alignment="TOP_CENTER" prefHeight="623.0" prefWidth="965.0" styleClass="mainPane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.ScoreController">
    <children>
-      <HBox alignment="CENTER" VBox.vgrow="SOMETIMES">
+      <HBox alignment="CENTER" prefHeight="190.0" prefWidth="965.0" VBox.vgrow="SOMETIMES">
          <children>
             <VBox prefHeight="200.0" prefWidth="358.0" HBox.hgrow="ALWAYS">
                <children>
