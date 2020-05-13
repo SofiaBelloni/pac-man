@@ -25,8 +25,8 @@ public enum GameScene {
      */
     SETTINGS,
     /**
-     * The scene with the rules of the game.
+     * The scene with the instruction of the game.
      */
-    RULES;
+    INSTRUCTIONS;
 
 }

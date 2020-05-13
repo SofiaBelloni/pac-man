@@ -42,5 +42,12 @@ public class MainMenuController extends SceneController {
         SoundManager.getSoundManager().play(Sound.BUTTON);
         this.getView().setScene(GameScene.SETTINGS);
     }
+
+    @FXML
+    private void onInstructionsClick() {
+        SoundManager.getSoundManager().stopAll();
+        SoundManager.getSoundManager().play(Sound.BUTTON);
+        this.getView().setScene(GameScene.INSTRUCTIONS);
+    }
 }
 
