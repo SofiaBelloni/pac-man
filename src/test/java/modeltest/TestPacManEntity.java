@@ -25,7 +25,7 @@ public class TestPacManEntity {
     private static final int YMAPSIZE = 31;
 
     /**
-     * Throw IllegalStateException because the build is wrong.
+     * Throw IllegalStateException because there are missing parameters in the builder.
      */
     @Test
     public void testPacManBuilderNoTypeSpecified() {
