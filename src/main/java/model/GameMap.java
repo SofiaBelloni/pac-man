@@ -51,7 +51,7 @@ public interface GameMap {
      */
     Pair<Integer, Integer> getPacManStartPosition();
     /**
-     * restores the pills in the map
+     * restores the pills in the map.
      */
     void restorePills();
 }

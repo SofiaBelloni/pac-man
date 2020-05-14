@@ -1,8 +1,12 @@
 package model;
 
-import utils.Pair;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
-import java.util.*;
+import utils.Pair;
 
 public class Collision {
     private Optional<Map<Integer, Pair<Integer, Integer>>> ghostsPositions = Optional.empty();
@@ -72,14 +76,14 @@ public class Collision {
      * @return A set with the ID of the ghosts that collide with Pac Man
      */
     public final Set<Integer> checkPacManGhostsCollision() {
-        Set<Integer> ghosts = new HashSet<>();
+        final Set<Integer> ghosts = new HashSet<>();
         this.ghostsPositions.get().keySet().forEach(x -> {
             if (this.ghostsPositions.get().get(x).equals(this.pacManPosition.get())) {
                 ghosts.add(x);
             }
             this.oldGhostsPositions.get().keySet().forEach(y -> {
-                if (x.equals(y) && this.ghostsPositions.get().get(x).equals(this.oldPacManPosition.get()) &&
-                        this.oldGhostsPositions.get().get(y).equals(this.pacManPosition.get())) {
+                if (x.equals(y) && this.ghostsPositions.get().get(x).equals(this.oldPacManPosition.get())
+                        && this.oldGhostsPositions.get().get(y).equals(this.pacManPosition.get())) {
                     ghosts.add(x);
                 }
             });

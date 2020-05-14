@@ -11,6 +11,9 @@ import java.io.IOException;
 
 import controller.Controller;
 
+/**
+ *this class represents the controller of the main menu scene.
+ */
 public class MainMenuController extends SceneController {
 
     @FXML

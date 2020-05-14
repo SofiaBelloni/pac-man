@@ -97,11 +97,17 @@ public interface GameModel {
      */
     int getxMapSize();
     /**
+     * Sets the game map.
      *
-     * @param gameMap
-     * sets the game map
+     * @param gameMap sets the game map
      */
     void setGameMap(GameMap gameMap);
+    /**
+     * @return the Map of GhostUtils
+     */
     Map<Integer, GhostUtils> getGhosts();
+    /**
+     * @return the time of inverted game
+     */
     int getInvertedGameTime();
 }
