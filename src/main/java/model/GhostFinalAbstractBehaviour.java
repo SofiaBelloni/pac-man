@@ -27,7 +27,7 @@ public abstract class GhostFinalAbstractBehaviour extends GhostSmartAbstractBeha
             this.rBehaviour.setCurrentDirection(this.getCurrentDirection());
             this.rBehaviour.setCurrentPosition(this.getCurrentPosition());
         } else {
-            if ((eatable || name.equals(Ghosts.OLDLEVEL)) && !this.isRelaxed()) {
+            if (timeToTurn || (eatable || name.equals(Ghosts.OLDLEVEL)) && !this.isRelaxed()) {
                     this.rBehaviour.move(timeToTurn);
                     this.setCurrentDirection(this.rBehaviour.getCurrentDirection());
                     this.setCurrentPosition(this.rBehaviour.getCurrentPosition());

@@ -65,6 +65,7 @@ public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour
      * @param targetPosition
      */
     protected final void findPath(final Pair<Integer, Integer> targetPosition) {
+        final Map<Pair<Integer, Integer>, Integer> queue = new HashMap<>();
         int distance = 0;
         this.isPathFound = false;
         for (int x = 0; x < this.xMapSize; x++) {
@@ -76,41 +77,53 @@ public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour
         this.setAdj(this.getCurrentPosition());
         if (this.getAdj(UP).getY() >= 0 && !this.walls.contains(this.getAdj(UP)) && !this.getCurrentDirection().equals(DOWN)) {
             this.mapDijkstra.put(this.getAdj(UP), distance);
+            queue.put(this.getAdj(UP), distance);
         }
         if (this.getAdj(DOWN).getY() < yMapSize && !this.walls.contains(this.getAdj(DOWN)) && !this.getCurrentDirection().equals(UP)) {
             this.mapDijkstra.put(this.getAdj(DOWN), distance);
+            queue.put(this.getAdj(DOWN), distance);
         }
         if (this.getAdj(RIGHT).getX() < xMapSize && !this.walls.contains(this.getAdj(RIGHT)) && !this.getCurrentDirection().equals(LEFT)) {
             this.mapDijkstra.put(this.getAdj(RIGHT), distance);
+            queue.put(this.getAdj(RIGHT), distance);
         }
         if (this.getAdj(LEFT).getX() >= 0 && !this.walls.contains(this.getAdj(LEFT)) && !this.getCurrentDirection().equals(RIGHT)) {
             this.mapDijkstra.put(this.getAdj(LEFT), distance);
+            queue.put(this.getAdj(LEFT), distance);
         }
         if (this.mapDijkstra.get(targetPosition) < UPPERBOUND) {
             this.isPathFound = true;
         }
         while (!this.isPathFound) {
-            for (final Pair<Integer, Integer> p : this.mapDijkstra.keySet()) {
-                if (this.mapDijkstra.get(p).equals(distance)) {
-                    this.setAdj(p);
-                    if (this.getAdj(UP).getY() >= 0 && !this.walls.contains(this.getAdj(UP)) && distance < this.mapDijkstra.get(this.getAdj(UP))) {
-                        this.mapDijkstra.put(this.getAdj(UP), distance + 1);
-                    }
-                    if (this.getAdj(RIGHT).getX() < xMapSize && !this.walls.contains(this.getAdj(RIGHT)) && distance < this.mapDijkstra.get(this.getAdj(RIGHT))) {
-                        this.mapDijkstra.put(this.getAdj(RIGHT), distance + 1);
-                    } 
-                    if (this.getAdj(LEFT).getX() >= 0 && !this.walls.contains(this.getAdj(LEFT)) && distance < this.mapDijkstra.get(this.getAdj(LEFT))) {
-                        this.mapDijkstra.put(this.getAdj(LEFT), distance + 1);
-                    } 
-                    if (this.getAdj(DOWN).getY() < yMapSize && !this.walls.contains(this.getAdj(DOWN)) && distance < this.mapDijkstra.get(this.getAdj(DOWN))) {
-                        this.mapDijkstra.put(this.getAdj(DOWN), distance + 1);
-                    }
-                    if (this.mapDijkstra.get(targetPosition) < UPPERBOUND) {
-                        this.isPathFound = true;
-                    }
+            final Map<Pair<Integer, Integer>, Integer> queueCopy = new HashMap<>(queue);
+            for (final Pair<Integer, Integer> p : queueCopy.keySet()) {
+                this.setAdj(p);
+                if (this.getAdj(UP).getY() >= 0 && !this.walls.contains(this.getAdj(UP)) && distance < this.mapDijkstra.get(this.getAdj(UP))) {
+                    this.mapDijkstra.put(this.getAdj(UP), distance + 1);
+                    queue.put(this.getAdj(UP), distance + 1);
+                }
+                if (this.getAdj(RIGHT).getX() < xMapSize && !this.walls.contains(this.getAdj(RIGHT)) && distance < this.mapDijkstra.get(this.getAdj(RIGHT))) {
+                    this.mapDijkstra.put(this.getAdj(RIGHT), distance + 1);
+                    queue.put(this.getAdj(RIGHT), distance + 1);
+                } 
+                if (this.getAdj(LEFT).getX() >= 0 && !this.walls.contains(this.getAdj(LEFT)) && distance < this.mapDijkstra.get(this.getAdj(LEFT))) {
+                    this.mapDijkstra.put(this.getAdj(LEFT), distance + 1);
+                    queue.put(this.getAdj(LEFT), distance + 1);
+                } 
+                if (this.getAdj(DOWN).getY() < yMapSize && !this.walls.contains(this.getAdj(DOWN)) && distance < this.mapDijkstra.get(this.getAdj(DOWN))) {
+                    this.mapDijkstra.put(this.getAdj(DOWN), distance + 1);
+                    queue.put(this.getAdj(DOWN), distance + 1);
+                }
+                if (this.mapDijkstra.get(targetPosition) < UPPERBOUND) {
+                    this.isPathFound = true;
                 }
             }
             distance++;
+            for (final Pair<Integer, Integer> p : queueCopy.keySet()) {
+                if (queue.get(p) < distance) {
+                    queue.remove(p);
+                }
+            }
         }
         this.move(targetPosition);
     }
