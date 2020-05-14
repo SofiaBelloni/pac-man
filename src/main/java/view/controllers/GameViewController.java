@@ -119,6 +119,7 @@ public class GameViewController extends SceneController {
         this.pacmanSpawn();
 
         // Inizialize HUD
+        controller.getData().initialize();
         this.highScore.setText(String.valueOf(controller.getHighScore()));
         this.level.setText(String.valueOf(controller.getData().getLevel()));
         for (int i = 0; i < controller.getData().getLives(); i++) {

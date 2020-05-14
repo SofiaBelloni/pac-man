@@ -31,9 +31,7 @@ public class DataUpdater {
         this.model = model;
         this.view = view;
         this.levelDuration = this.model.getLevelDuration();
-        this.finalLevel = 0;
-        this.finalScore = 0;
-        this.isGameEnded = false;
+        this.initialize();
     }
     /**
      * Updates model.
@@ -146,5 +144,13 @@ public class DataUpdater {
      */
     public int getyMapSize() {
         return this.model.getyMapSize();
+    }
+    /**
+     * Initialize DataUpdater.
+     */
+    public void initialize() {
+        this.isGameEnded = false;
+        this.finalLevel = 0;
+        this.finalScore = 0;
     }
 }

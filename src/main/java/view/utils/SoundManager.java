@@ -52,10 +52,6 @@ public class SoundManager {
          */
         COUNTDOWN(FOLDER + "countdown" + EXTENSION),
         /**
-         * The sound for when the game is inverted.
-         */
-        GAME_INVERTED(FOLDER + "" + EXTENSION),
-        /**
          * The sound for when Pac-Man eats a ghost or vice versa.
          */
         EATEN(FOLDER + "eaten" + EXTENSION),
