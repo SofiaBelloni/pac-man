@@ -2,7 +2,6 @@ package model;
 
 import java.util.List;
 import java.util.Set;
-
 import utils.Pair;
 
 /**
@@ -24,29 +23,25 @@ public abstract class GhostFinalAbstractBehaviour extends GhostSmartAbstractBeha
     @Override
     public final void nextPosition(final boolean eatable, final boolean timeToTurn, final Ghosts name) {
         this.checkIfInside();
-        if (timeToTurn) {
-            this.setRelaxed(false);
-        }
-        if (eatable || name.equals(Ghosts.OLDLEVEL) && !this.isRelaxed()) {
-            if (timeToTurn || !moveIfStuck()) {
-                this.rBehaviour.move(timeToTurn);
-                this.setCurrentPosition(this.rBehaviour.getCurrentPosition());
-                this.setCurrentDirection(this.rBehaviour.getCurrentDirection());
-            }
+        if (!timeToTurn &&  this.moveIfStuck()) {
+            this.rBehaviour.setCurrentDirection(this.getCurrentDirection());
+            this.rBehaviour.setCurrentPosition(this.getCurrentPosition());
         } else {
-            if (this.isInside() || !moveIfStuck()) {
+            if ((eatable || name.equals(Ghosts.OLDLEVEL)) && !this.isRelaxed()) {
+                    this.rBehaviour.move(timeToTurn);
+                    this.setCurrentDirection(this.rBehaviour.getCurrentDirection());
+                    this.setCurrentPosition(this.rBehaviour.getCurrentPosition());
+            } else {
                 if (this.isRelaxed()) {
                     this.relax(name, eatable);
                 } else {
                     this.findPath(this.getChaseTarget());
                 }
+                this.rBehaviour.setCurrentDirection(this.getCurrentDirection());
+                this.rBehaviour.setCurrentPosition(this.getCurrentPosition());
             }
         }
-        this.rBehaviour.setCurrentPosition(this.getCurrentPosition());
-        this.rBehaviour.setCurrentDirection(this.getCurrentDirection());
     }
-
-    protected abstract Pair<Integer, Integer> getChaseTarget();
 
     @Override
     public final void returnHome(final Pair<Integer, Integer> newPosition) {
@@ -61,8 +56,6 @@ public abstract class GhostFinalAbstractBehaviour extends GhostSmartAbstractBeha
         this.rBehaviour.checkIfInside();
     }
 
-    protected final GhostRandomBehaviour getRandomBehaviour() {
-        return this.rBehaviour;
-    }
+    protected abstract Pair<Integer, Integer> getChaseTarget();
 
 }

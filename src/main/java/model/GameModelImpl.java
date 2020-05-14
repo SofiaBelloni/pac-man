@@ -106,7 +106,7 @@ public class GameModelImpl implements GameModel {
         this.gameMap.get().restorePills();
         this.levelManager = new LevelManagerImpl(LEVEL_DURATION,
                 INVERTED_GAME_DURATION,
-                (this.gameMap.get().getPillsPositions().size() * this.gameMap.get().getPillScore())/4);
+                (this.gameMap.get().getPillsPositions().size() * this.gameMap.get().getPillScore()) / 4);
         this.ghosts = new HashSet<>();
         this.pacMan = new PacManImpl.Builder()
                 .currentDirection(Directions.UP)
