@@ -117,13 +117,9 @@ public abstract class GhostSmartAbstractBehaviour extends GhostAbstractBehaviour
                 if (this.mapDijkstra.get(targetPosition) < UPPERBOUND) {
                     this.isPathFound = true;
                 }
+                queue.remove(p);
             }
             distance++;
-            for (final Pair<Integer, Integer> p : queueCopy.keySet()) {
-                if (queue.get(p) < distance) {
-                    queue.remove(p);
-                }
-            }
         }
         this.move(targetPosition);
     }
