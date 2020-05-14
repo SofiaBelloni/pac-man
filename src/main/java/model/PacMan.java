@@ -1,7 +1,10 @@
 package model;
 
 import utils.Directions;
-
+/**
+ * Interface that represent the pacman entity.
+ *
+ */
 public interface PacMan extends Entity {
   /**
    * Set the PacMan direction.

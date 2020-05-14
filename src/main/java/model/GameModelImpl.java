@@ -11,7 +11,9 @@ import java.util.Set;
 import utils.Directions;
 import utils.GhostUtils;
 import utils.Pair;
-
+/**
+ * This class represents the implementation of the GameModel interface.
+ */
 public class GameModelImpl implements GameModel {
 
     private static final int PAC_MAN_LIVES = 3;

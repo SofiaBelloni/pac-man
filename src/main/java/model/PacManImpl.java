@@ -6,7 +6,10 @@ import java.util.Set;
 import utils.Directions;
 import utils.Pair;
 import utils.PairImpl;
-
+/**
+ * Class that represent the pacman entity.
+ *
+ */
 public final class PacManImpl extends EntityAbstractImpl implements PacMan {
 
     private Directions currentDirection;
@@ -15,6 +18,9 @@ public final class PacManImpl extends EntityAbstractImpl implements PacMan {
     private final Pair<Integer, Integer> startPosition;
     private final Set<Pair<Integer, Integer>> noWalls;
 
+    /**
+     * Private constructor. is called by the builder.
+     */
     private PacManImpl(final int xMapSize, final int yMapSize, final Pair<Integer, Integer> startPosition,
             final int lives, final Set<Pair<Integer, Integer>> noWalls, final Directions currentDirection) {
         super(xMapSize, yMapSize);
@@ -25,6 +31,9 @@ public final class PacManImpl extends EntityAbstractImpl implements PacMan {
         this.lives = lives;
     }
 
+    /**
+     * inner builder class to build the PacManImpl object.
+     */
     public static class Builder {
         private Optional<Integer> xMapSize = Optional.empty();
         private Optional<Integer> yMapSize = Optional.empty();
@@ -127,6 +136,9 @@ public final class PacManImpl extends EntityAbstractImpl implements PacMan {
             }
     }
 
+    /**
+     * calculate the next position of pacman basing on actual position and actual direction.
+     */
     private Pair<Integer, Integer> calculateNextPosition() {
         int x = 0;
         int y = 0;
@@ -149,32 +161,50 @@ public final class PacManImpl extends EntityAbstractImpl implements PacMan {
         return new PairImpl<Integer, Integer>(this.getPosition().getX() + x, this.getPosition().getY() + y);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setDirection(final Directions direction) {
         this.currentDirection = direction;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Directions getDirection() {
         return this.currentDirection;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getLives() {
         return this.lives;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void kill() {
         this.lives = this.lives - 1;
         this.returnToStartPosition();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Pair<Integer, Integer> getPosition() {
         return this.position;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void returnToStartPosition() {
         this.setPosition(startPosition);

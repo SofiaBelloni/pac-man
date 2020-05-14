@@ -14,7 +14,9 @@ import view.GameScene;
 import view.View;
 import view.utils.SoundManager;
 import view.utils.SoundManager.Sound;
-
+/**
+ * Describes the controller for the Game Over scene.
+ */
 public final class GameOverController extends SceneController {
 
     @FXML
@@ -53,6 +55,9 @@ public final class GameOverController extends SceneController {
         }
     }
 
+    /**
+     * this method is called when the user want to go to the next scene.
+     */
     private void nextScene() {
         this.getController().savePlayer(Optional.of(playerNameText.getText()).filter(t -> !t.isBlank()).orElse("Guest"));
         SoundManager.getSoundManager().stopAll();
