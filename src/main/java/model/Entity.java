@@ -3,7 +3,7 @@ package model;
 import utils.Pair;
 
 /**
- * This interface represents a generic game entity (ghosts, walls, pills, etc.).
+ * This interface represents a generic game entity (ghosts, pacman, etc.).
  */
 public interface Entity {
     /**
