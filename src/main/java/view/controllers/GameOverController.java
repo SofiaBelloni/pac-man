@@ -40,7 +40,7 @@ public final class GameOverController extends SceneController {
     }
 
     @FXML
-    private void saveAndGoNextScene(final ActionEvent event) throws IOException {
+    void saveAndGoNextScene(final ActionEvent event) throws IOException {
         this.nextScene();
     }
 
