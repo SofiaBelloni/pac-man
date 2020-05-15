@@ -148,7 +148,7 @@ public class DataUpdater {
     /**
      * Initialize DataUpdater.
      */
-    public void initialize() {
+    public final void initialize() {
         this.isGameEnded = false;
         this.finalLevel = 0;
         this.finalScore = 0;

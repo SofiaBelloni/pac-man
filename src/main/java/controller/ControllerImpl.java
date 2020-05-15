@@ -58,57 +58,57 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
-    public int getHighScore() {
+    public final int getHighScore() {
         return this.rankingManager.getHighScore();
     }
 
     @Override
-    public List<Player> getAllPlayers() {
+    public final List<Player> getAllPlayers() {
         return this.rankingManager.getAllPlayers();
     }
 
     @Override
-    public void resetRanking() {
+    public final void resetRanking() {
         this.rankingManager.reset();
     }
 
     @Override
-    public void startGame() {
+    public final void startGame() {
         this.gameLoop.start();
         this.levelTimer.startTimer();
     }
 
     @Override
-    public void pauseGame() {
+    public final void pauseGame() {
         this.levelTimer.stopTimer();
         this.gameLoop.pause();
     }
 
     @Override
-    public void resumeGame() {
+    public final void resumeGame() {
         this.levelTimer.startTimer();
         this.gameLoop.resume();
     }
 
     @Override
-    public void stopGame() {
+    public final void stopGame() {
         this.levelTimer.stopTimer();
         this.gameLoop.stop();
         this.model.initializeNewGame();
     }
 
     @Override
-    public void savePlayer(final String name) {
+    public final void savePlayer(final String name) {
         this.rankingManager.savePlayer(name, this.getData().getLevel(), this.getData().getCurrentScore());
     }
 
     @Override
-    public void newPacManDirection(final Directions newDirection) {
+    public final void newPacManDirection(final Directions newDirection) {
         this.model.setPacManDirection(newDirection);
     }
 
     @Override
-    public DataUpdater getData() {
+    public final DataUpdater getData() {
         return this.gameLoop.getData();
     }
 }
