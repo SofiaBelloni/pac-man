@@ -54,7 +54,7 @@ public class RankingManagerFileImpl implements RankingManager {
     }
 
     @Override
-    public int getHighScore() {
+    public final int getHighScore() {
         if (!this.scoreList.isEmpty()) {
             return this.scoreList.get(0).getScore();
         } else {
@@ -63,7 +63,7 @@ public class RankingManagerFileImpl implements RankingManager {
     }
 
     @Override
-    public void savePlayer(final String name, final int level, final int score) {
+    public final void savePlayer(final String name, final int level, final int score) {
         this.scoreList.add(new Player(name, level, score));
         this.scoreList.sort((a, b) -> a.compareByScore(b));
         if (this.scoreList.size() > MAX_SAVED_PLAYERS) {
@@ -77,12 +77,12 @@ public class RankingManagerFileImpl implements RankingManager {
     }
 
     @Override
-    public List<Player> getAllPlayers() {
+    public final List<Player> getAllPlayers() {
         return this.scoreList;
     }
 
     @Override
-    public void reset() {
+    public final void reset() {
         this.scoreList.clear();
         try {
             final OutputStream ostream = new FileOutputStream(this.file);
