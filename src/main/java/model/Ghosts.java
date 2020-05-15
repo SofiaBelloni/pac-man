@@ -20,5 +20,5 @@ public enum Ghosts {
     /**
      * Ghost from old levels.
      */
-    OLDLEVEL
+    RANDY
 }

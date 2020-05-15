@@ -54,7 +54,7 @@
                   <Image url="@../textures/images/game_map.png" />
                </image>
             </ImageView>
-            <ComboBox fx:id="gameMaps" onAction="#setGameMap" prefHeight="55.0" prefWidth="181.0" promptText="Select map" />
+            <ComboBox fx:id="gameMaps" onAction="#setGameMap" prefHeight="55.0" prefWidth="181.0" promptText="Select map" styleClass="combo-box" />
          </children>
       </HBox>
       <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
