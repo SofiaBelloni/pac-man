@@ -219,7 +219,7 @@ public class GameModelImpl implements GameModel {
         this.levelManager.nextLevel();
         this.ghosts.forEach(Entity::returnToStartPosition);
         this.ghosts.forEach(x -> x.setEatable(false));
-        this.ghosts.forEach(x -> x.setName(Ghosts.OLDLEVEL));
+        this.ghosts.forEach(x -> x.setName(Ghosts.RANDY));
         this.gameMap.get().restorePills();
         this.pacMan.setDirection(Directions.UP);
         this.pacMan.returnToStartPosition();

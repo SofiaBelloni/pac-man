@@ -89,6 +89,6 @@ public class GhostUtils {
      * Sets the ghost as old level ghost.
      */
     public final void setOldLevel() {
-        this.ghostName = Ghosts.OLDLEVEL;
+        this.ghostName = Ghosts.RANDY;
     }
 }

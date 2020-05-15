@@ -89,7 +89,7 @@ public abstract class GhostAbstractImpl extends EntityAbstractImpl implements Gh
     public final void setName(final Ghosts name) {
         this.checkCreation();
         this.name = name;
-        if (name.equals(Ghosts.OLDLEVEL)) {
+        if (name.equals(Ghosts.RANDY)) {
             this.myUtils.setOldLevel();
         }
     }
