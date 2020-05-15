@@ -44,7 +44,7 @@ public class ScoreController extends SceneController {
     }
 
     @FXML
-    private void goBack(final ActionEvent event) throws IOException {
+    public void goBack(final ActionEvent event) throws IOException {
         SoundManager.getSoundManager().play(Sound.BUTTON);
         this.getView().setScene(GameScene.MAINMENU);
     }

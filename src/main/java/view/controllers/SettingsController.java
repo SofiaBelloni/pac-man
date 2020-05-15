@@ -37,7 +37,7 @@ public class SettingsController extends SceneController {
      *
      */
     @FXML
-    private void onResetRankingClick() {
+    public void onResetRankingClick() {
         SoundManager.getSoundManager().play(Sound.BUTTON);
         this.getController().resetRanking();
     }
@@ -45,14 +45,14 @@ public class SettingsController extends SceneController {
      *
      */
     @FXML
-    private void setGameMap() {
+    public void setGameMap() {
         this.getController().setGameMap(this.gameMaps.getSelectionModel().getSelectedItem());
     }
     /**
      *
      */
     @FXML
-    private void onBackClick() {
+    public void onBackClick() {
         SoundManager.getSoundManager().play(Sound.BUTTON);
         this.getView().setScene(GameScene.MAINMENU);
     }
@@ -60,14 +60,14 @@ public class SettingsController extends SceneController {
      *
      */
     @FXML
-    private void volumeOffSelected() {
+    public void volumeOffSelected() {
         SoundManager.getSoundManager().setSoundEnabled(false);
     }
     /**
      *
      */
     @FXML
-    private void volumeOnSelected() {
+    public void volumeOnSelected() {
         SoundManager.getSoundManager().setSoundEnabled(true);
     }
 }

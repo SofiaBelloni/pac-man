@@ -21,7 +21,7 @@ public class InstructionsController extends SceneController {
     }
 
     @FXML
-    private void goBack() {
+    public void goBack() {
         SoundManager.getSoundManager().play(Sound.BUTTON);
         this.getView().setScene(GameScene.MAINMENU);
 

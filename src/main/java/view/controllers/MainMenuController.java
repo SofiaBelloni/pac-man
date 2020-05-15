@@ -26,28 +26,28 @@ public class MainMenuController extends SceneController {
     }
 
     @FXML
-    private void onNewGameClick() throws IOException {
+    public void onNewGameClick() throws IOException {
         SoundManager.getSoundManager().stopAll();
         SoundManager.getSoundManager().play(Sound.BUTTON);
         this.getView().setScene(GameScene.GAME);
     }
 
     @FXML
-    private void onScoreClick() throws IOException {
+    public void onScoreClick() throws IOException {
         SoundManager.getSoundManager().stopAll();
         SoundManager.getSoundManager().play(Sound.BUTTON);
         this.getView().setScene(GameScene.SCORE);
     }
 
     @FXML
-    private void onSettingsClick() throws IOException {
+    public void onSettingsClick() throws IOException {
         SoundManager.getSoundManager().stopAll();
         SoundManager.getSoundManager().play(Sound.BUTTON);
         this.getView().setScene(GameScene.SETTINGS);
     }
 
     @FXML
-    private void onInstructionsClick() {
+    public void onInstructionsClick() {
         SoundManager.getSoundManager().stopAll();
         SoundManager.getSoundManager().play(Sound.BUTTON);
         this.getView().setScene(GameScene.INSTRUCTIONS);
