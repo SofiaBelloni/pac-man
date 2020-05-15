@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" prefHeight="692.0" prefWidth="1064.0" styleClass="mainPane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.InstructionsController">
+<VBox alignment="TOP_CENTER" prefHeight="692.0" prefWidth="1243.0" styleClass="mainPane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.InstructionsController">
    <children>
       <HBox alignment="CENTER" prefHeight="190.0" prefWidth="1064.0">
          <children>
@@ -47,7 +47,7 @@
       <Separator prefHeight="0.0" prefWidth="1064.0" style="-fx-border-color: rgb(255,183,0);" />
       <HBox prefHeight="400.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="200.0">
+            <VBox alignment="CENTER" prefHeight="200.0" HBox.hgrow="SOMETIMES">
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="85.0" prefWidth="1064.0">
                      <children>
@@ -143,9 +143,9 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox alignment="CENTER" prefHeight="200.0">
+            <VBox alignment="CENTER" prefHeight="200.0" HBox.hgrow="ALWAYS">
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="85.0" prefWidth="1064.0">
+                  <HBox alignment="CENTER" prefHeight="85.0" prefWidth="1064.0">
                      <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="51.0" prefWidth="450.0" text="GOAL OF THE GAME:" textFill="#ffb700">
                            <font>
@@ -157,7 +157,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="500.0">
+                  <HBox alignment="CENTER" prefHeight="45.0" prefWidth="500.0">
                      <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="450.0" text="Move Pac-man inside the maze" textFill="#b2a6a6">
                            <font>
@@ -169,7 +169,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="500.0">
+                  <HBox alignment="CENTER" prefHeight="45.0" prefWidth="500.0">
                      <children>
                         <Label alignment="CENTER" prefHeight="8.0" prefWidth="334501.0" text="Try to collect as many pills as you can" textFill="#b2a6a6">
                            <font>
@@ -181,9 +181,9 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="500.0">
+                  <HBox alignment="CENTER" prefHeight="45.0" prefWidth="500.0">
                      <children>
-                        <Label alignment="CENTER" prefWidth="450.0" text="And when the ghosts turn blue... Gotta eat 'em all!" textFill="#b2a6a6">
+                        <Label alignment="CENTER" prefHeight="21.0" prefWidth="496.0" text="And when the ghosts turn blue... Gotta eat 'em all!" textFill="#b2a6a6">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -193,7 +193,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="500.0">
+                  <HBox alignment="CENTER" prefHeight="45.0" prefWidth="500.0">
                      <children>
                         <Label alignment="CENTER" prefHeight="45.0" prefWidth="450.0" text="But be careful:" textFill="#b2a6a6">
                            <font>
@@ -205,9 +205,9 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="331.0" prefHeight="45.0" prefWidth="500.0">
+                  <HBox alignment="CENTER" layoutX="10.0" layoutY="331.0" prefHeight="45.0" prefWidth="500.0">
                      <children>
-                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="457.0" text="When they turn grey the classic mode is about to return." textFill="#b2a6a6">
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="513.0" text="When they turn grey the classic mode is about to return." textFill="#b2a6a6">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -217,7 +217,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="272.0" prefHeight="45.0" prefWidth="500.0">
+                  <HBox alignment="CENTER" layoutX="10.0" layoutY="272.0" prefHeight="45.0" prefWidth="500.0">
                      <children>
                         <Label alignment="CENTER" prefHeight="30.0" prefWidth="450.0" text="The ghosts increase at every level!" textFill="#b2a6a6">
                            <font>
@@ -229,7 +229,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="298.0" prefHeight="45.0" prefWidth="500.0">
+                  <HBox alignment="CENTER" layoutX="10.0" layoutY="298.0" prefHeight="45.0" prefWidth="500.0">
                      <children>
                         <Label alignment="CENTER" prefHeight="45.0" prefWidth="450.0" text="SURVIVE AS LONG AS YOU CAN" textFill="#b2a6a6">
                            <font>
