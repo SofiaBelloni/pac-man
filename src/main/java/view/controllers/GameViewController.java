@@ -38,7 +38,9 @@ import view.View;
 import view.utils.GameState;
 import view.utils.SoundManager;
 import view.utils.SoundManager.Sound;
-
+/*
+ * This class manages the game view
+ */
 public class GameViewController extends SceneController {
 
     private static final int LIFE_ICON_DIMENSION = 50;
@@ -254,7 +256,7 @@ public class GameViewController extends SceneController {
         this.pacmanImage.setX(this.squareSize * this.pacmanPosition.getX());
         this.pacmanImage.setY(this.squareSize * this.pacmanPosition.getY());
         this.entityPane.getChildren().add(this.pacmanImage);
-        this.pacmanImage.setImage(new Image("textures/pac_man/pac_man2.png"));
+        this.pacmanImage.setImage(new Image("textures/pac_man/pac_man1.png"));
         this.pacmanImage.setRotate(270);
     }
 

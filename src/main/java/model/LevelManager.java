@@ -1,5 +1,7 @@
 package model;
-
+/*
+ * This interface defines methods used to manage scores, levels and game state
+ */
 public interface LevelManager {
     /**
      * @return true if the game is inverted (PacMan can eat ghosts), false otherwise

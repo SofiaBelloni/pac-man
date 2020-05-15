@@ -5,6 +5,11 @@ import java.util.Set;
 import model.GameMapImpl.Builder;
 import utils.Pair;
 
+/*
+ * 
+ * This interface defines the methods implemented by the game map Builder
+ *
+ */
 public interface GameMapBuilder {
     /**
      * @param xMapSize

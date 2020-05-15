@@ -16,12 +16,12 @@ public class InstructionsController extends SceneController {
     private Button backButton;
 
     @Override
-    public void init(final Controller controller, final View view) {
+    public final void init(final Controller controller, final View view) {
         super.init(controller, view);
     }
 
     @FXML
-    public void goBack() {
+    public final void goBack() {
         SoundManager.getSoundManager().play(Sound.BUTTON);
         this.getView().setScene(GameScene.MAINMENU);
 

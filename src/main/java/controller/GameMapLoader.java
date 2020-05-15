@@ -3,7 +3,9 @@ package controller;
 import java.util.Set;
 
 import utils.Pair;
-
+/*
+ * This interface defines the methods used in GameMapLoaderImpl
+ */
 public interface GameMapLoader {
     /**
      * @return the size of the map on the x-axis

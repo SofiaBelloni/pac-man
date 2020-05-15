@@ -10,7 +10,9 @@ import java.util.Set;
 
 import utils.Pair;
 import utils.PairImpl;
-
+/*
+ * This class is used to load game maps from files
+ */
 public class GameMapLoaderImpl implements GameMapLoader {
     private static final String GAME_MAP_PATH = "game_maps/";
     private final Integer xMapSize;

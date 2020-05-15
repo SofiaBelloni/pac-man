@@ -9,7 +9,9 @@ import view.GameScene;
 import view.View;
 import view.utils.SoundManager;
 import view.utils.SoundManager.Sound;
-
+/*
+ * This class manages settings view
+ */
 public class SettingsController extends SceneController {
 
     @FXML
@@ -33,41 +35,41 @@ public class SettingsController extends SceneController {
             this.gameMaps.getItems().add(e.getName());
         }
     }
-    /**
-     *
+    /*
+     *Resets the ranking
      */
     @FXML
-    public void onResetRankingClick() {
+    public final void onResetRankingClick() {
         SoundManager.getSoundManager().play(Sound.BUTTON);
         this.getController().resetRanking();
     }
-    /**
-     *
+    /*
+     *Sets the game map
      */
     @FXML
-    public void setGameMap() {
+    public final void setGameMap() {
         this.getController().setGameMap(this.gameMaps.getSelectionModel().getSelectedItem());
     }
-    /**
-     *
+    /*
+     *Sets the main menu view
      */
     @FXML
-    public void onBackClick() {
+    public final void onBackClick() {
         SoundManager.getSoundManager().play(Sound.BUTTON);
         this.getView().setScene(GameScene.MAINMENU);
     }
-    /**
-     *
+    /*
+     *Sets the volume off
      */
     @FXML
-    public void volumeOffSelected() {
+    public final void volumeOffSelected() {
         SoundManager.getSoundManager().setSoundEnabled(false);
     }
-    /**
-     *
+    /*
+     *Sets the volume on
      */
     @FXML
-    public void volumeOnSelected() {
+    public final void volumeOnSelected() {
         SoundManager.getSoundManager().setSoundEnabled(true);
     }
 }

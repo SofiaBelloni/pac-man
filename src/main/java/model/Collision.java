@@ -8,6 +8,11 @@ import java.util.Set;
 
 import utils.Pair;
 
+/*
+ * 
+ * This class is used to manage the collisions in the game
+ *
+ */
 public class Collision {
     private Optional<Map<Integer, Pair<Integer, Integer>>> ghostsPositions = Optional.empty();
     private Optional<Map<Integer, Pair<Integer, Integer>>> oldGhostsPositions = Optional.empty();
