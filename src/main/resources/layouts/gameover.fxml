@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="1157.0" styleClass="mainPane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.GameOverController">
+   <children>
+      <ImageView pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+         <image>
+            <Image url="@../textures/images/TitleGameOver.png" />
+         </image>
+      </ImageView>
+      <HBox alignment="BOTTOM_CENTER" prefHeight="139.0" prefWidth="701.0" VBox.vgrow="ALWAYS">
+         <children>
+            <VBox alignment="CENTER" prefHeight="285.0" prefWidth="702.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label fx:id="levelLabel" alignment="CENTER" text="Level: 12" textFill="#ffe800">
+                     <font>
+                        <Font size="43.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="scoreLabel" alignment="CENTER" text="Score: 1234" textFill="#ffe800">
+                     <font>
+                        <Font size="43.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="0.0" prefWidth="701.0" VBox.vgrow="ALWAYS">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <children>
+            <TextField fx:id="playerNameText" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="441.0" promptText="Player Name">
+               <font>
+                  <Font size="35.0" />
+               </font></TextField>
+         </children>
+      </HBox>
+      <HBox alignment="TOP_CENTER" prefHeight="134.0" prefWidth="823.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Button fx:id="saveButton" alignment="CENTER" mnemonicParsing="false" onAction="#saveAndGoNextScene">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../textures/images/save.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </HBox>
+   </children>
+</VBox>

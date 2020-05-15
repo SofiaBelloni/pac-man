@@ -34,11 +34,11 @@ dependencies {
             implementation("org.openjfx:javafx-$module:13:$platform")
         }
     }
-    // JUnit API and testing engine
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.2")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.5.2")
-    //FXGL
-    implementation("com.github.almasb:fxgl:11.8")
+	// JUnit API and testing engine
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.2")
+    // GSON
+    implementation("com.google.code.gson:gson:2.8.6")
 }
 
 tasks.withType<Test> {

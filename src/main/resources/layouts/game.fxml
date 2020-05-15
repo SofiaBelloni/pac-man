@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="rootBox" alignment="CENTER_LEFT" minHeight="576.0" minWidth="1024.0" onKeyPressed="#onKeyPressed" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.GameViewController">
+   <children>
+      <StackPane fx:id="gamePane" minHeight="558.0" minWidth="504.0">
+         <children>
+            <Label fx:id="countDown" textAlignment="CENTER" textFill="#ff0202">
+               <font>
+                  <Font name="System Bold Italic" size="64.0" />
+               </font>
+            </Label>
+         </children></StackPane>
+      <VBox fx:id="labelBox" alignment="CENTER" minHeight="576.0" minWidth="466.0" spacing="20.0" style="-fx-background-color: black;" styleClass="labelBox" stylesheets="@style.css" HBox.hgrow="SOMETIMES">
+         <children>
+            <HBox alignment="BOTTOM_LEFT" prefHeight="60.0" prefWidth="520.0">
+               <children>
+                  <Label contentDisplay="CENTER" text="HIGH SCORE:" textFill="#b2a6a6">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="170.0" />
+                     </HBox.margin></Label>
+                  <Label fx:id="highScore" text="0" textFill="#b2a6a6">
+                     <HBox.margin>
+                        <Insets left="50.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="26.0" />
+                     </font></Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="520.0">
+               <children>
+                  <Label text="SCORE:" textFill="#b2a6a6">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="170.0" />
+                     </HBox.margin></Label>
+                  <Label fx:id="score" text="0" textFill="#b2a6a6">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="50.0" />
+                     </HBox.margin></Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="520.0">
+               <children>
+                  <Label text="LEVEL:" textFill="#b2a6a6">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="170.0" />
+                     </HBox.margin></Label>
+                  <Label fx:id="level" text="0" textFill="#b0a5a5">
+                     <HBox.margin>
+                        <Insets left="60.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="26.0" />
+                     </font></Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="520.0">
+               <children>
+                  <ProgressBar fx:id="timer" centerShape="false" prefHeight="25.0" prefWidth="300.0" progress="1.0" style="-fx-accent: #412FE9;">
+                     <HBox.margin>
+                        <Insets left="170.0" />
+                     </HBox.margin>
+                  </ProgressBar>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="520.0">
+               <children>
+                  <HBox fx:id="livesContainer" prefHeight="100.0" prefWidth="200.0">
+                     <HBox.margin>
+                        <Insets left="172.0" />
+                     </HBox.margin>
+                  </HBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="520.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="37.0" prefWidth="186.0" style="-fx-border-color: rgb(178,166,166);" text="SPACEBAR" textFill="#b2a6a6">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="170.0" top="40.0" />
+                     </HBox.margin>
+                  </Label>
+                  <VBox prefHeight="65.0" prefWidth="184.0">
+                     <children>
+                        <Label fx:id="gameStateLabel" prefHeight="35.0" prefWidth="175.0" text="Start Game" textFill="#b2a6a6">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="40.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="35.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="520.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="37.0" prefWidth="76.0" style="-fx-border-color: rgb(178,166,166);" text="ESC" textFill="#b2a6a6">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="170.0" top="-20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label text="End Game" textFill="#b2a6a6">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="35.0" top="-20.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </VBox>
+   </children>
+</HBox>
